@@ -2,12 +2,22 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SearchBox from '../components/SearchBox.astro';
 import { BUILD_META } from '../lib/data';
+import { websiteJsonLd } from '../lib/jsonld';
+
+// docs/seo-policy.md §3: home is an "always potentially indexable" page
+// type; docs/adr (Bloc C, page_publication) records it as such --
+// PUBLIC_INDEXING_ENABLED being off still keeps this noindex in practice.
+const website = websiteJsonLd();
 ---
 
 <BaseLayout
   title="Understand a hotel's surroundings"
   description="Independent hotel-location intelligence: walkability, transit access, food & essentials, quiet-surroundings, family convenience, and nightlife access — computed from open geospatial data."
+  indexable={true}
 >
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(website)} />
+  </Fragment>
   <section class="hero">
     <h1>Before you book, understand the surroundings.</h1>
     <p class="tagline">

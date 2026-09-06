@@ -2,6 +2,11 @@
 # the serving DB, never committed.
 data/etl/
 
+# Local stand-in for the Supabase page_publication table
+# (src/hotelareascore/publication.py) -- regenerable via
+# scripts/compute_publication.py, never the real serving DB.
+data/serving/
+
 # Python
 __pycache__/
 *.pyc

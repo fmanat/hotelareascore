@@ -1,21 +1,47 @@
 ---
 import { FLAGS } from '../lib/flags';
+import { SITE_URL } from '../lib/site';
 
 interface Props {
   title: string;
   description: string;
-  /** Only ever true when the relevant indexing flag is also on — see below. */
+  /** Only ever true when the page's own recorded publication_status is
+   * 'indexable' (src/hotelareascore/publication.py) — see below. */
   indexable?: boolean;
+  /** An additional, page-type-specific flag that must ALSO be on (e.g.
+   * 'HOTEL_PAGE_INDEXING_ENABLED') — lets hotel pages stay off while
+   * PUBLIC_INDEXING_ENABLED turns on for city/static pages, or vice versa. */
+  requiresFlag?: keyof typeof FLAGS;
+  /** Astro passes a markdown page's frontmatter here (nested), not spread
+   * into top-level props, when this layout is used via `.md` frontmatter's
+   * `layout:` field (the 4 legal pages) rather than an explicit
+   * `<BaseLayout title=... />` call from a `.astro` page — fall back to it
+   * below so both call conventions work identically. */
+  frontmatter?: Partial<Props>;
 }
 
-const { title, description, indexable = false } = Astro.props;
+const props = { ...Astro.props.frontmatter, ...Astro.props };
+const { title, description, indexable = false, requiresFlag } = props;
 
 // Indexability is a decision, never a side effect of a route existing
-// (CLAUDE.md hard rule 2). Phase 2 has no page_publication table yet (that's
-// Supabase serving-world, docs/adr/002) so the flags ARE the decision for
-// now: both PUBLIC_INDEXING_ENABLED and the page's own request must be on,
-// and both default off (docs/STATE.md — Phase 4 turns these on deliberately).
-const robotsContent = FLAGS.PUBLIC_INDEXING_ENABLED && indexable ? 'index, follow' : 'noindex, nofollow';
+// (CLAUDE.md hard rule 2): `indexable` reflects a row in page_publication
+// (docs/seo-policy.md §6) that some script explicitly wrote with a reason,
+// never inferred here. That recorded decision is necessary but not
+// sufficient — PUBLIC_INDEXING_ENABLED (and, for pages that pass
+// `requiresFlag`, that flag too) must ALSO be on, and every flag defaults
+// off (docs/STATE.md — Phase 4 turns these on deliberately).
+const extraFlagOk = requiresFlag ? FLAGS[requiresFlag] : true;
+const robotsContent =
+  FLAGS.PUBLIC_INDEXING_ENABLED && extraFlagOk && indexable ? 'index, follow' : 'noindex, nofollow';
+
+// docs/seo-policy.md §6: "One canonical hotel identity -> one canonical
+// URL." Every page gets EXACTLY one canonical tag, computed here so no
+// page template can accidentally omit one or emit two — strip any query
+// string and a trailing slash (except the root) so ?a=&b= compare
+// permutations and a stray trailing slash never count as a second URL for
+// the same page.
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonicalUrl = new URL(path, SITE_URL).toString();
 ---
 
 <!doctype html>
@@ -24,8 +50,10 @@ const robotsContent = FLAGS.PUBLIC_INDEXING_ENABLED && indexable ? 'index, follo
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content={robotsContent} />
+    <link rel="canonical" href={canonicalUrl} />
     <title>{title} · HotelAreaScore</title>
     <meta name="description" content={description} />
+    <slot name="head" />
     <style>
       :root {
         color-scheme: light;
@@ -99,6 +127,32 @@ const robotsContent = FLAGS.PUBLIC_INDEXING_ENABLED && indexable ? 'index, follo
       .badge.high { background: #e3f3ec; color: var(--accent); }
       .badge.medium { background: #fbf0dc; color: var(--warn); }
       .badge.low { background: #f7e4e1; color: var(--low); }
+      /* Owner-provided legal templates (overnight mission Bloc C item 5) --
+         visible on every one of the 4 legal pages until the owner reviews
+         them; do not remove when editing their content, only when the
+         owner has actually reviewed and approved the page. */
+      .legal-links { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 14px; }
+      .legal-links a { color: var(--ink-muted); }
+    </style>
+    <style is:global>
+      /* NOT scoped like the block above: `.draft-banner` lives in the 4
+         legal pages' markdown content, rendered into this layout's <slot />
+         -- Astro's scoped-style attribute is only added to markup written
+         directly in a component's own template, never to slotted content
+         from the page using it, so a scoped rule here would silently never
+         match. Keep this the one deliberate exception. */
+      .draft-banner {
+        background: #fbf0dc;
+        color: var(--warn);
+        border: 1px solid var(--warn);
+        border-radius: var(--radius);
+        padding: 10px 16px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        margin: 20px 0;
+      }
     </style>
   </head>
   <body>
@@ -121,6 +175,12 @@ const robotsContent = FLAGS.PUBLIC_INDEXING_ENABLED && indexable ? 'index, follo
         <a href="/methodology">Read the methodology</a>.
       </p>
       <p>Phase 2 product proof — not a public launch. Not affiliated with any hotel brand.</p>
+      <nav class="legal-links" aria-label="Legal">
+        <a href="/legal-notice">Legal notice</a>
+        <a href="/privacy">Privacy &amp; cookies</a>
+        <a href="/affiliate-disclosure">Affiliate disclosure</a>
+        <a href="/terms">Terms of use</a>
+      </nav>
     </footer>
   </body>
 </html>

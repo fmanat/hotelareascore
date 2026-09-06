@@ -9,6 +9,7 @@ src/data/hotels-*.json
 src/data/city-baselines.json
 src/data/personas.json
 src/data/meta.json
+src/data/city-pages.json
 public/data/search-index.json
 
 # dependencies

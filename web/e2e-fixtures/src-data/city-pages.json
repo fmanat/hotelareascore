@@ -1,0 +1,196 @@
+{
+  "london": {
+    "city_id": "london",
+    "city_name": "London",
+    "country": "GB",
+    "n_hotels": 3,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "dimensions": {
+      "walkability_density": {
+        "median": 70.0,
+        "mean": 66.0
+      },
+      "transit_access": {
+        "median": 74.0,
+        "mean": 68.0
+      },
+      "food_essentials": {
+        "median": 68.0,
+        "mean": 65.0
+      },
+      "quietness_proxy": {
+        "median": 55.0,
+        "mean": 63.0
+      },
+      "family_convenience": {
+        "median": 60.0,
+        "mean": 60.3
+      },
+      "nightlife_access": {
+        "median": 40.0,
+        "mean": 36.0
+      }
+    },
+    "top_by_dimension": {
+      "walkability_density": [
+        {
+          "name": "Fixture Park Hotel",
+          "locality": "Camden",
+          "slug": "fixture-park-hotel-e2e001",
+          "score": 88.0
+        }
+      ],
+      "transit_access": [
+        {
+          "name": "Fixture Transit Hotel",
+          "locality": "Islington",
+          "slug": "fixture-transit-hotel-e2e002",
+          "score": 95.0
+        }
+      ],
+      "food_essentials": [
+        {
+          "name": "Fixture Park Hotel",
+          "locality": "Camden",
+          "slug": "fixture-park-hotel-e2e001",
+          "score": 82.0
+        }
+      ],
+      "quietness_proxy": [
+        {
+          "name": "Fixture Quiet Hotel",
+          "locality": "Richmond",
+          "slug": "fixture-quiet-hotel-e2e003",
+          "score": 92.0
+        }
+      ],
+      "family_convenience": [
+        {
+          "name": "Fixture Park Hotel",
+          "locality": "Camden",
+          "slug": "fixture-park-hotel-e2e001",
+          "score": 91.0
+        }
+      ],
+      "nightlife_access": [
+        {
+          "name": "Fixture Transit Hotel",
+          "locality": "Islington",
+          "slug": "fixture-transit-hotel-e2e002",
+          "score": 58.0
+        }
+      ]
+    },
+    "representative_hotels": [
+      {
+        "name": "Fixture Park Hotel",
+        "locality": "Camden",
+        "slug": "fixture-park-hotel-e2e001",
+        "balanced_score": 76.0
+      },
+      {
+        "name": "Fixture Transit Hotel",
+        "locality": "Islington",
+        "slug": "fixture-transit-hotel-e2e002",
+        "balanced_score": 71.0
+      }
+    ],
+    "center_lat": 51.5074,
+    "center_lon": -0.1278
+  },
+  "bangkok": {
+    "city_id": "bangkok",
+    "city_name": "Bangkok",
+    "country": "TH",
+    "n_hotels": 1,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "dimensions": {
+      "walkability_density": {
+        "median": 60.0,
+        "mean": 60.0
+      },
+      "transit_access": {
+        "median": 55.0,
+        "mean": 55.0
+      },
+      "food_essentials": {
+        "median": 85.0,
+        "mean": 85.0
+      },
+      "quietness_proxy": {
+        "median": 48.0,
+        "mean": 48.0
+      },
+      "family_convenience": {
+        "median": 20.0,
+        "mean": 20.0
+      },
+      "nightlife_access": {
+        "median": 75.0,
+        "mean": 75.0
+      }
+    },
+    "top_by_dimension": {
+      "walkability_density": [
+        {
+          "name": "Fixture Riverside Hotel",
+          "locality": "Bang Rak",
+          "slug": "fixture-riverside-hotel-e2e004",
+          "score": 60.0
+        }
+      ],
+      "transit_access": [
+        {
+          "name": "Fixture Riverside Hotel",
+          "locality": "Bang Rak",
+          "slug": "fixture-riverside-hotel-e2e004",
+          "score": 55.0
+        }
+      ],
+      "food_essentials": [
+        {
+          "name": "Fixture Riverside Hotel",
+          "locality": "Bang Rak",
+          "slug": "fixture-riverside-hotel-e2e004",
+          "score": 85.0
+        }
+      ],
+      "quietness_proxy": [
+        {
+          "name": "Fixture Riverside Hotel",
+          "locality": "Bang Rak",
+          "slug": "fixture-riverside-hotel-e2e004",
+          "score": 48.0
+        }
+      ],
+      "family_convenience": [
+        {
+          "name": "Fixture Riverside Hotel",
+          "locality": "Bang Rak",
+          "slug": "fixture-riverside-hotel-e2e004",
+          "score": 20.0
+        }
+      ],
+      "nightlife_access": [
+        {
+          "name": "Fixture Riverside Hotel",
+          "locality": "Bang Rak",
+          "slug": "fixture-riverside-hotel-e2e004",
+          "score": 75.0
+        }
+      ]
+    },
+    "representative_hotels": [
+      {
+        "name": "Fixture Riverside Hotel",
+        "locality": "Bang Rak",
+        "slug": "fixture-riverside-hotel-e2e004",
+        "balanced_score": 62.0
+      }
+    ],
+    "center_lat": 13.7563,
+    "center_lon": 100.5018
+  }
+}

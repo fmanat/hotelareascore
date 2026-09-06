@@ -7,7 +7,8 @@ import hotelsBangkok from '../data/hotels-bangkok.json';
 import cityBaselines from '../data/city-baselines.json';
 import personas from '../data/personas.json';
 import meta from '../data/meta.json';
-import type { CityBaseline, Hotel, Personas } from './types';
+import cityPages from '../data/city-pages.json';
+import type { CityBaseline, CityPage, Hotel, Personas } from './types';
 
 export const ALL_HOTELS: Hotel[] = [...(hotelsLondon as Hotel[]), ...(hotelsBangkok as Hotel[])];
 
@@ -18,6 +19,8 @@ export const CITY_BASELINES = cityBaselines as Record<string, CityBaseline>;
 export const PERSONAS = personas as Personas;
 
 export const BUILD_META = meta as { release: string; cities: string[] };
+
+export const CITY_PAGES = cityPages as Record<string, CityPage>;
 
 export function getHotel(slug: string): Hotel | undefined {
   return HOTELS_BY_SLUG.get(slug);

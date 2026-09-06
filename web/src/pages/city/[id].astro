@@ -1,0 +1,131 @@
+---
+// City page template (Bloc C item 4, overnight mission; docs/seo-policy.md
+// §3: "generated from aggregate data ... never 'the best neighborhood'
+// without an explicit criterion; prefer 'highest-scoring areas for X in
+// our dataset'"). Generated for all 12 launch cities, ALL noindex --
+// page_publication (src/hotelareascore/publication.py,
+// scripts/compute_publication.py) already records every city as noindex
+// ("not yet measured against real search demand"), and `indexable` here
+// reads that recorded status directly, same pattern as the hotel page.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CITY_PAGES } from '../../lib/data';
+import { DIMENSION_KEYS } from '../../lib/types';
+import { DIMENSION_META } from '../../lib/dimensions';
+import { breadcrumbJsonLd, placeJsonLd } from '../../lib/jsonld';
+
+export function getStaticPaths() {
+  return Object.values(CITY_PAGES).map((page) => ({
+    params: { id: page.city_id },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props as { page: (typeof CITY_PAGES)[string] };
+
+const breadcrumb = breadcrumbJsonLd([
+  { name: 'Search', path: '/' },
+  { name: page.city_name, path: `/city/${page.city_id}` },
+]);
+const place = placeJsonLd({ name: page.city_name, lat: page.center_lat, lon: page.center_lon });
+
+function fmt(n: number | null): string {
+  return n === null || n === undefined ? '—' : Math.round(n).toString();
+}
+---
+
+<BaseLayout
+  title={`Hotel surroundings in ${page.city_name}`}
+  description={`Aggregate surroundings data for ${page.n_hotels.toLocaleString()} hotels scored in ${page.city_name}: walkability, transit, food, quiet, family, and nightlife score distributions, computed from open geospatial data.`}
+  indexable={false}
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(place)} />
+  </Fragment>
+
+  <p class="breadcrumb"><a href="/">Search</a> · {page.city_name}</p>
+  <h1>Hotel surroundings in {page.city_name}</h1>
+  <p class="intro">
+    Aggregate view across <strong>{page.n_hotels.toLocaleString()}</strong> hotels we've scored in {page.city_name}{' '}
+    (score version <code>{page.score_version}</code>, Overture release <code>{page.source_release}</code>).
+    Computed automatically from open geospatial data — not an editorial "best neighborhoods" ranking.
+  </p>
+
+  <section class="distributions">
+    <h2>Score distribution by dimension</h2>
+    <table>
+      <thead>
+        <tr><th scope="col">Dimension</th><th scope="col">Median</th><th scope="col">Mean</th></tr>
+      </thead>
+      <tbody>
+        {
+          DIMENSION_KEYS.map((dim) => (
+            <tr>
+              <td>{DIMENSION_META[dim].label}</td>
+              <td>{fmt(page.dimensions[dim]?.median ?? null)}</td>
+              <td>{fmt(page.dimensions[dim]?.mean ?? null)}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <section class="clusters">
+    <h2>Highest-scoring areas by dimension in our dataset</h2>
+    <p class="hint">
+      Not "the best neighborhood" — the specific hotels with the highest computed score for each
+      dimension, in this dataset, today.
+    </p>
+    {
+      DIMENSION_KEYS.map((dim) => (
+        <div class="cluster">
+          <h3>{DIMENSION_META[dim].label}</h3>
+          <ul>
+            {(page.top_by_dimension[dim] ?? []).map((h) => (
+              <li>
+                {h.slug ? <a href={`/hotel/${h.slug}`}>{h.name}</a> : <span>{h.name}</span>}
+                {h.locality ? ` — ${h.locality}` : ''} ({fmt(h.score ?? null)})
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </section>
+
+  <section class="representative">
+    <h2>Representative hotels</h2>
+    <ul>
+      {
+        page.representative_hotels.map((h) => (
+          <li>
+            {h.slug ? <a href={`/hotel/${h.slug}`}>{h.name}</a> : <span>{h.name}</span>}
+            {h.locality ? ` — ${h.locality}` : ''} — balanced score {fmt(h.balanced_score ?? null)}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="methodology-note">
+    <p>
+      Scores are calculated automatically from geospatial data (Overture Maps). They describe the
+      surrounding area, not hotel rooms or service quality. <a href="/methodology">Read the full methodology</a>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .breadcrumb { color: var(--ink-muted); font-size: 0.85rem; margin: 0 0 6px; }
+  .intro { color: var(--ink-muted); max-width: 70ch; }
+  .hint { color: var(--ink-muted); font-size: 0.85rem; margin-top: -8px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 24px; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); }
+  .clusters { margin-top: 32px; }
+  .cluster { margin-bottom: 18px; }
+  .cluster h3 { margin: 0 0 6px; font-size: 1rem; }
+  .cluster ul, .representative ul { margin: 0; padding-left: 20px; }
+  .representative { margin-top: 32px; }
+  .methodology-note { margin-top: 40px; color: var(--ink-muted); font-size: 0.9rem; }
+</style>

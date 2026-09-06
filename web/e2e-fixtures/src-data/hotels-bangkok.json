@@ -9,7 +9,7 @@
     "region": null,
     "country": "TH",
     "lat": 13.7245,
-    "lon": 100.5140,
+    "lon": 100.514,
     "distance_from_center_km": 2.0,
     "far_from_center": false,
     "locality_mismatch": false,
@@ -31,6 +31,7 @@
     "verdict": "Excellent for restaurants and everyday essentials; active nightlife nearby.",
     "reason_codes": [],
     "nearby_facts": [],
-    "comparable": []
+    "comparable": [],
+    "publication_status": "noindex"
   }
 ]

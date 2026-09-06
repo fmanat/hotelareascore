@@ -12,7 +12,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from . import overture
+from . import overture, publication
 from .config import DIMENSIONS, ETL_DIR, REPO_ROOT, get_city, load_score_weights
 from .dedupe import haversine_m
 from .reason_codes import compute_reason_codes
@@ -105,6 +105,17 @@ def export_city(city_id: str, release: overture.Release) -> list[dict[str, Any]]
     rows = _fetch_hotels(con, etl_dir)
     nearby_by_hotel = _fetch_nearby_facts(con, etl_dir)
 
+    # docs/seo-policy.md §6 / CLAUDE.md hard rule 2: indexability is a
+    # recorded decision (src/hotelareascore/publication.py), read here, not
+    # computed inline. This is still only HALF the gate -- BaseLayout.astro
+    # ANDs it with FLAGS.PUBLIC_INDEXING_ENABLED/HOTEL_PAGE_INDEXING_ENABLED
+    # before a page actually renders index,follow.
+    with publication.connect() as pub_con:
+        indexable_by_id = {
+            row["page_id"]
+            for row in publication.list_by_status(pub_con, "indexable", "hotel")
+        }
+
     hotels: list[dict[str, Any]] = []
     for r in rows:
         scores = {d: round(r[d], 1) for d in DIMENSIONS}
@@ -127,6 +138,7 @@ def export_city(city_id: str, release: overture.Release) -> list[dict[str, Any]]
             "far_from_center": distance_km > FAR_FROM_CENTER_KM,
             "locality_mismatch": locality_mismatch is not None,
             "locality_mismatch_detail": locality_mismatch,
+            "publication_status": "indexable" if r["id"] in indexable_by_id else "noindex",
             "scores": scores,
             "balanced_score": round(r["balanced_score"], 1),
             "confidence": confidence,
@@ -154,6 +166,93 @@ def _city_baseline(city_id: str, release: overture.Release) -> dict[str, Any]:
     etl_dir = ETL_DIR / release.id / city_id
     with open(etl_dir / "city_baseline.json", "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def _city_page_aggregate(city_id: str, release: overture.Release, hotel_pages_built: set[str]) -> dict[str, Any] | None:
+    """Lightweight city-level aggregate for the city page template (Bloc C
+    item 4, overnight mission): score distributions + a handful of
+    representative/top-per-dimension hotel names, computed directly from
+    the ETL parquet -- NOT a full per-hotel export (that stays scoped to
+    `export_city`'s 2-city Phase 2 footprint; a city page needs aggregates
+    for all 12, not full hotel dumps, per the ETL/serving-world split,
+    docs/adr/002)."""
+    city = get_city(city_id)
+    etl_dir = ETL_DIR / release.id / city_id
+    hotels_path = etl_dir / "hotels.parquet"
+    scores_path = etl_dir / "hotel_scores.parquet"
+    baseline_path = etl_dir / "city_baseline.json"
+    if not (hotels_path.exists() and scores_path.exists() and baseline_path.exists()):
+        return None
+
+    con = overture.connect()
+    baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
+
+    top_by_dimension: dict[str, list[dict[str, Any]]] = {}
+    for dim in DIMENSIONS:
+        rows = con.execute(f"""
+            SELECT h.name, h.address_locality, h.id, s.{dim} AS score
+            FROM read_parquet('{hotels_path.as_posix()}') h
+            JOIN read_parquet('{scores_path.as_posix()}') s ON s.hotel_id = h.id
+            WHERE h.name IS NOT NULL AND trim(h.name) != ''
+            ORDER BY s.{dim} DESC LIMIT 3
+        """).fetchall()
+        top_by_dimension[dim] = [
+            {
+                "name": r[0], "locality": r[1], "score": round(r[3], 1),
+                "slug": hotel_slug(r[0], r[2]) if city_id in hotel_pages_built else None,
+            }
+            for r in rows
+        ]
+
+    rep_rows = con.execute(f"""
+        SELECT h.name, h.address_locality, h.id, s.balanced_score
+        FROM read_parquet('{hotels_path.as_posix()}') h
+        JOIN read_parquet('{scores_path.as_posix()}') s ON s.hotel_id = h.id
+        WHERE h.name IS NOT NULL AND trim(h.name) != ''
+        ORDER BY s.balanced_score DESC LIMIT 5
+    """).fetchall()
+    representative_hotels = [
+        {
+            "name": r[0], "locality": r[1], "balanced_score": round(r[3], 1),
+            "slug": hotel_slug(r[0], r[2]) if city_id in hotel_pages_built else None,
+        }
+        for r in rep_rows
+    ]
+
+    return {
+        "city_id": city.id,
+        "city_name": city.name,
+        "country": city.country,
+        "center_lat": city.center_lat,
+        "center_lon": city.center_lon,
+        "n_hotels": baseline["n_hotels"],
+        "score_version": baseline.get("score_version"),
+        "source_release": release.id,
+        "dimensions": {
+            dim: {
+                "median": baseline.get(f"{dim}_median"),
+                "mean": baseline.get(f"{dim}_mean"),
+            }
+            for dim in DIMENSIONS
+        },
+        "top_by_dimension": top_by_dimension,
+        "representative_hotels": representative_hotels,
+    }
+
+
+def export_city_pages(release: overture.Release, hotel_pages_built: set[str]) -> None:
+    """All 12 launch cities, not just the ones with full hotel exports --
+    see _city_page_aggregate's docstring."""
+    from .config import load_cities
+
+    WEB_SRC_DATA.mkdir(parents=True, exist_ok=True)
+    pages = {}
+    for city_id in load_cities():
+        agg = _city_page_aggregate(city_id, release, hotel_pages_built)
+        if agg is not None:
+            pages[city_id] = agg
+    with open(WEB_SRC_DATA / "city-pages.json", "w", encoding="utf-8") as f:
+        json.dump(pages, f, ensure_ascii=False)
 
 
 def export_web_data(release: overture.Release, city_ids: list[str]) -> None:
@@ -192,6 +291,8 @@ def export_web_data(release: overture.Release, city_ids: list[str]) -> None:
         json.dump(baselines, f, ensure_ascii=False)
     with open(WEB_SRC_DATA / "meta.json", "w", encoding="utf-8") as f:
         json.dump({"release": release.id, "cities": city_ids}, f)
+
+    export_city_pages(release, hotel_pages_built=set(city_ids))
 
     weights = load_score_weights()
     with open(WEB_SRC_DATA / "personas.json", "w", encoding="utf-8") as f:

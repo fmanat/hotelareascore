@@ -4,8 +4,14 @@
 // comparable hotels -> compare picker -> CTA -> methodology/confidence.
 // ("Compare with another hotel" added here, right after the comparable-
 // hotels list it naturally follows from -- docs/strategy.md §2 journey B.)
-// Hotel pages stay noindex by default (docs/seo-policy.md §2) until a
-// Phase 4 pilot cohort decision — nothing here changes that.
+// `indexable` reads hotel.publication_status (docs/seo-policy.md §6,
+// src/hotelareascore/publication.py -- a recorded decision, computed by
+// scripts/compute_publication.py from the pilot cohort selection, never
+// inferred here). BaseLayout still ANDs this with
+// FLAGS.HOTEL_PAGE_INDEXING_ENABLED, which stays OFF (overnight mission
+// Bloc C: "tout en flags OFF") -- so every hotel page renders noindex
+// regardless of publication_status until that flag is deliberately
+// turned on at Phase 4.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ScoreDimensions from '../../components/ScoreDimensions.astro';
 import NearbyFacts from '../../components/NearbyFacts.astro';
@@ -16,6 +22,7 @@ import ComparePicker from '../../components/ComparePicker.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import { ALL_HOTELS, CITY_BASELINES } from '../../lib/data';
 import { REASON_CODE_COPY } from '../../lib/reasonCodes';
+import { breadcrumbJsonLd, lodgingBusinessJsonLd, placeJsonLd } from '../../lib/jsonld';
 
 export function getStaticPaths() {
   return ALL_HOTELS.map((hotel) => ({
@@ -28,13 +35,39 @@ const { hotel } = Astro.props as { hotel: (typeof ALL_HOTELS)[number] };
 const baseline = CITY_BASELINES[hotel.city_id];
 
 const confidenceClass = hotel.confidence_label.toLowerCase();
+
+// docs/seo-policy.md §6: Hotel/LodgingBusiness/Place/BreadcrumbList/WebSite
+// only, never review/rating markup -- see lib/jsonld.ts's own guardrail
+// comment. Emitted unconditionally (structured data on a noindex page is
+// harmless and this is exactly the "prepared but inert" state Bloc C
+// wants); it only ever matters once HOTEL_PAGE_INDEXING_ENABLED is on.
+const breadcrumb = breadcrumbJsonLd([
+  { name: 'Search', path: '/' },
+  { name: hotel.city_name, path: `/city/${hotel.city_id}` },
+  { name: hotel.name, path: `/hotel/${hotel.slug}` },
+]);
+const place = placeJsonLd({ name: hotel.name, lat: hotel.lat, lon: hotel.lon, addressLocality: hotel.locality });
+const lodgingBusiness = lodgingBusinessJsonLd({
+  name: hotel.name,
+  lat: hotel.lat,
+  lon: hotel.lon,
+  addressLocality: hotel.locality,
+  url: `/hotel/${hotel.slug}`,
+  balancedScore: hotel.balanced_score,
+});
 ---
 
 <BaseLayout
-  title={`${hotel.name} — surroundings score`}
+  title={`${hotel.name}${hotel.locality && hotel.locality !== hotel.name ? `, ${hotel.locality}` : ''} — surroundings score`}
   description={`${hotel.name} in ${hotel.city_name}: ${hotel.verdict}`}
-  indexable={false}
+  indexable={hotel.publication_status === 'indexable'}
+  requiresFlag="HOTEL_PAGE_INDEXING_ENABLED"
 >
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(place)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(lodgingBusiness)} />
+  </Fragment>
   <article class="hotel">
     <header class="identity">
       <p class="breadcrumb">

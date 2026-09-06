@@ -65,6 +65,28 @@ jobs:
           path: web/playwright-report/
           retention-days: 7
 
+  seo-assertions:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: npm ci
+      - name: Install fixture data (same reasoning as the typecheck job)
+        run: node e2e/prepare-fixtures.mjs
+      - name: Build
+        run: npm run build
+      - name: SEO build-time assertions (CLAUDE.md §9)
+        run: python3 scripts/seo_assertions.py
+
   etl-tests:
     runs-on: ubuntu-latest
     steps:

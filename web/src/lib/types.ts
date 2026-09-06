@@ -48,6 +48,7 @@ export interface Hotel {
   far_from_center: boolean;
   locality_mismatch: boolean;
   locality_mismatch_detail: string | null;
+  publication_status: 'indexable' | 'noindex';
   scores: Scores;
   balanced_score: number;
   confidence: number;
@@ -65,6 +66,28 @@ export interface CityBaseline {
   city_id: string;
   n_hotels: number;
   [key: string]: unknown;
+}
+
+export interface CityPageHotelRef {
+  name: string;
+  locality: string | null;
+  slug: string | null;
+  score?: number;
+  balanced_score?: number;
+}
+
+export interface CityPage {
+  city_id: string;
+  city_name: string;
+  country: string;
+  center_lat: number;
+  center_lon: number;
+  n_hotels: number;
+  score_version: string;
+  source_release: string;
+  dimensions: Record<DimensionKey, { median: number | null; mean: number | null }>;
+  top_by_dimension: Record<DimensionKey, CityPageHotelRef[]>;
+  representative_hotels: CityPageHotelRef[];
 }
 
 export type PersonaWeights = Record<DimensionKey, number>;

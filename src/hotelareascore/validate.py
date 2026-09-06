@@ -75,9 +75,18 @@ def validate_city(city_id: str, release: overture.Release) -> dict[str, Any]:
     baseline_cursor = con.execute(baseline_sql)
     baseline_cols = [d[0] for d in baseline_cursor.description]
     baseline_row = baseline_cursor.fetchone()
+    # Bug found while building the Bloc C city-page template (overnight
+    # mission): this used to read `manifest.get("release")` -- `manifest`
+    # is ingest.py's manifest.json, which has no `score_version` key at
+    # all, only a Overture `release` id. Every city_baseline.json ever
+    # written therefore had the release id ("2026-08-19.0") sitting in its
+    # score_version field instead of the real score_version ("1.2.0").
+    # Read the real value from `scores`, which validate_city already loaded
+    # and just checked (#4 above) is never NULL.
+    score_version = _scalar(con, "SELECT score_version FROM scores LIMIT 1")
     baseline = {
         "city_id": city.id,
-        "score_version": manifest.get("release"),
+        "score_version": score_version,
         "source_release": release.id,
         "n_hotels": n_hotels,
         **dict(zip(baseline_cols, [round(v, 2) if v is not None else None for v in baseline_row])),
