@@ -40,11 +40,14 @@ export interface Hotel {
   city_id: string;
   city_name: string;
   locality: string | null;
+  region: string | null;
   country: string | null;
   lat: number;
   lon: number;
   distance_from_center_km: number;
   far_from_center: boolean;
+  locality_mismatch: boolean;
+  locality_mismatch_detail: string | null;
   scores: Scores;
   balanced_score: number;
   confidence: number;
@@ -72,4 +75,11 @@ export interface SearchIndexEntry {
   name: string;
   city: string;
   locality: string | null;
+  // Present so the Compare page (docs/strategy.md §2 journey B) can reuse
+  // this same fetched index instead of a second file.
+  scores: Scores;
+  balanced_score: number;
+  confidence: number;
+  confidence_label: 'High' | 'Medium' | 'Low';
+  verdict: string;
 }

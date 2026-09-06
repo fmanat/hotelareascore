@@ -23,20 +23,41 @@ jobs:
 
   typecheck:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Install & typecheck (no-op until app scaffold lands in Phase 2)
+      - name: Install & typecheck
         run: |
-          if [ -f package.json ]; then
-            npm ci
-            npm run typecheck --if-present
-            npm test --if-present
-          else
-            echo "No package.json yet — Phase 0: docs-only repo. OK."
-          fi
+          npm ci
+          npm run typecheck
+
+  e2e:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: E2E (search -> result -> persona -> compare, mobile, noindex, affiliate rel — CLAUDE.md §9)
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: web/playwright-report/
+          retention-days: 7
 
   etl-tests:
     runs-on: ubuntu-latest

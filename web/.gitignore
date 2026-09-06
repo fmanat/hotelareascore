@@ -14,6 +14,14 @@ public/data/search-index.json
 # dependencies
 node_modules/
 
+# Playwright E2E (web/e2e/) -- reports, traces, and the real-data backup
+# global-setup swaps out for fixtures during a run (restored in teardown).
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+.e2e-data-backup/
+
 # logs
 npm-debug.log*
 yarn-debug.log*

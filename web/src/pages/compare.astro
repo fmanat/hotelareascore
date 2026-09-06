@@ -1,0 +1,311 @@
+---
+// Compare page (docs/strategy.md §2 journey B: "Compare 2 hotels, major
+// conversion page"). A single static page, not one per hotel pair (that
+// would be a combinatorial explosion of URLs -- CLAUDE.md hard rule 2:
+// never create indexable URLs merely because they can be generated). Reads
+// ?a=<slug>&b=<slug> client-side and renders from the same
+// /data/search-index.json the search box and hotel pages already fetch --
+// no server, no external call at runtime. noindex (no `indexable` passed).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { DIMENSION_KEYS } from '../lib/types';
+import { DIMENSION_META } from '../lib/dimensions';
+
+const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSION_META[k].label]));
+---
+
+<BaseLayout
+  title="Compare two hotels"
+  description="Compare the surroundings of two hotels side by side: walkability, transit access, food & essentials, quiet-surroundings, family convenience, nightlife access, and confidence."
+>
+  <h1>Compare two hotels</h1>
+  <p class="intro">Side-by-side surroundings scores. Never rooms, price, or availability.</p>
+
+  <div class="pickers">
+    <div class="picker">
+      <label for="pick-a">Hotel A</label>
+      <input id="pick-a" type="search" placeholder="Search a hotel…" autocomplete="off" />
+      <ul id="pick-a-results" role="listbox" hidden></ul>
+    </div>
+    <div class="picker">
+      <label for="pick-b">Hotel B</label>
+      <input id="pick-b" type="search" placeholder="Search a hotel…" autocomplete="off" />
+      <ul id="pick-b-results" role="listbox" hidden></ul>
+    </div>
+  </div>
+
+  <p id="compare-status" class="status" hidden></p>
+
+  <div
+    id="compare-grid"
+    class="compare-grid"
+    hidden
+    data-dimension-keys={JSON.stringify(DIMENSION_KEYS)}
+    data-dimension-labels={JSON.stringify(dimensionLabels)}
+  >
+    <div class="col" id="col-a"></div>
+    <div class="col" id="col-b"></div>
+  </div>
+
+  <template id="dim-row-template">
+    <div class="dim-row">
+      <div class="dim-row-label"></div>
+      <div class="mini-bar"><div class="mini-bar-fill"></div></div>
+      <div class="dim-row-values"></div>
+    </div>
+  </template>
+</BaseLayout>
+
+<style>
+  h1 { margin: 24px 0 4px; }
+  .intro { color: var(--ink-muted); margin: 0 0 24px; }
+
+  .pickers {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  @media (min-width: 640px) {
+    .pickers { grid-template-columns: 1fr 1fr; }
+  }
+  .picker { position: relative; }
+  .picker label { display: block; font-weight: 600; margin-bottom: 6px; }
+  .picker input[type='search'] {
+    width: 100%;
+    font-size: 1rem;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--ink);
+  }
+  .picker input[type='search']:focus { outline: 2px solid var(--accent); }
+  .picker ul {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 4px;
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    max-height: 280px;
+    overflow-y: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+  .picker ul li a, .picker ul li button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    border: none;
+    background: none;
+    border-radius: 6px;
+    color: var(--ink);
+    text-decoration: none;
+    font: inherit;
+    cursor: pointer;
+  }
+  .picker ul li a:hover, .picker ul li a:focus,
+  .picker ul li button:hover, .picker ul li button:focus { background: var(--bg); }
+  .picker ul li .meta { display: block; font-size: 0.8rem; color: var(--ink-muted); }
+  .picker ul li.empty { padding: 10px 12px; color: var(--ink-muted); font-size: 0.9rem; }
+
+  .status { color: var(--ink-muted); margin: 24px 0; }
+  .status.error { color: var(--low); }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 12px;
+  }
+  @media (min-width: 640px) {
+    .compare-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .col {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    background: var(--surface);
+  }
+  .col h2 { margin: 0 0 4px; font-size: 1.1rem; }
+  .col .locality { color: var(--ink-muted); font-size: 0.85rem; margin: 0 0 10px; }
+  .col .verdict { margin: 0 0 12px; }
+  .col .balanced { font-weight: 600; margin-bottom: 4px; }
+  .col a.view-link { font-size: 0.85rem; }
+
+  .dim-row { margin: 14px 0; }
+  .dim-row-label { font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
+  .mini-bar { background: var(--border); border-radius: 999px; height: 8px; overflow: hidden; margin-bottom: 4px; }
+  .mini-bar-fill { height: 100%; border-radius: 999px; background: var(--accent); }
+  .dim-row-values { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--ink-muted); }
+  .dim-row-values .winner { color: var(--accent); font-weight: 700; }
+</style>
+
+<script>
+  interface SearchIndexEntry {
+    slug: string;
+    name: string;
+    city: string;
+    locality: string | null;
+    scores: Record<string, number>;
+    balanced_score: number;
+    confidence: number;
+    confidence_label: string;
+    verdict: string;
+  }
+
+  let indexPromise: Promise<SearchIndexEntry[]> | null = null;
+  function loadIndex(): Promise<SearchIndexEntry[]> {
+    if (!indexPromise) {
+      indexPromise = fetch('/data/search-index.json').then((r) => r.json());
+    }
+    return indexPromise;
+  }
+
+  function setupPicker(inputId: string, resultsId: string, onPick: (slug: string) => void) {
+    const input = document.getElementById(inputId) as HTMLInputElement | null;
+    const resultsEl = document.getElementById(resultsId) as HTMLUListElement | null;
+    if (!input || !resultsEl) return;
+
+    function render(matches: SearchIndexEntry[], query: string) {
+      resultsEl!.innerHTML = '';
+      if (query.length < 2) {
+        resultsEl!.hidden = true;
+        return;
+      }
+      if (matches.length === 0) {
+        resultsEl!.innerHTML = '<li class="empty">No hotels found in our index.</li>';
+        resultsEl!.hidden = false;
+        return;
+      }
+      const frag = document.createDocumentFragment();
+      matches.slice(0, 8).forEach((m) => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.innerHTML = `${m.name}<span class="meta">${m.locality ? m.locality + ', ' : ''}${m.city}</span>`;
+        btn.addEventListener('click', () => {
+          input!.value = m.name;
+          resultsEl!.hidden = true;
+          onPick(m.slug);
+        });
+        li.appendChild(btn);
+        frag.appendChild(li);
+      });
+      resultsEl!.appendChild(frag);
+      resultsEl!.hidden = false;
+    }
+
+    let debounceTimer: number | undefined;
+    input.addEventListener('input', () => {
+      const query = input.value.trim().toLowerCase();
+      window.clearTimeout(debounceTimer);
+      debounceTimer = window.setTimeout(async () => {
+        const data = await loadIndex();
+        const matches = query.length < 2 ? [] : data.filter((e) => e.name.toLowerCase().includes(query));
+        render(matches, query);
+      }, 120);
+    });
+    input.addEventListener('focus', () => loadIndex());
+    document.addEventListener('click', (e) => {
+      if (!(e.target instanceof Node)) return;
+      if (!input.parentElement?.contains(e.target)) resultsEl!.hidden = true;
+    });
+  }
+
+  function bandColor(score: number): string {
+    if (score >= 75) return 'var(--accent)';
+    if (score >= 50) return 'var(--warn)';
+    return 'var(--low)';
+  }
+
+  function renderCol(container: HTMLElement, hotel: SearchIndexEntry) {
+    container.innerHTML = `
+      <h2>${hotel.name}</h2>
+      <p class="locality">${hotel.locality ? hotel.locality + ', ' : ''}${hotel.city}</p>
+      <p class="verdict">${hotel.verdict}</p>
+      <p class="balanced">Balanced score: ${Math.round(hotel.balanced_score)}/100 · ${hotel.confidence_label} confidence</p>
+      <a class="view-link" href="/hotel/${hotel.slug}">View full result &rarr;</a>
+    `;
+  }
+
+  async function renderCompare() {
+    const statusEl = document.getElementById('compare-status') as HTMLElement;
+    const gridEl = document.getElementById('compare-grid') as HTMLElement;
+    const colA = document.getElementById('col-a') as HTMLElement;
+    const colB = document.getElementById('col-b') as HTMLElement;
+
+    const params = new URLSearchParams(window.location.search);
+    const slugA = params.get('a');
+    const slugB = params.get('b');
+
+    if (!slugA || !slugB) {
+      statusEl.textContent = 'Pick two hotels above to compare their surroundings.';
+      statusEl.hidden = false;
+      gridEl.hidden = true;
+      return;
+    }
+    if (slugA === slugB) {
+      statusEl.textContent = 'Pick two different hotels to compare.';
+      statusEl.className = 'status error';
+      statusEl.hidden = false;
+      gridEl.hidden = true;
+      return;
+    }
+
+    const index = await loadIndex();
+    const hotelA = index.find((h) => h.slug === slugA);
+    const hotelB = index.find((h) => h.slug === slugB);
+    if (!hotelA || !hotelB) {
+      statusEl.textContent = 'One or both hotels could not be found in our current dataset.';
+      statusEl.className = 'status error';
+      statusEl.hidden = false;
+      gridEl.hidden = true;
+      return;
+    }
+
+    statusEl.hidden = true;
+    gridEl.hidden = false;
+    renderCol(colA, hotelA);
+    renderCol(colB, hotelB);
+
+    const dimensionKeys: string[] = JSON.parse(gridEl.dataset.dimensionKeys ?? '[]');
+    const dimensionLabels: Record<string, string> = JSON.parse(gridEl.dataset.dimensionLabels ?? '{}');
+    const template = document.getElementById('dim-row-template') as HTMLTemplateElement;
+    [colA, colB].forEach((col, idx) => {
+      const hotel = idx === 0 ? hotelA : hotelB;
+      const other = idx === 0 ? hotelB : hotelA;
+      dimensionKeys.forEach((dim: string) => {
+        const row = (template.content.cloneNode(true) as DocumentFragment).querySelector('.dim-row') as HTMLElement;
+        const score = hotel.scores[dim] ?? 0;
+        const otherScore = other.scores[dim] ?? 0;
+        row.querySelector('.dim-row-label')!.textContent = dimensionLabels[dim];
+        const fill = row.querySelector<HTMLElement>('.mini-bar-fill')!;
+        fill.style.width = `${Math.round(score)}%`;
+        fill.style.background = bandColor(score);
+        const valuesEl = row.querySelector('.dim-row-values') as HTMLElement;
+        const isWinner = score > otherScore;
+        valuesEl.innerHTML = `<span class="${isWinner ? 'winner' : ''}">${Math.round(score)}${isWinner ? ' ▲' : ''}</span>`;
+        col.appendChild(row);
+      });
+    });
+  }
+
+  setupPicker('pick-a', 'pick-a-results', (slug) => {
+    const params = new URLSearchParams(window.location.search);
+    params.set('a', slug);
+    window.history.replaceState({}, '', `?${params.toString()}`);
+    renderCompare();
+  });
+  setupPicker('pick-b', 'pick-b-results', (slug) => {
+    const params = new URLSearchParams(window.location.search);
+    params.set('b', slug);
+    window.history.replaceState({}, '', `?${params.toString()}`);
+    renderCompare();
+  });
+
+  renderCompare();
+</script>

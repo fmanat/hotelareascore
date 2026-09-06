@@ -1,15 +1,18 @@
 ---
 // Result page. Order fixed by docs/strategy.md §2: identity -> verdict ->
 // six scores -> persona selector -> why-facts -> map -> city comparison ->
-// comparable hotels -> CTA -> methodology/confidence. Hotel pages stay
-// noindex by default (docs/seo-policy.md §2) until a Phase 4 pilot cohort
-// decision — nothing here changes that.
+// comparable hotels -> compare picker -> CTA -> methodology/confidence.
+// ("Compare with another hotel" added here, right after the comparable-
+// hotels list it naturally follows from -- docs/strategy.md §2 journey B.)
+// Hotel pages stay noindex by default (docs/seo-policy.md §2) until a
+// Phase 4 pilot cohort decision — nothing here changes that.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ScoreDimensions from '../../components/ScoreDimensions.astro';
 import NearbyFacts from '../../components/NearbyFacts.astro';
 import MapSection from '../../components/MapSection.astro';
 import CityComparison from '../../components/CityComparison.astro';
 import ComparableHotels from '../../components/ComparableHotels.astro';
+import ComparePicker from '../../components/ComparePicker.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import { ALL_HOTELS, CITY_BASELINES } from '../../lib/data';
 import { REASON_CODE_COPY } from '../../lib/reasonCodes';
@@ -72,7 +75,9 @@ const confidenceClass = hotel.confidence_label.toLowerCase();
 
     {baseline && <CityComparison scores={hotel.scores} cityName={hotel.city_name} baseline={baseline} />}
 
-    {hotel.comparable.length > 0 && <ComparableHotels hotels={hotel.comparable} />}
+    {hotel.comparable.length > 0 && <ComparableHotels hotels={hotel.comparable} currentSlug={hotel.slug} />}
+
+    <ComparePicker currentSlug={hotel.slug} />
 
     <CtaSection />
 

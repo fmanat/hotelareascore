@@ -168,7 +168,20 @@ def export_web_data(release: overture.Release, city_ids: list[str]) -> None:
         with open(WEB_SRC_DATA / f"hotels-{city_id}.json", "w", encoding="utf-8") as f:
             json.dump(hotels, f, ensure_ascii=False)
         search_index.extend(
-            {"slug": h["slug"], "name": h["name"], "city": h["city_name"], "locality": h["locality"]}
+            {
+                "slug": h["slug"],
+                "name": h["name"],
+                "city": h["city_name"],
+                "locality": h["locality"],
+                # Compare page (docs/strategy.md §2 journey B) reuses this
+                # same index client-side rather than fetching a second file
+                # -- these fields were already computed for the hotel page.
+                "scores": h["scores"],
+                "balanced_score": h["balanced_score"],
+                "confidence": h["confidence"],
+                "confidence_label": h["confidence_label"],
+                "verdict": h["verdict"],
+            }
             for h in hotels
         )
         baselines[city_id] = _city_baseline(city_id, release)

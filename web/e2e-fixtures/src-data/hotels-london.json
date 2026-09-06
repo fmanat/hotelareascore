@@ -1,0 +1,113 @@
+[
+  {
+    "id": "e2e-lon-1",
+    "slug": "fixture-park-hotel-e2e001",
+    "name": "Fixture Park Hotel",
+    "city_id": "london",
+    "city_name": "London",
+    "locality": "Camden",
+    "region": "ENG",
+    "country": "GB",
+    "lat": 51.5390,
+    "lon": -0.1426,
+    "distance_from_center_km": 3.2,
+    "far_from_center": false,
+    "locality_mismatch": false,
+    "locality_mismatch_detail": null,
+    "scores": {
+      "walkability_density": 88.0,
+      "transit_access": 74.0,
+      "food_essentials": 82.0,
+      "quietness_proxy": 55.0,
+      "family_convenience": 91.0,
+      "nightlife_access": 40.0
+    },
+    "balanced_score": 76.0,
+    "confidence": 92.0,
+    "confidence_label": "High",
+    "dedupe_confidence": 100,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "verdict": "Excellent for walking to everyday places; excellent for family convenience; moderate surrounding activity.",
+    "reason_codes": [],
+    "nearby_facts": [
+      { "rank": 1, "category": "park", "name": "Fixture Green Park", "distance_m": 120.0 },
+      { "rank": 2, "category": "cafe", "name": "Fixture Corner Cafe", "distance_m": 60.0 }
+    ],
+    "comparable": [
+      { "slug": "fixture-transit-hotel-e2e002", "name": "Fixture Transit Hotel", "balanced_score": 71.0 }
+    ]
+  },
+  {
+    "id": "e2e-lon-2",
+    "slug": "fixture-transit-hotel-e2e002",
+    "name": "Fixture Transit Hotel",
+    "city_id": "london",
+    "city_name": "London",
+    "locality": "Islington",
+    "region": "ENG",
+    "country": "GB",
+    "lat": 51.5362,
+    "lon": -0.1033,
+    "distance_from_center_km": 4.1,
+    "far_from_center": false,
+    "locality_mismatch": false,
+    "locality_mismatch_detail": null,
+    "scores": {
+      "walkability_density": 70.0,
+      "transit_access": 95.0,
+      "food_essentials": 68.0,
+      "quietness_proxy": 42.0,
+      "family_convenience": 30.0,
+      "nightlife_access": 58.0
+    },
+    "balanced_score": 71.0,
+    "confidence": 88.0,
+    "confidence_label": "High",
+    "dedupe_confidence": 100,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "verdict": "Excellent for transit access; good for walking to everyday places; active surroundings.",
+    "reason_codes": [],
+    "nearby_facts": [
+      { "rank": 1, "category": "train_station", "name": "Fixture Central Station", "distance_m": 90.0 }
+    ],
+    "comparable": [
+      { "slug": "fixture-park-hotel-e2e001", "name": "Fixture Park Hotel", "balanced_score": 76.0 }
+    ]
+  },
+  {
+    "id": "e2e-lon-3",
+    "slug": "fixture-quiet-hotel-e2e003",
+    "name": "Fixture Quiet Hotel",
+    "city_id": "london",
+    "city_name": "London",
+    "locality": "Richmond",
+    "region": "ENG",
+    "country": "GB",
+    "lat": 51.4613,
+    "lon": -0.3037,
+    "distance_from_center_km": 12.5,
+    "far_from_center": false,
+    "locality_mismatch": false,
+    "locality_mismatch_detail": null,
+    "scores": {
+      "walkability_density": 40.0,
+      "transit_access": 35.0,
+      "food_essentials": 45.0,
+      "quietness_proxy": 92.0,
+      "family_convenience": 60.0,
+      "nightlife_access": 10.0
+    },
+    "balanced_score": 52.0,
+    "confidence": 81.0,
+    "confidence_label": "High",
+    "dedupe_confidence": 100,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "verdict": "Excellent for quiet surroundings; limited transit access; quiet surroundings.",
+    "reason_codes": [],
+    "nearby_facts": [],
+    "comparable": []
+  }
+]

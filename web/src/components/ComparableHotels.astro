@@ -6,8 +6,9 @@ import type { ComparableHotel } from '../lib/types';
 
 interface Props {
   hotels: ComparableHotel[];
+  currentSlug: string;
 }
-const { hotels } = Astro.props;
+const { hotels, currentSlug } = Astro.props;
 ---
 
 <section class="comparable">
@@ -17,7 +18,12 @@ const { hotels } = Astro.props;
       hotels.map((h) => (
         <li>
           <a href={`/hotel/${h.slug}`}>{h.name}</a>
-          <span class="score">{Math.round(h.balanced_score)}</span>
+          <span class="right">
+            <span class="score">{Math.round(h.balanced_score)}</span>
+            <a class="compare-link" href={`/compare?a=${currentSlug}&b=${h.slug}`}>
+              Compare
+            </a>
+          </span>
         </li>
       ))
     }
@@ -35,8 +41,20 @@ const { hotels } = Astro.props;
   .comparable li {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 8px 0;
     border-bottom: 1px solid var(--border);
+    gap: 12px;
   }
+  .right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
   .score { color: var(--ink-muted); }
+  .compare-link {
+    font-size: 0.82rem;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .compare-link:hover { background: var(--bg); }
 </style>

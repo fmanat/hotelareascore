@@ -1,0 +1,156 @@
+---
+// A second hotel to compare against, picked from OUR index — same pattern
+// as SearchBox (autocomplete on /data/search-index.json, no server, no
+// external call). On selection, navigates to the Compare page
+// (docs/strategy.md §2 journey B) rather than a hotel page.
+interface Props {
+  currentSlug: string;
+}
+const { currentSlug } = Astro.props;
+---
+
+<div class="compare-picker" data-current-slug={currentSlug}>
+  <label for="compare-search" class="compare-label">Compare with another hotel</label>
+  <input
+    id="compare-search"
+    type="search"
+    placeholder="Search a hotel to compare…"
+    autocomplete="off"
+    aria-expanded="false"
+    aria-controls="compare-picker-results"
+  />
+  <ul id="compare-picker-results" role="listbox" hidden></ul>
+</div>
+
+<style>
+  .compare-picker { position: relative; margin: 24px 0; }
+  .compare-label { display: block; font-weight: 600; margin-bottom: 8px; }
+  input[type='search'] {
+    width: 100%;
+    font-size: 1rem;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--ink);
+  }
+  input[type='search']:focus { outline: 2px solid var(--accent); }
+  ul#compare-picker-results {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 4px;
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+  ul#compare-picker-results li a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 6px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  ul#compare-picker-results li a:hover,
+  ul#compare-picker-results li a:focus {
+    background: var(--bg);
+  }
+  ul#compare-picker-results .meta {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+  }
+  ul#compare-picker-results .empty {
+    padding: 10px 12px;
+    color: var(--ink-muted);
+    font-size: 0.9rem;
+  }
+</style>
+
+<script>
+  interface SearchIndexEntry {
+    slug: string;
+    name: string;
+    city: string;
+    locality: string | null;
+  }
+
+  document.querySelectorAll<HTMLElement>('.compare-picker').forEach((container) => {
+    const currentSlug = container.dataset.currentSlug ?? '';
+    const inputMaybe = container.querySelector<HTMLInputElement>('#compare-search');
+    const resultsMaybe = container.querySelector<HTMLUListElement>('#compare-picker-results');
+    if (!inputMaybe || !resultsMaybe) return;
+    const input: HTMLInputElement = inputMaybe;
+    const resultsEl: HTMLUListElement = resultsMaybe;
+
+    let index: SearchIndexEntry[] | null = null;
+    let indexPromise: Promise<SearchIndexEntry[]> | null = null;
+
+    function loadIndex(): Promise<SearchIndexEntry[]> {
+      if (!indexPromise) {
+        indexPromise = fetch('/data/search-index.json')
+          .then((r) => r.json())
+          .then((data: SearchIndexEntry[]) => {
+            index = data;
+            return data;
+          });
+      }
+      return indexPromise;
+    }
+
+    function render(matches: SearchIndexEntry[], query: string) {
+      resultsEl.innerHTML = '';
+      if (query.length < 2) {
+        resultsEl.hidden = true;
+        input.setAttribute('aria-expanded', 'false');
+        return;
+      }
+      if (matches.length === 0) {
+        resultsEl.innerHTML = '<li class="empty">No hotels found in our index.</li>';
+        resultsEl.hidden = false;
+        input.setAttribute('aria-expanded', 'true');
+        return;
+      }
+      const frag = document.createDocumentFragment();
+      matches.slice(0, 8).forEach((m) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `/compare?a=${encodeURIComponent(currentSlug)}&b=${encodeURIComponent(m.slug)}`;
+        a.innerHTML = `${m.name}<span class="meta">${m.locality ? m.locality + ', ' : ''}${m.city}</span>`;
+        li.appendChild(a);
+        frag.appendChild(li);
+      });
+      resultsEl.appendChild(frag);
+      resultsEl.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+    }
+
+    let debounceTimer: number | undefined;
+    input.addEventListener('input', () => {
+      const query = input.value.trim().toLowerCase();
+      window.clearTimeout(debounceTimer);
+      debounceTimer = window.setTimeout(async () => {
+        const data = index ?? (await loadIndex());
+        const matches =
+          query.length < 2
+            ? []
+            : data.filter((e) => e.slug !== currentSlug && e.name.toLowerCase().includes(query));
+        render(matches, query);
+      }, 120);
+    });
+
+    input.addEventListener('focus', () => loadIndex());
+
+    document.addEventListener('click', (e) => {
+      if (!(e.target instanceof Node)) return;
+      if (!container.contains(e.target)) {
+        resultsEl.hidden = true;
+      }
+    });
+  });
+</script>

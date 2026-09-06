@@ -1,0 +1,36 @@
+[
+  {
+    "id": "e2e-bkk-1",
+    "slug": "fixture-riverside-hotel-e2e004",
+    "name": "Fixture Riverside Hotel",
+    "city_id": "bangkok",
+    "city_name": "Bangkok",
+    "locality": "Bang Rak",
+    "region": null,
+    "country": "TH",
+    "lat": 13.7245,
+    "lon": 100.5140,
+    "distance_from_center_km": 2.0,
+    "far_from_center": false,
+    "locality_mismatch": false,
+    "locality_mismatch_detail": null,
+    "scores": {
+      "walkability_density": 60.0,
+      "transit_access": 55.0,
+      "food_essentials": 85.0,
+      "quietness_proxy": 48.0,
+      "family_convenience": 20.0,
+      "nightlife_access": 75.0
+    },
+    "balanced_score": 62.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "dedupe_confidence": 100,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "verdict": "Excellent for restaurants and everyday essentials; active nightlife nearby.",
+    "reason_codes": [],
+    "nearby_facts": [],
+    "comparable": []
+  }
+]
