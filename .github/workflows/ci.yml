@@ -1,0 +1,55 @@
+# CI — Phase 0 skeleton.
+# Gates grow with phases (CLAUDE.md §9): unit → data tests → integration →
+# E2E → SEO build-time assertions → golden-set regression.
+# Keep every job green; add jobs, don't weaken them.
+
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Markdown sanity (no broken ADR numbering, STATE.md present)
+        run: |
+          test -f docs/STATE.md
+          ls docs/adr/00[1-5]-*.md | wc -l | grep -q '^5$'
+          ! grep -rn "TODO-BLOCKING" docs/ || (echo "Blocking TODOs left in docs" && exit 1)
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install & typecheck (no-op until app scaffold lands in Phase 2)
+        run: |
+          if [ -f package.json ]; then
+            npm ci
+            npm run typecheck --if-present
+            npm test --if-present
+          else
+            echo "No package.json yet — Phase 0: docs-only repo. OK."
+          fi
+
+  etl-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Python ETL tests (no-op until Phase 1 pipeline lands)
+        run: |
+          if [ -f pyproject.toml ]; then
+            pip install -e ".[dev]"
+            pytest -q
+          else
+            echo "No pyproject.toml yet — Phase 0: docs-only repo. OK."
+          fi
