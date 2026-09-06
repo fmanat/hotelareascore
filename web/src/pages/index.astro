@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SearchBox from '../components/SearchBox.astro';
+import { BUILD_META } from '../lib/data';
+---
+
+<BaseLayout
+  title="Understand a hotel's surroundings"
+  description="Independent hotel-location intelligence: walkability, transit access, food & essentials, quiet-surroundings, family convenience, and nightlife access — computed from open geospatial data."
+>
+  <section class="hero">
+    <h1>Before you book, understand the surroundings.</h1>
+    <p class="tagline">
+      Computed scores for walkability, transit access, food &amp; essentials, quiet-surroundings,
+      family convenience, and nightlife access — from open geospatial data, not reviews or prices.
+    </p>
+    <SearchBox />
+    <p class="scope">
+      Currently covering hotels in <strong>London</strong> and <strong>Bangkok</strong> (product proof,
+      release {BUILD_META.release}).
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { padding: 40px 0 20px; }
+  h1 { font-size: 1.9rem; margin: 0 0 12px; }
+  .tagline { color: var(--ink-muted); margin: 0 0 28px; max-width: 60ch; }
+  .scope { margin-top: 16px; color: var(--ink-muted); font-size: 0.9rem; }
+</style>

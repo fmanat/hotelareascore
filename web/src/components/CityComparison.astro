@@ -1,0 +1,59 @@
+---
+// "vs city average" — uses the real city_baseline.json produced by
+// validate.py (docs/data-and-costs.md §3 stand-in for city_score_baselines),
+// not an invented benchmark.
+import { DIMENSION_KEYS } from '../lib/types';
+import { DIMENSION_META } from '../lib/dimensions';
+import type { Scores, CityBaseline } from '../lib/types';
+
+interface Props {
+  scores: Scores;
+  cityName: string;
+  baseline: CityBaseline;
+}
+const { scores, cityName, baseline } = Astro.props;
+---
+
+<section class="city-comparison">
+  <h2>Compared to {cityName}</h2>
+  <p class="hint">Median score across all {baseline.n_hotels.toLocaleString()} hotels we've scored in {cityName}.</p>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Dimension</th>
+        <th scope="col">This hotel</th>
+        <th scope="col">{cityName} median</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        DIMENSION_KEYS.map((dim) => {
+          const cityMedian = Number(baseline[`${dim}_median`] ?? 0);
+          const diff = scores[dim] - cityMedian;
+          return (
+            <tr>
+              <td>{DIMENSION_META[dim].label}</td>
+              <td>{Math.round(scores[dim])}</td>
+              <td>
+                {Math.round(cityMedian)}
+                <span class={diff >= 0 ? 'up' : 'down'}>
+                  {' '}
+                  ({diff >= 0 ? '+' : ''}
+                  {Math.round(diff)})
+                </span>
+              </td>
+            </tr>
+          );
+        })
+      }
+    </tbody>
+  </table>
+</section>
+
+<style>
+  .hint { color: var(--ink-muted); font-size: 0.85rem; margin-top: -6px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); }
+  .up { color: var(--accent); }
+  .down { color: var(--ink-muted); }
+</style>

@@ -4,9 +4,8 @@ Independent hotel-location intelligence: before you book, understand the
 surroundings. Computed scores from open geospatial data — not reviews, not
 prices, not a booking engine.
 
-**Status: Phase 1 (data proof — London + Bangkok) — pipeline runs end to end;
-see `docs/reports/data-proof-report-*.md` for the latest run and
-`docs/STATE.md` for what's next. Nothing past Phase 1 is authorized yet.**
+**Status: Phase 2 (product proof — London + Bangkok). Phase 1's Data Proof
+Report was accepted by the owner; see `docs/STATE.md` for what's next.**
 
 ## Repo layout
 
@@ -26,7 +25,8 @@ docs/
 src/hotelareascore/     ETL package: Overture -> hotels/POIs/scores (Python + DuckDB)
 data/config/            cities, taxonomy mapping, score weights (config, never hardcoded)
 data/etl/               ETL-world output (Parquet, gitignored — regenerate with `make`)
-tests/                  unit tests (taxonomy, geo/decay, dedupe, config bounds)
+web/                    Phase 2 product-proof site: Astro, static-first, no live backend
+tests/                  unit tests (taxonomy, geo/decay, dedupe, slugs, verdict, config bounds)
 scripts/                ops entry points (Phase 4+ bots)
 .github/workflows/     CI — gates grow with phases, never weaken
 ```
@@ -44,6 +44,22 @@ make report CITY=london,bangkok RELEASE=latest   # -> docs/reports/data-proof-re
 `make all` runs the four in sequence for both pilot cities. Every constant
 behind the scores lives in `data/config/score-weights.yml` and is an
 explicit v1 prior (docs/scoring.md §3) pending Phase 3 calibration.
+
+## Phase 2 product-proof site
+
+```bash
+make web-install         # once
+make web-build           # exports web/src/data + web/public/data, then `astro build`
+make web-dev             # same export, then a live dev server
+```
+
+Static Astro site (docs/adr/001), no live backend: every hotel page is
+prerendered at build time from the Phase 1 ETL output via
+`src/hotelareascore/webdata.py` (no Supabase yet — see `docs/adr/002` for why
+that's deliberate at this phase). All feature flags
+(`PUBLIC_INDEXING_ENABLED`, `MAP_ENABLED`, `AFFILIATE_ENABLED`, …) default
+off, so every page ships `noindex, nofollow` and the map/CTA sections render
+as disabled placeholders until an owner decision turns them on.
 
 ## Founding decisions (see docs/adr/)
 

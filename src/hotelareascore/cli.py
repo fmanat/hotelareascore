@@ -10,6 +10,7 @@ from . import overture
 from . import report as report_mod
 from . import scoring as scoring_mod
 from . import validate as validate_mod
+from . import webdata as webdata_mod
 from .config import ETL_DIR, load_cities
 
 ALL_CITY_IDS = list(load_cities().keys())
@@ -80,6 +81,13 @@ def cmd_report(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_webdata(args: argparse.Namespace) -> int:
+    release = resolve_release(args.release)
+    webdata_mod.export_web_data(release, args.city)
+    print(f"[webdata] exported {', '.join(args.city)} (release {release.id}) to web/src/data + web/public/data")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="hotelareascore")
     sub = p.add_subparsers(dest="command", required=True)
@@ -89,6 +97,7 @@ def build_parser() -> argparse.ArgumentParser:
         ("score", cmd_score, "all"),
         ("validate", cmd_validate, "all"),
         ("report", cmd_report, "all"),
+        ("webdata", cmd_webdata, "all"),
     ):
         sp = sub.add_parser(name)
         sp.add_argument("--city", type=_cities_arg, default=_cities_arg(default_city))

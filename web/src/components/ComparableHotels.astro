@@ -1,0 +1,42 @@
+---
+// Nearest-scoring peers in the same city (src/hotelareascore/webdata.py
+// _attach_comparable_hotels) — a deterministic, data-derived list, not a
+// recommendation engine and not AI-generated.
+import type { ComparableHotel } from '../lib/types';
+
+interface Props {
+  hotels: ComparableHotel[];
+}
+const { hotels } = Astro.props;
+---
+
+<section class="comparable">
+  <h2>Similar-scoring hotels nearby</h2>
+  <ul>
+    {
+      hotels.map((h) => (
+        <li>
+          <a href={`/hotel/${h.slug}`}>{h.name}</a>
+          <span class="score">{Math.round(h.balanced_score)}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .comparable ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 6px;
+  }
+  .comparable li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .score { color: var(--ink-muted); }
+</style>

@@ -1,0 +1,33 @@
+---
+// AFFILIATE_ENABLED defaults OFF (CLAUDE.md §8) — no affiliate program is
+// signed yet (docs/affiliate-matching.md §5: needs a live site with
+// traffic). CLAUDE.md hard rule 9 requires rel="sponsored" on any real
+// affiliate link; since there is no real link yet, we render a disabled
+// placeholder rather than invent one, and never gate the score behind it
+// (docs/strategy.md §6).
+import { FLAGS } from '../lib/flags';
+---
+
+<section class="cta">
+  {
+    FLAGS.AFFILIATE_ENABLED ? (
+      <p class="placeholder">Affiliate link wiring not yet implemented in this build.</p>
+    ) : (
+      <div class="disabled-cta" aria-disabled="true">
+        <span>Compare prices — coming soon</span>
+      </div>
+    )
+  }
+</section>
+
+<style>
+  .disabled-cta {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: var(--radius);
+    background: var(--border);
+    color: var(--ink-muted);
+    font-weight: 600;
+    cursor: not-allowed;
+  }
+</style>

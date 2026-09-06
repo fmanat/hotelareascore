@@ -1,0 +1,181 @@
+---
+// The 6 scores + persona selector. Personas only reweight how this section
+// is PRESENTED (which dimensions are emphasized, and a persona-fit summary
+// number) — the underlying dimension scores never change
+// (docs/strategy.md §2D). All computation is a few multiplications on data
+// already in the page; no network call.
+import { DIMENSION_KEYS, type Scores } from '../lib/types';
+import { DIMENSION_META } from '../lib/dimensions';
+import { PERSONAS } from '../lib/data';
+
+interface Props {
+  scores: Scores;
+}
+const { scores } = Astro.props;
+
+const PERSONA_LABELS: Record<string, string> = {
+  balanced: 'Balanced',
+  quiet_sleep: 'Quiet sleep',
+  first_time_tourist: 'First-time tourist',
+  car_free: 'Car-free',
+  family: 'Family',
+  nightlife: 'Nightlife',
+};
+
+function bandClass(score: number): string {
+  if (score >= 75) return 'good';
+  if (score >= 50) return 'mid';
+  return 'low';
+}
+---
+
+<section class="scores" data-scores={JSON.stringify(scores)} data-personas={JSON.stringify(PERSONAS)}>
+  <div class="persona-bar" role="tablist" aria-label="View scores for a traveler type">
+    {
+      Object.keys(PERSONAS).map((key) => (
+        <button
+          type="button"
+          class="persona-btn"
+          class:list={[{ active: key === 'balanced' }]}
+          data-persona={key}
+          role="tab"
+          aria-selected={key === 'balanced'}
+        >
+          {PERSONA_LABELS[key] ?? key}
+        </button>
+      ))
+    }
+  </div>
+  <p class="fit-line">
+    Fit for <strong class="fit-persona-label">balanced</strong> travelers:
+    <strong class="fit-value">—</strong>/100
+  </p>
+
+  <ul class="dims">
+    {
+      DIMENSION_KEYS.map((dim) => (
+        <li class="dim" data-dim={dim}>
+          <div class="dim-head">
+            <span class="dim-label">{DIMENSION_META[dim].label}</span>
+            <span class="dim-score">{Math.round(scores[dim])}</span>
+          </div>
+          <div class="bar-track">
+            <div class={`bar-fill ${bandClass(scores[dim])}`} style={`width:${Math.round(scores[dim])}%`} />
+          </div>
+          <p class="dim-desc">{DIMENSION_META[dim].description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .persona-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .persona-btn {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink-muted);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .persona-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 600;
+  }
+  .fit-line {
+    color: var(--ink-muted);
+    margin: 0 0 20px;
+  }
+  .fit-value { color: var(--ink); }
+  .dims {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 18px;
+  }
+  .dim {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    background: var(--surface);
+    transition: opacity 0.15s ease;
+  }
+  .dim.muted { opacity: 0.55; }
+  .dim.emphasized { border-color: var(--accent); }
+  .dim-head {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .bar-track {
+    background: var(--border);
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .bar-fill { height: 100%; border-radius: 999px; }
+  .bar-fill.good { background: var(--accent); }
+  .bar-fill.mid { background: var(--warn); }
+  .bar-fill.low { background: var(--low); }
+  .dim-desc {
+    margin: 8px 0 0;
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+  }
+</style>
+
+<script>
+  type Scores = Record<string, number>;
+  type Personas = Record<string, Scores>;
+
+  document.querySelectorAll<HTMLElement>('.scores').forEach((section) => {
+    const scores: Scores = JSON.parse(section.dataset.scores ?? '{}');
+    const personas: Personas = JSON.parse(section.dataset.personas ?? '{}');
+    const buttons = section.querySelectorAll<HTMLButtonElement>('.persona-btn');
+    const fitValue = section.querySelector<HTMLElement>('.fit-value');
+    const fitLabel = section.querySelector<HTMLElement>('.fit-persona-label');
+    const dims = section.querySelectorAll<HTMLElement>('.dim');
+
+    function applyPersona(key: string) {
+      const weights = personas[key];
+      if (!weights) return;
+
+      let fit = 0;
+      for (const [dim, w] of Object.entries(weights)) {
+        fit += (scores[dim] ?? 0) * w;
+      }
+      if (fitValue) fitValue.textContent = String(Math.round(fit));
+      if (fitLabel) fitLabel.textContent = key.replace(/_/g, ' ');
+
+      dims.forEach((el) => {
+        const dim = el.dataset.dim ?? '';
+        const w = weights[dim] ?? 0;
+        el.classList.toggle('emphasized', w >= 0.2);
+        el.classList.toggle('muted', w <= 0.05);
+      });
+
+      buttons.forEach((b) => {
+        const active = b.dataset.persona === key;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-selected', String(active));
+      });
+    }
+
+    buttons.forEach((b) => {
+      b.addEventListener('click', () => applyPersona(b.dataset.persona ?? 'balanced'));
+    });
+
+    applyPersona('balanced');
+  });
+</script>

@@ -1,0 +1,38 @@
+---
+// MAP_ENABLED defaults OFF (CLAUDE.md §8) — MapLibre + a tile provider is
+// real integration work with its own cost/lazy-load considerations
+// (CLAUDE.md §5) that hasn't been decided on for Phase 2. Coordinates are
+// still shown as plain data; no interactive map ships until the flag does.
+import { FLAGS } from '../lib/flags';
+
+interface Props {
+  lat: number;
+  lon: number;
+}
+const { lat, lon } = Astro.props;
+---
+
+<section class="map-section">
+  <h2>Location</h2>
+  {
+    FLAGS.MAP_ENABLED ? (
+      <p class="placeholder">Map rendering not yet wired up in this build.</p>
+    ) : (
+      <div class="placeholder-box">
+        <p>Interactive map is not enabled in this preview (Phase 4 feature, MAP_ENABLED flag off).</p>
+        <p class="coords">{lat.toFixed(5)}, {lon.toFixed(5)}</p>
+      </div>
+    )
+  }
+</section>
+
+<style>
+  .placeholder-box {
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: center;
+    color: var(--ink-muted);
+  }
+  .coords { font-family: ui-monospace, monospace; margin-top: 8px; }
+</style>

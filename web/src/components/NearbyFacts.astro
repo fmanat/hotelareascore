@@ -1,0 +1,59 @@
+---
+// The "Why?" section — grounded facts only (CLAUDE.md hard rule 3): every
+// row here is a real nearby place from nearby_facts.parquet
+// (docs/data-and-costs.md §3), not a generated summary.
+import type { NearbyFact } from '../lib/types';
+
+interface Props {
+  facts: NearbyFact[];
+}
+const { facts } = Astro.props;
+
+function fmtCategory(cat: string): string {
+  return cat.replace(/_/g, ' ');
+}
+function fmtDistance(m: number): string {
+  return m < 1000 ? `${Math.round(m)} m` : `${(m / 1000).toFixed(1)} km`;
+}
+---
+
+<section class="nearby">
+  <h2>Why this score?</h2>
+  {
+    facts.length === 0 ? (
+      <p class="empty">No nearby places found in our dataset within the scored radius.</p>
+    ) : (
+      <ul>
+        {facts.map((f) => (
+          <li>
+            <span class="name">{f.name}</span>
+            <span class="meta">
+              {fmtCategory(f.category)} · {fmtDistance(f.distance_m)}
+            </span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</section>
+
+<style>
+  .nearby ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .nearby li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+  }
+  .name { font-weight: 500; }
+  .meta { color: var(--ink-muted); white-space: nowrap; }
+  .empty { color: var(--ink-muted); }
+</style>

@@ -18,6 +18,19 @@ validate:
 report:
 	python3 -m hotelareascore.cli report --city $(CITY) --release $(RELEASE)
 
+webdata:
+	python3 -m hotelareascore.cli webdata --city $(CITY) --release $(RELEASE)
+
+# Phase 2 product-proof site (web/) — static Astro build, no live backend.
+web-install:
+	npm --prefix web install
+
+web-build: webdata
+	npm --prefix web run build
+
+web-dev: webdata
+	npm --prefix web run dev
+
 # Full Phase 1 pipeline: Overture release -> scores -> QA -> Data Proof Report.
 all: ingest score validate report
 

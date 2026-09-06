@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { DIMENSION_KEYS } from '../lib/types';
+import { DIMENSION_META } from '../lib/dimensions';
+import { BUILD_META } from '../lib/data';
+---
+
+<BaseLayout
+  title="Methodology"
+  description="How HotelAreaScore computes its six surroundings scores, what the confidence rating means, and what these scores are not."
+>
+  <h1>Methodology</h1>
+
+  <p>
+    Every score on this site is computed automatically from open geospatial data — currently{' '}
+    <a href="https://overturemaps.org/" rel="noopener">Overture Maps</a> (release <code>{BUILD_META.release}</code>).
+    Nothing here is a review, a rating from guests, or an editorial opinion. There is no way to pay
+    to change a score.
+  </p>
+
+  <h2>The six dimensions</h2>
+  <p>We deliberately show six separate scores rather than one blended number, so trade-offs stay visible.</p>
+  <dl>
+    {
+      DIMENSION_KEYS.map((dim) => (
+        <div class="dim-entry">
+          <dt>{DIMENSION_META[dim].label}</dt>
+          <dd>{DIMENSION_META[dim].description}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <h2>How a score is computed (in plain terms)</h2>
+  <p>
+    For most dimensions, every relevant nearby place counts toward the score, but places further away
+    count for less — a cafe 50 m away matters more than one 500 m away. We combine that with how the
+    hotel compares to other hotels in the same city, so a score reflects both an absolute standard and
+    the local context. The quiet-surroundings score works in reverse: it starts high and loses points
+    for nearby major roads, rail lines, nightlife venues, and airports.
+  </p>
+  <p>
+    <strong>Every constant in this formula — how quickly "further away" stops counting, how much weight
+    the city comparison gets — is an explicit first version, not a scientifically validated model.</strong>
+    We plan a calibration pass against a human-labeled set of hotels before treating any of it as final.
+  </p>
+
+  <h2>Confidence</h2>
+  <p>
+    Each hotel also gets a confidence rating — <strong>High</strong> (≥ 80), <strong>Medium</strong>{' '}
+    (60–79), or <strong>Low</strong> (&lt; 60) — reflecting how certain we are in the underlying data:
+    the source's own confidence in that hotel's identity and location, how much nearby data we found for
+    each dimension, how many hotels we've scored in that city so far, and whether the hotel record
+    required merging duplicate entries. A low confidence rating means treat the score as a rough
+    indication, not a precise measurement.
+  </p>
+
+  <h2>Traveler types</h2>
+  <p>
+    The persona selector on each hotel page changes how the six scores are <em>weighted and presented</em>{' '}
+    for a traveler type (for example, a "quiet sleep" traveler weighs the quiet-surroundings score far
+    more heavily). It never changes the underlying facts or scores themselves.
+  </p>
+
+  <h2>What this is not</h2>
+  <ul>
+    <li>Not a safety or crime rating.</li>
+    <li>Not a measured, in-room noise level — the quiet-surroundings score estimates environmental
+      exposure from nearby infrastructure and activity only.</li>
+    <li>Not a price comparison or booking engine.</li>
+    <li>Not based on guest reviews.</li>
+  </ul>
+
+  <p class="disclosure">
+    Scores are calculated automatically from geospatial data. They describe the surrounding area, not
+    hotel rooms or service quality.
+  </p>
+</BaseLayout>
+
+<style>
+  h1 { margin-top: 24px; }
+  h2 { margin-top: 36px; }
+  dl { margin: 0; }
+  .dim-entry { margin-bottom: 18px; }
+  dt { font-weight: 700; }
+  dd { margin: 4px 0 0; color: var(--ink-muted); }
+  .disclosure {
+    margin-top: 40px;
+    padding: 16px;
+    border-left: 3px solid var(--accent);
+    background: var(--surface);
+    color: var(--ink-muted);
+  }
+</style>

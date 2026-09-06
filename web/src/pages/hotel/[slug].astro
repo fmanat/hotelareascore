@@ -1,0 +1,108 @@
+---
+// Result page. Order fixed by docs/strategy.md §2: identity -> verdict ->
+// six scores -> persona selector -> why-facts -> map -> city comparison ->
+// comparable hotels -> CTA -> methodology/confidence. Hotel pages stay
+// noindex by default (docs/seo-policy.md §2) until a Phase 4 pilot cohort
+// decision — nothing here changes that.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScoreDimensions from '../../components/ScoreDimensions.astro';
+import NearbyFacts from '../../components/NearbyFacts.astro';
+import MapSection from '../../components/MapSection.astro';
+import CityComparison from '../../components/CityComparison.astro';
+import ComparableHotels from '../../components/ComparableHotels.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import { ALL_HOTELS, CITY_BASELINES } from '../../lib/data';
+import { REASON_CODE_COPY } from '../../lib/reasonCodes';
+
+export function getStaticPaths() {
+  return ALL_HOTELS.map((hotel) => ({
+    params: { slug: hotel.slug },
+    props: { hotel },
+  }));
+}
+
+const { hotel } = Astro.props as { hotel: (typeof ALL_HOTELS)[number] };
+const baseline = CITY_BASELINES[hotel.city_id];
+
+const confidenceClass = hotel.confidence_label.toLowerCase();
+---
+
+<BaseLayout
+  title={`${hotel.name} — surroundings score`}
+  description={`${hotel.name} in ${hotel.city_name}: ${hotel.verdict}`}
+  indexable={false}
+>
+  <article class="hotel">
+    <header class="identity">
+      <p class="breadcrumb">{hotel.city_name}{hotel.locality && hotel.locality !== hotel.city_name ? ` · ${hotel.locality}` : ''}</p>
+      <h1>{hotel.name}</h1>
+      <p class="verdict">{hotel.verdict}</p>
+      <div class="badges">
+        <span class={`badge ${confidenceClass}`}>{hotel.confidence_label} confidence</span>
+        <span class="balanced">Balanced score: <strong>{Math.round(hotel.balanced_score)}</strong>/100</span>
+      </div>
+      {
+        hotel.reason_codes.length > 0 && (
+          <ul class="reason-codes">
+            {hotel.reason_codes.map((code) => (
+              <li>{REASON_CODE_COPY[code] ?? code}</li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    <ScoreDimensions scores={hotel.scores} />
+
+    <NearbyFacts facts={hotel.nearby_facts} />
+
+    <MapSection lat={hotel.lat} lon={hotel.lon} />
+
+    {baseline && <CityComparison scores={hotel.scores} cityName={hotel.city_name} baseline={baseline} />}
+
+    {hotel.comparable.length > 0 && <ComparableHotels hotels={hotel.comparable} />}
+
+    <CtaSection />
+
+    <section class="confidence-detail">
+      <h2>Data &amp; confidence</h2>
+      <p>
+        Confidence: <strong>{hotel.confidence_label}</strong> ({hotel.confidence}/100).
+        Score version <code>{hotel.score_version}</code>, from Overture Maps release{' '}
+        <code>{hotel.source_release}</code>.
+        {hotel.dedupe_confidence < 100 && (
+          <> This hotel record was merged from multiple matching source entries.</>
+        )}
+        {' '}<a href="/methodology">Read the full methodology</a>.
+      </p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .identity { padding-top: 24px; }
+  .breadcrumb { color: var(--ink-muted); font-size: 0.85rem; margin: 0 0 6px; }
+  h1 { margin: 0 0 10px; font-size: 1.7rem; }
+  .verdict { font-size: 1.05rem; margin: 0 0 14px; }
+  .badges { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; flex-wrap: wrap; }
+  .balanced { color: var(--ink-muted); font-size: 0.92rem; }
+  .reason-codes {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .reason-codes li {
+    font-size: 0.82rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 12px;
+    color: var(--ink-muted);
+  }
+  .hotel > :global(section) { margin: 40px 0; }
+  .hotel h2 { font-size: 1.15rem; }
+  .confidence-detail { color: var(--ink-muted); font-size: 0.9rem; }
+</style>
