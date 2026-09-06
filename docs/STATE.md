@@ -241,7 +241,7 @@ in from the start, it's a decision input, not an afterthought.
 
 | Month | Est. recurring € | Main driver | Notes |
 |---|---:|---|---|
-| 2026-09 | 0 | — | validation + Phases 1–3, all 12 launch cities, all free tiers (docs/reports/phase-3-batch-2-ingestion-report.md) |
+| 2026-09 | 0 | - | 33,970 hotels, 185 MB ETL output, all free tiers |
 
 ## Last session summary
 

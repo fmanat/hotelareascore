@@ -1,0 +1,83 @@
+# Monthly data-refresh bot (CLAUDE.md §8, skeleton — overnight mission Bloc F).
+#
+# discover -> ingest -> score -> validate -> report, for all 12 launch
+# cities against the latest Overture release. Manual trigger ONLY: no
+# `schedule:` trigger exists in this file at all, so nothing runs on a
+# cron by accident. When this is ready to actually run monthly, add a
+# `schedule:` trigger deliberately (that is itself the go-live decision,
+# not a config default) — the intended cadence is documented here, not
+# wired to a live cron.
+#
+# Gated on the `DATA_REFRESH_ENABLED` repository variable (CLAUDE.md §8:
+# feature flags default OFF for new/dangerous behavior) as a second,
+# independent safety check beyond "no schedule trigger exists": even a
+# manual run does nothing until an owner sets
+# Settings -> Secrets and variables -> Actions -> Variables ->
+# DATA_REFRESH_ENABLED = true.
+#
+# Fail-closed (CLAUDE.md hard rule 10): validate must pass for every city
+# or the job fails before any report is produced -- nothing here pushes to
+# a serving database (Supabase isn't wired into CI, and this workflow
+# never touches it) and nothing here is published; it only produces a
+# downloadable report artifact for a human to review.
+#
+# NOT implemented in this skeleton (documented, not silently skipped): a
+# per-city score-version diff against the PREVIOUS release, the way
+# scripts/score_diff.py did for the 1.0.1->1.1.0->1.2.0 bumps this
+# session. That diff needs the previous release's hotel_scores.parquet,
+# which today only exists on whichever machine last ran the pipeline
+# (data/etl/ is gitignored, ADR-002) -- there is nowhere in CI to fetch it
+# from until Supabase serving (Phase 4) retains old score_version rows
+# per ADR-004. Once that's live, add a step here that diffs against the
+# DB's current version before this workflow is ever turned on for real.
+
+name: data-refresh-monthly
+
+on:
+  workflow_dispatch: {}
+  # Intended eventual cadence, NOT active -- add deliberately when ready:
+  # schedule:
+  #   - cron: '0 6 1 * *'  # 06:00 UTC on the 1st of each month
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    if: vars.DATA_REFRESH_ENABLED == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Discover release, ingest, score, validate, report (all 12 cities)
+        run: |
+          RELEASE=$(python3 -c "from hotelareascore import overture; print(overture.discover_latest_release().id)")
+          echo "release=$RELEASE" >> "$GITHUB_ENV"
+          make ingest CITY=all RELEASE="$RELEASE"
+          make score CITY=all RELEASE="$RELEASE"
+          make validate CITY=all RELEASE="$RELEASE"
+          make report CITY=all RELEASE="$RELEASE"
+      - name: Cost estimate
+        run: python3 scripts/cost_bot.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: data-refresh-report-${{ env.release }}
+          path: docs/reports/
+          retention-days: 90
+      - name: Note
+        run: |
+          echo "## Data refresh complete for release ${{ env.release }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Report artifact uploaded. No auto-publish: docs/STATE.md and any" >> "$GITHUB_STEP_SUMMARY"
+          echo "score_version bump still needs a human to review the diff and commit" >> "$GITHUB_STEP_SUMMARY"
+          echo "(docs/scoring.md §5) -- this workflow never pushes to main." >> "$GITHUB_STEP_SUMMARY"
+
+  disabled-notice:
+    runs-on: ubuntu-latest
+    if: vars.DATA_REFRESH_ENABLED != 'true'
+    steps:
+      - name: Explain why nothing ran
+        run: |
+          echo "DATA_REFRESH_ENABLED is not set to 'true' (repo variable)." >> "$GITHUB_STEP_SUMMARY"
+          echo "This is intentional (CLAUDE.md §8: flags default OFF). Set it in" >> "$GITHUB_STEP_SUMMARY"
+          echo "Settings -> Secrets and variables -> Actions -> Variables to enable." >> "$GITHUB_STEP_SUMMARY"

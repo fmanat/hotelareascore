@@ -1,0 +1,80 @@
+# Weekly ops bot (CLAUDE.md §8, skeleton — overnight mission Bloc F):
+# health checks + (future) Supabase keep-alive, cost estimate.
+#
+# Manual trigger ONLY, same reasoning as data-refresh-monthly.yml: no
+# `schedule:` trigger in this file, so nothing runs on a cron by accident.
+# Add one deliberately when this is ready to actually run weekly.
+#
+# Inert without secrets, on purpose: no Supabase URL/key exists in this
+# repo's secrets today (CLAUDE.md hard rule 8 -- server-side only, via
+# Cloudflare/GitHub secrets, never in code), so the keep-alive step below
+# is a documented no-op until SUPABASE_URL/SUPABASE_SERVICE_ROLE_KEY are
+# added as repo secrets AND the step is un-commented -- not commented out
+# by accident, deliberately gated so a bare `workflow_dispatch` run today
+# does nothing destructive or costly.
+
+name: ops-weekly
+
+on:
+  workflow_dispatch: {}
+  # Intended eventual cadence, NOT active -- add deliberately when ready:
+  # schedule:
+  #   - cron: '0 8 * * 1'  # 08:00 UTC every Monday
+
+jobs:
+  health-and-cost:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Overture release catalog reachable (docs/adr/003)
+        run: |
+          python3 -c "
+          from hotelareascore import overture
+          r = overture.discover_latest_release()
+          print(f'Latest Overture release: {r.id}')
+          "
+
+      - name: Site reachable (once a public URL exists)
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: |
+          if [ -z "$SITE_URL" ]; then
+            echo "SITE_URL repo variable not set -- no live site yet, skipping." >> "$GITHUB_STEP_SUMMARY"
+          else
+            status=$(curl -s -o /dev/null -w "%{http_code}" "$SITE_URL")
+            echo "GET $SITE_URL -> HTTP $status" >> "$GITHUB_STEP_SUMMARY"
+            if [ "$status" -ge 500 ]; then
+              echo "::error::Site returned $status"
+              exit 1
+            fi
+          fi
+
+      # docs/data-and-costs.md §2: "Supabase Free pauses after ~1 week of
+      # inactivity -- the weekly ops bot's health check doubles as
+      # keep-alive." Inert until Supabase exists and its secrets are added.
+      - name: Supabase keep-alive (inert -- no secrets configured yet)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        run: |
+          if [ -z "$SUPABASE_URL" ]; then
+            echo "SUPABASE_URL secret not set -- Supabase isn't provisioned yet, skipping." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "TODO: ping a trivial read-only endpoint (e.g. PostgREST root) to keep the free-tier project awake." >> "$GITHUB_STEP_SUMMARY"
+            echo "Not implemented: no schema/table names are assumed here until Supabase is actually provisioned (docs/adr/002)." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Cost estimate (docs/data-and-costs.md §6)
+        run: python3 scripts/cost_bot.py | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Note
+        run: |
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "This workflow does not commit anything -- if cost_bot.py updated" >> "$GITHUB_STEP_SUMMARY"
+          echo "docs/STATE.md locally, that change is NOT pushed automatically" >> "$GITHUB_STEP_SUMMARY"
+          echo "(CLAUDE.md §8: automation outputs a report, never auto-publishes)." >> "$GITHUB_STEP_SUMMARY"

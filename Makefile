@@ -21,6 +21,9 @@ report:
 webdata:
 	python3 -m hotelareascore.cli webdata --city $(CITY) --release $(RELEASE)
 
+cost:
+	python3 scripts/cost_bot.py
+
 # Phase 2 product-proof site (web/) — static Astro build, no live backend.
 web-install:
 	npm --prefix web install
