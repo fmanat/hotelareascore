@@ -31,10 +31,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Install & typecheck
-        run: |
-          npm ci
-          npm run typecheck
+      - name: Install
+        run: npm ci
+      # astro check needs web/src/data/*.json to resolve lib/data.ts's
+      # imports; CI has no generated ETL output (docs/adr/002), so reuse
+      # the E2E fixtures rather than running the full Overture pipeline
+      # just to typecheck.
+      - name: Install fixture data for typecheck
+        run: node e2e/prepare-fixtures.mjs
+      - name: Typecheck
+        run: npm run typecheck
 
   e2e:
     runs-on: ubuntu-latest
