@@ -49,24 +49,42 @@ stay searchable, never indexable.
 
 ### 4.1 Golden set
 ~50 hotels across ≥ 5 cities (include London + Bangkok for urban-pattern
-contrast). Owner labels each 1–5 on: transit convenience, nearby restaurants,
-major-road exposure, nightlife intensity, park/family convenience.
-Stored at `tests/golden/hotels.csv`. Budget honestly: 8–15 owner-hours.
-Goal is "no obvious nonsense", not scientific truth.
+contrast), all 12 launch cities in practice for Phase 3. Each hotel labeled
+1–5 on: transit convenience, nearby restaurants, major-road exposure
+(correlates NEGATIVELY with quietness_proxy — a plausibility check in
+§4.2, not just a sign convention), nightlife intensity, park/family
+convenience. Stored at `tests/golden/hotels.csv`. Goal is "no obvious
+nonsense", not scientific truth.
 
 **Blind labeling, mandatory (added 2026-09-06, owner instruction):** the
 labeling tool never shows our computed scores, verdict sentence, or reason
 codes while a hotel is being rated — name, map/coordinates, address, and the
 5 rating questions only. Showing our own output during labeling would let it
 anchor the very labels meant to check it, silently inflating the apparent
-agreement in §4.2. A hotel the owner can't confidently judge gets no label
+agreement in §4.2. A hotel that can't be confidently judged gets no label
 (an explicit "can't judge" skip) rather than a guessed one — a missing label
 is honest signal, a guessed one is noise that looks like data.
 
+**Actual provenance (2026-09-06, must stay accurate — see
+`tests/golden/LABELS-PROVENANCE.md`, committed alongside the CSV):** these
+50 labels were produced by **Claude, not the owner** — the owner declined
+the labeling task and asked Claude to do it instead, from world knowledge of
+each pinned location (station proximity, arterials, districts, parks),
+independent of this project's Overture data and formulas, but **not
+independently verified on the ground and not owner-reviewed**. This is
+weaker evidence than owner or third-party human labels: apply §4.2's bar
+with more suspicion than the bar itself implies, and do not describe this
+set anywhere as "human-verified" — "calibrated against a labeled reference
+set" is accurate, a claim of human or owner validation is not. `docs/STATE.md`
+records this as a standing caveat on every result derived from this golden
+set until it is replaced or independently spot-checked.
+
 ### 4.2 Acceptance
-Direction matches human labels (Spearman rank correlation per dimension ≥ 0.6
-as a working bar); no systematic city bias (per-city mean error inspected); no
-category-mapping disasters; quietness proxy plausible; outliers explainable.
+Direction matches the labeled reference set (Spearman rank correlation per
+dimension ≥ 0.6 as a working bar — read with the §4.1 provenance caveat in
+mind, this set is Claude-labeled, not owner- or independently-verified); no
+systematic city bias (per-city mean error inspected); no category-mapping
+disasters; quietness proxy plausible; outliers explainable.
 
 ### 4.3 Sensitivity analysis (new, required)
 Before freezing v1.0: perturb each major constant (±30% on decay scales,

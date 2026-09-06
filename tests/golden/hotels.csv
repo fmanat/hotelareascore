@@ -1,0 +1,51 @@
+hotel_id,name,city,locality,transit_convenience,nearby_restaurants,major_road_exposure,nightlife_intensity,park_family_convenience,labeled_at
+a05c42f0-75ac-4087-b55a-2af2948d95cd,Holiday Inn Express London - Earl's Court,London,London,4,3,3,2,3,2026-09-06T21:30:00Z
+8490d0c3-f9b4-4f9e-bfd2-a3b1e108ef71,Ardra Guest House,London,London,3,2,4,1,3,2026-09-06T21:30:00Z
+7ca0213b-90f4-4e69-a738-0bb0df3a4a9e,Willett Hotel,London,London,5,4,3,2,3,2026-09-06T21:30:00Z
+8bca5fde-f7e5-45a4-8bf5-21f4b45770f5,Hotel Amano,London,London,5,5,3,4,2,2026-09-06T21:30:00Z
+35af8d0f-ccd2-4005-9f6f-9f173844193b,Amari Don Muang Bangkok,Bangkok,Bangkok,4,3,5,1,1,2026-09-06T21:30:00Z
+fbae2641-7c15-458a-9259-45378d2e4ac7,Airport Hotels Bangkok Travel Service,Bangkok,Bangkok,2,2,4,1,1,2026-09-06T21:30:00Z
+a303b42c-f890-43c2-b031-5bd456bb36a1,Suksawad Hotel,Bangkok,Bangkok,3,4,3,1,3,2026-09-06T21:30:00Z
+a94d53cb-00c1-4303-b729-4707e35da9b8,สุขุมวิทซอย11,Bangkok,Bangkok,5,5,4,5,1,2026-09-06T21:30:00Z
+b2a1e3f4-5b32-4901-9dc0-fd94fcd5db40,Holiday Inn Paris Charles de Gaulle S.A.R.L.,Paris,Paris,4,3,5,2,4,2026-09-06T21:30:00Z
+ba83be62-5b9b-4498-8c3c-e129bfb1c333,Le Relais de la Malmaison,Paris,Rueil-Malmaison,2,2,3,1,4,2026-09-06T21:30:00Z
+87a7810f-f3e8-45a5-97d4-bbb01f0b1ef3,Little Hotel,Paris,Paris,5,4,4,3,2,2026-09-06T21:30:00Z
+4488ea46-d462-43e5-abc7-09cc07d0e5f4,Hôtel du Vieux Marais,Paris,Paris,5,5,2,4,2,2026-09-06T21:30:00Z
+8b8c072c-4441-4806-8564-c1237bdf8f20,Crowne Plaza Rome St. Peter's,Rome,Rome,2,2,2,1,5,2026-09-06T21:30:00Z
+3b2b29ec-47e5-48cf-84c0-0f01dfe439a4,OC Hotel,Rome,Rome,1,1,5,1,1,2026-09-06T21:30:00Z
+bd89c235-a16d-479a-8e13-bf6df4f0bf81,B&B Glicini,Rome,Rome,3,3,4,1,3,2026-09-06T21:30:00Z
+46ecaf4c-b375-43c7-8f35-cca2b130c3f1,Scott House Hotel Rome,Rome,Rome,5,4,4,2,2,2026-09-06T21:30:00Z
+0b1ca007-2e8f-4006-8220-bc24727d37de,Apartaments JSMBarcelona,Barcelona,Barcelona,4,3,4,2,2,2026-09-06T21:30:00Z
+58fb3f39-1d99-4bfa-a87d-849362722d94,Premia de Mar,Barcelona,Barcelona,3,2,4,1,3,2026-09-06T21:30:00Z
+c2da66c9-fc88-42b3-a4b0-0a976c0fa095,Pensión Palacio,Barcelona,Barcelona,5,5,4,4,2,2026-09-06T21:30:00Z
+3723ecf4-083a-48f1-a733-86a25374ccc2,CalMillas,Barcelona,Barcelona,5,5,3,4,2,2026-09-06T21:30:00Z
+0e2256c4-c5f3-4777-a0b4-96d059639a2d,ibis budget Amsterdam City South,Amsterdam,Amsterdam,3,2,5,1,2,2026-09-06T21:30:00Z
+ab9653ee-4bad-4b27-b6d9-8765806a36eb,Hotel Gilinsky,Amsterdam,Amstelveen,1,1,2,1,5,2026-09-06T21:30:00Z
+71f1eba6-42b3-4dd4-97c7-aa296af5c7f7,De Windketel,Amsterdam,Amsterdam,3,4,3,3,5,2026-09-06T21:30:00Z
+4533198c-0583-4f84-bb9e-c2478538e0c9,Facade Hotel Amsterdam,Amsterdam,Amsterdam,5,5,2,5,1,2026-09-06T21:30:00Z
+3e18d55b-d4d3-4c63-be09-eea0e6ce0ec1,ibis Lisboa Centro Liberdade,Lisbon,Lisbon,4,4,4,2,3,2026-09-06T21:30:00Z
+5a49f399-7995-4552-95b9-e1fc24ff00c2,Lisboa Camping & Bungalows,Lisbon,Lisbon,1,1,2,1,5,2026-09-06T21:30:00Z
+8fa7c696-623c-4c25-8ea9-24eb42b31ea8,SSs Apartments,Lisbon,Lisbon,3,4,3,3,2,2026-09-06T21:30:00Z
+7e1bf5ea-5f8a-43d5-a01f-4c1c00dfcdaf,Art Legacy Hotel,Lisbon,Lisbon,5,5,2,3,2,2026-09-06T21:30:00Z
+fbca6aef-573c-4056-986f-04e8c6d5ef9f,Holiday Inn Darling Harbour,Sydney,Sydney,4,5,4,4,4,2026-09-06T21:30:00Z
+b03d413f-557e-484d-9e06-2d085667cb14,Ermington Hotel,Sydney,Ermington,2,2,5,2,3,2026-09-06T21:30:00Z
+ca2f7ec9-405e-4a2b-9905-5c9f6398153c,Strathfield Hotel,Sydney,Strathfield,5,4,3,2,2,2026-09-06T21:30:00Z
+6e87e257-4809-4220-bab1-c33eedbefbec,APX World Square,Sydney,Sydney,5,5,4,4,1,2026-09-06T21:30:00Z
+c7c450ad-f1ae-42d0-a28c-19ebff856597,BEST WESTERN Hotel Fino Tokyo Akihabara,Tokyo,Tokyo,5,4,4,3,1,2026-09-06T21:30:00Z
+66caa9ab-e6a6-482a-95d9-f5c6f8746c37,ホテルCOCO,Tokyo,Tokyo,3,2,4,1,3,2026-09-06T21:30:00Z
+4a4ae738-6711-432a-ab0e-e3d4d0d9ccb2,Guesthouse SAKAE,Tokyo,足立区,3,2,3,1,3,2026-09-06T21:30:00Z
+2bf89f8c-dfec-4e9d-a8a4-6ae4ffc59231,桝本屋酒店,Tokyo,Tokyo,4,3,3,2,2,2026-09-06T21:30:00Z
+4b3d8f70-5f4b-470f-b81c-59405312eb54,Dusit Thani Dubai,Dubai,Dubai,1,2,4,1,2,2026-09-06T21:30:00Z
+3915f140-e82a-416b-b71b-88b3b7f0a015,Le Méridien Fairway,Dubai,Dubai,4,3,5,2,2,2026-09-06T21:30:00Z
+a9b48284-e2df-4e9d-be7f-76fae7f25aa6,"Souq Madinat Jumeirah, Dubai",Dubai,Dubai,1,5,3,3,4,2026-09-06T21:30:00Z
+51966295-a8dc-4e3a-bea9-4ab36ee6ff39,Astoria Hotel,Dubai,Dubai,4,5,3,3,2,2026-09-06T21:30:00Z
+85cfbc39-09ae-496c-9200-97fed03a07e5,Koenji Guesthouse,Tokyo,Tokyo,4,4,3,4,2,2026-09-06T21:30:00Z
+346a49c0-bf06-4543-bc84-76544715ba84,アクアプレイス旭湯,Tokyo,Tokyo,3,3,3,2,2,2026-09-06T21:30:00Z
+74a3c0f8-612b-47fd-9614-26fbf5fdac10,Days Inn by Wyndham Brooklyn / Eastern Parkway,New York,Brooklyn,4,2,4,1,2,2026-09-06T21:30:00Z
+756a9130-4883-41ac-b438-3e5a570e1da7,SpringHill Suites,New York,Carlstadt NJ,1,2,5,1,1,2026-09-06T21:30:00Z
+dc2543f4-5e4e-4e14-8531-df694da349fd,"The GEM Hotel Hudson Yards, an Ascend Hotel Collection Member",New York,Manhattan,4,4,4,3,2,2026-09-06T21:30:00Z
+7c2d7eea-88b7-4b5a-92f2-081e58e22442,Larchmont Hotel,New York,Manhattan,5,5,2,4,3,2026-09-06T21:30:00Z
+73a7a96d-c14b-41eb-809d-d93b89a478c1,Holiday Inn Express,Singapore,Singapore,5,5,3,4,2,2026-09-06T21:30:00Z
+1208e4ff-0792-4ebb-8c94-e4c52c2962bb,Changi Lodge,Singapore,Changi,2,4,2,1,4,2026-09-06T21:30:00Z
+db892b28-fb78-4125-9b80-6be220290304,Bright Star Hotel,Singapore,Geylang,4,5,4,4,1,2026-09-06T21:30:00Z
+1ba776e3-f6aa-43cc-aa8e-db4844b82ce4,Treetops Executive Residences Singapore,Singapore,Singapore,3,3,2,2,3,2026-09-06T21:30:00Z

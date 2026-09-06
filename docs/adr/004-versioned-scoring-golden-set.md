@@ -43,3 +43,14 @@ precision, both trust-killers.
 - Score changes are deliberate, slightly slower events — by design.
 - Storage for score history is negligible (~30 MB across versions at 12
   cities) and already in the volumetric budget.
+
+## Amendment (2026-09-06, same day, Phase 3 execution)
+
+The owner declined the 8–15h labeling commitment in point 3 and Consequences
+and asked Claude to label the golden set instead, from world knowledge
+rather than the owner's own judgment — see `docs/scoring.md §4.1` and
+`tests/golden/LABELS-PROVENANCE.md` for the full provenance record. The
+acceptance bar in the Rationale ("vs owner labels") did not change, but what
+it's actually tested against did: treat this round's calibration result as
+weaker evidence than the ADR originally assumed, not as a change to the bar
+itself.
