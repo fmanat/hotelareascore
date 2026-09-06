@@ -1,0 +1,740 @@
+[
+  {
+    "slug": "hyatt-regency-london-albert-embankment-8ad52a9a",
+    "name": "Hyatt Regency London Albert Embankment",
+    "city": "London",
+    "locality": "London",
+    "verdict": "Excellent for transit access; good for walking to everyday places; busy surroundings.",
+    "balanced_score": 68,
+    "confidence": 100,
+    "confidence_label": "High",
+    "scores": {
+      "walkability_density": 79,
+      "transit_access": 94,
+      "food_essentials": 70,
+      "quietness_proxy": 9,
+      "family_convenience": 74,
+      "nightlife_access": 73
+    },
+    "reason_codes": [
+      "GOOD_TRANSIT_ACCESS",
+      "BUSY_SURROUNDINGS",
+      "ACTIVE_NIGHTLIFE",
+      "FAMILY_FRIENDLY_SURROUNDINGS"
+    ],
+    "nearby": [
+      {
+        "name": "Mezemiso",
+        "category": "lebanese_restaurant",
+        "distance_m": 9
+      },
+      {
+        "name": "Embankment Grocers",
+        "category": "korean_grocery_store",
+        "distance_m": 22
+      },
+      {
+        "name": "The Architects’ Coach",
+        "category": "life_coach",
+        "distance_m": 33
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "premier-inn-london-richmond-ce00dcf1",
+    "name": "Premier Inn London Richmond",
+    "city": "London",
+    "locality": "Richmond",
+    "verdict": "Good for walking to everyday places; busy surroundings.",
+    "balanced_score": 46,
+    "confidence": 100,
+    "confidence_label": "High",
+    "scores": {
+      "walkability_density": 69,
+      "transit_access": 49,
+      "food_essentials": 50,
+      "quietness_proxy": 19,
+      "family_convenience": 50,
+      "nightlife_access": 32
+    },
+    "reason_codes": [
+      "BUSY_SURROUNDINGS"
+    ],
+    "nearby": [
+      {
+        "name": "Richmond Town Centre",
+        "category": "shopping",
+        "distance_m": 11
+      },
+      {
+        "name": "Stasher Luggage Storage - North Sheen Station",
+        "category": "shopping",
+        "distance_m": 23
+      },
+      {
+        "name": "BathroomsbyDesign Richmond",
+        "category": "bathroom_fixture_store",
+        "distance_m": 69
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "the-hilton-hotel-london-central-12a22092",
+    "name": "The Hilton Hotel, London Central",
+    "city": "London",
+    "locality": "Wembley",
+    "verdict": "Excellent for walking to everyday places; excellent for restaurants and everyday essentials; moderate surrounding activity.",
+    "balanced_score": 58,
+    "confidence": 93,
+    "confidence_label": "High",
+    "scores": {
+      "walkability_density": 87,
+      "transit_access": 39,
+      "food_essentials": 86,
+      "quietness_proxy": 46,
+      "family_convenience": 14,
+      "nightlife_access": 45
+    },
+    "reason_codes": [
+      "HIGH_RESTAURANT_DENSITY"
+    ],
+    "nearby": [
+      {
+        "name": "Malgudi - Simply Indian",
+        "category": "restaurant",
+        "distance_m": 64
+      },
+      {
+        "name": "Kerala Natural Herbal",
+        "category": "naturopathic_medicine",
+        "distance_m": 68
+      },
+      {
+        "name": "Rithika Flowers",
+        "category": "flowers_and_gifts_store",
+        "distance_m": 75
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "star-and-garter-hotel-richmond-eaf87e79",
+    "name": "Star and Garter Hotel, Richmond",
+    "city": "London",
+    "locality": "Richmond",
+    "verdict": "Good for family convenience; quiet surroundings.",
+    "balanced_score": 29,
+    "confidence": 89,
+    "confidence_label": "High",
+    "scores": {
+      "walkability_density": 12,
+      "transit_access": 0,
+      "food_essentials": 16,
+      "quietness_proxy": 84,
+      "family_convenience": 79,
+      "nightlife_access": 20
+    },
+    "reason_codes": [
+      "QUIET_SURROUNDINGS",
+      "FAMILY_FRIENDLY_SURROUNDINGS"
+    ],
+    "nearby": [
+      {
+        "name": "Afternoon Tea at the Gate",
+        "category": "restaurant",
+        "distance_m": 274
+      },
+      {
+        "name": "Richmond Great Park",
+        "category": "park",
+        "distance_m": 274
+      },
+      {
+        "name": "Petersham Meadow",
+        "category": "park",
+        "distance_m": 290
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "point-a-london-paddington-6e2c2686",
+    "name": "Point A London Paddington",
+    "city": "London",
+    "locality": "London",
+    "verdict": "Excellent for restaurants and everyday essentials; excellent for walking to everyday places; busy surroundings.",
+    "balanced_score": 75,
+    "confidence": 100,
+    "confidence_label": "High",
+    "scores": {
+      "walkability_density": 93,
+      "transit_access": 83,
+      "food_essentials": 96,
+      "quietness_proxy": 0,
+      "family_convenience": 77,
+      "nightlife_access": 84
+    },
+    "reason_codes": [
+      "HIGH_RESTAURANT_DENSITY",
+      "GOOD_TRANSIT_ACCESS",
+      "BUSY_SURROUNDINGS",
+      "ACTIVE_NIGHTLIFE",
+      "FAMILY_FRIENDLY_SURROUNDINGS"
+    ],
+    "nearby": [
+      {
+        "name": "GWR Pullman Dining",
+        "category": "restaurant",
+        "distance_m": 16
+      },
+      {
+        "name": "William Hill",
+        "category": "betting_center",
+        "distance_m": 23
+      },
+      {
+        "name": "T4",
+        "category": "bubble_tea_shop",
+        "distance_m": 28
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "hotel-amano-b45770f5",
+    "name": "Hotel Amano",
+    "city": "London",
+    "locality": "London",
+    "verdict": "Excellent for transit access; excellent for restaurants and everyday essentials; moderate surrounding activity.",
+    "balanced_score": 93,
+    "confidence": 100,
+    "confidence_label": "High",
+    "scores": {
+      "walkability_density": 99,
+      "transit_access": 100,
+      "food_essentials": 99,
+      "quietness_proxy": 67,
+      "family_convenience": 90,
+      "nightlife_access": 99
+    },
+    "reason_codes": [
+      "HIGH_RESTAURANT_DENSITY",
+      "GOOD_TRANSIT_ACCESS",
+      "VERY_CLOSE_TRANSIT",
+      "ACTIVE_NIGHTLIFE",
+      "FAMILY_FRIENDLY_SURROUNDINGS"
+    ],
+    "nearby": [
+      {
+        "name": "Peters Fraser Dunlop",
+        "category": "shopping",
+        "distance_m": 15
+      },
+      {
+        "name": "Sarason Restaurant Drury  Lane",
+        "category": "restaurant",
+        "distance_m": 24
+      },
+      {
+        "name": "LW Theatres",
+        "category": "theatre_venue",
+        "distance_m": 25
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "the-hautboy-0bf1b882",
+    "name": "The Hautboy",
+    "city": "London",
+    "locality": "Guildford",
+    "verdict": "Mixed surroundings; quiet surroundings — see the full scores below.",
+    "balanced_score": 15,
+    "confidence": 64,
+    "confidence_label": "Medium",
+    "scores": {
+      "walkability_density": 4,
+      "transit_access": 0,
+      "food_essentials": 0,
+      "quietness_proxy": 92,
+      "family_convenience": 0,
+      "nightlife_access": 0
+    },
+    "reason_codes": [
+      "QUIET_SURROUNDINGS",
+      "LIMITED_NEARBY_DATA"
+    ],
+    "nearby": [
+      {
+        "name": "Barnaby Lawrence",
+        "category": "complementary_and_alternative_medicine",
+        "distance_m": 227
+      },
+      {
+        "name": "Cobham Dog Training",
+        "category": "pet_store",
+        "distance_m": 227
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "revenuebydesign-155e4d2e",
+    "name": "RevenuebyDesign",
+    "city": "London",
+    "locality": "London",
+    "verdict": "Excellent for restaurants and everyday essentials; excellent for walking to everyday places; busy surroundings.",
+    "balanced_score": 78,
+    "confidence": 78,
+    "confidence_label": "Medium",
+    "scores": {
+      "walkability_density": 96,
+      "transit_access": 85,
+      "food_essentials": 96,
+      "quietness_proxy": 10,
+      "family_convenience": 72,
+      "nightlife_access": 96
+    },
+    "reason_codes": [
+      "HIGH_RESTAURANT_DENSITY",
+      "GOOD_TRANSIT_ACCESS",
+      "BUSY_SURROUNDINGS",
+      "ACTIVE_NIGHTLIFE",
+      "FAMILY_FRIENDLY_SURROUNDINGS"
+    ],
+    "nearby": [
+      {
+        "name": "Bon March Centre",
+        "category": "department_store",
+        "distance_m": 4
+      },
+      {
+        "name": "Brown Boy Productions",
+        "category": "arts_and_entertainment",
+        "distance_m": 6
+      },
+      {
+        "name": "Compass Fostering",
+        "category": "home_health_care",
+        "distance_m": 7
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "8468671-f152bc7b",
+    "name": "8468671",
+    "city": "London",
+    "locality": "Uxbridge",
+    "verdict": "Mixed surroundings; quiet surroundings — see the full scores below.",
+    "balanced_score": 24,
+    "confidence": 56,
+    "confidence_label": "Low",
+    "scores": {
+      "walkability_density": 17,
+      "transit_access": 38,
+      "food_essentials": 0,
+      "quietness_proxy": 87,
+      "family_convenience": 0,
+      "nightlife_access": 0
+    },
+    "reason_codes": [
+      "QUIET_SURROUNDINGS",
+      "LOW_DATA_CONFIDENCE"
+    ],
+    "nearby": [
+      {
+        "name": "Gut and Liver London",
+        "category": "health_care",
+        "distance_m": 135
+      },
+      {
+        "name": "Hera UK",
+        "category": "hospital",
+        "distance_m": 138
+      },
+      {
+        "name": "Image Enhancement Technology",
+        "category": "radiology",
+        "distance_m": 144
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "dusit-princess-srinakarin-12d36d4a",
+    "name": "Dusit Princess Srinakarin",
+    "city": "Bangkok",
+    "locality": "กรุงเทพมหานคร",
+    "verdict": "Excellent for walking to everyday places; excellent for restaurants and everyday essentials; busy surroundings.",
+    "balanced_score": 58,
+    "confidence": 100,
+    "confidence_label": "High",
+    "scores": {
+      "walkability_density": 92,
+      "transit_access": 51,
+      "food_essentials": 87,
+      "quietness_proxy": 18,
+      "family_convenience": 55,
+      "nightlife_access": 28
+    },
+    "reason_codes": [
+      "HIGH_RESTAURANT_DENSITY",
+      "BUSY_SURROUNDINGS"
+    ],
+    "nearby": [
+      {
+        "name": "Lobby Lounge",
+        "category": "restaurant",
+        "distance_m": 17
+      },
+      {
+        "name": "The Chinese Restaurant",
+        "category": "chinese_restaurant",
+        "distance_m": 31
+      },
+      {
+        "name": "Lennshop",
+        "category": "electronics_store",
+        "distance_m": 77
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "hyatt-regency-bangkok-sukhumvit-429c63fe",
+    "name": "Hyatt Regency Bangkok Sukhumvit",
+    "city": "Bangkok",
+    "locality": "กรุงเทพมหานคร",
+    "verdict": "Excellent for walking to everyday places; excellent for restaurants and everyday essentials; busy surroundings.",
+    "balanced_score": 78,
+    "confidence": 100,
+    "confidence_label": "High",
+    "scores": {
+      "walkability_density": 98,
+      "transit_access": 83,
+      "food_essentials": 98,
+      "quietness_proxy": 0,
+      "family_convenience": 72,
+      "nightlife_access": 99
+    },
+    "reason_codes": [
+      "HIGH_RESTAURANT_DENSITY",
+      "GOOD_TRANSIT_ACCESS",
+      "BUSY_SURROUNDINGS",
+      "ACTIVE_NIGHTLIFE",
+      "FAMILY_FRIENDLY_SURROUNDINGS"
+    ],
+    "nearby": [
+      {
+        "name": "Renewme skin clinic",
+        "category": "dermatology",
+        "distance_m": 5
+      },
+      {
+        "name": "Tin Cafe Sukhumvit",
+        "category": "cafe",
+        "distance_m": 10
+      },
+      {
+        "name": "Arno’s Sukhumvit 13",
+        "category": "steakhouse",
+        "distance_m": 14
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "sheraton-8cccaee6",
+    "name": "Sheraton",
+    "city": "Bangkok",
+    "locality": "กรุงเทพมหานคร",
+    "verdict": "Excellent for transit access; excellent for restaurants and everyday essentials; moderate surrounding activity.",
+    "balanced_score": 81,
+    "confidence": 99,
+    "confidence_label": "High",
+    "scores": {
+      "walkability_density": 91,
+      "transit_access": 94,
+      "food_essentials": 92,
+      "quietness_proxy": 57,
+      "family_convenience": 58,
+      "nightlife_access": 74
+    },
+    "reason_codes": [
+      "HIGH_RESTAURANT_DENSITY",
+      "GOOD_TRANSIT_ACCESS",
+      "ACTIVE_NIGHTLIFE"
+    ],
+    "nearby": [
+      {
+        "name": "Siam Yacht Club",
+        "category": "bar",
+        "distance_m": 6
+      },
+      {
+        "name": "Mandara Spa",
+        "category": "spa",
+        "distance_m": 10
+      },
+      {
+        "name": "The Lobby Lounge",
+        "category": "lounge",
+        "distance_m": 12
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "chai-na-resort-9ce8740f",
+    "name": "Chai Na Resort",
+    "city": "Bangkok",
+    "locality": "กรุงเทพมหานคร",
+    "verdict": "Mixed surroundings; quiet surroundings — see the full scores below.",
+    "balanced_score": 16,
+    "confidence": 82,
+    "confidence_label": "High",
+    "scores": {
+      "walkability_density": 1,
+      "transit_access": 0,
+      "food_essentials": 3,
+      "quietness_proxy": 100,
+      "family_convenience": 0,
+      "nightlife_access": 0
+    },
+    "reason_codes": [
+      "QUIET_SURROUNDINGS",
+      "LIMITED_NEARBY_DATA"
+    ],
+    "nearby": [
+      {
+        "name": "เคียงนากาแฟ",
+        "category": "coffee_shop",
+        "distance_m": 374
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "true-tower-a394d466",
+    "name": "อาคารใยแก้ว True Tower",
+    "city": "Bangkok",
+    "locality": "กรุงเทพมหานคร",
+    "verdict": "Excellent for restaurants and everyday essentials; excellent for walking to everyday places; busy surroundings.",
+    "balanced_score": 70,
+    "confidence": 93,
+    "confidence_label": "High",
+    "scores": {
+      "walkability_density": 91,
+      "transit_access": 58,
+      "food_essentials": 92,
+      "quietness_proxy": 22,
+      "family_convenience": 49,
+      "nightlife_access": 93
+    },
+    "reason_codes": [
+      "HIGH_RESTAURANT_DENSITY",
+      "BUSY_SURROUNDINGS",
+      "ACTIVE_NIGHTLIFE"
+    ],
+    "nearby": [
+      {
+        "name": "กาแฟโบร๊าณโบราณ & นมสด",
+        "category": "coffee_shop",
+        "distance_m": 26
+      },
+      {
+        "name": "ร้านเรา",
+        "category": "thai_restaurant",
+        "distance_m": 26
+      },
+      {
+        "name": "Room decor - เฟอร์นิเจอร์ชั้นวางมินิมอลคุณภาพดี",
+        "category": "furniture_store",
+        "distance_m": 32
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "11-e35da9b8",
+    "name": "สุขุมวิทซอย11",
+    "city": "Bangkok",
+    "locality": "กรุงเทพมหานคร",
+    "verdict": "Excellent for transit access; excellent for walking to everyday places; moderate surrounding activity.",
+    "balanced_score": 90,
+    "confidence": 94,
+    "confidence_label": "High",
+    "scores": {
+      "walkability_density": 98,
+      "transit_access": 100,
+      "food_essentials": 97,
+      "quietness_proxy": 62,
+      "family_convenience": 72,
+      "nightlife_access": 100
+    },
+    "reason_codes": [
+      "HIGH_RESTAURANT_DENSITY",
+      "GOOD_TRANSIT_ACCESS",
+      "VERY_CLOSE_TRANSIT",
+      "ACTIVE_NIGHTLIFE",
+      "FAMILY_FRIENDLY_SURROUNDINGS"
+    ],
+    "nearby": [
+      {
+        "name": "หมอชิต กรุงเทพฯ",
+        "category": "bus_station",
+        "distance_m": 22
+      },
+      {
+        "name": "7-Eleven (เซเว่น อีเลฟเว่น)",
+        "category": "convenience_store",
+        "distance_m": 32
+      },
+      {
+        "name": "Limoncello",
+        "category": "italian_restaurant",
+        "distance_m": 53
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "hotel-6bd840a5",
+    "name": "เดอะเบสรีสอร์ท คลองมอญ",
+    "city": "Bangkok",
+    "locality": "กรุงเทพมหานคร",
+    "verdict": "Mixed surroundings; quiet surroundings — see the full scores below.",
+    "balanced_score": 18,
+    "confidence": 74,
+    "confidence_label": "Medium",
+    "scores": {
+      "walkability_density": 11,
+      "transit_access": 0,
+      "food_essentials": 14,
+      "quietness_proxy": 88,
+      "family_convenience": 0,
+      "nightlife_access": 0
+    },
+    "reason_codes": [
+      "QUIET_SURROUNDINGS"
+    ],
+    "nearby": [
+      {
+        "name": "Totti Coffee",
+        "category": "coffee_shop",
+        "distance_m": 40
+      },
+      {
+        "name": "K.Engineering",
+        "category": "hardware_store",
+        "distance_m": 216
+      },
+      {
+        "name": "ครัวตาปุ้ม ลาดกระบัง",
+        "category": "thai_restaurant",
+        "distance_m": 247
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "hotel-97a26849",
+    "name": "ชวาลา โมเตล",
+    "city": "Bangkok",
+    "locality": "กรุงเทพมหานคร",
+    "verdict": "Good for restaurants and everyday essentials; good for walking to everyday places; moderate surrounding activity.",
+    "balanced_score": 46,
+    "confidence": 68,
+    "confidence_label": "Medium",
+    "scores": {
+      "walkability_density": 75,
+      "transit_access": 19,
+      "food_essentials": 79,
+      "quietness_proxy": 78,
+      "family_convenience": 0,
+      "nightlife_access": 0
+    },
+    "reason_codes": [
+      "HIGH_RESTAURANT_DENSITY"
+    ],
+    "nearby": [
+      {
+        "name": "บริษัท เยาวราช จำกัด",
+        "category": "pharmacy",
+        "distance_m": 77
+      },
+      {
+        "name": "นัวนมคัพซี",
+        "category": "restaurant",
+        "distance_m": 80
+      },
+      {
+        "name": "ฤกษ์ดี หัตถเวช",
+        "category": "massage_therapy",
+        "distance_m": 87
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  },
+  {
+    "slug": "hotel-09438643",
+    "name": "ริมฝั่งน้ำโฮมสเตย์",
+    "city": "Bangkok",
+    "locality": "ตำบลคลองนิยมยาตรา",
+    "verdict": "Mixed surroundings; quiet surroundings — see the full scores below.",
+    "balanced_score": 20,
+    "confidence": 55,
+    "confidence_label": "Low",
+    "scores": {
+      "walkability_density": 7,
+      "transit_access": 0,
+      "food_essentials": 15,
+      "quietness_proxy": 100,
+      "family_convenience": 0,
+      "nightlife_access": 0
+    },
+    "reason_codes": [
+      "QUIET_SURROUNDINGS",
+      "LOW_DATA_CONFIDENCE"
+    ],
+    "nearby": [
+      {
+        "name": "ร้านกะเพราแซ่ป",
+        "category": "restaurant",
+        "distance_m": 90
+      },
+      {
+        "name": "บริษัท สินธุมาศ โสภณ จำกัด",
+        "category": "spa",
+        "distance_m": 196
+      },
+      {
+        "name": "PharmaCafe by Ya Rachaya",
+        "category": "coffee_shop",
+        "distance_m": 215
+      }
+    ],
+    "score_version": "1.0.1",
+    "source_release": "2026-08-19.0"
+  }
+]

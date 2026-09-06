@@ -120,10 +120,14 @@ def _transit_dimension(con, city: City, weights: dict[str, Any]) -> None:
             FROM per_mode GROUP BY hotel_id
         )
         SELECT h.id AS hotel_id,
-               coalesce(
-                 least(100.0, p.best_mode_score + {bonus} * least(greatest(p.n_modes - 1, 0), {max_bonus_modes})),
-                 0.0
-               ) AS score,
+               -- DuckDB's least()/greatest() skip NULL arguments instead of
+               -- propagating them (confirmed: least(100.0, NULL) = 100.0),
+               -- so a hotel with zero transit POIs in radius (best_mode_score
+               -- NULL from the LEFT JOIN) previously scored 100 instead of 0.
+               -- Coalescing best_mode_score to 0.0 BEFORE the least() call
+               -- fixes it: score_version 1.0.1 (docs/scoring.md §5 minor bump
+               -- — rankings may shift for affected hotels).
+               least(100.0, coalesce(p.best_mode_score, 0.0) + {bonus} * least(greatest(p.n_modes - 1, 0), {max_bonus_modes})) AS score,
                coalesce(p.n_modes, 0) AS poi_count,
                coalesce(p.n_modes, 0) AS distinct_categories,
                p.nearest_m

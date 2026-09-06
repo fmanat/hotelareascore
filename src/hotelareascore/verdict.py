@@ -15,7 +15,18 @@ LABELS = {
     "nightlife_access": "nightlife",
 }
 
-_LEAD_DIMENSIONS = tuple(LABELS.keys())
+# nightlife_access is deliberately NOT a lead-clause candidate for the
+# default/balanced verdict: docs/strategy.md §2 marks it "positive only for
+# that persona", and it also drives one of the quietness penalty terms
+# (score-weights.yml quietness.penalties.nightlife) — a hotel can quite
+# legitimately have high nightlife_access (a bar right next door) and a high
+# quietness_proxy at the same time (the penalty only looks at the *nearest*
+# venue, docs/scoring.md sensitivity backlog), which produced a
+# self-contradictory sentence like "Excellent for nightlife; ...; quiet
+# surroundings" when nightlife led. Excluding it here is a presentation fix;
+# the underlying quietness-vs-nightlife prior is tracked separately, not
+# tuned by this change (docs/scoring.md §4.3).
+_LEAD_DIMENSIONS = tuple(d for d in LABELS if d != "nightlife_access")
 
 
 def band_for(score: float) -> str | None:

@@ -22,10 +22,19 @@ activity; not an in-room noise measurement") · Family convenience (never
 
 ## 3. Model v1 — priors, explicitly
 
-Distance decay `exp(-d/scale)`; density `log(1+weighted_count)` normalized to
-city distribution; hybrid `0.70·absolute + 0.30·city_percentile`; quietness
-penalty weights/scales per the original table; persona weight tables in
-`data/config/score-weights.yml` (config, never hardcoded in UI).
+Distance decay `exp(-d/scale)` per nearby POI, summed to a weighted count.
+Density dimensions (walkability, food & essentials, family, nightlife)
+normalize that weighted count with a saturating curve,
+`absolute = 100·(1 − exp(−weighted_count/saturation))`, then hybridize with
+where the hotel ranks in its own city, `hybrid = 0.70·absolute +
+0.30·city_percentile` (docs/adr/004 §5 versioning applies to any change to
+either formula — corrected 2026-09-06 from an earlier `log(1+weighted_count)`
+description that no longer matched `src/hotelareascore/scoring.py`; the code
+was always the saturating-curve version). Transit access is proximity-only
+(nearest stop per mode, small multi-mode bonus), never density-based — no
+travel-time claims without routing data. Quietness penalty weights/scales in
+`data/config/score-weights.yml` (config, never hardcoded in UI); see §4.3 for
+a known simplification in that formula.
 
 **Status of every constant above: educated prior, not validated.** They exist
 to get to calibration, and calibration (§4) may change any of them. The
@@ -60,6 +69,19 @@ resulting hotel ranking per city vs baseline.
   actual attention (compare both settings against golden labels, pick, and
   document in an ADR).
 This spends tuning effort only where it matters and kills false precision.
+
+**Priority candidate flagged 2026-09-06 (owner audit), not tuned yet:** the
+quietness_proxy nightlife penalty looks only at the *nearest* nightlife venue
+(`min(distance)`), not density — a hotel with 25 bars within 250 m and one
+with a single bar at the same distance get the same penalty, capped at the
+configured max weight (25 pts, `score-weights.yml` quietness.penalties.
+nightlife). Repro: a hotel with `nightlife_access` ≈ 95 (many nearby venues)
+can still show `quietness_proxy` ≈ 85. This is a plausible real effect (one
+loud bar next door vs. a whole street of them are not the same), but the
+current formula can't tell them apart — put it at the top of the §4.3
+perturbation list (try a density term, e.g. `count(venues within radius)`,
+alongside the pure-nearest version, and compare both against golden labels).
+Do not change the constant or formula outside that calibration pass.
 
 ## 5. Score-version change protocol
 

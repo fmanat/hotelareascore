@@ -55,3 +55,22 @@ def test_build_verdict_ends_with_period_and_is_capitalized():
     verdict = build_verdict(_scores(walkability_density=90, quietness_proxy=90))
     assert verdict.endswith(".")
     assert verdict[0].isupper()
+
+
+def test_build_verdict_never_leads_with_nightlife():
+    # docs/strategy.md §2: nightlife_access is "positive only for that
+    # persona" -- it must never win a lead-clause slot in the default verdict,
+    # even when it's the single highest-scoring dimension by far.
+    scores = _scores(nightlife_access=99, walkability_density=10, quietness_proxy=50)
+    verdict = build_verdict(scores)
+    assert "nightlife" not in verdict.lower()
+
+
+def test_build_verdict_never_self_contradicts_on_nightlife_vs_quiet():
+    # Owner audit repro: 25 bars < 250m (high nightlife_access) alongside a
+    # high quietness_proxy (the penalty only looks at the nearest venue --
+    # docs/scoring.md §4.3 backlog) used to produce "Excellent for nightlife;
+    # ...; quiet surroundings" in the same sentence.
+    scores = _scores(nightlife_access=95, quietness_proxy=85, walkability_density=20)
+    verdict = build_verdict(scores)
+    assert not ("nightlife" in verdict.lower() and "quiet surroundings" in verdict.lower())

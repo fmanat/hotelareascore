@@ -2,7 +2,7 @@
 # educated prior, not validated." Calibration (Phase 3, golden set +
 # sensitivity analysis) may change any of these. Never edit this file without
 # bumping `score_version` (docs/scoring.md §5 / docs/adr/004).
-score_version: "1.0.0-proof"
+score_version: "1.0.1"
 
 # exp(-d/scale): distance (m) at which a single nearby POI's contribution has
 # decayed to ~37% (1/e). Larger scale = "being farther away still counts".

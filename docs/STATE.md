@@ -16,10 +16,13 @@ backend/Supabase — build-time data only from the Phase 1 ETL output
 
 **Built and running (`web/`, 2026-09-06).** 12,021 hotel pages + home +
 methodology, `npm run build` in ~20s. All pages ship `noindex, nofollow`
-(flags OFF). 18-hotel real-data inspection sheet published for owner review —
-link in the session's chat transcript (Artifact, not reproduced here since
-Artifact links aren't durable repo state). Awaiting owner sign-off on the
-15–20 outputs to close the gate.
+(flags OFF). **Gate NOT closed yet** — an owner code audit found and this
+session fixed a real scoring bug (score_version now `1.0.1`, see Decisions
+below); a revised 18-hotel inspection sheet is published for owner review
+(link in chat; raw data also at
+[`docs/reports/inspection-18.json`](reports/inspection-18.json) so it's
+checkable without the Artifact link). Awaiting owner sign-off on the
+15–20 outputs to close the gate — do not mark Phase 2 done without it.
 
 Phase 1 Data Proof Report: [`docs/reports/data-proof-report-2026-08-19.0.md`](reports/data-proof-report-2026-08-19.0.md) — **accepted by owner 2026-09-06.**
 
@@ -61,52 +64,65 @@ Phase 1 Data Proof Report: [`docs/reports/data-proof-report-2026-08-19.0.md`](re
 ## Decisions taken (pointers, not prose)
 
 - 2026-09-06 — **Phase 0bis GO** recorded (owner: Jean). Basis:
-  `rapport-decision-phase-0bis.md` — city-intent SERPs held by solo blogs,
-  hotel-brand SEO content and forums, with zero data-driven incumbents;
-  computed-surroundings angle unoccupied (Walk Score = US-centric address
-  tool, dead hotel integrations); direct demand evidence (Tripadvisor London
-  thread requesting exactly this product). Owner accepted Stage A revenue
-  reality (~€124/mo mid-case) and time budget (validation.md §2.5).
-  Inflections adopted with the GO: (a) city/area pages are the primary SEO
-  center of gravity from Phase 4; hotel pilot cohort remains the measured
-  experiment; (b) AI Overviews presence check added to cohort measurement.
-- ADR-001…005 drafted (stack, ETL/serving split, Overture, score versioning,
-  indexability/pilot cohort) — pending first commit.
-- 2026-09-06 — Phase 1 pipeline built: `src/hotelareascore/` (Python +
-  DuckDB), release discovery via the bucket's own `release/` catalog listing
-  (never hardcoded, docs/adr/003), fail-closed schema check, per-city bbox
-  extraction, dedupe (normalized name + ≤25m proximity, never merges distinct
-  chain branches), the 6 v1 scoring dimensions (docs/scoring.md §2) computed
-  via a per-city equirectangular projection — chosen over Web Mercator
-  specifically to avoid a London/Bangkok latitude bias in proximity math —
-  and a Data Proof Report generator (`make report`). 33 unit tests green.
-  Full run on release `2026-08-19.0`: 4,463 London + 7,558 Bangkok hotels
-  scored, €0 marginal cost.
-- 2026-09-06 — **Phase 1 Data Proof Report accepted by owner (Jean).** Bangkok
-  generic-`lodging` finding acknowledged, explicitly deferred to a bounded
-  pre-Phase-3 task (see section above) rather than actioned now. Phase 2
-  opened.
+  `rapport-decision-phase-0bis.md` — SERPs held by solo blogs/forums, zero
+  data-driven incumbents, direct demand evidence (Tripadvisor thread).
+  Inflections: (a) city/area pages are the primary SEO center of gravity
+  from Phase 4, hotel pilot cohort stays the measured experiment; (b)
+  AI Overviews presence check added to cohort measurement. ADR-001…005
+  drafted alongside.
+- 2026-09-06 — Phase 1 pipeline built (`src/hotelareascore/`, Python +
+  DuckDB): release discovery via the bucket's catalog (never hardcoded,
+  docs/adr/003), fail-closed schema check, dedupe, the 6 v1 dimensions via a
+  per-city equirectangular projection (avoids a London/Bangkok latitude
+  bias), Data Proof Report generator. Full run: 4,463 London + 7,558 Bangkok
+  hotels, €0 cost. **Report accepted by owner**; Bangkok generic-`lodging`
+  finding deferred to the bounded pre-Phase-3 task above. Phase 2 opened.
 - 2026-09-06 — Phase 2 site built (`web/`, Astro, static-first, no adapter):
   `src/hotelareascore/webdata.py` bridges the ETL parquet to build-time JSON
-  (slugs, deterministic verdict sentences, reason codes, nearest-scoring
-  "comparable hotels" — all new pure functions with unit tests, 52 total now
-  green). Result page follows the exact section order in strategy.md §2;
-  persona selector is a small client-side script that only reweights
-  presentation (never the stored scores); map and CTA sections render as
-  disabled placeholders (`MAP_ENABLED`/`AFFILIATE_ENABLED` both off). Two new
-  real anomalies surfaced while building (both cosmetic, not scoring bugs):
-  (a) a handful of hotel-family taxonomy entries are actually a restaurant/
-  sub-venue, not a distinct hotel (e.g. "Royal Princess Dusit Restaurant");
-  (b) hotel names with no Latin characters (Thai script) slugify to a
-  generic `hotel-XXXXXXXX` URL — fine for this proof, worth a
-  transliteration pass before Phase 3.
+  (slugs, verdict sentences, reason codes, nearest-scoring "comparable
+  hotels" — new pure functions, unit-tested). Result page follows the exact
+  section order in strategy.md §2; persona selector is client-side and only
+  reweights presentation, never the stored scores; map/CTA render as
+  disabled placeholders (`MAP_ENABLED`/`AFFILIATE_ENABLED` off). Cosmetic,
+  non-blocking anomalies noted: some hotel-taxonomy entries are actually a
+  restaurant/sub-venue; Thai-script names slugify to generic `hotel-XXXXXXXX`
+  URLs (transliteration pass before Phase 3).
+- 2026-09-06 — **Owner code audit, before Phase 2 close** — 2 real bugs fixed,
+  1 prior documented, 1 doc/code drift corrected:
+  1. **`transit_access` bug:** DuckDB's `least()`/`greatest()` skip NULL
+     arguments instead of propagating them, so a hotel with zero transit POIs
+     in radius scored 100 instead of 0. Fixed in `scoring.py` (coalesce
+     `best_mode_score` to 0.0 before the `least()` call); regression tests
+     added for the invariant "POI-dimension score > 0 ⇒ poi_count > 0"
+     (`tests/test_scoring_poi_invariant.py`, all 6 POI dimensions).
+     **`score_version` bumped `1.0.0-proof` → `1.0.1`** (docs/scoring.md §5,
+     minor). Re-scored both cities: 414 London / 1,960 Bangkok hotels moved,
+     each by exactly −20 balanced-score points (transit weighs 0.20 in the
+     balanced persona) — diff report at
+     [`docs/reports/score-diff-1.0.0-proof-to-1.0.1.md`](reports/score-diff-1.0.0-proof-to-1.0.1.md).
+  2. **Self-contradictory verdicts:** `nightlife_access` could lead the
+     verdict sentence ("Excellent for nightlife…") while quietness_proxy
+     independently said "quiet surroundings", because the nightlife penalty
+     in quietness_proxy only looks at the *nearest* venue. Fixed by excluding
+     `nightlife_access` from verdict lead-clause candidates by default
+     (strategy.md §2: "positive only for that persona") — structurally
+     prevents the contradiction, not just the observed case.
+  3. **Documented, not tuned:** the quietness_proxy nightlife penalty ignores
+     venue density (nearest-only, capped at 25 pts) — added as the top
+     candidate for the Phase 3 sensitivity pass (docs/scoring.md §4.3), with
+     the repro case. No constants changed.
+  4. **Doc/code drift fixed:** scoring.md §3 said density used
+     `log(1+weighted_count)`; the code has always used the saturating curve
+     documented in `score-weights.yml`. Doc corrected to match code;
+     `/methodology` copy was already consistent, no change needed there.
+  webdata + the 18-hotel inspection sheet regenerated under `1.0.1`; raw JSON
+  committed at `docs/reports/inspection-18.json`. **Phase 2 gate stays open**
+  pending owner review of the corrected sheet.
 - **Scope decision, not asked to the owner (ordinary engineering):** `web/`
-  is NOT wired into CI. Its build imports the real per-city JSON exported by
-  `make webdata`, which needs the (gitignored, network-fetched) Phase 1 ETL
-  output — running that on every push would make CI slow, network-dependent
-  and non-reproducible as Overture releases roll monthly. Add web CI
-  (fixture-data-based `astro check` + build) as its own task before any
-  Phase 4 deployment work, not silently bundled into it.
+  is NOT wired into CI — its build needs the gitignored, network-fetched ETL
+  output, which would make CI slow and non-reproducible across monthly
+  Overture releases. Add web CI (fixture-data-based `astro check` + build) as
+  its own task before Phase 4 deployment work.
 
 ## Blockers / risks being watched
 
@@ -131,14 +147,14 @@ Phase 1 Data Proof Report: [`docs/reports/data-proof-report-2026-08-19.0.md`](re
 
 ## Last session summary
 
-- 2026-09-06 — Phase 0bis executed; GO recorded; Phase 1 opened. Phase 1
-  pipeline built and run end-to-end (London + Bangkok); Data Proof Report
-  generated and **accepted by owner**; Phase 2 opened. Astro product-proof
-  site built and verified in-browser (home/autocomplete, result page in the
-  strategy.md §2 order, persona selector, methodology) — 12,021 static hotel
-  pages, all noindex. Delivered an 18-hotel real-data inspection artifact for
-  owner review (diverse: both cities, chain + independent, full confidence
-  range). Next: owner reviews the 15–20 outputs; on sign-off, close Phase 2
-  and scope Phase 3 (launch dataset, ~12 cities, golden-set calibration) —
-  remember the bounded Bangkok `lodging` sampling task above runs before that
-  city expansion, not as part of it.
+- 2026-09-06 — Phase 0bis executed; GO recorded; Phase 1 opened and its Data
+  Proof Report **accepted by owner**; Phase 2 opened. Astro product-proof
+  site built and verified in-browser (12,021 static hotel pages, all
+  noindex). Owner code audit then caught a real `transit_access` scoring bug
+  and a self-contradictory verdict case (see Decisions above) — both fixed,
+  regression-tested, `score_version` bumped to `1.0.1`, both cities re-scored,
+  diff report produced, inspection sheet regenerated and its raw data
+  committed. **Phase 2 gate is still open** — not yet signed off. Next: owner
+  reviews the corrected 15–20 outputs; on sign-off, close Phase 2 and scope
+  Phase 3 (the bounded Bangkok `lodging` sampling task runs before that city
+  expansion, not as part of it).
