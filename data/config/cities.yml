@@ -1,12 +1,21 @@
 # Phase 1 pilot cities (docs/strategy.md §5 — "London + Bangkok, contrasting
-# urban patterns"). Add more cities here only under Phase 3 (launch dataset);
-# adding a city here is a data-scope change, not an indexing decision.
+# urban patterns"), plus Phase 3 launch-dataset Batch 1 (docs/reports/
+# phase-3-plan.md). Adding a city here is a data-scope change, not an
+# indexing decision.
+#
+# Entity QA item (c) lesson (docs/STATE.md): London's original "generous
+# margin" bbox pulled in hotels ~30-38km out (Sevenoaks, Guildford, Stansted)
+# under the "London" city label — 20.8% of London's hotels are >15km from
+# center. Not re-ingested here (Phase 2 already closed on that data); the
+# Batch 1 bboxes below are deliberately tighter, and every hotel now carries
+# a `distance_from_center_km` + `far_from_center` flag (webdata.py) as a
+# second line of defense regardless of bbox precision.
 cities:
   - id: london
     name: London
     country: GB
     center: { lat: 51.5074, lon: -0.1278 }
-    # Greater London, generous margin for edge hotels.
+    # Greater London, generous margin for edge hotels -- see note above.
     bbox: { minx: -0.52, miny: 51.29, maxx: 0.33, maxy: 51.68 }
 
   - id: bangkok
@@ -15,3 +24,57 @@ cities:
     center: { lat: 13.7563, lon: 100.5018 }
     # Bangkok metro area (Sukhumvit -> Chao Phraya -> Don Mueang approach).
     bbox: { minx: 100.32, miny: 13.55, maxx: 100.93, maxy: 13.95 }
+
+  - id: paris
+    name: Paris
+    country: FR
+    center: { lat: 48.8566, lon: 2.3522 }
+    bbox: { minx: 2.15, miny: 48.80, maxx: 2.50, maxy: 48.92 }
+
+  - id: rome
+    name: Rome
+    country: IT
+    center: { lat: 41.9028, lon: 12.4964 }
+    bbox: { minx: 12.35, miny: 41.82, maxx: 12.62, maxy: 41.98 }
+
+  - id: barcelona
+    name: Barcelona
+    country: ES
+    center: { lat: 41.3874, lon: 2.1686 }
+    bbox: { minx: 2.05, miny: 41.32, maxx: 2.25, maxy: 41.47 }
+
+  - id: amsterdam
+    name: Amsterdam
+    country: NL
+    center: { lat: 52.3676, lon: 4.9041 }
+    bbox: { minx: 4.80, miny: 52.30, maxx: 5.00, maxy: 52.42 }
+
+  - id: lisbon
+    name: Lisbon
+    country: PT
+    center: { lat: 38.7223, lon: -9.1393 }
+    bbox: { minx: -9.23, miny: 38.68, maxx: -9.08, maxy: 38.78 }
+
+  - id: sydney
+    name: Sydney
+    country: AU
+    center: { lat: -33.8688, lon: 151.2093 }
+    bbox: { minx: 151.00, miny: -33.95, maxx: 151.30, maxy: -33.75 }
+
+  - id: tokyo
+    name: Tokyo
+    country: JP
+    center: { lat: 35.6762, lon: 139.6503 }
+    # Central wards only, not the full (much larger) Tokyo metro area.
+    bbox: { minx: 139.60, miny: 35.60, maxx: 139.90, maxy: 35.78 }
+
+  - id: dubai
+    name: Dubai
+    country: AE
+    center: { lat: 25.2048, lon: 55.2708 }
+    # Dubai's urban shape is a long coastal strip, not a disc around one
+    # center -- expect the far_from_center flag to trigger more here for
+    # legitimately central hotels (e.g. Dubai Marina vs. Downtown Dubai are
+    # themselves ~25 km apart). Not a bbox error; a real geography mismatch
+    # with the radius-based disclosure — noted for the ingestion report.
+    bbox: { minx: 55.10, miny: 24.95, maxx: 55.42, maxy: 25.30 }

@@ -58,3 +58,12 @@ def test_quietness_config_has_required_keys():
     cfg = taxonomy.quietness_config()
     for key in ("major_road_radius_m", "rail_radius_m", "nightlife_radius_m", "airport_radius_m", "road_classes"):
         assert key in cfg
+
+
+def test_nearby_facts_display_exclude_covers_known_noise_examples():
+    excluded = taxonomy.nearby_facts_display_exclude()
+    assert "life_coach" in excluded
+    assert "pet_groomer" in excluded
+    # scoring-relevant categories must NOT be excluded from display
+    assert "restaurant" not in excluded
+    assert "cafe" not in excluded

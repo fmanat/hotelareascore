@@ -54,6 +54,15 @@ major-road exposure, nightlife intensity, park/family convenience.
 Stored at `tests/golden/hotels.csv`. Budget honestly: 8–15 owner-hours.
 Goal is "no obvious nonsense", not scientific truth.
 
+**Blind labeling, mandatory (added 2026-09-06, owner instruction):** the
+labeling tool never shows our computed scores, verdict sentence, or reason
+codes while a hotel is being rated — name, map/coordinates, address, and the
+5 rating questions only. Showing our own output during labeling would let it
+anchor the very labels meant to check it, silently inflating the apparent
+agreement in §4.2. A hotel the owner can't confidently judge gets no label
+(an explicit "can't judge" skip) rather than a guessed one — a missing label
+is honest signal, a guessed one is noise that looks like data.
+
 ### 4.2 Acceptance
 Direction matches human labels (Spearman rank correlation per dimension ≥ 0.6
 as a working bar); no systematic city bias (per-city mean error inspected); no

@@ -7,15 +7,21 @@
 ## Current phase
 
 **Phase 3 — launch dataset (~12 cities), golden set, calibration** (see
-`docs/strategy.md §5`). Plan presented to owner for approval BEFORE any
-ingestion — see [`docs/reports/phase-3-plan.md`](reports/phase-3-plan.md).
-Do not run `make ingest` for any new city until that plan is approved.
+`docs/strategy.md §5`). Plan **approved by owner 2026-09-06** with 3
+amendments (2-batch ingestion, 2-wave golden set, blind/mobile-first
+labeling tool) — see [`docs/reports/phase-3-plan.md`](reports/phase-3-plan.md).
 
-Phase 2 (product proof) gate: **✅ closed 2026-09-06** — owner inspected the
-(bug-fixed, `score_version 1.0.1`) 18-hotel sheet, machine audit + human
-review both conclusive. Phase 1 Data Proof Report:
-[`docs/reports/data-proof-report-2026-08-19.0.md`](reports/data-proof-report-2026-08-19.0.md)
-— accepted 2026-09-06.
+**Done this session:** entity-QA items (a)-(d) implemented; Batch 1 (Paris,
+Rome, Barcelona, Amsterdam, Lisbon, Sydney, Tokyo, Dubai) ingested, scored
+(`score_version 1.0.1`), validated —
+[ingestion report](reports/phase-3-batch-1-ingestion-report.md). Golden-set
+labeling tool built and published (blind, mobile-first, 42 Batch-1 hotels
+loaded) — link in chat; not reproduced here since Artifact links aren't
+durable repo state. **Batch 2 (New York, Singapore) has NOT been ingested —
+waits for its own go-ahead per the approved plan.**
+
+Phase 2 gate: ✅ closed 2026-09-06. Phase 1 Data Proof Report: accepted
+2026-09-06 ([report](reports/data-proof-report-2026-08-19.0.md)).
 
 ## Phase gate status
 
@@ -25,7 +31,7 @@ review both conclusive. Phase 1 Data Proof Report:
 | 0bis — demand validation | Kill criteria evaluated, owner GO recorded | ✅ **GO recorded 2026-09-06** (see decision log below) |
 | 1 — data proof (2 cities) | Data Proof Report accepted by owner | ✅ **accepted 2026-09-06** |
 | 2 — product proof | Owner inspected 15–20 hotel outputs | ✅ **closed 2026-09-06** |
-| 3 — launch dataset (~12 cities) | Golden set built, calibration done | ▶ current — plan awaiting approval |
+| 3 — launch dataset (~12 cities) | Golden set built, calibration done | ▶ current — Batch 1 ingested (10/12 cities), golden-set labeling in progress |
 | 4 — SEO launch (incl. pilot hotel cohort) | Pilot cohort live, GSC connected | ☐ |
 | 5 — commercial test | First affiliate integrated, clicks measured | ☐ |
 | 6 — growth automation | Weekly GSC loop producing PRs | ☐ |
@@ -36,35 +42,41 @@ review both conclusive. Phase 1 Data Proof Report:
 - [ ] Legal vehicle & jurisdiction for the site and affiliate revenue
       (`docs/strategy.md §8` — owner homework)
 
-## Bounded pre-Phase-3 task: entity QA (owner-scoped — do NOT start without explicit instruction)
+## Entity QA — done this session (items a-d)
 
-Owner decision 2026-09-06: expanded from "sample the Bangkok `lodging`
-bucket" into a 4-part entity-QA task, based on findings in the 18-hotel
-audit (`docs/reports/inspection-18.json`). Run this **before** Phase 3 city
-expansion, not as part of it, and not automatically.
+All 4 items from the bounded pre-Phase-3 task are implemented and live in
+Batch 1's data (full detail: `docs/reports/phase-3-batch-1-ingestion-report.md`):
 
-- **(a) Non-hotels classified as hotels.** Audit examples: "RevenuebyDesign"
-  (a consultancy) and "อาคารใยแก้ว True Tower" (an office building) both
-  carry a hotel-family taxonomy leaf. Estimate the rate on a sample; propose
-  exclusion rules (name-pattern signals, source/category cross-checks) for
-  `data/config/taxonomy-mapping.yml`.
-- **(b) Name sanity checks in `validate.py`.** Purely numeric names
-  (e.g. `"8468671"`) and empty names should be flagged (or hard-failed) as a
-  QA anomaly, not silently scored.
-- **(c) City bbox scope.** "The Hautboy" is in Ockham, Surrey — ~30 km from
-  central London — but is labeled "London." Propose either tightening city
-  bboxes (`data/config/cities.yml`) or showing an honest `locality`/distance
-  on result pages instead of implying it's "in London."
-- **(d) Nearby-facts category filter.** The "Why?" section's `walkability_density`-
-  hierarchy match pulls in irrelevant `lifestyle_services` leaves (e.g.
-  `life_coach`). Tighten the category filter used for `nearby_facts` display
-  (docs/data-and-costs.md §2) separately from the scoring predicate if
-  needed — scores and displayed facts don't have to share one filter.
+- **(a)** `src/hotelareascore/entity_qa.py` — name-pattern non-hotel
+  exclusion, wired into `ingest.py`. Took 3 iterations against real Batch 1
+  data (see module docstring for the false-positive history — "tower"/
+  "design" markers wrongly excluded real hotels, up to 3.3% of Dubai's
+  candidates, before removal). **Known limitation: effectively English-market
+  only** — near-zero recall on French/Italian/Japanese/Arabic business
+  names. Every exclusion logged in full per city (`manifest.json`).
+- **(b)** `validate.py` flags purely-numeric and empty hotel names
+  (`n_numeric_name`).
+- **(c)** Every hotel now carries `distance_from_center_km` +
+  `far_from_center` (>15 km, `webdata.py`); result pages show an honest
+  disclosure instead of implying "in London" etc. Batch 1 bboxes also
+  deliberately tightened (`cities.yml`). London itself: 928 hotels (20.8%)
+  are >15 km from center — not re-ingested (Phase 2 closed), but now
+  disclosed.
+- **(d)** `nearby_facts_display_exclude` in `taxonomy-mapping.yml` — pet
+  services, personal coaching, delivery services no longer clutter the
+  "Why?" section; walkability_density's SCORE predicate is unchanged.
 
-Also still relevant from the original framing: Bangkok's generic
-`lodging` leaf (11,024 places, `docs/reports/data-proof-report-2026-08-19.0.md`
-"Rejects" section) — fold into (a)'s sampling pass rather than a separate
-exercise.
+**Blind-labeling rule** added to `docs/scoring.md §4.1` per owner
+instruction: the labeling tool never shows our scores/verdict/reason codes.
+
+## Batch 2 (New York, Singapore) — do NOT start without explicit instruction
+
+Waits on its own go-ahead per the approved plan, even though its stated
+precondition (entity-QA taxonomy fix) is now live and tested. When
+instructed: `make ingest/score/validate --city new_york,singapore` (bboxes
+not yet defined in `cities.yml` — add them first, tightened per the Batch 1
+lesson), then extend the golden set with ~8 more hotels (wave 2, per the
+approved plan) using the same tool/collection.
 
 ## Decisions taken (pointers, not prose)
 
@@ -90,13 +102,18 @@ exercise.
   quietness's nearest-only nightlife penalty, flagged for the Phase 3
   sensitivity pass (§4.3). Inspection sheet + `docs/reports/inspection-18.json`
   regenerated under `1.0.1`.
-- 2026-09-06 — **Phase 2 gate closed by owner** (audit + human review both
-  conclusive). Entity-QA findings became the bounded pre-Phase-3 task above.
-  Phase 3 opened: researched all 10 remaining launch-city candidates with
-  real Overture queries (no ingestion) — found New York and Singapore share
-  Bangkok's generic-`lodging` data-quality problem. Full plan at
-  [`docs/reports/phase-3-plan.md`](reports/phase-3-plan.md), awaiting
-  approval.
+- 2026-09-06 — **Phase 2 gate closed by owner**; Phase 3 plan researched
+  (10 candidate cities, real Overture queries, no ingestion) and presented
+  ([plan](reports/phase-3-plan.md)).
+- 2026-09-06 — **Owner approved the Phase 3 plan** with 3 amendments
+  (2-batch ingestion, 2-wave golden set, blind/mobile-first tool). Entity QA
+  (a)-(d) implemented (see section above). Batch 1 (8 cities) ingested,
+  scored, validated — [ingestion report](reports/phase-3-batch-1-ingestion-report.md).
+  Golden-set tool built (`db` capability, blind, mobile-first, keyboard
+  shortcuts, shuffled order, "can't judge" skip) and published with 42
+  Batch-1 candidates loaded, stratified by score/confidence/chain-vs-
+  independent plus 2 deliberate calm-vs-nightlife tension cases (Tokyo). Not
+  yet reviewed by owner.
 - **Scope decision, not asked to the owner (ordinary engineering):** `web/`
   is NOT wired into CI — its build needs the gitignored, network-fetched ETL
   output, which would make CI slow and non-reproducible across monthly
@@ -122,20 +139,21 @@ exercise.
 
 | Month | Est. recurring € | Main driver | Notes |
 |---|---:|---|---|
-| 2026-09 | 0 | — | validation + Phases 1–2 + Phase 3 city research, all free tiers (docs/reports/phase-3-plan.md §5) |
+| 2026-09 | 0 | — | validation + Phases 1–3 (Batch 1, 10/12 cities), all free tiers (docs/reports/phase-3-batch-1-ingestion-report.md) |
 
 ## Last session summary
 
-- 2026-09-06 — Phase 0bis GO → Phase 1 pipeline + accepted Data Proof Report
-  → Phase 2 Astro site, owner-audit bug fixes (`score_version 1.0.1`) →
-  **Phase 2 gate closed by owner**. Entity-QA findings from that audit
-  expanded into the bounded pre-Phase-3 task (STATE.md above) — not started.
-  Phase 3 opened: researched all 10 remaining provisional launch cities with
-  real (read-only, no ingestion) Overture queries — found the same
-  generic-`lodging` data-quality problem in New York and Singapore that
-  Bangkok had, informing a two-batch ingestion sequence. Full plan,
-  volumetric/cost estimate, and golden-set labeling protocol presented in
-  [`docs/reports/phase-3-plan.md`](reports/phase-3-plan.md) for owner
-  approval — **no city has been ingested yet.** Next: owner reviews and
-  approves (or amends) the plan; on approval, run the entity-QA task first,
-  then Batch 1 ingestion.
+- 2026-09-06 — Phase 0bis → Phase 1 → Phase 2 (with an owner code audit that
+  fixed a real scoring bug, `score_version 1.0.1`) → **Phase 2 gate closed**.
+  Phase 3 plan researched, presented, and **approved with 3 amendments**.
+  Entity QA (a)-(d) implemented and tested against real data (3 iterations
+  to get item (a)'s heuristic safe — see "Entity QA" section above for the
+  false-positive history, worth reading before trusting it further). Batch 1
+  (Paris, Rome, Barcelona, Amsterdam, Lisbon, Sydney, Tokyo, Dubai) ingested,
+  scored, validated — real volumetry (~115 MB / 10 cities) landed within 6%
+  of the plan's estimate. Golden-set labeling tool built and published: 42
+  hotels, blind (no scores/verdicts shown), mobile-first, keyboard
+  shortcuts, auto-resume via the `db` capability. **Batch 2 (New York,
+  Singapore) intentionally not started** — waits for its own go-ahead.
+  Next: owner works through the 42-hotel labeling tool; on completion (or
+  alongside it), decide on Batch 2's go-ahead.

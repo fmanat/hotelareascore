@@ -99,3 +99,7 @@ def all_point_poi_hierarchies() -> set[str]:
 
 def quietness_config() -> dict:
     return load_taxonomy_mapping()["dimensions"]["quietness_proxy"]
+
+
+def nearby_facts_display_exclude() -> set[str]:
+    return set(load_taxonomy_mapping().get("nearby_facts_display_exclude", []))

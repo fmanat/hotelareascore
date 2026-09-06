@@ -310,6 +310,13 @@ def _write_nearby_facts(con, city: City, release_id: str, etl_dir: Path, top_n: 
     dlat, dlon = geo.degree_margin(radius_m, city)
     proj_h = geo.project_sql("ST_Point(h.lon, h.lat)", city)
     proj_p = geo.project_sql("ST_Point(p.lon, p.lat)", city)
+    # Entity QA item (d): a display-only denylist -- these categories still
+    # count toward the walkability_density SCORE (unchanged predicate), they
+    # just don't clutter the "Why?" section's nearby-facts list.
+    display_exclude = taxonomy.nearby_facts_display_exclude()
+    exclude_sql = "AND p.taxonomy_primary NOT IN ({})".format(
+        ", ".join(f"'{c}'" for c in display_exclude)
+    ) if display_exclude else ""
     con.execute(
         f"""
         CREATE OR REPLACE TEMP TABLE nearby_facts AS
@@ -321,6 +328,7 @@ def _write_nearby_facts(con, city: City, release_id: str, etl_dir: Path, top_n: 
               ON p.lon BETWEEN h.lon - {dlon} AND h.lon + {dlon}
              AND p.lat BETWEEN h.lat - {dlat} AND h.lat + {dlat}
             WHERE p.name IS NOT NULL
+            {exclude_sql}
         ),
         ranked AS (
             SELECT *, row_number() OVER (PARTITION BY hotel_id ORDER BY distance_m) AS rnk

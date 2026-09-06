@@ -43,6 +43,8 @@ export interface Hotel {
   country: string | null;
   lat: number;
   lon: number;
+  distance_from_center_km: number;
+  far_from_center: boolean;
   scores: Scores;
   balanced_score: number;
   confidence: number;

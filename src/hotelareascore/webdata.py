@@ -14,6 +14,7 @@ from typing import Any
 
 from . import overture
 from .config import DIMENSIONS, ETL_DIR, REPO_ROOT, get_city, load_score_weights
+from .dedupe import haversine_m
 from .reason_codes import compute_reason_codes
 from .slug import hotel_slug
 from .verdict import build_verdict
@@ -22,6 +23,13 @@ WEB_SRC_DATA = REPO_ROOT / "web" / "src" / "data"
 WEB_PUBLIC_DATA = REPO_ROOT / "web" / "public" / "data"
 
 N_COMPARABLE = 4
+
+# Entity QA item (c): a hotel this far from the city center gets an honest
+# "N km from central <city>" disclosure instead of implying it's simply "in"
+# the city (docs/STATE.md — "The Hautboy" is ~30 km from central London but
+# Overture's own address_locality already correctly says "Guildford"; the
+# bbox-driven city assignment is what was misleading, not the address data).
+FAR_FROM_CENTER_KM = 15.0
 
 
 def confidence_label(confidence: float) -> str:
@@ -91,6 +99,7 @@ def export_city(city_id: str, release: overture.Release) -> list[dict[str, Any]]
         scores = {d: round(r[d], 1) for d in DIMENSIONS}
         nearby = nearby_by_hotel.get(r["id"], [])
         confidence = round(r["confidence"], 1)
+        distance_km = round(haversine_m(city.center_lat, city.center_lon, r["lat"], r["lon"]) / 1000, 1)
         hotel = {
             "id": r["id"],
             "slug": hotel_slug(r["name"] or "hotel", r["id"]),
@@ -101,6 +110,8 @@ def export_city(city_id: str, release: overture.Release) -> list[dict[str, Any]]
             "country": r["address_country"],
             "lat": round(r["lat"], 6),
             "lon": round(r["lon"], 6),
+            "distance_from_center_km": distance_km,
+            "far_from_center": distance_km > FAR_FROM_CENTER_KM,
             "scores": scores,
             "balanced_score": round(r["balanced_score"], 1),
             "confidence": confidence,

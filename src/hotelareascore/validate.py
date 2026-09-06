@@ -13,6 +13,7 @@ from typing import Any
 
 from . import overture, taxonomy
 from .config import DIMENSIONS, ETL_DIR, get_city
+from .webdata import FAR_FROM_CENTER_KM
 
 
 class ValidationError(RuntimeError):
@@ -96,6 +97,32 @@ def validate_city(city_id: str, release: overture.Release) -> dict[str, Any]:
         """,
     )
     n_missing_name = _scalar(con, "SELECT count(*) FROM hotels WHERE name IS NULL OR trim(name) = ''")
+    # Entity QA item (b): purely numeric names (e.g. "8468671") are a
+    # near-certain sign of a name Overture couldn't resolve properly.
+    n_numeric_name = _scalar(con, r"SELECT count(*) FROM hotels WHERE regexp_matches(trim(name), '^[0-9]+$')")
+    numeric_name_samples = con.execute(
+        r"SELECT name FROM hotels WHERE regexp_matches(trim(name), '^[0-9]+$') LIMIT 10"
+    ).fetchall()
+    # Entity QA item (c): hotels far from the bbox's nominal city center --
+    # not wrong (Overture's own address_locality is usually already honest
+    # about it, e.g. "The Hautboy" correctly shows locality "Guildford"),
+    # but worth surfacing per city so an overly generous bbox is visible in
+    # this report rather than discovered by inspection later. Same
+    # haversine + threshold as webdata.py's FAR_FROM_CENTER_KM.
+    haversine_km_sql = (
+        f"2 * 6371 * asin(sqrt("
+        f"pow(sin(radians(lat - {city.center_lat}) / 2), 2) + "
+        f"cos(radians({city.center_lat})) * cos(radians(lat)) * "
+        f"pow(sin(radians(lon - {city.center_lon}) / 2), 2)))"
+    )
+    n_far_from_center = _scalar(con, f"SELECT count(*) FROM hotels WHERE {haversine_km_sql} > {FAR_FROM_CENTER_KM}")
+    far_from_center_samples = con.execute(
+        f"""
+        SELECT name, address_locality, round({haversine_km_sql}, 1) AS km
+        FROM hotels WHERE {haversine_km_sql} > {FAR_FROM_CENTER_KM}
+        ORDER BY km DESC LIMIT 5
+        """
+    ).fetchall()
     coincident_clusters = con.execute(
         """
         SELECT lat, lon, list(name ORDER BY name) AS names, count(*) AS n
@@ -125,7 +152,9 @@ def validate_city(city_id: str, release: overture.Release) -> dict[str, Any]:
                h.dedupe_confidence
         FROM hotels h JOIN scores s ON s.hotel_id = h.id
         ORDER BY
-            (CASE WHEN h.name IS NULL OR trim(h.name) = '' THEN 0 ELSE 1 END),
+            (CASE WHEN h.name IS NULL OR trim(h.name) = '' THEN 0
+                  WHEN regexp_matches(trim(h.name), '^[0-9]+$') THEN 1
+                  ELSE 2 END),
             s.confidence ASC,
             s.balanced_score ASC
         LIMIT 10
@@ -148,6 +177,12 @@ def validate_city(city_id: str, release: overture.Release) -> dict[str, Any]:
         "n_all_zero_dimensions": n_all_zero,
         "n_unresolved_coincident_coords": n_unresolved_coincident,
         "n_missing_name": n_missing_name,
+        "n_numeric_name": n_numeric_name,
+        "numeric_name_samples": [r[0] for r in numeric_name_samples],
+        "n_far_from_center": n_far_from_center,
+        "far_from_center_samples": [{"name": r[0], "locality": r[1], "km": r[2]} for r in far_from_center_samples],
+        "entity_qa_excluded_count": manifest.get("entity_qa_excluded_count", 0),
+        "entity_qa_excluded_names_sample": manifest.get("entity_qa_excluded_names", [])[:10],
         "coincident_coord_clusters_sample": [
             {"lat": r[0], "lon": r[1], "names": r[2], "n": r[3]} for r in coincident_clusters
         ],

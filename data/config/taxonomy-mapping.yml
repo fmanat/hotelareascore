@@ -102,3 +102,35 @@ dimensions:
     road_classes: [motorway, trunk, primary]
     nightlife_categories: [bar, pub, dance_club, cocktail_bar, brewery]
     airport_categories: [airport]
+
+# ---------------------------------------------------------------------------
+# Entity QA item (d), docs/STATE.md: categories excluded from the "Why?"
+# section's displayed nearby_facts ONLY -- they still count toward the
+# walkability_density SCORE via the broad hierarchy match (changing that is
+# a scoring-formula change, docs/scoring.md §5, out of scope for a display
+# fix). These leaves are real businesses but not what a traveler means by
+# "what's nearby": personal coaching/consulting, pet services, and delivery
+# services aren't places to notice on a walk. Not exhaustive -- extend as
+# more display-noise leaves are found (same spirit as entity_qa.py).
+# ---------------------------------------------------------------------------
+nearby_facts_display_exclude:
+  - life_coach
+  - health_coaching
+  - nutrition_service
+  - weight_loss_center
+  - image_consultant
+  - food_consultant
+  - veterinarian
+  - pet_groomer
+  - pet_boarding
+  - pet_sitting
+  - dog_walker
+  - dog_trainer
+  - animal_shelter
+  - animal_or_pet_service
+  - horse_boarding
+  - pet_breeder
+  - pet_adoption
+  - animal_rescue_service
+  - food_delivery_service
+  - pizza_delivery_service

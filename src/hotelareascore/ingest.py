@@ -21,6 +21,7 @@ from typing import Any
 from . import overture, taxonomy
 from .config import City, ETL_DIR, get_city
 from .dedupe import HotelRecord, dedupe_hotels
+from .entity_qa import is_likely_non_hotel
 
 
 def city_dir(release: overture.Release, city: City) -> Path:
@@ -119,6 +120,25 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
     hotels_raw_rows = con.execute(
         "SELECT id, name, lat, lon, confidence, n_sources, taxonomy_primary FROM hotels_raw"
     ).fetchall()
+    n_hotels_raw = len(hotels_raw_rows)
+
+    # Entity QA (docs/STATE.md, item a): a name-pattern heuristic, not a
+    # validated classifier -- see entity_qa.py docstring for known
+    # limitations. Every exclusion is logged so it can be found and
+    # reverted if it turns out to be a real hotel.
+    entity_qa_excluded = [(r[0], r[1]) for r in hotels_raw_rows if is_likely_non_hotel(r[1])]
+    excluded_ids = {eid for eid, _ in entity_qa_excluded}
+    if excluded_ids:
+        hotels_raw_rows = [r for r in hotels_raw_rows if r[0] not in excluded_ids]
+        con.execute("CREATE OR REPLACE TEMP TABLE _entity_qa_excluded (id VARCHAR)")
+        con.executemany("INSERT INTO _entity_qa_excluded VALUES (?)", [(i,) for i in excluded_ids])
+        con.execute(
+            "CREATE OR REPLACE TEMP TABLE hotels_raw_qa AS "
+            "SELECT h.* FROM hotels_raw h LEFT JOIN _entity_qa_excluded e ON e.id = h.id WHERE e.id IS NULL"
+        )
+        con.execute("DROP TABLE hotels_raw")
+        con.execute("ALTER TABLE hotels_raw_qa RENAME TO hotels_raw")
+
     records = [
         HotelRecord(
             id=r[0], name=r[1] or "", lat=r[2], lon=r[3],
@@ -151,7 +171,6 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
     con.execute(f"COPY pois TO '{out_dir / 'pois.parquet'}' (FORMAT PARQUET)")
     con.execute(f"COPY segments TO '{out_dir / 'segments.parquet'}' (FORMAT PARQUET)")
 
-    n_hotels_raw = len(hotels_raw_rows)
     n_hotels_final = con.execute("SELECT count(*) FROM hotels_final").fetchone()[0]
     n_pois = con.execute("SELECT count(*) FROM pois").fetchone()[0]
     n_segments = con.execute("SELECT count(*) FROM segments").fetchone()[0]
@@ -165,6 +184,8 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
         "hotels_after_dedupe": n_hotels_final,
         "dedupe_groups_merged": len(merged_groups),
         "dedupe_records_absorbed": sum(len(d.member_ids) for d in merged_groups) - len(merged_groups),
+        "entity_qa_excluded_count": len(entity_qa_excluded),
+        "entity_qa_excluded_names": [name for _, name in entity_qa_excluded],
         "pois": n_pois,
         "segments": n_segments,
     }

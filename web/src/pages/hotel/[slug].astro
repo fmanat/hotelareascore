@@ -34,7 +34,14 @@ const confidenceClass = hotel.confidence_label.toLowerCase();
 >
   <article class="hotel">
     <header class="identity">
-      <p class="breadcrumb">{hotel.city_name}{hotel.locality && hotel.locality !== hotel.city_name ? ` · ${hotel.locality}` : ''}</p>
+      <p class="breadcrumb">
+        {hotel.city_name}{hotel.locality && hotel.locality !== hotel.city_name ? ` · ${hotel.locality}` : ''}
+        {hotel.far_from_center && (
+          <span class="far-flag">
+            · {hotel.distance_from_center_km} km from central {hotel.city_name}
+          </span>
+        )}
+      </p>
       <h1>{hotel.name}</h1>
       <p class="verdict">{hotel.verdict}</p>
       <div class="badges">
@@ -82,6 +89,7 @@ const confidenceClass = hotel.confidence_label.toLowerCase();
 <style>
   .identity { padding-top: 24px; }
   .breadcrumb { color: var(--ink-muted); font-size: 0.85rem; margin: 0 0 6px; }
+  .far-flag { color: #8a5a00; font-weight: 600; }
   h1 { margin: 0 0 10px; font-size: 1.7rem; }
   .verdict { font-size: 1.05rem; margin: 0 0 14px; }
   .badges { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; flex-wrap: wrap; }
