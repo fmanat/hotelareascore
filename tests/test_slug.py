@@ -24,3 +24,16 @@ def test_hotel_slug_is_stable_and_unique_for_same_brand_name():
 
 def test_hotel_slug_deterministic():
     assert hotel_slug("The Savoy Hotel", "abc12345") == hotel_slug("The Savoy Hotel", "abc12345")
+
+
+def test_purely_numeric_name_gets_hotel_prefix():
+    # docs/reports/nyc-bbox-options.md: a bare numeric string (an unresolved
+    # source reference, not a real name) reads as a broken/spam link if
+    # slugified as-is ("8468671-f152bc7b") -- the prefix keeps it legible.
+    assert slugify("8468671") == "hotel-8468671"
+    assert slugify("86") == "hotel-86"
+
+
+def test_name_with_a_number_but_not_purely_numeric_is_untouched():
+    assert slugify("21 Club") == "21-club"
+    assert slugify("Hotel 1898") == "hotel-1898"

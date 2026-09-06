@@ -109,29 +109,41 @@ cohort:
   heuristic has no CJK vocabulary at all, so this is a false *inclusion* the
   existing exclusion logic structurally cannot see. Any CJK-market fix needs
   its own language-specific marker list, not a patch to the English one.
+  **Documented as an honest `xfail` test** (overnight Bloc E,
+  `test_known_limitation_cjk_liquor_shop_not_caught`) so this stays visible
+  in CI rather than silently unaddressed — a full CJK-market marker list is
+  still not attempted, deliberately (guessing at non-English markers
+  without native judgment risks new false exclusions).
 - **`346a49c0…` アクアプレイス旭湯 (Tokyo)** — looks like a **bathhouse/sento**
   (旭湯), possibly with lodging attached. Same CJK-blind-spot family as above;
   verify on the ground before it enters any indexable cohort.
 - **`a9b48284…` Souq Madinat Jumeirah (Dubai)** — a souk/venue, not a hotel.
-  English name, in scope for the existing heuristic, but genuinely not
-  caught: **confirmed by reading `entity_qa.py` — "souq"/"souk" is simply
-  absent from `_NON_HOTEL_MARKER_TERMS`**, not a matching bug. A coverage gap
-  from Batch 1's mostly-European city mix; add it as a marker (with the
-  Batch-1-lesson word-boundary discipline) before Middle-East cities get any
-  indexable cohort.
+  **"souq" added as a marker (overnight Bloc E)**, checked against every hit
+  across all 12 cities first ("Maison Souquet," a real Paris hotel, does not
+  collide; "souk"/"bazaar"/"mall" were checked too and deliberately NOT
+  added — each has a real, currently-included hotel using the word as a
+  theme name with no guardable collision pattern, see `entity_qa.py`'s
+  comment). **This specimen still isn't caught in practice**: "Jumeirah"
+  hits the brand allowlist first and short-circuits before the new marker
+  is even checked — the pre-existing brand-shortcut limitation (item a
+  above, 33 other records) claiming one more concrete instance. Not fixed
+  tonight, same reasoning as the existing 33.
 - **`b2a1e3f4…` "Holiday Inn Paris Charles de Gaulle S.A.R.L." (Paris)** — a
   corporate-entity record; the name says CDG airport, the pin is at Porte de
   Charenton (SE Paris, ~25 km away). Looks like a legal-entity/HQ record
   Overture attached hotel-adjacent taxonomy to, not a bookable property.
 - **`756a9130…` SpringHill Suites (New York)** — pin is in Carlstadt, New
   Jersey, inside the "New York" bbox (5-borough box is wide enough to catch
-  nearby NJ). **Confirmed by direct measurement: 13.6 km from the New York
-  center point — under the 15 km `far_from_center` threshold (item c above),
-  so today's disclosure would NOT catch it.** A real gap: "far from center"
-  and "wrong state/metro area entirely" are different failure modes: the
-  same 13.6 km can be an outer borough (expected, fine) or a different U.S.
-  state (not what a "New York hotel" listing should show without a much
-  louder flag). Needs its own check, not a smaller radius.
+  nearby NJ). **Fixed at the disclosure layer** (locality-consistency check,
+  earlier this session) — but the real scale turned out much bigger than
+  this one example: **351/2,194 "New York" hotels (16%) are actually in New
+  Jersey.** A bbox fix turns out to be geometrically impossible (Staten
+  Island and the New Jersey cities in this dataset occupy the same
+  longitude band — a rectangle can't separate them without also cutting
+  real Staten Island hotels). Full options report, no action taken:
+  [nyc-bbox-options.md](reports/nyc-bbox-options.md) — recommends
+  polygon-based extraction (a real ETL change) or a "NYC metro" market
+  label (a positioning decision) as the two live options, owner's call.
 
 ## Batch 2 (New York, Singapore) — DONE 2026-09-06
 

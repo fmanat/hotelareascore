@@ -1,3 +1,5 @@
+import pytest
+
 from hotelareascore.entity_qa import is_likely_non_hotel
 
 
@@ -114,3 +116,50 @@ def test_empty_or_none_name_not_flagged():
 def test_lodging_keyword_alone_beats_marker():
     # "Ltd" NON_HOTEL_MARKERS hit, but "Hostel" keyword should win.
     assert not is_likely_non_hotel("City Stay Hostel Ltd")
+
+
+def test_souq_marker_catches_a_souk_name():
+    assert is_likely_non_hotel("Souq Waqif")
+    assert is_likely_non_hotel("Grand Souq Market")
+
+
+def test_souq_marker_alone_does_not_catch_the_backlog_specimen():
+    # docs/STATE.md entity-QA backlog: "Souq Madinat Jumeirah, Dubai" is a
+    # souk/venue, not a hotel -- but it is NOT caught even with the new
+    # "souq" marker, because "Jumeirah" hits the brand allowlist first and
+    # short-circuits everything else (the pre-existing, separately-logged
+    # brand-shortcut limitation in the module docstring). Documented here
+    # as a concrete instance of that known limitation, not a bug in the new
+    # marker: the marker itself works (see test_souq_marker_catches_a_souk_name).
+    assert not is_likely_non_hotel("Souq Madinat Jumeirah, Dubai")
+
+
+def test_souq_marker_does_not_collide_with_real_hotel_name():
+    # "Maison Souquet" (Paris) is a real boutique hotel -- \b after "souq"
+    # correctly fails to match since the next letter ("u") is still a word
+    # character, same word-boundary discipline as bug #3.
+    assert not is_likely_non_hotel("Maison Souquet")
+
+
+def test_souk_and_bazaar_and_mall_deliberately_not_markers():
+    # Checked against every hit across all 12 ingested cities and rejected
+    # (module docstring): each has a real, currently-included hotel using
+    # the word as a theme name, with no guardable collision pattern.
+    assert not is_likely_non_hotel("Souk Al Bahar Palace Hotel Dubai")
+    assert not is_likely_non_hotel("The Bazaar Hotel Bangkok")
+    assert not is_likely_non_hotel("Kempinski Hotel Mall of the Emirates")
+
+
+@pytest.mark.xfail(
+    reason=(
+        "Known limitation, logged not fixed (module docstring): this heuristic "
+        "is Latin-script only. 桝本屋酒店 is almost certainly a liquor shop -- "
+        "酒店 means 'sake shop' in Japanese, 'hotel' only in Chinese -- but "
+        "nothing here reads script or language, so it can't be caught without "
+        "a dedicated non-English marker list. Documented as an honest xfail, "
+        "not silently skipped, so this stays visible until someone builds that."
+    ),
+    strict=True,
+)
+def test_known_limitation_cjk_liquor_shop_not_caught():
+    assert is_likely_non_hotel("桝本屋酒店")

@@ -64,6 +64,27 @@ Spa branding" (a single legitimate property) from "a sub-venue that should
 not be its own entity" needs more than a regex order fix and risks a new
 false-exclusion class if done carelessly — same caution as the marker
 changes above.
+
+**Known limitation, logged not fixed (found while golden-set labeling,
+2026-09-06, `tests/golden/LABELS-PROVENANCE.md`): this heuristic is
+English-market only, structurally, not just by omission.** Every marker,
+brand name, and street-type word above is an ASCII/Latin-script string
+match; a hotel-family taxonomy leaf whose name is entirely CJK (or any
+other non-Latin script) cannot match any of them regardless of what the
+name says, because there is nothing here that reads the name's *language*
+or *meaning* at all. The textbook case: `2bf89f8c…` **桝本屋酒店** (Tokyo) is
+almost certainly a **liquor shop**, not a hotel — 酒店 (jiǔdiàn) means
+"hotel" in Chinese, but the same two characters mean "sake shop" in
+Japanese, and this is a Japanese business name. No English-language marker
+list, however extended, closes this gap — it needs its own
+language-specific marker list (or a taxonomy/script-aware signal from
+Overture itself), not a patch to `_NON_HOTEL_MARKER_TERMS`. Not attempted
+here: out of scope for a same-night marker fix, and guessing at Japanese
+markers without native-level judgment risks the exact false-exclusion
+failure mode this module has spent 4 iterations trying to avoid on
+English names alone. See `test_known_limitation_cjk_liquor_shop_not_caught`
+for a regression-flavored test that documents this honestly (`xfail`, not
+skipped) rather than silently.
 """
 from __future__ import annotations
 
@@ -115,6 +136,28 @@ _NON_HOTEL_MARKER_TERMS = [
     "advertising agency", "construction co", "construction company", "engineering co",
     "engineering company", "engineering services", "it services", "software", "warehouse", "depot",
     "centre for", "center for", "society", "association",
+    # "souq" (overnight backlog item, docs/STATE.md): added after checking
+    # every hit across all 12 ingested cities, not guessed. "Maison Souquet"
+    # (Paris, a real boutique hotel) does NOT collide because \b after
+    # "souq" fails when the next letter is still a word character
+    # ("souq|uet") -- no guard needed. NOTE: this marker alone does NOT
+    # catch the entity-QA backlog specimen it was added for ("Souq Madinat
+    # Jumeirah, Dubai") -- "Jumeirah" hits HOSPITALITY_BRANDS first and
+    # short-circuits before NON_HOTEL_MARKERS is even checked, the same
+    # pre-existing brand-shortcut limitation already logged above (33 other
+    # records, restaurant/spa/bar/parking/ballroom annex words). Fixing
+    # that ordering is out of scope here -- same caution as everywhere else
+    # in this file about reordering checks carelessly.
+    # "souk" (the other transliteration) and "bazaar" were checked too and
+    # deliberately NOT added: "Souk Al Bahar Palace Hotel Dubai" and "The
+    # Bazaar Hotel Bangkok" are real, currently-included hotels that use the
+    # word as a theme name, an unguardable collision (no street-suffix
+    # pattern like bug #4's bank/church/mosque/temple to hang a lookahead
+    # on). "mall" was checked and rejected outright -- dozens of legitimate
+    # Dubai hotels alone are named around "Dubai Mall"/"Mall of the
+    # Emirates" (Kempinski, Hilton Garden Inn, Novotel Suites, Vida, The
+    # Address, ...).
+    "souq",
 ]
 NON_HOTEL_MARKERS = re.compile(
     r"\b(" + "|".join(re.escape(t) for t in _NON_HOTEL_MARKER_TERMS) + r")\b",
