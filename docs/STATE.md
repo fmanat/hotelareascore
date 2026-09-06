@@ -69,6 +69,43 @@ Batch 1's data (full detail: `docs/reports/phase-3-batch-1-ingestion-report.md`)
 **Blind-labeling rule** added to `docs/scoring.md §4.1` per owner
 instruction: the labeling tool never shows our scores/verdict/reason codes.
 
+## Entity QA backlog — not started (5 specimens, from golden-set labeling)
+
+Found while Claude labeled the golden set (`tests/golden/LABELS-PROVENANCE.md`
+§"Data-quality specimens"), left IN the calibration (labels judge the pin,
+per the tool's own rule) but each needs a real fix before any indexable
+cohort:
+
+- **`2bf89f8c…` 桝本屋酒店 (Tokyo)** — almost certainly a **liquor shop**, not
+  a hotel (酒店 = "sake shop" in Japanese, "hotel" only in Chinese). Textbook
+  case of the documented English-only limitation (item a above): the current
+  heuristic has no CJK vocabulary at all, so this is a false *inclusion* the
+  existing exclusion logic structurally cannot see. Any CJK-market fix needs
+  its own language-specific marker list, not a patch to the English one.
+- **`346a49c0…` アクアプレイス旭湯 (Tokyo)** — looks like a **bathhouse/sento**
+  (旭湯), possibly with lodging attached. Same CJK-blind-spot family as above;
+  verify on the ground before it enters any indexable cohort.
+- **`a9b48284…` Souq Madinat Jumeirah (Dubai)** — a souk/venue, not a hotel.
+  English name, in scope for the existing heuristic, but genuinely not
+  caught: **confirmed by reading `entity_qa.py` — "souq"/"souk" is simply
+  absent from `_NON_HOTEL_MARKER_TERMS`**, not a matching bug. A coverage gap
+  from Batch 1's mostly-European city mix; add it as a marker (with the
+  Batch-1-lesson word-boundary discipline) before Middle-East cities get any
+  indexable cohort.
+- **`b2a1e3f4…` "Holiday Inn Paris Charles de Gaulle S.A.R.L." (Paris)** — a
+  corporate-entity record; the name says CDG airport, the pin is at Porte de
+  Charenton (SE Paris, ~25 km away). Looks like a legal-entity/HQ record
+  Overture attached hotel-adjacent taxonomy to, not a bookable property.
+- **`756a9130…` SpringHill Suites (New York)** — pin is in Carlstadt, New
+  Jersey, inside the "New York" bbox (5-borough box is wide enough to catch
+  nearby NJ). **Confirmed by direct measurement: 13.6 km from the New York
+  center point — under the 15 km `far_from_center` threshold (item c above),
+  so today's disclosure would NOT catch it.** A real gap: "far from center"
+  and "wrong state/metro area entirely" are different failure modes: the
+  same 13.6 km can be an outer borough (expected, fine) or a different U.S.
+  state (not what a "New York hotel" listing should show without a much
+  louder flag). Needs its own check, not a smaller radius.
+
 ## Batch 2 (New York, Singapore) — DONE 2026-09-06
 
 Owner green-lit Batch 2 off the coverage report's recommendation. Ingested,
