@@ -15,10 +15,13 @@ labeling tool) — see [`docs/reports/phase-3-plan.md`](reports/phase-3-plan.md)
 Rome, Barcelona, Amsterdam, Lisbon, Sydney, Tokyo, Dubai) ingested, scored
 (`score_version 1.0.1`), validated —
 [ingestion report](reports/phase-3-batch-1-ingestion-report.md). Golden-set
-labeling tool built and published (blind, mobile-first, 42 Batch-1 hotels
-loaded) — link in chat; not reproduced here since Artifact links aren't
-durable repo state. **Batch 2 (New York, Singapore) has NOT been ingested —
-waits for its own go-ahead per the approved plan.**
+labeling tool source committed at `tools/golden-labeler/` (blind,
+mobile-first, CSV export, `db`+`downloads` capabilities) with the 42-hotel
+selection versioned at `tests/golden/selection.json`; published Artifact
+link in chat, not reproduced here. Coverage check
+([report](reports/phase-3-coverage-bangkok-nyc.md)) done — recommendation:
+Batch 2 acceptable to run as-is. **Batch 2 (New York, Singapore) has NOT
+been ingested — still waits for explicit go-ahead.**
 
 Phase 2 gate: ✅ closed 2026-09-06. Phase 1 Data Proof Report: accepted
 2026-09-06 ([report](reports/data-proof-report-2026-08-19.0.md)).
@@ -71,40 +74,36 @@ instruction: the labeling tool never shows our scores/verdict/reason codes.
 
 ## Batch 2 (New York, Singapore) — do NOT start without explicit instruction
 
-Waits on its own go-ahead per the approved plan, even though its stated
-precondition (entity-QA taxonomy fix) is now live and tested. When
-instructed: `make ingest/score/validate --city new_york,singapore` (bboxes
-not yet defined in `cities.yml` — add them first, tightened per the Batch 1
-lesson), then extend the golden set with ~8 more hotels (wave 2, per the
-approved plan) using the same tool/collection.
+The **real** precondition was a coverage check, not the entity-QA
+exclusion fix (exclusion only removes false hotels from the *included*
+set — it says nothing about real hotels missing from the *excluded* set).
+Done: [`docs/reports/phase-3-coverage-bangkok-nyc.md`](reports/phase-3-coverage-bangkok-nyc.md)
+hand-classified 50 Bangkok + 50 New York rejected-lodging records.
+**Recommendation: acceptable to proceed as-is** — the gap (~10-16% of the
+rejected bucket looks like real, miscategorized lodging) is the same order
+of magnitude already accepted in Phase 1, and the bulk of the rest (46-58%)
+is genuine noise a rescue rule would risk pulling in. A follow-up
+"generic-lodging inclusion rescue" is scoped in that report as a later,
+separately-tested task — not a Batch 2 blocker.
+
+Still waits on its own explicit go-ahead. When instructed:
+`make ingest/score/validate --city new_york,singapore` (bboxes not yet
+defined in `cities.yml` — add them first, tightened per the Batch 1
+lesson), then extend the golden set with ~8 more hotels (wave 2) via
+`tests/golden/selection.json` + `tools/golden-labeler/build.py`, republish.
 
 ## Decisions taken (pointers, not prose)
 
-- 2026-09-06 — **Phase 0bis GO** (owner: Jean; `rapport-decision-phase-0bis.md`).
-  ADR-001…005 drafted. Phase 1 pipeline built (`src/hotelareascore/`,
-  Python+DuckDB; release discovery, fail-closed schema check, dedupe, the 6
-  v1 dimensions via a per-city equirectangular projection). Full run: 4,463
-  London + 7,558 Bangkok hotels, €0 cost — **report accepted by owner.**
-  Phase 2 Astro site built (`web/`, static-first, `webdata.py` bridges ETL
-  → build-time JSON; result page in the strategy.md §2 order; map/CTA
-  disabled placeholders, flags off).
-- 2026-09-06 — **Owner code audit before Phase 2 close** found a real
-  `transit_access` bug: DuckDB's `least()`/`greatest()` skip NULL args
-  instead of propagating them, so a hotel with zero transit POIs scored 100
-  instead of 0. Fixed (coalesce before `least()`); regression tests added
-  (`tests/test_scoring_poi_invariant.py`). **`score_version` → `1.0.1`**
-  (docs/scoring.md §5, minor) — 414 London / 1,960 Bangkok hotels moved,
-  each exactly −20 balanced-score points
-  ([diff report](reports/score-diff-1.0.0-proof-to-1.0.1.md)). Also fixed:
-  self-contradictory verdicts (excluded `nightlife_access` from verdict
-  lead-clauses — strategy.md §2); scoring.md §3 doc/code drift (density
-  formula description corrected to match the code). Documented, not tuned:
-  quietness's nearest-only nightlife penalty, flagged for the Phase 3
-  sensitivity pass (§4.3). Inspection sheet + `docs/reports/inspection-18.json`
-  regenerated under `1.0.1`.
-- 2026-09-06 — **Phase 2 gate closed by owner**; Phase 3 plan researched
-  (10 candidate cities, real Overture queries, no ingestion) and presented
-  ([plan](reports/phase-3-plan.md)).
+- 2026-09-06 — **Phase 0bis GO** (owner: Jean; `rapport-decision-phase-0bis.md`);
+  ADR-001…005 drafted; Phase 1 pipeline built and run (4,463 London + 7,558
+  Bangkok hotels, €0 cost) — **report accepted**; Phase 2 Astro site built
+  (`web/`, static-first). **Owner code audit** then found and fixed a real
+  `transit_access` bug (DuckDB `least()` swallowing NULL, scoring 100
+  instead of 0 — `score_version` → `1.0.1`, 414/1,960 hotels moved exactly
+  −20 pts, [diff report](reports/score-diff-1.0.0-proof-to-1.0.1.md)) plus a
+  self-contradictory-verdict bug and a scoring.md doc/code drift — **Phase 2
+  gate closed**. Phase 3 plan researched (10 candidates, no ingestion) and
+  presented ([plan](reports/phase-3-plan.md)).
 - 2026-09-06 — **Owner approved the Phase 3 plan** with 3 amendments
   (2-batch ingestion, 2-wave golden set, blind/mobile-first tool). Entity QA
   (a)-(d) implemented (see section above). Batch 1 (8 cities) ingested,
@@ -114,6 +113,19 @@ approved plan) using the same tool/collection.
   Batch-1 candidates loaded, stratified by score/confidence/chain-vs-
   independent plus 2 deliberate calm-vs-nightlife tension cases (Tokyo). Not
   yet reviewed by owner.
+- 2026-09-06 — **Owner audit round 2** (before labeling starts): (1) tool
+  export + source committed — CSV export (`downloads` capability, copy-paste
+  fallback), `tools/golden-labeler/` source + `tests/golden/selection.json`
+  committed and versioned, Artifact republished with `db`+`downloads`. (2)
+  Coverage check (the real Batch 2 precondition, not the entity-QA fix) —
+  hand-classified 100 rejected-lodging records (50 Bangkok + 50 New York):
+  ~10-16% look like real miscategorized lodging, ~46-58% genuine noise
+  (public housing, real-estate agencies, street-address artifacts), rest
+  ambiguous. Recommendation: Batch 2 OK to proceed as-is; a rescue rule is a
+  scoped follow-up, not a blocker. (3) Logged (not fixed): brand-allowlist
+  short-circuit lets 33 hotel sub-venues (restaurant/spa/bar/parking/
+  ballroom sharing a parent brand name, e.g. "Royal Princess Dusit
+  Restaurant") through across the 10 ingested cities.
 - **Scope decision, not asked to the owner (ordinary engineering):** `web/`
   is NOT wired into CI — its build needs the gitignored, network-fetched ETL
   output, which would make CI slow and non-reproducible across monthly
@@ -143,17 +155,20 @@ approved plan) using the same tool/collection.
 
 ## Last session summary
 
-- 2026-09-06 — Phase 0bis → Phase 1 → Phase 2 (with an owner code audit that
-  fixed a real scoring bug, `score_version 1.0.1`) → **Phase 2 gate closed**.
-  Phase 3 plan researched, presented, and **approved with 3 amendments**.
-  Entity QA (a)-(d) implemented and tested against real data (3 iterations
-  to get item (a)'s heuristic safe — see "Entity QA" section above for the
-  false-positive history, worth reading before trusting it further). Batch 1
-  (Paris, Rome, Barcelona, Amsterdam, Lisbon, Sydney, Tokyo, Dubai) ingested,
-  scored, validated — real volumetry (~115 MB / 10 cities) landed within 6%
-  of the plan's estimate. Golden-set labeling tool built and published: 42
-  hotels, blind (no scores/verdicts shown), mobile-first, keyboard
-  shortcuts, auto-resume via the `db` capability. **Batch 2 (New York,
-  Singapore) intentionally not started** — waits for its own go-ahead.
-  Next: owner works through the 42-hotel labeling tool; on completion (or
-  alongside it), decide on Batch 2's go-ahead.
+- 2026-09-06 — Phase 0bis → Phase 1 → Phase 2 (owner audit fixed a real
+  scoring bug, `score_version 1.0.1`) → **gate closed**. Phase 3 plan
+  approved with 3 amendments. Entity QA (a)-(d) implemented (3 iterations to
+  get item (a) safe). Batch 1 (8 cities) ingested/scored/validated — real
+  volumetry within 6% of estimate. Golden-set tool built.
+- Same day, before labeling started: **owner audit round 2** required (1)
+  CSV export + committed tool source (`tools/golden-labeler/`,
+  `tests/golden/selection.json`) before any labels could safely leave the
+  Artifact, and (2) a coverage check on Bangkok/New York's rejected-lodging
+  buckets as the *real* Batch 2 precondition (not the entity-QA fix, which
+  only cleans the included set). Both done: tool republished with
+  `db`+`downloads`, [coverage report](reports/phase-3-coverage-bangkok-nyc.md)
+  recommends Batch 2 is OK to proceed as-is. Also logged: the brand-allowlist
+  short-circuit lets ~33 hotel sub-venues through (not fixed).
+  **Batch 2 still not started** — waits for explicit go-ahead. Next: owner
+  labels via the tool (exports CSV when done, or Claude reads the Artifact's
+  `db` directly next session); separately, decide on Batch 2's go-ahead.

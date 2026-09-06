@@ -1,0 +1,531 @@
+<title>Golden Set Labeling</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #faf8f4;
+    --surface: #ffffff;
+    --surface-2: #f4f1ea;
+    --border: #e3ddd0;
+    --ink: #211f1a;
+    --ink-muted: #6b6355;
+    --ink-faint: #9a9284;
+    --accent: #0f6e5c;
+    --accent-ink: #ffffff;
+    --accent-tint: #e2f0ea;
+    --warn: #8a5a00;
+    --warn-tint: #f7ecd6;
+    --font-display: 'Newsreader', Georgia, serif;
+    --font-body: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17181a; --surface: #202224; --surface-2: #26282a; --border: #34363a;
+      --ink: #ece9e2; --ink-muted: #a7a196; --ink-faint: #746e63;
+      --accent: #4fbf9f; --accent-ink: #0b1a16; --accent-tint: #17332c;
+      --warn: #d9a441; --warn-tint: #362c14;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17181a; --surface: #202224; --surface-2: #26282a; --border: #34363a;
+    --ink: #ece9e2; --ink-muted: #a7a196; --ink-faint: #746e63;
+    --accent: #4fbf9f; --accent-ink: #0b1a16; --accent-tint: #17332c;
+    --warn: #d9a441; --warn-tint: #362c14;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.45;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 20px 16px 100px; }
+
+  header.top {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--bg);
+    padding: 10px 0 14px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .top-row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+  .brand { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; }
+  .count { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink-muted); }
+  .bar-track { background: var(--surface-2); border-radius: 999px; height: 7px; overflow: hidden; }
+  .bar-fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.25s ease; }
+
+  #app { display: grid; gap: 18px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    display: grid;
+    gap: 18px;
+  }
+  .hotel-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.4rem;
+    text-wrap: balance;
+    margin: 0;
+  }
+  .hotel-meta { color: var(--ink-muted); font-size: 0.9rem; margin: 4px 0 0; }
+  .maps-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 10px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: var(--accent-tint);
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.92rem;
+  }
+  .maps-link:active { opacity: 0.8; }
+
+  .questions { display: grid; gap: 16px; }
+  .question {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 14px 16px;
+    background: var(--surface);
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .question.is-active { border-color: var(--accent); background: var(--accent-tint); }
+  .question.is-answered { background: var(--surface-2); }
+  .q-label { font-weight: 600; font-size: 0.95rem; margin: 0 0 2px; }
+  .q-anchors {
+    display: flex; justify-content: space-between;
+    font-size: 0.74rem; color: var(--ink-faint);
+    margin: 2px 0 10px;
+  }
+  .q-buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .q-btn {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 14px 0;
+    min-height: 48px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .q-btn:active { transform: scale(0.96); }
+  .q-btn.selected { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 60%, transparent);
+    padding: 14px 0 4px;
+  }
+  .btn {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 15px 0;
+    min-height: 52px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:disabled { background: var(--border); color: var(--ink-faint); cursor: not-allowed; }
+  .btn-ghost { background: var(--surface); color: var(--ink-muted); border: 1.5px solid var(--border); }
+  .btn-ghost:active, .btn-primary:not(:disabled):active { opacity: 0.85; }
+
+  .kbd-hint {
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 0.78rem;
+    margin-top: 4px;
+  }
+  .kbd-hint kbd {
+    font-family: var(--font-mono);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+  @media (max-width: 480px) {
+    .kbd-hint { display: none; }
+  }
+
+  .state-msg {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink-muted);
+  }
+  .state-msg h2 { font-family: var(--font-display); color: var(--ink); }
+
+  .skip-banner {
+    font-size: 0.85rem;
+    color: var(--warn);
+    background: var(--warn-tint);
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+
+  .export-btn {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink-muted);
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  .export-btn:active { opacity: 0.8; }
+
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex; align-items: flex-end;
+    z-index: 20;
+  }
+  @media (min-width: 640px) {
+    .modal-backdrop { align-items: center; justify-content: center; }
+  }
+  .modal {
+    background: var(--surface);
+    border-radius: 16px 16px 0 0;
+    padding: 20px;
+    width: 100%;
+    max-width: 640px;
+    max-height: 80vh;
+    overflow-y: auto;
+    display: grid;
+    gap: 12px;
+  }
+  @media (min-width: 640px) {
+    .modal { border-radius: 16px; }
+  }
+  .modal h3 { font-family: var(--font-display); margin: 0; }
+  .modal textarea {
+    width: 100%;
+    height: 200px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--ink);
+    resize: vertical;
+  }
+  .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="top-row">
+      <span class="brand">Golden Set</span>
+      <span class="count" id="progress-count">— / —</span>
+    </div>
+    <div class="bar-track"><div class="bar-fill" id="progress-bar" style="width:0%"></div></div>
+    <div style="margin-top:10px; text-align:right;">
+      <button type="button" class="export-btn" id="export-btn">Export labels (CSV)</button>
+    </div>
+  </header>
+
+  <div id="app">
+    <div class="state-msg"><h2>Loading…</h2></div>
+  </div>
+</div>
+
+<script>
+  const HOTELS = __HOTELS_JSON__;
+
+  const QUESTIONS = [
+    { key: 'transit', label: 'Transit convenience', lo: 'very inconvenient', hi: 'very convenient' },
+    { key: 'restaurants', label: 'Nearby restaurants', lo: 'none nearby', hi: 'abundant' },
+    { key: 'road_exposure', label: 'Major-road exposure', lo: 'none', hi: 'heavily exposed' },
+    { key: 'nightlife', label: 'Nightlife intensity', lo: 'very quiet', hi: 'very lively' },
+    { key: 'family', label: 'Park / family convenience', lo: 'poor for families', hi: 'excellent for families' },
+  ];
+
+  const appEl = document.getElementById('app');
+  const progressCountEl = document.getElementById('progress-count');
+  const progressBarEl = document.getElementById('progress-bar');
+
+  let db = null;
+  let order = null;           // array of hotel ids, fixed shuffle order
+  let labelsById = new Map(); // hotel id -> label doc data (or null if not yet loaded)
+  let current = {};           // in-progress answers for the hotel on screen
+
+  function shuffledIds() {
+    const ids = HOTELS.map((h) => h.id);
+    for (let i = ids.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [ids[i], ids[j]] = [ids[j], ids[i]];
+    }
+    return ids;
+  }
+
+  function hotelById(id) {
+    return HOTELS.find((h) => h.id === id);
+  }
+
+  function renderLoading(text) {
+    appEl.innerHTML = `<div class="state-msg"><h2>${text}</h2></div>`;
+  }
+
+  function renderDone(skippedCount) {
+    progressCountEl.textContent = `${HOTELS.length} / ${HOTELS.length}`;
+    progressBarEl.style.width = '100%';
+    appEl.innerHTML = `
+      <div class="state-msg">
+        <h2>All 42 done</h2>
+        <p>${HOTELS.length - skippedCount} labeled, ${skippedCount} marked "can't judge."</p>
+        <p>Thanks — this data feeds the Phase 3 golden-set calibration (docs/scoring.md §4).</p>
+        <p>Use "Export labels (CSV)" above to get your data out.</p>
+      </div>
+    `;
+  }
+
+  function findNextUnlabeled() {
+    for (const id of order) {
+      if (!labelsById.has(id)) return id;
+    }
+    return null;
+  }
+
+  function updateProgress() {
+    const done = order.filter((id) => labelsById.has(id)).length;
+    progressCountEl.textContent = `${done} / ${order.length}`;
+    progressBarEl.style.width = `${Math.round((100 * done) / order.length)}%`;
+  }
+
+  function renderHotel(id) {
+    const hotel = hotelById(id);
+    current = {};
+    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${hotel.lat},${hotel.lon}`;
+
+    const questionsHtml = QUESTIONS.map((q, qi) => `
+      <div class="question" data-key="${q.key}" data-index="${qi}">
+        <p class="q-label">${q.label}</p>
+        <div class="q-anchors"><span>1 · ${q.lo}</span><span>5 · ${q.hi}</span></div>
+        <div class="q-buttons">
+          ${[1, 2, 3, 4, 5].map((v) => `<button type="button" class="q-btn" data-value="${v}">${v}</button>`).join('')}
+        </div>
+      </div>
+    `).join('');
+
+    appEl.innerHTML = `
+      <div class="card">
+        <div>
+          <p class="hotel-name">${hotel.name}</p>
+          <p class="hotel-meta">${hotel.city}${hotel.locality && hotel.locality !== hotel.city ? ' · ' + hotel.locality : ''}</p>
+          <a class="maps-link" href="${mapsUrl}" target="_blank" rel="noopener">Open in Google Maps ↗</a>
+        </div>
+        <div class="questions">${questionsHtml}</div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn-ghost" id="cant-judge-btn">Can't judge this one</button>
+        <button type="button" class="btn btn-primary" id="next-btn" disabled>Save &amp; next</button>
+      </div>
+      <p class="kbd-hint">Keyboard: <kbd>1</kbd>–<kbd>5</kbd> rates the highlighted question · <kbd>Enter</kbd> saves &amp; advances</p>
+    `;
+
+    const questionEls = [...appEl.querySelectorAll('.question')];
+    const nextBtn = document.getElementById('next-btn');
+    const cantJudgeBtn = document.getElementById('cant-judge-btn');
+
+    function setActiveQuestion() {
+      const firstUnanswered = questionEls.find((el) => !(el.dataset.key in current));
+      questionEls.forEach((el) => el.classList.remove('is-active'));
+      if (firstUnanswered) firstUnanswered.classList.add('is-active');
+      return firstUnanswered;
+    }
+
+    function answer(qEl, value) {
+      const key = qEl.dataset.key;
+      current[key] = value;
+      qEl.classList.add('is-answered');
+      qEl.querySelectorAll('.q-btn').forEach((b) => {
+        b.classList.toggle('selected', Number(b.dataset.value) === value);
+      });
+      setActiveQuestion();
+      nextBtn.disabled = Object.keys(current).length < QUESTIONS.length;
+    }
+
+    questionEls.forEach((qEl) => {
+      qEl.querySelectorAll('.q-btn').forEach((btn) => {
+        btn.addEventListener('click', () => answer(qEl, Number(btn.dataset.value)));
+      });
+    });
+
+    setActiveQuestion();
+
+    nextBtn.addEventListener('click', () => saveAndAdvance(id, { ...current }, false));
+    cantJudgeBtn.addEventListener('click', () => saveAndAdvance(id, null, true));
+
+    appEl._keyHandler = (e) => {
+      if (e.key >= '1' && e.key <= '5') {
+        const active = questionEls.find((el) => el.classList.contains('is-active'));
+        if (active) answer(active, Number(e.key));
+      } else if (e.key === 'Enter' && !nextBtn.disabled) {
+        saveAndAdvance(id, { ...current }, false);
+      }
+    };
+  }
+
+  async function saveAndAdvance(id, answers, cantJudge) {
+    const doc = cantJudge
+      ? { cant_judge: true, labeled_at: new Date().toISOString() }
+      : { ...answers, cant_judge: false, labeled_at: new Date().toISOString() };
+
+    labelsById.set(id, doc); // optimistic local update
+    updateProgress();
+
+    if (db) {
+      try {
+        await db.doc('labels/' + id).set(doc);
+      } catch (e) {
+        console.error('save failed', e);
+      }
+    }
+
+    advance();
+  }
+
+  function advance() {
+    const nextId = findNextUnlabeled();
+    if (!nextId) {
+      const skipped = [...labelsById.values()].filter((d) => d.cant_judge).length;
+      renderDone(skipped);
+      return;
+    }
+    renderHotel(nextId);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (appEl._keyHandler) appEl._keyHandler(e);
+  });
+
+  // --- CSV export (tests/golden/hotels.csv schema, tools/golden-labeler/README.md) ---
+
+  const CSV_COLUMNS = [
+    'hotel_id', 'name', 'city', 'locality',
+    'transit_convenience', 'nearby_restaurants', 'major_road_exposure',
+    'nightlife_intensity', 'park_family_convenience', 'labeled_at',
+  ];
+
+  function csvValue(v) {
+    const s = v === undefined || v === null ? '' : String(v);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
+  function buildCsv() {
+    const rows = [CSV_COLUMNS.join(',')];
+    let n = 0;
+    for (const id of order || []) {
+      const doc = labelsById.get(id);
+      if (!doc || doc.cant_judge) continue; // no guessed label -- scoring.md §4.1
+      const hotel = hotelById(id);
+      rows.push([
+        hotel.id, hotel.name, hotel.city, hotel.locality || '',
+        doc.transit, doc.restaurants, doc.road_exposure, doc.nightlife, doc.family,
+        doc.labeled_at,
+      ].map(csvValue).join(','));
+      n++;
+    }
+    return { csv: rows.join('\n') + '\n', count: n };
+  }
+
+  function showCsvFallback(csv) {
+    const backdrop = document.createElement('div');
+    backdrop.className = 'modal-backdrop';
+    backdrop.innerHTML = `
+      <div class="modal">
+        <h3>Copy your CSV</h3>
+        <p style="color:var(--ink-muted); font-size:0.85rem; margin:0;">
+          Download wasn't available here — copy the text below and save it as
+          <code>hotels.csv</code>, or paste it directly to Claude.
+        </p>
+        <textarea readonly id="csv-textarea"></textarea>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-primary" id="csv-copy-btn" style="flex:1;">Copy to clipboard</button>
+          <button type="button" class="btn btn-ghost" id="csv-close-btn" style="flex:1;">Close</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(backdrop);
+    const textarea = backdrop.querySelector('#csv-textarea');
+    textarea.value = csv;
+    backdrop.querySelector('#csv-copy-btn').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(csv);
+        backdrop.querySelector('#csv-copy-btn').textContent = 'Copied!';
+      } catch (e) {
+        textarea.select();
+      }
+    });
+    backdrop.querySelector('#csv-close-btn').addEventListener('click', () => backdrop.remove());
+    backdrop.addEventListener('click', (e) => { if (e.target === backdrop) backdrop.remove(); });
+  }
+
+  async function exportCsv() {
+    const { csv, count } = buildCsv();
+    if (count === 0) {
+      alert("No completed labels yet — rate at least one hotel (and don't mark it \"can't judge\") first.");
+      return;
+    }
+    try {
+      const downloads = window.claude && window.claude.use ? await window.claude.use('downloads') : null;
+      if (downloads) {
+        await downloads.save({ filename: 'golden-hotels.csv', data: csv });
+        return;
+      }
+    } catch (e) {
+      // declined, unavailable, or errored -- fall through to the copy/paste modal
+    }
+    showCsvFallback(csv);
+  }
+
+  document.getElementById('export-btn').addEventListener('click', exportCsv);
+
+  async function init() {
+    renderLoading('Loading…');
+    try {
+      db = window.claude && window.claude.use ? await window.claude.use('db') : null;
+    } catch (e) {
+      db = null;
+    }
+
+    if (db) {
+      const orderDoc = await db.doc('state/order').get();
+      if (orderDoc.exists && Array.isArray(orderDoc.data().ids)) {
+        order = orderDoc.data().ids;
+      } else {
+        order = shuffledIds();
+        await db.doc('state/order').set({ ids: order, created_at: new Date().toISOString() });
+      }
+
+      const labelsSnap = await db.collection('labels').get();
+      labelsSnap.docs.forEach((d) => labelsById.set(d.id, d.data()));
+    } else {
+      // No db capability available in this view -- fall back to an
+      // in-memory session (no cross-session resume, but still usable).
+      order = shuffledIds();
+    }
+
+    updateProgress();
+    advance();
+  }
+
+  init();
+</script>

@@ -32,6 +32,23 @@ Expect this list to keep needing iteration — every exclusion is logged
 (`manifest.json` `entity_qa_excluded_names`, the full per-city list, not
 just a sample) specifically so a wrongly excluded hotel can be found and
 reverted; nothing here is silent.
+
+**Known limitation, logged not fixed (owner audit, 2026-09-06):** the brand
+allowlist is checked FIRST and short-circuits everything else, including
+cases where it shouldn't. A hotel's own sub-venue — a restaurant, spa, bar,
+parking garage, or ballroom that Overture gave its own place record under a
+lodging-family taxonomy leaf — still slips through as long as its name
+contains a recognized brand token, e.g. "Royal Princess Dusit Restaurant"
+(the "Dusit" brand hit fires before any annex word could matter) or "Grand
+Ballroom, Shangri-La Hotel, Bangkok". Across the 10 Batch 1 + Phase 1
+cities, 33 included hotel records combine a brand token with an annex word
+(restaurant|spa|bar|cafe|parking|ballroom) — see
+`docs/reports/phase-3-coverage-bangkok-nyc.md` for the count per city and
+examples. Not fixed here: distinguishing "the hotel's own combined Hotel &
+Spa branding" (a single legitimate property) from "a sub-venue that should
+not be its own entity" needs more than a regex order fix and risks a new
+false-exclusion class if done carelessly — same caution as the marker
+changes above.
 """
 from __future__ import annotations
 
