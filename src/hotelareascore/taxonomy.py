@@ -102,11 +102,21 @@ def quietness_config() -> dict:
 
 
 def family_convenience_land_use_config() -> dict:
-    """Polygon-source config for family_convenience v2 (score_version
-    1.1.0): which base/land_use subtype/class values count as a green space,
-    scored by distance to the polygon boundary (see scoring.py
-    _family_convenience_dimension)."""
+    """base/land_use polygon-source config for family_convenience (score
+    from distance to the polygon boundary, see scoring.py
+    _family_convenience_dimension). v1.2.0 (docs/adr/007) expanded this
+    beyond v1.1.0's park/playground-only filter -- verified, not guessed,
+    see taxonomy-mapping.yml's comment block for what was checked and
+    excluded."""
     return load_taxonomy_mapping()["dimensions"]["family_convenience"]["land_use"]
+
+
+def family_convenience_land_config() -> dict:
+    """base/land (natural land-cover, distinct from base/land_use) polygon
+    source for family_convenience v1.2.0 (docs/adr/007): forest, grass,
+    beach sand -- real nearby green space the land_use-only v1.1.0 filter
+    could not see at all, since this theme wasn't ingested before."""
+    return load_taxonomy_mapping()["dimensions"]["family_convenience"]["land"]
 
 
 def family_convenience_display_only_categories() -> list[str]:

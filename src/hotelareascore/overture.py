@@ -26,6 +26,7 @@ REQUIRED_PLACE_COLUMNS = {
 }
 REQUIRED_SEGMENT_COLUMNS = {"id", "subtype", "class", "geometry", "bbox"}
 REQUIRED_LAND_USE_COLUMNS = {"id", "subtype", "class", "geometry", "names", "bbox"}
+REQUIRED_LAND_COLUMNS = {"id", "subtype", "class", "geometry", "names", "bbox"}
 
 
 class SchemaError(RuntimeError):
@@ -99,6 +100,19 @@ def land_use_path(release: Release) -> str:
     point undercounts (or overcounts, for heavily-mapped landmarks) real
     green-space access."""
     return f"s3://overturemaps-us-west-2/release/{release.id}/theme=base/type=land_use/*"
+
+
+def land_path(release: Release) -> str:
+    """base/land: natural land-cover polygons (forest, grass, beach sand,
+    etc.) -- distinct from base/land_use, which is human land-use (park,
+    residential, agriculture...). Added in v1.2.0 (docs/adr/007) after
+    diagnostics showed real nearby green space (forest, managed grass,
+    sports pitches/tracks, beaches) that the v1.1.0 land_use-only filter
+    missed for several golden-set hotels -- verified against a live
+    extract, not guessed (London bbox: 'forest'/'wood' 17,324, 'grass'/
+    'grass' 1,159, 'sand'/'beach' 113, among many non-family classes like
+    242,527 individual street trees that are deliberately NOT included)."""
+    return f"s3://overturemaps-us-west-2/release/{release.id}/theme=base/type=land/*"
 
 
 def check_schema(con: duckdb.DuckDBPyConnection, path: str, required_columns: set[str], label: str) -> None:

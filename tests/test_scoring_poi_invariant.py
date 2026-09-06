@@ -142,13 +142,15 @@ def test_family_convenience_zero_with_nothing_nearby(con):
     assert row == (0.0, 0)
 
 
-def test_family_convenience_positive_with_nearby_zoo_point(con):
+def test_family_convenience_positive_with_nearby_aquarium_point(con):
+    """aquarium is the one category with no land_use/land polygon
+    (docs/adr/007) -- it stays a places-theme point."""
     _one_hotel(con)
     con.execute(
         """
         CREATE TEMP TABLE pois AS
-        SELECT 'p1' AS id, 51.5001 AS lat, -0.1001 AS lon, 'zoo' AS taxonomy_primary,
-               ['sports_and_recreation', 'zoo'] AS taxonomy_hierarchy, 'Test Zoo' AS name
+        SELECT 'p1' AS id, 51.5001 AS lat, -0.1001 AS lon, 'aquarium' AS taxonomy_primary,
+               ['sports_and_recreation', 'aquarium'] AS taxonomy_hierarchy, 'Test Aquarium' AS name
         """
     )
     _empty_green_spaces(con)
@@ -161,16 +163,18 @@ def test_family_convenience_positive_with_nearby_zoo_point(con):
     assert row[0] > 0
 
 
-def test_family_convenience_ignores_park_points_display_only_category(con):
-    """park/playground stay places-theme points for the 'Why?' display
-    (docs/adr/006) but must NOT feed the score anymore -- that's the land_use
-    polygon's job now."""
+@pytest.mark.parametrize("category", ["park", "playground", "zoo"])
+def test_family_convenience_ignores_display_only_points(con, category):
+    """park/playground/zoo stay places-theme points for the 'Why?' display
+    (docs/adr/006, docs/adr/007) but must NOT feed the score -- that's the
+    green_spaces polygon's job now (zoo moved from a point category to its
+    land_use `entertainment`/`zoo` polygon in v1.2.0, confirmed present)."""
     _one_hotel(con)
     con.execute(
-        """
+        f"""
         CREATE TEMP TABLE pois AS
-        SELECT 'p1' AS id, 51.5001 AS lat, -0.1001 AS lon, 'park' AS taxonomy_primary,
-               ['sports_and_recreation', 'park'] AS taxonomy_hierarchy, 'Test Park Point' AS name
+        SELECT 'p1' AS id, 51.5001 AS lat, -0.1001 AS lon, '{category}' AS taxonomy_primary,
+               ['sports_and_recreation', '{category}'] AS taxonomy_hierarchy, 'Test Point' AS name
         """
     )
     _empty_green_spaces(con)
@@ -180,6 +184,44 @@ def test_family_convenience_ignores_park_points_display_only_category(con):
 
     row = con.execute("SELECT score, poi_count FROM dim_family_convenience WHERE hotel_id = 'h1'").fetchone()
     assert row == (0.0, 0)
+
+
+@pytest.mark.parametrize("subtype,cls", [
+    ("park", "park"),
+    ("protected", "nature_reserve"),
+    ("recreation", "pitch"),
+    ("recreation", "track"),
+    ("recreation", "recreation_ground"),
+    ("managed", "grass"),
+    ("entertainment", "zoo"),
+    ("forest", "wood"),
+    ("grass", "grassland"),
+    ("sand", "beach"),
+])
+def test_family_convenience_v1_2_0_green_classes_score_positive(con, subtype, cls):
+    """Every class added in v1.2.0 (docs/adr/007, verified against a live
+    extract -- docs/reports/family-v1.2.0-diagnostic.md) must actually
+    count, not just exist in config."""
+    _one_hotel(con, lat=51.5, lon=-0.1)
+    _empty_pois(con)
+    polygon_wkt = "POLYGON((-0.1005 51.4995, -0.0995 51.4995, -0.0995 51.5005, -0.1005 51.5005, -0.1005 51.4995))"
+    con.execute(
+        f"""
+        CREATE TEMP TABLE green_spaces AS
+        SELECT 'g1' AS id, 'Test Green Space' AS name, '{subtype}' AS subtype, '{cls}' AS class,
+               '{polygon_wkt}' AS geometry_wkt,
+               -0.1005 AS bbox_xmin, 51.4995 AS bbox_ymin, -0.0995 AS bbox_xmax, 51.5005 AS bbox_ymax
+        """
+    )
+    weights = load_score_weights()
+
+    scoring._family_convenience_dimension(con, CITY, weights)
+
+    row = con.execute("SELECT score, poi_count FROM dim_family_convenience WHERE hotel_id = 'h1'").fetchone()
+    assert row[1] == 1
+    assert row[0] > 0
+
+
 
 
 def test_family_convenience_hotel_inside_park_polygon_scores_at_zero_distance(con):

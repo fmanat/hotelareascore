@@ -10,7 +10,15 @@
 # are reused unchanged for the new polygon-distance input -- a deliberately
 # minimal change (new data source, same formula shape, no new tuning knob)
 # and still an unvalidated prior like everything else in this file.
-score_version: "1.1.0"
+#
+# 1.2.0 (docs/adr/007): family_convenience's green-space class list expanded
+# (managed grass, sports pitches/tracks, nature reserves, zoo moved from a
+# point to its land_use polygon, plus a new base/land source for forest/
+# grass/beach) after diagnostics found real nearby green space the v1.1.0
+# filter missed. No constant below changed value -- still the same formula
+# shape and constants as 1.1.0, only the green_spaces.parquet input is
+# broader.
+score_version: "1.2.0"
 
 # exp(-d/scale): distance (m) at which a single nearby POI's contribution has
 # decayed to ~37% (1/e). Larger scale = "being farther away still counts".

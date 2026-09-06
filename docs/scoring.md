@@ -139,14 +139,21 @@ nearest lead for a future improvement is modeling road *severity* (a
 motorway and a two-lane primary road currently get an identical penalty),
 not the nightlife term tested here.
 
-**family_convenience: real anomaly, root cause found, fixed as v2 — see
-docs/adr/006.** Wrong-signed against its label in all 3 calibration
-variants; traced to the v1 formula scoring point representations of an
-inherently areal feature (park/playground). v2 (score_version 1.1.0) scores
-from Overture's polygon land-use footprints instead, distance to the
-polygon boundary rather than a point or centroid. Re-calibration against the
-same 50 labels is required before this dimension — and Phase 3's calibration
-gate as a whole — can be considered closed (§5 below).
+**family_convenience: real anomaly, root cause found, fixed twice, still
+open — see docs/adr/006, docs/adr/007.** Wrong-signed against its label in
+all 3 calibration variants; traced to the v1 formula scoring point
+representations of an inherently areal feature (park/playground). v2
+(score_version 1.1.0) scores from Overture's polygon land-use footprints
+instead, distance to the polygon boundary rather than a point or centroid —
+this fixed the sign but not the magnitude. v1.2.0 expanded the green-space
+class list further (verified against a live extract, `docs/adr/007`) and
+was recalibrated against a fresh, stricter re-labeling
+(`tests/golden/family_strict.csv`, "reachable on foot only"): Spearman
+0.209, still short of the owner's 0.5 bar. Per the owner's own
+pre-authorized rule, no further tuning without another explicit review —
+see `docs/reports/family-v1.2.0-recalibration.md` for the full result and
+candidate next steps. **Phase 3's calibration gate stays open on this
+dimension**; the rest of the gate (§4.2 above) is unaffected.
 
 ## 5. Score-version change protocol
 

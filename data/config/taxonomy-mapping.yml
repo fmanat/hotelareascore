@@ -89,22 +89,48 @@ dimensions:
   # v2 (score_version 1.1.0, docs/adr/006): park/playground access is scored
   # from Overture's base/land_use polygon footprints, distance measured to
   # the polygon's own boundary (not its centroid) -- see land_use below.
-  # zoo/aquarium stay points (`places` theme; no polygon footprint exists
-  # for them in land_use) via `categories`. `display_only_categories` keeps
-  # park/playground showing up in the "Why?" nearby-facts section (a
-  # places-theme point named e.g. "Hyde Park" is still a useful landmark to
-  # display) even though those points no longer feed the SCORE.
+  # `display_only_categories` keeps places-theme points showing up in the
+  # "Why?" nearby-facts section (a point named e.g. "Hyde Park" or "London
+  # Zoo" is still a useful landmark to display) even though those points no
+  # longer feed the SCORE.
+  #
+  # v1.2.0 (docs/adr/007): expanded the polygon filter after diagnostics
+  # (docs/reports/family-v1.2.0-diagnostic.md) found real, close green space
+  # the v1.1.0 park/playground-only filter missed for several golden-set
+  # hotels (managed lawns, sports pitches/tracks, forest, beaches) --
+  # verified against a live extract of both base/land_use and base/land
+  # (not guessed). Also moved `zoo` from a places-theme point to its
+  # base/land_use polygon (`entertainment`/`zoo`, confirmed present --
+  # v1.1.0/ADR-006 wrongly assumed zoo had no polygon footprint).
+  # `aquarium` stays a point: no land_use/land polygon exists for it.
+  #
+  # Deliberately EXCLUDED, checked and rejected rather than overlooked:
+  # `horticulture` (private gardens/allotments/orchards -- London alone has
+  # 28,030 `horticulture/garden` polygons, almost all private back gardens,
+  # would swamp the signal), `golf` (private/members courses -- green but
+  # not a walkable public family amenity), `agriculture` (private farmland
+  # -- meadow/farmland near a hotel is not a family amenity), `campground`
+  # (ambiguous, often the lodging property itself), `recreation/stadium`
+  # and `recreation/marina` (ticketed venue / boat marina), `tree`/
+  # `tree_row` (base/land -- 242,527 individual street trees in London
+  # alone; a tree-lined street is not a park), `shrub`/`wetland`/`rock`/
+  # `physical` (base/land -- not usable leisure space).
   family_convenience:
     radius_m: 600
     categories:
-      - zoo
       - aquarium
     display_only_categories:
       - park
       - playground
+      - zoo
     land_use:
-      subtypes: [park]
-      recreation_classes: [playground]
+      subtypes: [park, protected]  # any class: park/park, park/village_green, park/dog_park, protected/nature_reserve, ...
+      recreation_classes: [playground, pitch, recreation_ground, track]
+      managed_classes: [grass]
+      entertainment_classes: [zoo]
+    land:
+      subtypes: [forest, grass]  # any class: forest/wood, forest/forest, grass/grass, grass/grassland, grass/meadow
+      sand_classes: [beach]      # sand/beach only -- NOT sand/sand (desert/generic sand, not a recreational beach)
 
   quietness_proxy:
     major_road_radius_m: 150

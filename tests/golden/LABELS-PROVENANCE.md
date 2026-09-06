@@ -57,3 +57,33 @@ Travel Service (Lat Krabang) · `a303b42c…` Suksawad Hotel (Bangkok Noi) ·
 
 These 5 stay IN the calibration (they are locations like any other; the
 labels judge the pin), but each is a candidate for the entity-QA backlog.
+
+## Amendment (2026-09-06, overnight run) — `family_strict.csv`, a stricter re-labeling of family_convenience only
+
+After the v1.1.0 fix (land_use polygons, boundary distance —
+`docs/adr/006`) still failed the 0.6 Spearman target against the original
+`park_family_convenience` column (result: correctly-signed but weak, +0.06
+to +0.10 — see `docs/reports/phase-3-calibration-sensitivity-report.md`
+§6), the working hypothesis was a **label-construct mismatch**: the
+original label asked for a holistic "family convenience" judgment (general
+neighborhood feel, nearby attractions), not the formula's narrow "is there
+a park/playground within ~600m" question.
+
+`tests/golden/family_strict.csv` re-labels the same 50 hotel_ids, **by
+Claude again (not the owner)**, blind to the computed scores as before,
+under a deliberately narrower operational definition: **"is there a park
+or playground reachable on foot (roughly ≤ 10 minutes / 600-800m) from this
+exact pin — yes/no plus a rough quality/size judgment, 1-5"** — not general
+family-friendliness, not proximity to attractions, not neighborhood
+character. This is a different question from the original
+`park_family_convenience` column and supersedes it for family_convenience
+calibration specifically; the other 4 dimensions (transit, restaurants,
+road exposure, nightlife) are unaffected and still use the original
+`hotels.csv` labels.
+
+Same provenance caveats as the original 50: Claude-labeled from world
+knowledge of each pinned location, independent of this project's Overture
+data and formulas, **not independently verified on the ground and not
+owner-reviewed**. Treat any calibration result against `family_strict.csv`
+with the same "weaker evidence than owner labels" caveat as the original
+set (§4.1 above, unchanged).

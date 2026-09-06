@@ -18,9 +18,11 @@ from . import geo, overture, taxonomy
 from .config import City, DIMENSIONS, get_city, load_score_weights
 
 # family_convenience moved to its own dedicated function in score_version
-# 1.1.0 (docs/adr/006): it now combines points (zoo/aquarium) with land_use
-# polygons (park/playground), which the generic point-only _density_dimension
-# below can't express.
+# 1.1.0 (docs/adr/006): it now combines points (aquarium -- no polygon
+# footprint exists for it) with polygons from two Overture themes
+# (base/land_use, base/land -- park/playground/pitch/track/nature reserve/
+# managed grass/zoo/forest/grass/beach, expanded in v1.2.0/docs/adr/007),
+# which the generic point-only _density_dimension below can't express.
 DENSITY_DIMENSIONS = ("food_essentials", "walkability_density", "nightlife_access")
 
 
@@ -90,18 +92,20 @@ def _density_dimension(con, city: City, dimension: str, weights: dict[str, Any],
 
 
 def _family_convenience_dimension(con, city: City, weights: dict[str, Any]) -> None:
-    """family_convenience v2 (score_version 1.1.0, docs/adr/006): combines
-    two POI sources into the same weighted-count -> saturating-curve ->
-    city-percentile hybrid every other density dimension uses (only the
-    source changed, not the formula shape or its constants):
-      - points (zoo/aquarium, Overture `places`) -- no polygon footprint
-        exists for these in Overture's base theme, so point distance is the
-        only option;
-      - green-space polygons (park/playground, Overture `base/land_use`) --
-        distance is measured to the polygon's own boundary via ST_Distance
-        (0 if the hotel is inside it), not to a centroid or a single
-        places-theme point, which is what caused 9/11 golden-set hotels with
-        a real nearby park to score exactly 0
+    """family_convenience (score_version 1.1.0, docs/adr/006; classes
+    expanded in 1.2.0, docs/adr/007): combines two POI sources into the
+    same weighted-count -> saturating-curve -> city-percentile hybrid every
+    other density dimension uses (only the source changed, not the formula
+    shape or its constants):
+      - points (`aquarium` only -- no polygon footprint exists for it in
+        Overture's base theme, so point distance is the only option);
+      - green-space polygons (`green_spaces` table, built in ingest.py from
+        base/land_use + base/land: park/playground/pitch/track/nature
+        reserve/managed grass/zoo, and forest/grass/beach) -- distance is
+        measured to the polygon's own boundary via ST_Distance (0 if the
+        hotel is inside it), not to a centroid or a single places-theme
+        point, which is what caused 9/11 golden-set hotels with a real
+        nearby park to score exactly 0 under the pre-1.1.0 formula
         (docs/reports/phase-3-family-surface-vs-point.json).
     """
     dim = "family_convenience"

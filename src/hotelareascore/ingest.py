@@ -90,21 +90,8 @@ def _poi_sql(places_path: str, city: City) -> str:
     """
 
 
-def _green_spaces_sql(land_use_path: str, city: City) -> str:
-    """Polygon footprints for family_convenience v2 (docs/adr/006):
-    Overture's base/land_use theme, filtered to park/playground -- the same
-    real-world features `places` represents as points, here as their actual
-    area geometry. bbox.* columns are extracted directly (Overture already
-    computes them) rather than derived from geometry at score time, so
-    scoring's bbox prefilter is a plain column comparison."""
+def _green_space_select(source_path: str, city: City, predicate: str) -> str:
     minx, miny, maxx, maxy = city.bbox
-    cfg = taxonomy.family_convenience_land_use_config()
-    subtypes = ", ".join(f"'{s}'" for s in cfg["subtypes"])
-    rec_classes = cfg.get("recreation_classes", [])
-    predicate = f"(subtype IN ({subtypes}))"
-    if rec_classes:
-        classes = ", ".join(f"'{c}'" for c in rec_classes)
-        predicate += f" OR (subtype = 'recreation' AND class IN ({classes}))"
     return f"""
         SELECT
             id,
@@ -117,11 +104,59 @@ def _green_spaces_sql(land_use_path: str, city: City) -> str:
             bbox.xmax AS bbox_xmax,
             bbox.ymax AS bbox_ymax,
             '{city.id}' AS city_id
-        FROM read_parquet('{land_use_path}')
+        FROM read_parquet('{source_path}')
         WHERE bbox.xmin BETWEEN {minx} AND {maxx}
           AND bbox.ymin BETWEEN {miny} AND {maxy}
           AND ({predicate})
     """
+
+
+def land_use_green_predicate() -> str:
+    """SQL predicate (on `subtype`/`class` columns) for which base/land_use
+    polygons count as family_convenience green space -- docs/adr/006,
+    classes expanded in docs/adr/007. See taxonomy-mapping.yml's comment
+    block for what was checked and explicitly excluded."""
+    cfg = taxonomy.family_convenience_land_use_config()
+    subtypes = ", ".join(f"'{s}'" for s in cfg["subtypes"])
+    predicate = f"(subtype IN ({subtypes}))"
+    for key, fixed_subtype in (
+        ("recreation_classes", "recreation"),
+        ("managed_classes", "managed"),
+        ("entertainment_classes", "entertainment"),
+    ):
+        classes = cfg.get(key, [])
+        if classes:
+            values = ", ".join(f"'{c}'" for c in classes)
+            predicate += f" OR (subtype = '{fixed_subtype}' AND class IN ({values}))"
+    return predicate
+
+
+def land_green_predicate() -> str:
+    """SQL predicate for which base/land (natural land-cover) polygons
+    count as family_convenience green space -- docs/adr/007."""
+    cfg = taxonomy.family_convenience_land_config()
+    subtypes = ", ".join(f"'{s}'" for s in cfg["subtypes"])
+    predicate = f"(subtype IN ({subtypes}))"
+    sand_classes = cfg.get("sand_classes", [])
+    if sand_classes:
+        values = ", ".join(f"'{c}'" for c in sand_classes)
+        predicate += f" OR (subtype = 'sand' AND class IN ({values}))"
+    return predicate
+
+
+def _green_spaces_sql(land_use_path: str, land_path: str, city: City) -> str:
+    """Polygon footprints for family_convenience (docs/adr/006, v1.2.0
+    expansion docs/adr/007): union of two Overture themes, filtered to the
+    classes verified (docs/reports/family-v1.2.0-diagnostic.md) to be real,
+    walkable, public green/recreational space -- not private gardens, golf
+    courses, farmland, or individual street trees (see
+    taxonomy-mapping.yml's comment block for the full exclusion list).
+    bbox.* columns are extracted directly (Overture already computes them)
+    rather than derived from geometry at score time, so scoring's bbox
+    prefilter is a plain column comparison."""
+    lu_select = _green_space_select(land_use_path, city, land_use_green_predicate())
+    land_select = _green_space_select(land_path, city, land_green_predicate())
+    return f"{lu_select}\n        UNION ALL\n        {land_select}"
 
 
 def _segment_sql(segments_path: str, city: City) -> str:
@@ -152,15 +187,17 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
     places_path = overture.places_path(release)
     segments_path = overture.segments_path(release)
     land_use_path = overture.land_use_path(release)
+    land_path = overture.land_path(release)
     overture.check_schema(con, places_path, overture.REQUIRED_PLACE_COLUMNS, "places theme")
     overture.check_schema(con, segments_path, overture.REQUIRED_SEGMENT_COLUMNS, "transportation theme")
     overture.check_schema(con, land_use_path, overture.REQUIRED_LAND_USE_COLUMNS, "base/land_use theme")
+    overture.check_schema(con, land_path, overture.REQUIRED_LAND_COLUMNS, "base/land theme")
 
     t0 = time.time()
     con.execute(f"CREATE OR REPLACE TEMP TABLE hotels_raw AS {_hotels_raw_sql(places_path, city)}")
     con.execute(f"CREATE OR REPLACE TEMP TABLE pois AS {_poi_sql(places_path, city)}")
     con.execute(f"CREATE OR REPLACE TEMP TABLE segments AS {_segment_sql(segments_path, city)}")
-    con.execute(f"CREATE OR REPLACE TEMP TABLE green_spaces AS {_green_spaces_sql(land_use_path, city)}")
+    con.execute(f"CREATE OR REPLACE TEMP TABLE green_spaces AS {_green_spaces_sql(land_use_path, land_path, city)}")
     extract_seconds = time.time() - t0
 
     hotels_raw_rows = con.execute(
