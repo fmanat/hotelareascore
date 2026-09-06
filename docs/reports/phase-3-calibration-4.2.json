@@ -6,21 +6,24 @@
       "nearby_restaurants vs food_essentials (+)": 0.8280878418112108,
       "major_road_exposure vs quietness_proxy (-)": -0.35737082088258787,
       "nightlife_intensity vs nightlife_access (+)": 0.7950783696749086,
-      "park_family_convenience vs family_convenience (+)": -0.24847441672516007
+      "park_family_convenience vs family_convenience (+)": -0.24847441672516007,
+      "(d) composite(0.6*major_road_exposure+0.4*nightlife_intensity) vs quietness_proxy (-)": -0.21149525769026856
     },
     "(b) excl. 2 prior-exposure": {
       "transit_convenience vs transit_access (+)": 0.7938402225718885,
       "nearby_restaurants vs food_essentials (+)": 0.8210565389916336,
       "major_road_exposure vs quietness_proxy (-)": -0.360058823981474,
       "nightlife_intensity vs nightlife_access (+)": 0.7710835584401463,
-      "park_family_convenience vs family_convenience (+)": -0.218405857254059
+      "park_family_convenience vs family_convenience (+)": -0.218405857254059,
+      "(d) composite(0.6*major_road_exposure+0.4*nightlife_intensity) vs quietness_proxy (-)": -0.2650952472431647
     },
     "(c) excl. 7 low-confidence": {
       "transit_convenience vs transit_access (+)": 0.8291667026880549,
       "nearby_restaurants vs food_essentials (+)": 0.8032276510181167,
       "major_road_exposure vs quietness_proxy (-)": -0.4027602792390067,
       "nightlife_intensity vs nightlife_access (+)": 0.8236252469390104,
-      "park_family_convenience vs family_convenience (+)": -0.33216377807976
+      "park_family_convenience vs family_convenience (+)": -0.33216377807976,
+      "(d) composite(0.6*major_road_exposure+0.4*nightlife_intensity) vs quietness_proxy (-)": -0.29822403486505444
     }
   },
   "per_city_mean_error": {

@@ -1,0 +1,483 @@
+[
+  {
+    "hotel": "Lisboa Camping & Bungalows",
+    "city": "lisbon",
+    "label": 5,
+    "nearby_land_use_polygons": [
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 78,
+        "approx_area_m2": 376
+      },
+      {
+        "name": "Parque Urbano do Alto da Cabreira",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 318,
+        "approx_area_m2": 90468
+      },
+      {
+        "name": "Parque Infantil Parque da Ribeira 3",
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 728,
+        "approx_area_m2": 100
+      },
+      {
+        "name": "Parque Infantil Parque da Ribeira 2",
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 742,
+        "approx_area_m2": 100
+      },
+      {
+        "name": "Parque Infantil Parque da Ribeira 1",
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 745,
+        "approx_area_m2": 100
+      },
+      {
+        "name": "Parque da Ribeira de Alfragide",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 768,
+        "approx_area_m2": 40714
+      }
+    ]
+  },
+  {
+    "hotel": "Le Relais de la Malmaison",
+    "city": "paris",
+    "label": 4,
+    "nearby_land_use_polygons": [
+      {
+        "name": "promenade de la couverture de l'autoroute",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 209,
+        "approx_area_m2": 32345
+      },
+      {
+        "name": "Promenade de la couverture de l'autoroute",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 249,
+        "approx_area_m2": 16609
+      },
+      {
+        "name": "Parc des Impressionistes",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 346,
+        "approx_area_m2": 74571
+      },
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 455,
+        "approx_area_m2": 5741
+      },
+      {
+        "name": null,
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 494,
+        "approx_area_m2": 533
+      },
+      {
+        "name": "Square Nadar",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 635,
+        "approx_area_m2": 4033
+      },
+      {
+        "name": "Parc des Bords de Seine",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 657,
+        "approx_area_m2": 54022
+      },
+      {
+        "name": null,
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 764,
+        "approx_area_m2": 640
+      },
+      {
+        "name": "Parc du Prieur\u00e9",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 793,
+        "approx_area_m2": 2882
+      },
+      {
+        "name": "Square Tuck",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 799,
+        "approx_area_m2": 6546
+      },
+      {
+        "name": "Square de l'Orangerie",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 802,
+        "approx_area_m2": 5214
+      }
+    ]
+  },
+  {
+    "hotel": "Changi Lodge",
+    "city": "singapore",
+    "label": 4,
+    "nearby_land_use_polygons": []
+  },
+  {
+    "hotel": "Ardra Guest House",
+    "city": "london",
+    "label": 3,
+    "nearby_land_use_polygons": [
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 467,
+        "approx_area_m2": 16228
+      },
+      {
+        "name": "Roundshaw Park",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 845,
+        "approx_area_m2": 82515
+      },
+      {
+        "name": null,
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 898,
+        "approx_area_m2": 2688
+      }
+    ]
+  },
+  {
+    "hotel": "Premia de Mar",
+    "city": "barcelona",
+    "label": 3,
+    "nearby_land_use_polygons": [
+      {
+        "name": "Jard\u00ed Petra Kelly",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 543,
+        "approx_area_m2": 68437
+      },
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 562,
+        "approx_area_m2": 82492
+      },
+      {
+        "name": null,
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 588,
+        "approx_area_m2": 8
+      },
+      {
+        "name": null,
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 589,
+        "approx_area_m2": 8
+      },
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "village_green",
+        "approx_dist_to_bbox_center_m": 642,
+        "approx_area_m2": 201
+      },
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "village_green",
+        "approx_dist_to_bbox_center_m": 730,
+        "approx_area_m2": 10679
+      },
+      {
+        "name": "Jardins de Jacint Verdaguer",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 766,
+        "approx_area_m2": 30856
+      },
+      {
+        "name": "Jardins del Mirador de l'Alcalde",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 796,
+        "approx_area_m2": 13784
+      },
+      {
+        "name": "Jardins de Joan Brossa",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 859,
+        "approx_area_m2": 1626
+      }
+    ]
+  },
+  {
+    "hotel": "\u30db\u30c6\u30ebCOCO",
+    "city": "tokyo",
+    "label": 3,
+    "nearby_land_use_polygons": [
+      {
+        "name": "\u5927\u5411\u5150\u7ae5\u904a\u5712",
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 60,
+        "approx_area_m2": 624
+      },
+      {
+        "name": "\u6c5f\u6238\u5ddd\u5824\u3055\u304f\u3089\u516c\u5712",
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 461,
+        "approx_area_m2": 2911
+      },
+      {
+        "name": "\u6771\u753a\u7b2c1\u5e7c\u5150\u516c\u5712",
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 709,
+        "approx_area_m2": 411
+      },
+      {
+        "name": "\u6771\u91d1\u753a\u3044\u305a\u307f\u5150\u7ae5\u904a\u5712",
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 737,
+        "approx_area_m2": 419
+      },
+      {
+        "name": "\u9ad8\u5dde\u30b7\u30e9\u30ab\u30b7\u516c\u5712",
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 769,
+        "approx_area_m2": 176
+      },
+      {
+        "name": "\u6771\u91d1\u753a\u4e94\u4e01\u76ee\u5150\u7ae5\u904a\u5712",
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 816,
+        "approx_area_m2": 367
+      },
+      {
+        "name": "\u308f\u304b\u3070\u516c\u5712",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 828,
+        "approx_area_m2": 2614
+      }
+    ]
+  },
+  {
+    "hotel": "Strathfield Hotel",
+    "city": "sydney",
+    "label": 2,
+    "nearby_land_use_polygons": [
+      {
+        "name": "Everton Place Park",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 105,
+        "approx_area_m2": 578
+      },
+      {
+        "name": "Russel Street Reserve",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 449,
+        "approx_area_m2": 1349
+      },
+      {
+        "name": "Laker Reserve",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 460,
+        "approx_area_m2": 433
+      },
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 675,
+        "approx_area_m2": 6016
+      },
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 714,
+        "approx_area_m2": 11500
+      },
+      {
+        "name": "Burwood Park",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 743,
+        "approx_area_m2": 60434
+      },
+      {
+        "name": null,
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 768,
+        "approx_area_m2": 823
+      },
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 790,
+        "approx_area_m2": 1165
+      },
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 829,
+        "approx_area_m2": 1756
+      },
+      {
+        "name": "Nature Play",
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 835,
+        "approx_area_m2": 2149
+      },
+      {
+        "name": null,
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 876,
+        "approx_area_m2": 357
+      }
+    ]
+  },
+  {
+    "hotel": "Dusit Thani Dubai",
+    "city": "dubai",
+    "label": 2,
+    "nearby_land_use_polygons": [
+      {
+        "name": "DEWA Staff",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 280,
+        "approx_area_m2": 31233
+      }
+    ]
+  },
+  {
+    "hotel": "Le Meridien Fairway",
+    "city": "dubai",
+    "label": 2,
+    "nearby_land_use_polygons": [
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 424,
+        "approx_area_m2": 2757
+      },
+      {
+        "name": null,
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 490,
+        "approx_area_m2": 674
+      },
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 494,
+        "approx_area_m2": 3072
+      },
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 672,
+        "approx_area_m2": 5230
+      }
+    ]
+  },
+  {
+    "hotel": "OC Hotel",
+    "city": "rome",
+    "label": 1,
+    "nearby_land_use_polygons": [
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 340,
+        "approx_area_m2": 141
+      },
+      {
+        "name": null,
+        "subtype": "recreation",
+        "class": "playground",
+        "approx_dist_to_bbox_center_m": 479,
+        "approx_area_m2": 346
+      },
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 533,
+        "approx_area_m2": 2948
+      },
+      {
+        "name": "Parco Guido Rossa",
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 646,
+        "approx_area_m2": 10451
+      },
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 669,
+        "approx_area_m2": 2003
+      },
+      {
+        "name": null,
+        "subtype": "park",
+        "class": "park",
+        "approx_dist_to_bbox_center_m": 682,
+        "approx_area_m2": 2817
+      }
+    ]
+  },
+  {
+    "hotel": "Airport Hotels Bangkok Travel Service",
+    "city": "bangkok",
+    "label": 1,
+    "nearby_land_use_polygons": []
+  }
+]

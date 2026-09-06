@@ -1,0 +1,546 @@
+{
+  "perturbations": [
+    {
+      "label": "decay_scale_m.food_essentials +30%",
+      "dimension": "food_essentials",
+      "per_city_tau": {
+        "london": 0.979,
+        "bangkok": 0.98,
+        "paris": 0.98,
+        "rome": 0.974,
+        "barcelona": 0.982,
+        "amsterdam": 0.982,
+        "lisbon": 0.979,
+        "sydney": 0.982,
+        "tokyo": 0.98,
+        "dubai": 0.978,
+        "new_york": 0.987,
+        "singapore": 0.981
+      },
+      "mean_tau": 0.98,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "decay_scale_m.food_essentials -30%",
+      "dimension": "food_essentials",
+      "per_city_tau": {
+        "london": 0.961,
+        "bangkok": 0.961,
+        "paris": 0.962,
+        "rome": 0.951,
+        "barcelona": 0.964,
+        "amsterdam": 0.966,
+        "lisbon": 0.96,
+        "sydney": 0.967,
+        "tokyo": 0.963,
+        "dubai": 0.957,
+        "new_york": 0.976,
+        "singapore": 0.965
+      },
+      "mean_tau": 0.963,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "decay_scale_m.walkability_density +30%",
+      "dimension": "walkability_density",
+      "per_city_tau": {
+        "london": 0.982,
+        "bangkok": 0.982,
+        "paris": 0.986,
+        "rome": 0.98,
+        "barcelona": 0.989,
+        "amsterdam": 0.986,
+        "lisbon": 0.979,
+        "sydney": 0.983,
+        "tokyo": 0.983,
+        "dubai": 0.98,
+        "new_york": 0.989,
+        "singapore": 0.983
+      },
+      "mean_tau": 0.983,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "decay_scale_m.walkability_density -30%",
+      "dimension": "walkability_density",
+      "per_city_tau": {
+        "london": 0.966,
+        "bangkok": 0.966,
+        "paris": 0.975,
+        "rome": 0.963,
+        "barcelona": 0.978,
+        "amsterdam": 0.973,
+        "lisbon": 0.962,
+        "sydney": 0.969,
+        "tokyo": 0.968,
+        "dubai": 0.962,
+        "new_york": 0.98,
+        "singapore": 0.968
+      },
+      "mean_tau": 0.969,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "decay_scale_m.nightlife_access +30%",
+      "dimension": "nightlife_access",
+      "per_city_tau": {
+        "london": 0.982,
+        "bangkok": 0.986,
+        "paris": 0.982,
+        "rome": 0.969,
+        "barcelona": 0.98,
+        "amsterdam": 0.984,
+        "lisbon": 0.982,
+        "sydney": 0.986,
+        "tokyo": 0.982,
+        "dubai": 0.97,
+        "new_york": 0.987,
+        "singapore": 0.983
+      },
+      "mean_tau": 0.981,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "decay_scale_m.nightlife_access -30%",
+      "dimension": "nightlife_access",
+      "per_city_tau": {
+        "london": 0.966,
+        "bangkok": 0.973,
+        "paris": 0.966,
+        "rome": 0.944,
+        "barcelona": 0.962,
+        "amsterdam": 0.968,
+        "lisbon": 0.965,
+        "sydney": 0.975,
+        "tokyo": 0.966,
+        "dubai": 0.945,
+        "new_york": 0.976,
+        "singapore": 0.97
+      },
+      "mean_tau": 0.965,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "decay_scale_m.family_convenience +30%",
+      "dimension": "family_convenience",
+      "per_city_tau": {
+        "london": 0.972,
+        "bangkok": 0.977,
+        "paris": 0.955,
+        "rome": 0.959,
+        "barcelona": 0.966,
+        "amsterdam": 0.943,
+        "lisbon": 0.95,
+        "sydney": 0.972,
+        "tokyo": 0.952,
+        "dubai": 0.974,
+        "new_york": 0.98,
+        "singapore": 0.96
+      },
+      "mean_tau": 0.963,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "decay_scale_m.family_convenience -30%",
+      "dimension": "family_convenience",
+      "per_city_tau": {
+        "london": 0.947,
+        "bangkok": 0.957,
+        "paris": 0.915,
+        "rome": 0.922,
+        "barcelona": 0.935,
+        "amsterdam": 0.9,
+        "lisbon": 0.905,
+        "sydney": 0.944,
+        "tokyo": 0.913,
+        "dubai": 0.952,
+        "new_york": 0.962,
+        "singapore": 0.925
+      },
+      "mean_tau": 0.931,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "decay_scale_m.transit_access +30%",
+      "dimension": "transit_access",
+      "per_city_tau": {
+        "london": 0.982,
+        "bangkok": 0.994,
+        "paris": 0.986,
+        "rome": 0.989,
+        "barcelona": 0.984,
+        "amsterdam": 0.991,
+        "lisbon": 0.986,
+        "sydney": 0.992,
+        "tokyo": 0.977,
+        "dubai": 0.994,
+        "new_york": 0.987,
+        "singapore": 0.988
+      },
+      "mean_tau": 0.987,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "decay_scale_m.transit_access -30%",
+      "dimension": "transit_access",
+      "per_city_tau": {
+        "london": 0.982,
+        "bangkok": 0.993,
+        "paris": 0.988,
+        "rome": 0.988,
+        "barcelona": 0.984,
+        "amsterdam": 0.989,
+        "lisbon": 0.986,
+        "sydney": 0.99,
+        "tokyo": 0.978,
+        "dubai": 0.993,
+        "new_york": 0.986,
+        "singapore": 0.988
+      },
+      "mean_tau": 0.987,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "hybrid_absolute_weight=0.5 [food_essentials]",
+      "dimension": "food_essentials",
+      "per_city_tau": {
+        "london": 1.0,
+        "bangkok": 1.0,
+        "paris": 1.0,
+        "rome": 1.0,
+        "barcelona": 1.0,
+        "amsterdam": 1.0,
+        "lisbon": 1.0,
+        "sydney": 1.0,
+        "tokyo": 1.0,
+        "dubai": 1.0,
+        "new_york": 1.0,
+        "singapore": 1.0
+      },
+      "mean_tau": 1.0,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "hybrid_absolute_weight=0.5 [walkability_density]",
+      "dimension": "walkability_density",
+      "per_city_tau": {
+        "london": 1.0,
+        "bangkok": 1.0,
+        "paris": 1.0,
+        "rome": 1.0,
+        "barcelona": 1.0,
+        "amsterdam": 1.0,
+        "lisbon": 1.0,
+        "sydney": 1.0,
+        "tokyo": 1.0,
+        "dubai": 1.0,
+        "new_york": 1.0,
+        "singapore": 1.0
+      },
+      "mean_tau": 1.0,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "hybrid_absolute_weight=0.5 [nightlife_access]",
+      "dimension": "nightlife_access",
+      "per_city_tau": {
+        "london": 1.0,
+        "bangkok": 1.0,
+        "paris": 1.0,
+        "rome": 1.0,
+        "barcelona": 1.0,
+        "amsterdam": 1.0,
+        "lisbon": 1.0,
+        "sydney": 1.0,
+        "tokyo": 1.0,
+        "dubai": 1.0,
+        "new_york": 1.0,
+        "singapore": 1.0
+      },
+      "mean_tau": 1.0,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "hybrid_absolute_weight=0.5 [family_convenience]",
+      "dimension": "family_convenience",
+      "per_city_tau": {
+        "london": 1.0,
+        "bangkok": 1.0,
+        "paris": 1.0,
+        "rome": 1.0,
+        "barcelona": 1.0,
+        "amsterdam": 1.0,
+        "lisbon": 1.0,
+        "sydney": 1.0,
+        "tokyo": 1.0,
+        "dubai": 1.0,
+        "new_york": 1.0,
+        "singapore": 1.0
+      },
+      "mean_tau": 1.0,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "hybrid_absolute_weight=0.9 [food_essentials]",
+      "dimension": "food_essentials",
+      "per_city_tau": {
+        "london": 1.0,
+        "bangkok": 1.0,
+        "paris": 1.0,
+        "rome": 1.0,
+        "barcelona": 1.0,
+        "amsterdam": 1.0,
+        "lisbon": 1.0,
+        "sydney": 1.0,
+        "tokyo": 1.0,
+        "dubai": 1.0,
+        "new_york": 1.0,
+        "singapore": 1.0
+      },
+      "mean_tau": 1.0,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "hybrid_absolute_weight=0.9 [walkability_density]",
+      "dimension": "walkability_density",
+      "per_city_tau": {
+        "london": 1.0,
+        "bangkok": 1.0,
+        "paris": 1.0,
+        "rome": 1.0,
+        "barcelona": 1.0,
+        "amsterdam": 1.0,
+        "lisbon": 1.0,
+        "sydney": 1.0,
+        "tokyo": 1.0,
+        "dubai": 1.0,
+        "new_york": 1.0,
+        "singapore": 1.0
+      },
+      "mean_tau": 1.0,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "hybrid_absolute_weight=0.9 [nightlife_access]",
+      "dimension": "nightlife_access",
+      "per_city_tau": {
+        "london": 1.0,
+        "bangkok": 1.0,
+        "paris": 1.0,
+        "rome": 1.0,
+        "barcelona": 1.0,
+        "amsterdam": 1.0,
+        "lisbon": 1.0,
+        "sydney": 1.0,
+        "tokyo": 1.0,
+        "dubai": 1.0,
+        "new_york": 1.0,
+        "singapore": 1.0
+      },
+      "mean_tau": 1.0,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "hybrid_absolute_weight=0.9 [family_convenience]",
+      "dimension": "family_convenience",
+      "per_city_tau": {
+        "london": 1.0,
+        "bangkok": 1.0,
+        "paris": 1.0,
+        "rome": 1.0,
+        "barcelona": 1.0,
+        "amsterdam": 1.0,
+        "lisbon": 1.0,
+        "sydney": 1.0,
+        "tokyo": 1.0,
+        "dubai": 1.0,
+        "new_york": 1.0,
+        "singapore": 1.0
+      },
+      "mean_tau": 1.0,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "quietness.major_road.weight +30%",
+      "dimension": "quietness_proxy",
+      "per_city_tau": {
+        "london": 0.942,
+        "bangkok": 0.973,
+        "paris": 0.945,
+        "rome": 0.952,
+        "barcelona": 0.958,
+        "amsterdam": 0.946,
+        "lisbon": 0.946,
+        "sydney": 0.928,
+        "tokyo": 0.948,
+        "dubai": 0.961,
+        "new_york": 0.924,
+        "singapore": 0.956
+      },
+      "mean_tau": 0.948,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "quietness.major_road.weight -30%",
+      "dimension": "quietness_proxy",
+      "per_city_tau": {
+        "london": 0.923,
+        "bangkok": 0.961,
+        "paris": 0.925,
+        "rome": 0.934,
+        "barcelona": 0.946,
+        "amsterdam": 0.933,
+        "lisbon": 0.926,
+        "sydney": 0.909,
+        "tokyo": 0.927,
+        "dubai": 0.944,
+        "new_york": 0.909,
+        "singapore": 0.939
+      },
+      "mean_tau": 0.931,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "quietness.rail.weight +30%",
+      "dimension": "quietness_proxy",
+      "per_city_tau": {
+        "london": 0.956,
+        "bangkok": 0.985,
+        "paris": 0.95,
+        "rome": 0.936,
+        "barcelona": 0.946,
+        "amsterdam": 0.934,
+        "lisbon": 0.944,
+        "sydney": 0.957,
+        "tokyo": 0.949,
+        "dubai": 0.976,
+        "new_york": 0.948,
+        "singapore": 0.967
+      },
+      "mean_tau": 0.954,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "quietness.rail.weight -30%",
+      "dimension": "quietness_proxy",
+      "per_city_tau": {
+        "london": 0.945,
+        "bangkok": 0.98,
+        "paris": 0.933,
+        "rome": 0.911,
+        "barcelona": 0.925,
+        "amsterdam": 0.914,
+        "lisbon": 0.928,
+        "sydney": 0.947,
+        "tokyo": 0.938,
+        "dubai": 0.969,
+        "new_york": 0.935,
+        "singapore": 0.958
+      },
+      "mean_tau": 0.94,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "quietness.nightlife.weight +30%",
+      "dimension": "quietness_proxy",
+      "per_city_tau": {
+        "london": 0.965,
+        "bangkok": 0.968,
+        "paris": 0.953,
+        "rome": 0.951,
+        "barcelona": 0.956,
+        "amsterdam": 0.946,
+        "lisbon": 0.952,
+        "sydney": 0.955,
+        "tokyo": 0.962,
+        "dubai": 0.954,
+        "new_york": 0.955,
+        "singapore": 0.961
+      },
+      "mean_tau": 0.957,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "quietness.nightlife.weight -30%",
+      "dimension": "quietness_proxy",
+      "per_city_tau": {
+        "london": 0.96,
+        "bangkok": 0.963,
+        "paris": 0.948,
+        "rome": 0.947,
+        "barcelona": 0.952,
+        "amsterdam": 0.938,
+        "lisbon": 0.948,
+        "sydney": 0.95,
+        "tokyo": 0.959,
+        "dubai": 0.948,
+        "new_york": 0.95,
+        "singapore": 0.957
+      },
+      "mean_tau": 0.952,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "quietness.airport.weight +30%",
+      "dimension": "quietness_proxy",
+      "per_city_tau": {
+        "london": 0.97,
+        "bangkok": 0.971,
+        "paris": 0.973,
+        "rome": 0.959,
+        "barcelona": 0.967,
+        "amsterdam": 0.95,
+        "lisbon": 0.974,
+        "sydney": 0.959,
+        "tokyo": 0.956,
+        "dubai": 0.962,
+        "new_york": 0.961,
+        "singapore": 0.975
+      },
+      "mean_tau": 0.965,
+      "load_bearing_cities": []
+    },
+    {
+      "label": "quietness.airport.weight -30%",
+      "dimension": "quietness_proxy",
+      "per_city_tau": {
+        "london": 0.967,
+        "bangkok": 0.969,
+        "paris": 0.972,
+        "rome": 0.957,
+        "barcelona": 0.965,
+        "amsterdam": 0.948,
+        "lisbon": 0.973,
+        "sydney": 0.955,
+        "tokyo": 0.951,
+        "dubai": 0.957,
+        "new_york": 0.957,
+        "singapore": 0.973
+      },
+      "mean_tau": 0.962,
+      "load_bearing_cities": []
+    }
+  ],
+  "nightlife_density_variant": {
+    "per_city_tau": {
+      "london": 0.914,
+      "bangkok": 0.918,
+      "paris": 0.877,
+      "rome": 0.857,
+      "barcelona": 0.864,
+      "amsterdam": 0.854,
+      "lisbon": 0.874,
+      "sydney": 0.894,
+      "tokyo": 0.887,
+      "dubai": 0.896,
+      "new_york": 0.901,
+      "singapore": 0.914
+    },
+    "mean_tau": 0.888,
+    "load_bearing_cities": [],
+    "spearman_major_road_vs_quietness": {
+      "baseline": -0.35737082088258787,
+      "density_variant": -0.338132999824371
+    }
+  }
+}

@@ -50,6 +50,16 @@ DIMENSION_PAIRS = [
     ("park_family_convenience", "family_convenience", "+"),
 ]
 
+# Composite quietness label (owner instruction, follow-up): quietness_proxy's
+# formula penalizes major roads AND rail AND nightlife AND airport, so
+# testing it against major_road_exposure alone tests only one of its inputs
+# -- structurally unfair to the proxy. 0.6/0.4 weighting mirrors the
+# formula's own relative weights (major_road=45, nightlife=25 out of the
+# two combined -> 45/(45+25)=0.643, 25/70=0.357, rounded to the owner's
+# 0.6/0.4). Still excludes rail/airport (no rail/airport intensity label
+# exists), so this is a closer approximation, not full coverage.
+QUIETNESS_COMPOSITE_WEIGHTS = {"major_road_exposure": 0.6, "nightlife_intensity": 0.4}
+
 PRIOR_EXPOSURE_IDS = {
     "8bca5fde-f7e5-45a4-8bf5-21f4b45770f5",  # Hotel Amano
     "a94d53cb-00c1-4303-b729-4707e35da9b8",  # สุขุมวิทซอย11
@@ -139,6 +149,14 @@ def compute_spearman_table(rows: list[dict]) -> dict[str, float]:
         xs = [r[label_col] for r in rows]
         ys = [r[computed_col] for r in rows]
         out[f"{label_col} vs {computed_col} ({sign})"] = spearman(xs, ys)
+    composite = [
+        sum(w * r[col] for col, w in QUIETNESS_COMPOSITE_WEIGHTS.items())
+        for r in rows
+    ]
+    quietness = [r["quietness_proxy"] for r in rows]
+    out["(d) composite(0.6*major_road_exposure+0.4*nightlife_intensity) vs quietness_proxy (-)"] = spearman(
+        composite, quietness
+    )
     return out
 
 

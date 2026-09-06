@@ -15,10 +15,22 @@ labeling tool) — see [`docs/reports/phase-3-plan.md`](reports/phase-3-plan.md)
 see sections below). Golden-set labeling tool source at
 `tools/golden-labeler/` (blind, mobile-first, CSV export,
 `db`+`downloads` capabilities), full 50-hotel selection versioned at
-`tests/golden/selection.json`; published Artifact link in chat, not
-reproduced here. **Owner is labeling now.** Next: collect the 50 labels
-(export or `read_db`), run the sensitivity analysis (`docs/scoring.md §4.3`),
-freeze `score_version` for launch.
+`tests/golden/selection.json`. **Labels are in and calibration (§4.2) +
+sensitivity analysis (§4.3) are done** — owner declined the labeling task
+partway through and asked Claude to label instead (`tests/golden/
+LABELS-PROVENANCE.md` — weaker evidence, read with that caveat). Full
+results and recommendation:
+[phase-3-calibration-sensitivity-report.md](reports/phase-3-calibration-sensitivity-report.md).
+**Recommendation: freeze all v1.0.1 constants, no version bump** — nothing
+tested is load-bearing enough to justify a change. One real defect found
+(`family_convenience` scores 0 for hotels with a real nearby park, because
+the pipeline only reads Overture's point `places` theme, never the polygon
+`base/land_use` theme) is scoped as its own future data-pipeline change, not
+a weight tweak — **not done this session, owner has not reviewed/approved
+it.** Next: owner reviews the report; if approved, schedule the
+family_convenience data-source fix as its own piece of work (new ETL theme,
+taxonomy mapping change, score_version bump, golden-set regression per
+§5) before Phase 4 launch.
 
 Phase 2 gate: ✅ closed 2026-09-06. Phase 1 Data Proof Report: accepted
 2026-09-06 ([report](reports/data-proof-report-2026-08-19.0.md)).
@@ -31,7 +43,7 @@ Phase 2 gate: ✅ closed 2026-09-06. Phase 1 Data Proof Report: accepted
 | 0bis — demand validation | Kill criteria evaluated, owner GO recorded | ✅ **GO recorded 2026-09-06** (see decision log below) |
 | 1 — data proof (2 cities) | Data Proof Report accepted by owner | ✅ **accepted 2026-09-06** |
 | 2 — product proof | Owner inspected 15–20 hotel outputs | ✅ **closed 2026-09-06** |
-| 3 — launch dataset (~12 cities) | Golden set built, calibration done | ▶ current — all 12 cities ingested, golden set (50 hotels) selected, owner labeling in progress |
+| 3 — launch dataset (~12 cities) | Golden set built, calibration done | ▶ current — all 12 cities ingested, golden set (50 hotels) labeled (by Claude, not owner) and calibrated; recommendation (freeze v1.0.1) awaiting owner review |
 | 4 — SEO launch (incl. pilot hotel cohort) | Pilot cohort live, GSC connected | ☐ |
 | 5 — commercial test | First affiliate integrated, clicks measured | ☐ |
 | 6 — growth automation | Weekly GSC loop producing PRs | ☐ |
@@ -232,3 +244,25 @@ in from the start, it's a decision input, not an afterthought.
   `read_db` before and after. **Owner is labeling now.** Next: collect the
   50 labels when ready (export, or `read_db` next session), run the
   sensitivity analysis (`docs/scoring.md §4.3`), freeze `score_version`.
+- Same day: owner declined the labeling task partway through and asked
+  Claude to label the 50 hotels instead, from world knowledge
+  (`tests/golden/LABELS-PROVENANCE.md`, committed with the CSV) —
+  `docs/scoring.md`/`ADR-004`/`/methodology` corrected to state that real
+  provenance and never imply human/owner validation. Ran §4.2 calibration
+  (3 required variants + a 4th composite-quietness-label variant requested
+  as a follow-up) and the full §4.3 sensitivity sweep (decay scales, hybrid
+  weight, quietness penalties, nightlife nearest-vs-density variant, persona
+  weights ±10pt): **everything stable, nothing load-bearing.** Investigated
+  the one real anomaly (`family_convenience` wrong-signed vs its label) down
+  to a root cause: the formula only reads Overture's point `places` theme,
+  never the polygon `base/land_use` theme also present in the same release —
+  confirmed 9/11 zero-scoring golden-set hotels have a real nearby park/
+  playground polygon the pipeline can't see. Logged the 5 entity-QA
+  specimens found while labeling to the backlog (2 independently verified:
+  "souq" is absent from `entity_qa.py`'s markers; the Carlstadt-NJ
+  SpringHill Suites pin is 13.6 km from the New York center, under the
+  15 km disclosure threshold). **Full report and recommendation:
+  [phase-3-calibration-sensitivity-report.md](reports/phase-3-calibration-sensitivity-report.md)
+  — freeze v1.0.1 as-is, no version bump. No constant was changed; owner
+  review is next**, per explicit instruction not to touch
+  `score-weights.yml` before this report was seen.
