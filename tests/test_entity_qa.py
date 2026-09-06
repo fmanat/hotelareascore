@@ -78,6 +78,26 @@ def test_markers_do_not_match_inside_unrelated_words():
     assert not is_likely_non_hotel("Weddings Hornchurch")
 
 
+def test_street_name_collisions_not_flagged():
+    # Bug #4 (Batch 2 New York/Singapore): "union"/"mosque" matched inside
+    # real street/square names, wrongly excluding a real W Hotels property
+    # and a real Singapore hostel address.
+    assert not is_likely_non_hotel("W New York – Union Square")
+    assert not is_likely_non_hotel("31 Union Square West")
+    assert not is_likely_non_hotel("Wink @ Mosque Street")
+    assert not is_likely_non_hotel("Hotel on Church Street")
+    assert not is_likely_non_hotel("Bank Street Studios")  # would need a lodging keyword in practice; checks the guard alone
+    assert not is_likely_non_hotel("Temple Place Apartments")
+
+
+def test_risky_markers_still_catch_genuine_non_hotels():
+    # The guard only exempts "<marker> <street-type-word>" -- a real
+    # institution named plainly should still be caught.
+    assert is_likely_non_hotel("First National Bank")
+    assert is_likely_non_hotel("St Mary's Church")
+    assert is_likely_non_hotel("Sri-Sri Radha Govinda Temple")
+
+
 def test_park_plaza_brand_recognized():
     assert not is_likely_non_hotel("Park Plaza County Hall London Limited")
 

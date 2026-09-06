@@ -78,3 +78,19 @@ cities:
     # themselves ~25 km apart). Not a bbox error; a real geography mismatch
     # with the radius-based disclosure — noted for the ingestion report.
     bbox: { minx: 55.10, miny: 24.95, maxx: 55.42, maxy: 25.30 }
+
+  - id: new_york
+    name: New York
+    country: US
+    center: { lat: 40.7128, lon: -74.0060 }
+    # The 5 boroughs proper -- Staten Island south to the Bronx/Westchester
+    # line, the NJ waterline to eastern Queens. Not shrunk further: unlike
+    # London's commuter-belt overreach, this genuinely is "New York."
+    bbox: { minx: -74.28, miny: 40.49, maxx: -73.70, maxy: 40.92 }
+
+  - id: singapore
+    name: Singapore
+    country: SG
+    center: { lat: 1.3521, lon: 103.8198 }
+    # The whole city-state -- there is no "wrong suburb" to exclude here.
+    bbox: { minx: 103.60, miny: 1.22, maxx: 104.05, maxy: 1.47 }

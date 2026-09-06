@@ -284,14 +284,15 @@
   }
 
   function renderDone(skippedCount) {
-    progressCountEl.textContent = `${HOTELS.length} / ${HOTELS.length}`;
+    progressCountEl.textContent = `${order.length} / ${order.length}`;
     progressBarEl.style.width = '100%';
     appEl.innerHTML = `
       <div class="state-msg">
-        <h2>All 42 done</h2>
-        <p>${HOTELS.length - skippedCount} labeled, ${skippedCount} marked "can't judge."</p>
+        <h2>All ${order.length} done</h2>
+        <p>${order.length - skippedCount} labeled, ${skippedCount} marked "can't judge."</p>
         <p>Thanks — this data feeds the Phase 3 golden-set calibration (docs/scoring.md §4).</p>
         <p>Use "Export labels (CSV)" above to get your data out.</p>
+        <p style="font-size:0.85rem;">If more hotels get added later, they'll appear here automatically next time you open this page.</p>
       </div>
     `;
   }
@@ -508,12 +509,26 @@
 
     if (db) {
       const orderDoc = await db.doc('state/order').get();
-      if (orderDoc.exists && Array.isArray(orderDoc.data().ids)) {
-        order = orderDoc.data().ids;
-      } else {
-        order = shuffledIds();
-        await db.doc('state/order').set({ ids: order, created_at: new Date().toISOString() });
+      let ids = orderDoc.exists && Array.isArray(orderDoc.data().ids) ? [...orderDoc.data().ids] : [];
+
+      // Merge in any hotels added to HOTELS since this order was created
+      // (e.g. a later golden-set wave) without disturbing already-labeled
+      // positions -- new ids are shuffled among themselves, then appended.
+      const known = new Set(ids);
+      const newIds = HOTELS.map((h) => h.id).filter((id) => !known.has(id));
+      for (let i = newIds.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newIds[i], newIds[j]] = [newIds[j], newIds[i]];
       }
+      if (newIds.length > 0 || !orderDoc.exists) {
+        ids = [...ids, ...newIds];
+        await db.doc('state/order').set({
+          ids,
+          created_at: orderDoc.exists ? orderDoc.data().created_at : new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        });
+      }
+      order = ids;
 
       const labelsSnap = await db.collection('labels').get();
       labelsSnap.docs.forEach((d) => labelsById.set(d.id, d.data()));

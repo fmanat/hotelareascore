@@ -6,9 +6,9 @@ aren't hotels — a consultancy ("RevenuebyDesign"), an office tower
 cheap structured signal from the source data itself to catch them.
 
 This is therefore a **name-pattern heuristic, not a validated classifier**,
-and it took three iterations against real Batch 1 data (Paris, Rome,
-Barcelona, Amsterdam, Lisbon, Sydney, Tokyo, Dubai) to get to something
-worth shipping — each caught a distinct, real bug class:
+and it took four iterations against real Batch 1/2 data (Paris, Rome,
+Barcelona, Amsterdam, Lisbon, Sydney, Tokyo, Dubai, New York, Singapore) to
+get to something worth shipping — each caught a distinct, real bug class:
 
 1. "tower"/"design" as markers excluded real hotels: "Design Hotel" and
    "Design Apartments" are a legitimate boutique-accommodation style, and a
@@ -27,6 +27,21 @@ worth shipping — each caught a distinct, real bug class:
    or ending mid-word when a neighboring alternative's boundary happens to
    line up. Only the deliberately unbounded "by ?design" pattern (for
    camelCase names like "RevenuebyDesign") skips this, on purpose.
+4. Bug #3's fix (word boundaries) doesn't help when a marker word IS a real
+   whole word that also names a street: "union" matched "W New York –
+   Union Square" (a real W Hotels property) and "mosque" matched "Wink @
+   Mosque Street" (a real Singapore hostel address) — both are Batch 2
+   finds (`docs/reports/phase-3-batch-2-ingestion-report.md`). "bank",
+   "church" and "temple" carry the same risk (Bank St, Church St, Temple Pl
+   all exist). Fixed differently from bugs #1-3: these four now require a
+   negative lookahead (`RISKY_MARKERS`) — not flagged when immediately
+   followed by a street-type word — instead of being removed outright,
+   since (unlike tower/design/building/office/factory) they still have
+   genuine hits worth keeping ("First National Bank", "St Mary's Church").
+   "union" alone was dropped entirely: no genuine hit for it has turned up
+   yet, only collisions. Known residual staleness: this fix would also
+   rescue 2 already-ingested Dubai records ("...union metro dubai" — a
+   metro-station name, not re-ingested for this alone).
 
 Expect this list to keep needing iteration — every exclusion is logged
 (`manifest.json` `entity_qa_excluded_names`, the full per-city list, not
@@ -87,21 +102,42 @@ HOSPITALITY_BRANDS = re.compile(
 # it does not guarantee every alternative is bounded on both sides.
 # Deliberately excludes "tower"/"building"/"office"/"design"/"factory" (bug
 # #1): each is a common, legitimate hospitality-naming convention somewhere
-# in the world.
+# in the world. Also excludes "union" (bug #4 below moved it to the guarded
+# list, then it was dropped entirely -- see RISKY_MARKER_TERMS).
 _NON_HOTEL_MARKER_TERMS = [
     "consulting", "consultant", "consultants", "solutions", "solution", "trading", "chartered", "law",
     "llp", "plc", "ltd", "limited", "insurance", "embassy", "consulate", "chamber of commerce",
-    "regional office", "head office", "corporation", "corp", "bank", "foundation", "church", "mosque",
-    "temple", "school", "academy", "university", "hospital", "clinic", "dental", "government",
+    "regional office", "head office", "corporation", "corp", "foundation",
+    "school", "academy", "university", "hospital", "clinic", "dental", "government",
     "ministry", "council", "municipal", "logistics", "shipping", "freight", "import", "export",
     "accountant", "accountants", "accounting", "architect", "architects", "estate agents",
     "real estate agency", "surveyor", "surveyors", "recruitment", "staffing", "marketing agency",
     "advertising agency", "construction co", "construction company", "engineering co",
     "engineering company", "engineering services", "it services", "software", "warehouse", "depot",
-    "centre for", "center for", "society", "association", "union",
+    "centre for", "center for", "society", "association",
 ]
 NON_HOTEL_MARKERS = re.compile(
     r"\b(" + "|".join(re.escape(t) for t in _NON_HOTEL_MARKER_TERMS) + r")\b",
+    re.IGNORECASE,
+)
+
+# Bug #4 (owner-audited, Batch 2 New York/Singapore): "union" matched inside
+# "W New York - Union Square" (a real W Hotels property) and "mosque"
+# matched inside "Wink @ Mosque Street" (a real Singapore hostel address) --
+# both are streets/squares named after the same concept the marker means to
+# catch (a labor union, a mosque), not an instance of it. "bank"/"church"/
+# "temple" carry the identical risk (Bank St, Church St, Temple Pl all
+# exist). These four are checked separately with a guard: not flagged when
+# immediately followed by a street-type word. "union" itself is dropped
+# outright -- no genuine hit for it has turned up yet, only this collision.
+_STREET_TYPE_WORD = (
+    r"(?:street|st|road|rd|square|sq|avenue|ave|lane|ln|way|drive|dr|"
+    r"boulevard|blvd|place|pl|court|ct|close|row|walk|circle|crescent|terrace)"
+)
+_RISKY_MARKER_TERMS = ["bank", "church", "mosque", "temple"]
+RISKY_MARKERS = re.compile(
+    r"\b(?:" + "|".join(re.escape(t) for t in _RISKY_MARKER_TERMS) + r")\b"
+    r"(?!\.?\s*" + _STREET_TYPE_WORD + r"\b)",
     re.IGNORECASE,
 )
 
@@ -132,4 +168,8 @@ def is_likely_non_hotel(name: str | None) -> bool:
         return False
     if LODGING_KEYWORDS.search(folded):
         return False
-    return bool(NON_HOTEL_MARKERS.search(folded) or COMPOUND_NAME_MARKERS.search(folded))
+    return bool(
+        NON_HOTEL_MARKERS.search(folded)
+        or RISKY_MARKERS.search(folded)
+        or COMPOUND_NAME_MARKERS.search(folded)
+    )

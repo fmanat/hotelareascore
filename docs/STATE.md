@@ -11,17 +11,14 @@
 amendments (2-batch ingestion, 2-wave golden set, blind/mobile-first
 labeling tool) — see [`docs/reports/phase-3-plan.md`](reports/phase-3-plan.md).
 
-**Done this session:** entity-QA items (a)-(d) implemented; Batch 1 (Paris,
-Rome, Barcelona, Amsterdam, Lisbon, Sydney, Tokyo, Dubai) ingested, scored
-(`score_version 1.0.1`), validated —
-[ingestion report](reports/phase-3-batch-1-ingestion-report.md). Golden-set
-labeling tool source committed at `tools/golden-labeler/` (blind,
-mobile-first, CSV export, `db`+`downloads` capabilities) with the 42-hotel
-selection versioned at `tests/golden/selection.json`; published Artifact
-link in chat, not reproduced here. Coverage check
-([report](reports/phase-3-coverage-bangkok-nyc.md)) done — recommendation:
-Batch 2 acceptable to run as-is. **Batch 2 (New York, Singapore) has NOT
-been ingested — still waits for explicit go-ahead.**
+**All 12 launch cities now ingested/scored/validated** (Batch 1 + Batch 2,
+see sections below). Golden-set labeling tool source at
+`tools/golden-labeler/` (blind, mobile-first, CSV export,
+`db`+`downloads` capabilities), full 50-hotel selection versioned at
+`tests/golden/selection.json`; published Artifact link in chat, not
+reproduced here. **Owner is labeling now.** Next: collect the 50 labels
+(export or `read_db`), run the sensitivity analysis (`docs/scoring.md §4.3`),
+freeze `score_version` for launch.
 
 Phase 2 gate: ✅ closed 2026-09-06. Phase 1 Data Proof Report: accepted
 2026-09-06 ([report](reports/data-proof-report-2026-08-19.0.md)).
@@ -34,7 +31,7 @@ Phase 2 gate: ✅ closed 2026-09-06. Phase 1 Data Proof Report: accepted
 | 0bis — demand validation | Kill criteria evaluated, owner GO recorded | ✅ **GO recorded 2026-09-06** (see decision log below) |
 | 1 — data proof (2 cities) | Data Proof Report accepted by owner | ✅ **accepted 2026-09-06** |
 | 2 — product proof | Owner inspected 15–20 hotel outputs | ✅ **closed 2026-09-06** |
-| 3 — launch dataset (~12 cities) | Golden set built, calibration done | ▶ current — Batch 1 ingested (10/12 cities), golden-set labeling in progress |
+| 3 — launch dataset (~12 cities) | Golden set built, calibration done | ▶ current — all 12 cities ingested, golden set (50 hotels) selected, owner labeling in progress |
 | 4 — SEO launch (incl. pilot hotel cohort) | Pilot cohort live, GSC connected | ☐ |
 | 5 — commercial test | First affiliate integrated, clicks measured | ☐ |
 | 6 — growth automation | Weekly GSC loop producing PRs | ☐ |
@@ -72,25 +69,30 @@ Batch 1's data (full detail: `docs/reports/phase-3-batch-1-ingestion-report.md`)
 **Blind-labeling rule** added to `docs/scoring.md §4.1` per owner
 instruction: the labeling tool never shows our scores/verdict/reason codes.
 
-## Batch 2 (New York, Singapore) — do NOT start without explicit instruction
+## Batch 2 (New York, Singapore) — DONE 2026-09-06
 
-The **real** precondition was a coverage check, not the entity-QA
-exclusion fix (exclusion only removes false hotels from the *included*
-set — it says nothing about real hotels missing from the *excluded* set).
-Done: [`docs/reports/phase-3-coverage-bangkok-nyc.md`](reports/phase-3-coverage-bangkok-nyc.md)
-hand-classified 50 Bangkok + 50 New York rejected-lodging records.
-**Recommendation: acceptable to proceed as-is** — the gap (~10-16% of the
-rejected bucket looks like real, miscategorized lodging) is the same order
-of magnitude already accepted in Phase 1, and the bulk of the rest (46-58%)
-is genuine noise a rescue rule would risk pulling in. A follow-up
-"generic-lodging inclusion rescue" is scoped in that report as a later,
-separately-tested task — not a Batch 2 blocker.
+Owner green-lit Batch 2 off the coverage report's recommendation. Ingested,
+scored, validated (bboxes tightened per the Batch 1 lesson —
+`data/config/cities.yml`) —
+[ingestion report](reports/phase-3-batch-2-ingestion-report.md). **All 12
+Phase 3 launch cities are now ingested; cumulative volumetry (~131 MB) landed
+within 0.5% of the plan's ~130 MB estimate.** A 4th entity-QA false-positive
+class surfaced and was fixed (see next section). Golden-set wave 2 (8
+New York/Singapore hotels, `tests/golden/selection.json`) added and the
+labeling tool republished — **owner's wave-1 labels confirmed preserved**
+(verified via `read_db` before/after: `state/order` unchanged, still 42
+ids, until the next page load merges in the new 8 automatically).
 
-Still waits on its own explicit go-ahead. When instructed:
-`make ingest/score/validate --city new_york,singapore` (bboxes not yet
-defined in `cities.yml` — add them first, tightened per the Batch 1
-lesson), then extend the golden set with ~8 more hotels (wave 2) via
-`tests/golden/selection.json` + `tools/golden-labeler/build.py`, republish.
+## Phase 4 commitment: `search_events` as the coverage KPI (owner decision, 2026-09-06)
+
+No automatic "rejected lodging" rescue rule will be built off blind sampling
+(Bangkok's 58% noise rate makes that too risky — `docs/reports/phase-3-coverage-bangkok-nyc.md`).
+**In exchange:** once the live site is up (Phase 4), `search_events`
+(searches with no matching hotel) becomes the per-city coverage KPI. If it
+shows real user demand concentrated on specific missing hotels, the rescue
+rule gets reconsidered against that actual-demand data — not another
+sampling pass. Whoever picks up Phase 4 SEO-launch work: wire this metric
+in from the start, it's a decision input, not an afterthought.
 
 ## Decisions taken (pointers, not prose)
 
@@ -126,6 +128,18 @@ lesson), then extend the golden set with ~8 more hotels (wave 2) via
   short-circuit lets 33 hotel sub-venues (restaurant/spa/bar/parking/
   ballroom sharing a parent brand name, e.g. "Royal Princess Dusit
   Restaurant") through across the 10 ingested cities.
+- 2026-09-06 — **Owner green-lit Batch 2** off the coverage report. New
+  York + Singapore ingested/scored/validated (tightened bboxes) —
+  [report](reports/phase-3-batch-2-ingestion-report.md); **all 12 cities
+  done**, cumulative volumetry ~131 MB (within 0.5% of the ~130 MB
+  estimate). Found and fixed a 4th entity-QA bug in the process: "union"/
+  "mosque"/"bank"/"church"/"temple" collided with real street/square names
+  ("W New York – Union Square", "Wink @ Mosque Street") — now guarded
+  against a following street-type word, "union" dropped outright. Owner
+  decision: no automated "rejected lodging" rescue rule now; `search_events`
+  becomes the Phase 4 coverage KPI instead (see section above). Golden-set
+  wave 2 (8 hotels) added, tool republished with wave-1 labels confirmed
+  intact (verified via `read_db`).
 - **Scope decision, not asked to the owner (ordinary engineering):** `web/`
   is NOT wired into CI — its build needs the gitignored, network-fetched ETL
   output, which would make CI slow and non-reproducible across monthly
@@ -151,7 +165,7 @@ lesson), then extend the golden set with ~8 more hotels (wave 2) via
 
 | Month | Est. recurring € | Main driver | Notes |
 |---|---:|---|---|
-| 2026-09 | 0 | — | validation + Phases 1–3 (Batch 1, 10/12 cities), all free tiers (docs/reports/phase-3-batch-1-ingestion-report.md) |
+| 2026-09 | 0 | — | validation + Phases 1–3, all 12 launch cities, all free tiers (docs/reports/phase-3-batch-2-ingestion-report.md) |
 
 ## Last session summary
 
@@ -169,6 +183,15 @@ lesson), then extend the golden set with ~8 more hotels (wave 2) via
   `db`+`downloads`, [coverage report](reports/phase-3-coverage-bangkok-nyc.md)
   recommends Batch 2 is OK to proceed as-is. Also logged: the brand-allowlist
   short-circuit lets ~33 hotel sub-venues through (not fixed).
-  **Batch 2 still not started** — waits for explicit go-ahead. Next: owner
-  labels via the tool (exports CSV when done, or Claude reads the Artifact's
-  `db` directly next session); separately, decide on Batch 2's go-ahead.
+- Same day: **owner green-lit Batch 2**. New York + Singapore ingested,
+  scored, validated (tightened bboxes) — **all 12 launch cities now done**,
+  cumulative volumetry ~131 MB (within 0.5% of the ~130 MB estimate). Found
+  and fixed a 4th entity-QA bug along the way ("union"/"mosque"/"bank"/
+  "church"/"temple" colliding with real street/square names — see
+  `entity_qa.py` and the Batch 2 report). Owner decision: no automated
+  rescue rule for rejected-lodging now; `search_events` becomes the Phase 4
+  coverage KPI instead. Golden-set wave 2 (8 hotels) added to the 50-hotel
+  selection; tool republished with wave-1 labels verified intact via
+  `read_db` before and after. **Owner is labeling now.** Next: collect the
+  50 labels when ready (export, or `read_db` next session), run the
+  sensitivity analysis (`docs/scoring.md §4.3`), freeze `score_version`.
