@@ -1,0 +1,17 @@
+# Phase 1 pilot cities (docs/strategy.md §5 — "London + Bangkok, contrasting
+# urban patterns"). Add more cities here only under Phase 3 (launch dataset);
+# adding a city here is a data-scope change, not an indexing decision.
+cities:
+  - id: london
+    name: London
+    country: GB
+    center: { lat: 51.5074, lon: -0.1278 }
+    # Greater London, generous margin for edge hotels.
+    bbox: { minx: -0.52, miny: 51.29, maxx: 0.33, maxy: 51.68 }
+
+  - id: bangkok
+    name: Bangkok
+    country: TH
+    center: { lat: 13.7563, lon: 100.5018 }
+    # Bangkok metro area (Sukhumvit -> Chao Phraya -> Don Mueang approach).
+    bbox: { minx: 100.32, miny: 13.55, maxx: 100.93, maxy: 13.95 }

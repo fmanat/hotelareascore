@@ -1,0 +1,104 @@
+# Scoring constants — docs/scoring.md §3: "Status of every constant below:
+# educated prior, not validated." Calibration (Phase 3, golden set +
+# sensitivity analysis) may change any of these. Never edit this file without
+# bumping `score_version` (docs/scoring.md §5 / docs/adr/004).
+score_version: "1.0.0-proof"
+
+# exp(-d/scale): distance (m) at which a single nearby POI's contribution has
+# decayed to ~37% (1/e). Larger scale = "being farther away still counts".
+decay_scale_m:
+  food_essentials: 250
+  walkability_density: 250
+  transit_access: 400
+  nightlife_access: 250
+  family_convenience: 350
+
+# hybrid = hybrid_absolute_weight * absolute_score + (1 - hybrid_absolute_weight) * city_percentile_score
+hybrid_absolute_weight: 0.70
+
+# absolute_score = 100 * (1 - exp(-weighted_count / absolute_saturation))
+# i.e. the weighted, decay-discounted POI count at which the absolute
+# (cross-city) score reaches ~63/100.
+absolute_saturation:
+  food_essentials: 6
+  walkability_density: 15
+  nightlife_access: 4
+  family_convenience: 2
+
+# quietness_proxy starts at 100 (quiet) and loses points from nearby
+# infrastructure/activity; floor 0. Each penalty is
+# penalty_weight * exp(-d/penalty_scale_m), summed and capped.
+quietness:
+  start: 100
+  penalties:
+    major_road: { weight: 45, scale_m: 100 }
+    rail:       { weight: 35, scale_m: 100 }
+    nightlife:  { weight: 25, scale_m: 120 }
+    airport:    { weight: 30, scale_m: 2500 }
+
+# transit_access is proximity-based (no travel-time claims without routing
+# data, docs/scoring.md §2): best single-mode decay score, plus a small bonus
+# per additional mode found within radius (multi-modality), capped at 100.
+transit:
+  multi_mode_bonus: 8
+  max_bonus_modes: 3
+
+# Confidence 0-100 (docs/scoring.md §3): High >=80, Medium 60-79, Low <60.
+# Weighted composite of independent signals — the weights themselves are a
+# v1 prior, revisit in the sensitivity pass (docs/scoring.md §4.3).
+confidence:
+  weights:
+    place_confidence: 0.30     # Overture's own `confidence` field on the hotel record
+    poi_coverage: 0.30         # fraction of the 6 dimensions with >=1 POI found in radius
+    city_sample_size: 0.20     # city hotel count vs target sample size
+    dedupe_quality: 0.20       # penalized if the hotel record required multi-source merge
+  city_sample_target_n: 300
+  default_place_confidence: 50   # used when Overture's own confidence is null
+
+# Persona reweighting (docs/strategy.md §2D) — presentation only, never
+# changes underlying facts/scores. Weights sum to 1.0 per persona; applied to
+# the 6 raw dimension scores to produce a persona-fit number at render time
+# (Phase 2), stored here now so the config exists before the UI needs it.
+personas:
+  balanced:
+    walkability_density: 0.20
+    transit_access: 0.20
+    food_essentials: 0.20
+    quietness_proxy: 0.15
+    family_convenience: 0.10
+    nightlife_access: 0.15
+  quiet_sleep:
+    walkability_density: 0.10
+    transit_access: 0.15
+    food_essentials: 0.15
+    quietness_proxy: 0.45
+    family_convenience: 0.10
+    nightlife_access: 0.05
+  first_time_tourist:
+    walkability_density: 0.25
+    transit_access: 0.25
+    food_essentials: 0.20
+    quietness_proxy: 0.10
+    family_convenience: 0.05
+    nightlife_access: 0.15
+  car_free:
+    walkability_density: 0.25
+    transit_access: 0.40
+    food_essentials: 0.15
+    quietness_proxy: 0.10
+    family_convenience: 0.05
+    nightlife_access: 0.05
+  family:
+    walkability_density: 0.20
+    transit_access: 0.15
+    food_essentials: 0.15
+    quietness_proxy: 0.25
+    family_convenience: 0.25
+    nightlife_access: 0.00
+  nightlife:
+    walkability_density: 0.15
+    transit_access: 0.15
+    food_essentials: 0.15
+    quietness_proxy: 0.05
+    family_convenience: 0.00
+    nightlife_access: 0.50

@@ -4,8 +4,9 @@ Independent hotel-location intelligence: before you book, understand the
 surroundings. Computed scores from open geospatial data — not reviews, not
 prices, not a booking engine.
 
-**Status: Phase 0 (repo & ADRs) + Phase 0bis (demand validation) — nothing
-heavier is authorized yet. Read `docs/STATE.md` first, always.**
+**Status: Phase 1 (data proof — London + Bangkok) — pipeline runs end to end;
+see `docs/reports/data-proof-report-*.md` for the latest run and
+`docs/STATE.md` for what's next. Nothing past Phase 1 is authorized yet.**
 
 ## Repo layout
 
@@ -21,10 +22,28 @@ docs/
   data-and-costs.md    sources, ETL/serving split, volumetrics, cost bot
   affiliate-matching.md  hotel ↔ partner-inventory entity resolution
   adr/                 architecture decision records (001–005 = founding set)
-data/config/           weights, brand aliases (config, never hardcoded)
-scripts/               ETL & ops entry points (Phase 1+)
+  reports/             generated Data Proof Reports (owner acceptance artifact)
+src/hotelareascore/     ETL package: Overture -> hotels/POIs/scores (Python + DuckDB)
+data/config/            cities, taxonomy mapping, score weights (config, never hardcoded)
+data/etl/               ETL-world output (Parquet, gitignored — regenerate with `make`)
+tests/                  unit tests (taxonomy, geo/decay, dedupe, config bounds)
+scripts/                ops entry points (Phase 4+ bots)
 .github/workflows/     CI — gates grow with phases, never weaken
 ```
+
+## Phase 1 pipeline
+
+```bash
+pip install -e ".[dev]"
+make ingest CITY=all      # Overture release -> per-city hotels/POIs/segments (data/etl/)
+make score CITY=all       # -> hotel_scores + nearby_facts (docs/scoring.md v1 formulas)
+make validate CITY=all    # data QA, fails closed on hard issues (CLAUDE.md hard rule 10)
+make report CITY=london,bangkok RELEASE=latest   # -> docs/reports/data-proof-report-<release>.md
+```
+
+`make all` runs the four in sequence for both pilot cities. Every constant
+behind the scores lives in `data/config/score-weights.yml` and is an
+explicit v1 prior (docs/scoring.md §3) pending Phase 3 calibration.
 
 ## Founding decisions (see docs/adr/)
 

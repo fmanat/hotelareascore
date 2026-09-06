@@ -1,0 +1,19 @@
+# ETL world output (docs/adr/002) — large, regenerable from Overture; never
+# the serving DB, never committed.
+data/etl/
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+.venv/
+venv/
+
+# Env
+.env
+
+# OS
+.DS_Store

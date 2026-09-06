@@ -1,0 +1,104 @@
+# Internal taxonomy mapping, keyed on Overture's CURRENT taxonomy fields
+# (`taxonomy.primary`, `taxonomy.hierarchy`) — NOT the deprecated `categories`
+# field (docs/adr/003 note; data-and-costs.md §1). Verified against a live
+# extract of the London bbox on release 2026-08-19.0 (docs/scoring.md v1 =
+# "educated prior, not validated" applies to every list below).
+#
+# Any change to this file changes what counts as a hotel or a nearby fact —
+# treat it like a taxonomy-mapping change (CLAUDE.md hard rule 5 / scoring.md
+# §6): tests in tests/test_taxonomy.py must cover it.
+
+# ---------------------------------------------------------------------------
+# What counts as a "hotel" entity for HotelAreaScore v1 (product-scope
+# decision, not a data artifact — see docs/reports/data-proof-report-*.md).
+# `taxonomy.hierarchy` contains "lodging" for all of these; we then narrow to
+# types that match the product thesis (a bookable hotel-like stay), excluding
+# vacation-rental / campground / generic-unclassified lodging.
+# ---------------------------------------------------------------------------
+hotel_types:
+  included:
+    - hotel
+    - resort
+    - inn
+    - lodge
+    - guest_house
+    - bed_and_breakfast
+    - hostel
+    - service_apartment
+  excluded:
+    # present under hierarchy=lodging in Overture but out of MVP scope:
+    - lodging               # generic/unclassified leaf, too ambiguous to score
+    - holiday_rental_home
+    - campground
+    - cabin
+    - cottage
+    - rv_park
+    - ski_resort
+    - beach_resort
+    - self_catering_accommodation
+
+# ---------------------------------------------------------------------------
+# Scoring dimensions (docs/scoring.md §2). Each entry lists the Overture
+# `taxonomy.primary` leaves (exact, verified present) and/or top-level
+# `taxonomy.hierarchy[1]` families to match, plus the search radius in
+# meters used for that dimension's distance decay.
+# ---------------------------------------------------------------------------
+dimensions:
+  food_essentials:
+    radius_m: 400
+    categories:
+      - restaurant
+      - cafe
+      - bakery
+      - coffee_shop
+      - grocery_store
+      - convenience_store
+      - pharmacy
+
+  walkability_density:
+    radius_m: 400
+    # broad "useful density" mix, excluding lodging itself and transport
+    # infrastructure (transit access is scored separately).
+    hierarchies:
+      - shopping
+      - food_and_drink
+      - health_care
+      - lifestyle_services
+      - arts_and_entertainment
+
+  transit_access:
+    radius_m: 800
+    categories:
+      - train_station
+      - metro_station
+      - light_rail_and_subway_station
+      - bus_station
+      - public_transit_facility_or_service
+
+  nightlife_access:
+    radius_m: 400
+    categories:
+      - bar
+      - pub
+      - dance_club
+      - cocktail_bar
+      - wine_bar
+      - brewery
+      - lounge
+
+  family_convenience:
+    radius_m: 600
+    categories:
+      - park
+      - playground
+      - zoo
+      - aquarium
+
+  quietness_proxy:
+    major_road_radius_m: 150
+    rail_radius_m: 150
+    nightlife_radius_m: 200
+    airport_radius_m: 5000
+    road_classes: [motorway, trunk, primary]
+    nightlife_categories: [bar, pub, dance_club, cocktail_bar, brewery]
+    airport_categories: [airport]
