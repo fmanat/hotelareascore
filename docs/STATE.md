@@ -7,45 +7,31 @@
 ## Current phase
 
 **Phase 3 — launch dataset (~12 cities), golden set, calibration** (see
-`docs/strategy.md §5`). Plan **approved by owner 2026-09-06** with 3
-amendments (2-batch ingestion, 2-wave golden set, blind/mobile-first
-labeling tool) — see [`docs/reports/phase-3-plan.md`](reports/phase-3-plan.md).
-
-**All 12 launch cities now ingested/scored/validated on score_version
-1.1.0** (Batch 1 + Batch 2 + the family_convenience v2 re-ingestion, see
-sections below). Golden-set labeling tool source at `tools/golden-labeler/`
-(blind, mobile-first, CSV export, `db`+`downloads` capabilities), full
-50-hotel selection versioned at `tests/golden/selection.json`, labels at
-`tests/golden/hotels.csv` (Claude-labeled, not owner — `tests/golden/
-LABELS-PROVENANCE.md`, weaker evidence, read with that caveat).
+`docs/strategy.md §5`), **gate still open**; Phase 4 SEO-launch machinery
+has now been built ahead of time but stays fully inert (flags off) until
+Phase 3 actually closes. See the overnight-mission summary at the bottom
+of this file (2026-09-07) for the full picture — condensed here:
 
 **PHASE 3 GATE: NOT CLOSED.** Owner's own closing condition: "la Phase 3 se
-clôt quand famille passe." Calibration + sensitivity report:
-[phase-3-calibration-sensitivity-report.md](reports/phase-3-calibration-sensitivity-report.md)
-(§1-5 original report + §6 addendum). Status per dimension:
-- Transit, restaurants, nightlife: **pass** (Spearman 0.77-0.83, robust
-  across all sample variants). Every §4.3 sensitivity perturbation stable
-  (τ ≥ 0.85 everywhere) — all v1.1.0 constants frozen, no further tuning.
-- Quietness: kept as-is, documented as a moderate-correlation **proxy**
-  (`/methodology`, `docs/scoring.md §4.3`) — owner-accepted limitation, not
-  a blocker.
-- **family_convenience: still fails the 0.6 target after the v2 fix**
-  (owner-approved: land_use polygon ingestion, boundary-distance scoring,
-  `docs/adr/006`, `score_version` → 1.1.0). Root cause (points-only
-  formula missing real nearby parks) was confirmed and fixed — Spearman
-  went from wrong-signed (−0.22 to −0.33) to correctly-signed but weak
-  (+0.06 to +0.10), still short of 0.6. **Per the owner's own failure
-  criterion, no further change made — stopped here for owner review**, see
-  report §6 for the two options on the table (accept as a disclosed
-  limitation like quietness, vs. a targeted re-labeling pass).
+clôt quand famille passe." All 12 cities ingested/scored/validated on
+**score_version 1.2.0**. Status per dimension (full detail:
+[phase-3-calibration-sensitivity-report.md](reports/phase-3-calibration-sensitivity-report.md),
+[family-v1.2.0-recalibration.md](reports/family-v1.2.0-recalibration.md)):
+- Transit, restaurants, nightlife: **pass** (Spearman 0.77-0.83). Every
+  constant sensitivity-tested and stable — frozen, no further tuning.
+- Quietness: kept as-is, documented as a moderate-correlation **proxy** —
+  owner-accepted limitation, not a blocker.
+- **family_convenience: still fails after two fix attempts.** v2
+  (`docs/adr/006`, land_use polygons) fixed the wrong-signed correlation;
+  v1.2.0 (`docs/adr/007`, expanded green classes + a fresh strict
+  re-labeling `tests/golden/family_strict.csv`) still landed at Spearman
+  **0.209**, below the owner's pre-authorized 0.5 threshold. Per that same
+  instruction, stopped — no further tuning without another explicit review.
+  **This is the one thing blocking Phase 3 closure.**
 
-Also delivered this round: locality-consistency disclosure
-(`City.expected_region`, independent of the 15km far-from-center threshold)
-— found **351/2,194 "New York" hotels (16%) actually have a New Jersey
-address region**, 188 of those previously undisclosed entirely (under the
-15km threshold). All 351 now disclosed on the hotel page. The NY bbox
-itself may be worth tightening later — not done, out of scope for this
-round, flagged in the report.
+Golden-set labels are Claude-produced, not owner (`tests/golden/
+LABELS-PROVENANCE.md`) — weaker evidence, read every number above with
+that caveat.
 
 Phase 2 gate: ✅ closed 2026-09-06. Phase 1 Data Proof Report: accepted
 2026-09-06 ([report](reports/data-proof-report-2026-08-19.0.md)).
@@ -58,16 +44,33 @@ Phase 2 gate: ✅ closed 2026-09-06. Phase 1 Data Proof Report: accepted
 | 0bis — demand validation | Kill criteria evaluated, owner GO recorded | ✅ **GO recorded 2026-09-06** (see decision log below) |
 | 1 — data proof (2 cities) | Data Proof Report accepted by owner | ✅ **accepted 2026-09-06** |
 | 2 — product proof | Owner inspected 15–20 hotel outputs | ✅ **closed 2026-09-06** |
-| 3 — launch dataset (~12 cities) | Golden set built, calibration done | ▶ current — NOT closed: v1.1.0 shipped (family_convenience v2), still fails Spearman ≥ 0.6 target; owner decision pending (accept as disclosed limitation vs. re-label) |
-| 4 — SEO launch (incl. pilot hotel cohort) | Pilot cohort live, GSC connected | ☐ |
+| 3 — launch dataset (~12 cities) | Golden set built, calibration done | ▶ current — NOT closed: family_convenience fails Spearman ≥ 0.5 (0.209) after 2 fix rounds; owner decision pending |
+| 4 — SEO launch (incl. pilot hotel cohort) | Pilot cohort live, GSC connected | ▶ **machinery built overnight 2026-09-07, all inert (flags OFF)** — page_publication, sitemaps, robots.txt, canonicals, JSON-LD, city pages, CI SEO assertions, 200-hotel pilot cohort proposal. Nothing launched; owner decision to actually flip a flag is separate from this being ready. |
 | 5 — commercial test | First affiliate integrated, clicks measured | ☐ |
 | 6 — growth automation | Weekly GSC loop producing PRs | ☐ |
 
 ## Open owner decisions
 
-- [ ] Domain/brand name (blocking public launch, not blocking Phases 1–2)
+- [ ] Domain/brand name (blocking public launch, not blocking Phases 1–2) —
+      also now blocks giving `web/src/lib/site.ts`'s `SITE_URL` a real value
+      (currently the RFC 2606 placeholder `example.invalid`)
 - [ ] Legal vehicle & jurisdiction for the site and affiliate revenue
       (`docs/strategy.md §8` — owner homework)
+- [ ] **Phase 3 closure**: accept family_convenience as a disclosed
+      limitation (like quietness) and close the gate, or commission a
+      genuinely independent re-labeling pass first — see
+      [family-v1.2.0-recalibration.md](reports/family-v1.2.0-recalibration.md)
+- [ ] **NYC bbox/positioning**: polygon-based extraction (data fix) vs. a
+      "NYC metro" market label (positioning decision) for the 351 New
+      Jersey hotels currently inside the "New York" dataset — see
+      [nyc-bbox-options.md](reports/nyc-bbox-options.md)
+- [ ] **Pilot cohort review**: sanity-check a sample of the 200 proposed
+      hotels before any Phase 4 flag is turned on — see
+      [pilot-cohort-proposal.md](reports/pilot-cohort-proposal.md)
+- [ ] **4 legal pages** (`/legal-notice`, `/privacy`, `/affiliate-disclosure`,
+      `/terms`) are owner-provided templates, drafted onto the site with
+      every `[bracket]` placeholder still open — need real review, not just
+      technical integration (already done, noindex, DRAFT-banner marked)
 
 ## Entity QA — done this session (items a-d)
 
@@ -216,11 +219,14 @@ in from the start, it's a decision input, not an afterthought.
   becomes the Phase 4 coverage KPI instead (see section above). Golden-set
   wave 2 (8 hotels) added, tool republished with wave-1 labels confirmed
   intact (verified via `read_db`).
-- **Scope decision, not asked to the owner (ordinary engineering):** `web/`
-  is NOT wired into CI — its build needs the gitignored, network-fetched ETL
-  output, which would make CI slow and non-reproducible across monthly
-  Overture releases. Add web CI (fixture-data-based `astro check` + build) as
-  its own task before Phase 4 deployment work.
+- ~~`web/` is NOT wired into CI~~ **Resolved, overnight mission Bloc B/C
+  (2026-09-07):** `web/` now has 3 real CI jobs (`typecheck`, `e2e`,
+  `seo-assertions`), all running against a small deterministic fixture
+  dataset (`web/e2e-fixtures/`) instead of the gitignored, network-fetched
+  ETL output — solves exactly the reproducibility problem this note used to
+  flag. The previous `typecheck` job had also been a silent no-op since
+  Phase 2 (checked for `package.json` at the repo root, which doesn't
+  exist — it's in `web/`); fixed in the same pass.
 
 ## Blockers / risks being watched
 
@@ -314,3 +320,72 @@ in from the start, it's a decision input, not an afterthought.
   itself deferred as a separate decision. **Phase 3 gate stays open**;
   owner decision pending on family_convenience (accept as a disclosed
   limitation vs. commission re-labeling).
+
+- **2026-09-07 — Ordre de mission de nuit (propriétaire absent), 6 blocs
+  exécutés en autonomie, 6 commits poussés, CI verte à chaque étape.**
+
+  **Bloc A — Famille v1.2.0 (priorité absolue) : ÉCHEC, comme prévu par la
+  règle pré-autorisée.** Diagnostic sur 5 hôtels nommés : confirmé à la
+  fois des trous de filtre réels (pelouses gérées, terrains de sport
+  ignorés) et des cas d'absence réelle de verdure (pas de fix possible).
+  Filtre étendu (`docs/adr/007`, vérifié contre un extrait Overture réel —
+  jamais deviné), 2ᵉ thème Overture ingéré (`base/land`), 12 villes
+  ré-ingérées/re-scorées/validées en `score_version` 1.2.0. Recalibré
+  contre `tests/golden/family_strict.csv` (fourni par vous) : **Spearman
+  0,209, sous le seuil de 0,5** — arrêt immédiat, aucun réglage
+  supplémentaire, comme demandé. Fait notable : le même filtre étendu AIDE
+  le label original (0,095→0,239) mais PAS le label strict — les deux
+  labels mesurent des choses différentes. Rapport complet :
+  [family-v1.2.0-recalibration.md](reports/family-v1.2.0-recalibration.md).
+  **La Phase 3 reste ouverte** — c'est la seule chose qui bloque sa
+  clôture.
+
+  **Bloc B — Page Compare (dette Phase 2) : FAIT.** `/compare`, 2 hôtels
+  côte à côte, sélection depuis la page résultat (lien direct + recherche),
+  mobile d'abord, noindex, zéro appel externe. Première vraie
+  infrastructure E2E du projet (Playwright, données de test déterministes,
+  10 tests, desktop + mobile) — a aussi révélé que le job CI "typecheck"
+  était un no-op silencieux depuis la Phase 2 (mauvais chemin), corrigé.
+
+  **Bloc C — Machinerie SEO Phase 4 : FAITE, entièrement inerte.**
+  `page_publication` opérationnelle (SQLite local + migration Postgres
+  pour plus tard), sitemaps/robots.txt/canonicals/JSON-LD (jamais de
+  markup review/note), assertions SEO en CI (titres uniques sur
+  l'ensemble indexable, un seul canonical, sitemap exact, JSON-LD valide),
+  gabarit de page ville (12 générées, toutes noindex), 4 pages légales
+  intégrées avec bandeau "DRAFT" visible et placeholders intacts — **non
+  relues par vous**. `robots.txt` est le vrai interrupteur : tout est
+  bloqué tant que `PUBLIC_INDEXING_ENABLED` reste OFF. Bug réel trouvé et
+  corrigé au passage : `validate.py` écrivait l'id de release Overture à
+  la place du `score_version` dans chaque baseline ville depuis le début.
+  Détail : [ADR-008](adr/008-page-publication-and-seo-machinery.md).
+
+  **Bloc D — Cohorte pilote : FAIT.** 200 hôtels proposés (6 des 11 portes
+  de `seo-policy.md §4` réellement vérifiées par hôtel, les autres
+  structurellement acquises à ce stade — détaillé dans le rapport), ~70/30
+  indépendant/chaîne, répartis sur les 12 villes. Aucun changement de
+  `page_publication` fait à ce stade — juste la proposition. Point
+  d'attention signalé : le critère de "distinctivité" n'est pas orienté
+  (un score anormalement BAS compte autant qu'un anormalement HAUT).
+  [pilot-cohort-proposal.md](reports/pilot-cohort-proposal.md).
+
+  **Bloc E — Hygiène backlog : FAIT.** Marqueur "souq" ajouté (vérifié
+  contre les 12 villes ; "souk"/"bazaar"/"mall" délibérément écartés —
+  vrais hôtels réels qui collisionnent). Limitation CJK documentée avec
+  test `xfail` honnête (桝本屋酒店). Rapport bbox NYC : resserrer la bbox
+  est **géométriquement impossible** (Staten Island et le New Jersey
+  occupent la même bande de longitude) — 2 options réelles présentées,
+  aucune tranchée. Correctif de slug pour les 9 hôtels à nom purement
+  numérique (appliqué, sûr, testé).
+
+  **Bloc F — Bots d'exploitation : FAIT, squelettes inertes.** 2 workflows
+  GitHub Actions (`data-refresh-monthly`, `ops-weekly`), tous deux
+  `workflow_dispatch` uniquement — aucun cron actif dans aucun fichier.
+  Bot de coût : mesure des proxys locaux réels (pas d'API de facturation
+  branchée), coût actuel honnête = 0€, alerte prête pour quand ce sera
+  réel.
+
+  Aucun flag activé, aucune page rendue indexable en pratique, aucune
+  dépense, aucun compte tiers créé, aucune décision de marque/domaine/
+  légal/commercial prise à ma place. Liste complète des décisions qui vous
+  attendent : voir "Open owner decisions" en haut de ce fichier.
