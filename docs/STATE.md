@@ -11,26 +11,41 @@
 amendments (2-batch ingestion, 2-wave golden set, blind/mobile-first
 labeling tool) — see [`docs/reports/phase-3-plan.md`](reports/phase-3-plan.md).
 
-**All 12 launch cities now ingested/scored/validated** (Batch 1 + Batch 2,
-see sections below). Golden-set labeling tool source at
-`tools/golden-labeler/` (blind, mobile-first, CSV export,
-`db`+`downloads` capabilities), full 50-hotel selection versioned at
-`tests/golden/selection.json`. **Labels are in and calibration (§4.2) +
-sensitivity analysis (§4.3) are done** — owner declined the labeling task
-partway through and asked Claude to label instead (`tests/golden/
-LABELS-PROVENANCE.md` — weaker evidence, read with that caveat). Full
-results and recommendation:
-[phase-3-calibration-sensitivity-report.md](reports/phase-3-calibration-sensitivity-report.md).
-**Recommendation: freeze all v1.0.1 constants, no version bump** — nothing
-tested is load-bearing enough to justify a change. One real defect found
-(`family_convenience` scores 0 for hotels with a real nearby park, because
-the pipeline only reads Overture's point `places` theme, never the polygon
-`base/land_use` theme) is scoped as its own future data-pipeline change, not
-a weight tweak — **not done this session, owner has not reviewed/approved
-it.** Next: owner reviews the report; if approved, schedule the
-family_convenience data-source fix as its own piece of work (new ETL theme,
-taxonomy mapping change, score_version bump, golden-set regression per
-§5) before Phase 4 launch.
+**All 12 launch cities now ingested/scored/validated on score_version
+1.1.0** (Batch 1 + Batch 2 + the family_convenience v2 re-ingestion, see
+sections below). Golden-set labeling tool source at `tools/golden-labeler/`
+(blind, mobile-first, CSV export, `db`+`downloads` capabilities), full
+50-hotel selection versioned at `tests/golden/selection.json`, labels at
+`tests/golden/hotels.csv` (Claude-labeled, not owner — `tests/golden/
+LABELS-PROVENANCE.md`, weaker evidence, read with that caveat).
+
+**PHASE 3 GATE: NOT CLOSED.** Owner's own closing condition: "la Phase 3 se
+clôt quand famille passe." Calibration + sensitivity report:
+[phase-3-calibration-sensitivity-report.md](reports/phase-3-calibration-sensitivity-report.md)
+(§1-5 original report + §6 addendum). Status per dimension:
+- Transit, restaurants, nightlife: **pass** (Spearman 0.77-0.83, robust
+  across all sample variants). Every §4.3 sensitivity perturbation stable
+  (τ ≥ 0.85 everywhere) — all v1.1.0 constants frozen, no further tuning.
+- Quietness: kept as-is, documented as a moderate-correlation **proxy**
+  (`/methodology`, `docs/scoring.md §4.3`) — owner-accepted limitation, not
+  a blocker.
+- **family_convenience: still fails the 0.6 target after the v2 fix**
+  (owner-approved: land_use polygon ingestion, boundary-distance scoring,
+  `docs/adr/006`, `score_version` → 1.1.0). Root cause (points-only
+  formula missing real nearby parks) was confirmed and fixed — Spearman
+  went from wrong-signed (−0.22 to −0.33) to correctly-signed but weak
+  (+0.06 to +0.10), still short of 0.6. **Per the owner's own failure
+  criterion, no further change made — stopped here for owner review**, see
+  report §6 for the two options on the table (accept as a disclosed
+  limitation like quietness, vs. a targeted re-labeling pass).
+
+Also delivered this round: locality-consistency disclosure
+(`City.expected_region`, independent of the 15km far-from-center threshold)
+— found **351/2,194 "New York" hotels (16%) actually have a New Jersey
+address region**, 188 of those previously undisclosed entirely (under the
+15km threshold). All 351 now disclosed on the hotel page. The NY bbox
+itself may be worth tightening later — not done, out of scope for this
+round, flagged in the report.
 
 Phase 2 gate: ✅ closed 2026-09-06. Phase 1 Data Proof Report: accepted
 2026-09-06 ([report](reports/data-proof-report-2026-08-19.0.md)).
@@ -43,7 +58,7 @@ Phase 2 gate: ✅ closed 2026-09-06. Phase 1 Data Proof Report: accepted
 | 0bis — demand validation | Kill criteria evaluated, owner GO recorded | ✅ **GO recorded 2026-09-06** (see decision log below) |
 | 1 — data proof (2 cities) | Data Proof Report accepted by owner | ✅ **accepted 2026-09-06** |
 | 2 — product proof | Owner inspected 15–20 hotel outputs | ✅ **closed 2026-09-06** |
-| 3 — launch dataset (~12 cities) | Golden set built, calibration done | ▶ current — all 12 cities ingested, golden set (50 hotels) labeled (by Claude, not owner) and calibrated; recommendation (freeze v1.0.1) awaiting owner review |
+| 3 — launch dataset (~12 cities) | Golden set built, calibration done | ▶ current — NOT closed: v1.1.0 shipped (family_convenience v2), still fails Spearman ≥ 0.6 target; owner decision pending (accept as disclosed limitation vs. re-label) |
 | 4 — SEO launch (incl. pilot hotel cohort) | Pilot cohort live, GSC connected | ☐ |
 | 5 — commercial test | First affiliate integrated, clicks measured | ☐ |
 | 6 — growth automation | Weekly GSC loop producing PRs | ☐ |
@@ -266,3 +281,24 @@ in from the start, it's a decision input, not an afterthought.
   — freeze v1.0.1 as-is, no version bump. No constant was changed; owner
   review is next**, per explicit instruction not to touch
   `score-weights.yml` before this report was seen.
+- Same day: **owner accepted the v1.0.1 freeze and approved the
+  family_convenience v2 fix** the report identified (docs/adr/006):
+  ingested Overture's `base/land_use` polygon theme (new fail-closed schema
+  check, same treatment as `places`/`transportation`); family_convenience
+  is now its own scoring function, boundary-distance to park/playground
+  polygons + point distance for zoo/aquarium, same constants reused
+  unchanged. `score_version` → **1.1.0**, all 12 cities re-ingested,
+  re-scored, re-validated (all pass), zero big movers in the diff
+  ([score-diff-1.0.1-to-1.1.0.md](reports/score-diff-1.0.1-to-1.1.0.md)).
+  Re-calibrated against the same 50 labels: **sign fixed (−0.22/−0.33 →
+  +0.06/+0.10) but still short of the 0.6 target** — per the owner's own
+  instruction, stopped here, no further tuning, reported back (report §6).
+  Also shipped this round: quietness limitation line on `/methodology`
+  (kept as-is per owner decision); `tests/golden/joined-scores-1.0.1.csv` +
+  `-1.1.0.csv` committed for audit/replay; a locality-consistency
+  disclosure independent of the km threshold, which surfaced a bigger
+  problem than expected (351/2,194 "New York" hotels are actually in New
+  Jersey, 188 previously undisclosed) — all now disclosed, bbox tightening
+  itself deferred as a separate decision. **Phase 3 gate stays open**;
+  owner decision pending on family_convenience (accept as a disclosed
+  limitation vs. commission re-labeling).

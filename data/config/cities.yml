@@ -87,6 +87,13 @@ cities:
     # line, the NJ waterline to eastern Queens. Not shrunk further: unlike
     # London's commuter-belt overreach, this genuinely is "New York."
     bbox: { minx: -74.28, miny: 40.49, maxx: -73.70, maxy: 40.92 }
+    # docs/STATE.md entity-QA backlog: the NJ waterline is close enough that
+    # a hotel can sit inside this bbox while being in a different US state
+    # (SpringHill Suites, Carlstadt NJ -- 13.6 km from center, under the
+    # 15 km far_from_center threshold, so distance alone doesn't catch it).
+    # Checked against Overture's own addresses[].region field independent of
+    # the distance flag.
+    expected_region: NY
 
   - id: singapore
     name: Singapore

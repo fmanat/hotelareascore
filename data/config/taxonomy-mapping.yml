@@ -86,13 +86,25 @@ dimensions:
       - brewery
       - lounge
 
+  # v2 (score_version 1.1.0, docs/adr/006): park/playground access is scored
+  # from Overture's base/land_use polygon footprints, distance measured to
+  # the polygon's own boundary (not its centroid) -- see land_use below.
+  # zoo/aquarium stay points (`places` theme; no polygon footprint exists
+  # for them in land_use) via `categories`. `display_only_categories` keeps
+  # park/playground showing up in the "Why?" nearby-facts section (a
+  # places-theme point named e.g. "Hyde Park" is still a useful landmark to
+  # display) even though those points no longer feed the SCORE.
   family_convenience:
     radius_m: 600
     categories:
-      - park
-      - playground
       - zoo
       - aquarium
+    display_only_categories:
+      - park
+      - playground
+    land_use:
+      subtypes: [park]
+      recreation_classes: [playground]
 
   quietness_proxy:
     major_road_radius_m: 150

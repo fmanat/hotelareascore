@@ -101,5 +101,23 @@ def quietness_config() -> dict:
     return load_taxonomy_mapping()["dimensions"]["quietness_proxy"]
 
 
+def family_convenience_land_use_config() -> dict:
+    """Polygon-source config for family_convenience v2 (score_version
+    1.1.0): which base/land_use subtype/class values count as a green space,
+    scored by distance to the polygon boundary (see scoring.py
+    _family_convenience_dimension)."""
+    return load_taxonomy_mapping()["dimensions"]["family_convenience"]["land_use"]
+
+
+def family_convenience_display_only_categories() -> list[str]:
+    """places-theme categories kept in the flat POI extract for the "Why?"
+    nearby-facts display only -- they no longer feed the family_convenience
+    SCORE (that now comes from land_use polygons, see
+    family_convenience_land_use_config)."""
+    return list(
+        load_taxonomy_mapping()["dimensions"]["family_convenience"].get("display_only_categories", [])
+    )
+
+
 def nearby_facts_display_exclude() -> set[str]:
     return set(load_taxonomy_mapping().get("nearby_facts_display_exclude", []))

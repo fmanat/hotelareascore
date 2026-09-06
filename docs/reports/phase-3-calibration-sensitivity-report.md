@@ -2,10 +2,13 @@
 
 > Read alongside `tests/golden/LABELS-PROVENANCE.md` (label provenance
 > caveat, must be applied to every number below) and `docs/scoring.md §4-5`
-> (the protocol this report executes). **No scoring constant has been
-> changed.** `data/config/score-weights.yml` is untouched; `score_version`
-> stays `1.0.1`. This is the report the owner asked to see before any change
-> is made, per the explicit instruction to show it first.
+> (the protocol this report executes). Sections 1-5 below are the original
+> report, delivered before any change was made, per the explicit instruction
+> to show it first. **§6 is an addendum**: the owner reviewed this report,
+> accepted the freeze recommendation, and separately approved the
+> family_convenience v2 fix it identified — executed, `score_version` is now
+> `1.1.0`. Read §6 for what changed and its outcome; §1-5 are left as
+> originally delivered, for the record.
 
 ## Recommendation (read this first)
 
@@ -240,3 +243,119 @@ owner sign-off is required for *this* delivery, because nothing was
 changed. The two follow-up items identified (family_convenience data
 source; quietness road-severity modeling) each require the full §5
 protocol **when and if** the owner decides to schedule them.
+
+---
+
+## 6. Addendum (2026-09-06) — family_convenience v2 executed, re-calibrated, target not met
+
+Owner decision on this report: accept the freeze recommendation (§1-5,
+unchanged); do not close Phase 3 yet because family_convenience has a
+proven root cause; fix it (`docs/adr/006`); re-run the full §5 protocol;
+target Spearman ≥ 0.6 against the same 50 labels; **on failure, stop and
+report back before touching anything else.** All of that ran. Result:
+**target not met — stopping here, as instructed, before any further
+change.**
+
+### What was built and run
+
+- Ingested `theme=base/type=land_use` for all 12 cities (new fail-closed
+  schema check, `overture.REQUIRED_LAND_USE_COLUMNS`) — same release
+  (`2026-08-19.0`), re-ingested in place. `green_spaces.parquet` added per
+  city (8,046 polygons for London alone; counts vary by city).
+- `family_convenience` is now its own scoring function
+  (`scoring._family_convenience_dimension`): `zoo`/`aquarium` stay points,
+  `park`/`playground` score from land_use polygons, distance to the
+  polygon's own boundary (`ST_Distance`, 0 if the hotel is inside it).
+  `park`/`playground` places-theme points are kept for the "Why?" display
+  only, no longer feed the score. No existing constant's value changed.
+- `score_version` → **1.1.0**. All 12 cities re-scored, all 12 pass
+  `validate` with no hard failures. Diff report:
+  [score-diff-1.0.1-to-1.1.0.md](score-diff-1.0.1-to-1.1.0.md) — as
+  expected, `family_convenience` changed for nearly every hotel in every
+  city (new source, most hotels had 0 nearby points before), balanced_score
+  moved by single digits everywhere (family_convenience's persona weight is
+  0.10-0.25, so even a full 0→100 swing bounds the balanced-score effect),
+  **zero big movers (|Δ| ≥ 15) in any city.** No shocking or unexplained
+  shift; this is exactly the well-behaved diff a source-only change (same
+  formula shape) should produce.
+- Re-ran `scripts/calibrate_golden_set.py` against the new 1.1.0 scores.
+  Joined tables committed for both versions, per item 4 below.
+
+### Calibration result: sign fixed, magnitude still short
+
+| Variant | family_convenience Spearman, v1.0.1 (before) | v1.1.0 (after) |
+|---|---:|---:|
+| (a) all 50 | −0.248 | **+0.095** |
+| (b) excl. 2 prior-exposure | −0.218 | **+0.060** |
+| (c) excl. 7 low-confidence | −0.332 | **+0.100** |
+
+The fix worked in the sense the diagnosis said it would: the correlation is
+no longer wrong-signed (evidence the polygon-boundary fix genuinely
+corrected real false-zeros, consistent with the 9/11 root-cause finding in
+§3). But it is nowhere near the 0.6 target — essentially uncorrelated, just
+on the correct side of zero now. Per-city mean error dropped in most cities
+(e.g. Bangkok 24.6 → 12.4) but stayed high in several others (Singapore
+47.4, Amsterdam 42.7) — inconsistent enough across cities that this doesn't
+look like "almost there, needs one more small fix."
+
+**Per the owner's own failure criterion, no further change is made without
+review.** In particular: no taxonomy expansion (e.g. adding
+`recreation_ground`/`nature_reserve`/`village_green` land_use classes,
+which exist in the data but weren't included), no radius change, no
+re-labeling — any of those would be "touching something else" before this
+conversation happens.
+
+### Hypothesis for the remaining gap (not acted on)
+
+The most likely remaining explanation, unchanged from §1's original
+discussion of this dimension: **a construct mismatch between the label and
+the formula**, not a further data gap. `park_family_convenience` was labeled
+from a holistic "would a family enjoy staying here" judgment (walkability,
+general neighborhood feel, proximity to attractions) rather than strictly
+"is there a park/playground/zoo/aquarium within 600m" — the formula's
+literal definition. Fixing the data source removed the false negatives but
+can't fix a labeling target that was never measuring quite the same thing.
+If this is right, the next real step is not another formula change but a
+narrower re-labeling question ("is there a park or playground within
+roughly a 5-8 minute walk?") — a decision for the owner, not something to
+act on unilaterally here.
+
+### Other items from this request
+
+- **Quietness:** kept as-is (§4.3 above already covers this — nothing
+  tested moved it). `docs/scoring.md §4.3` and `/methodology` both now state
+  the moderate-correlation limitation explicitly (methodology.astro: "a
+  deliberate proxy, not a validated measurement... points the right
+  direction but only moderately").
+- **Auditability:** `tests/golden/joined-scores-1.0.1.csv` and
+  `joined-scores-1.1.0.csv` committed (`tests/golden/joined-scores-README.md`
+  explains provenance and how to regenerate) — the exact table each
+  Spearman number above is computed from, replayable without re-running the
+  ETL pipeline.
+- **Locality disclosure fix:** `City.expected_region` (config.py) +
+  `addresses[].region` extraction (ingest.py) + a `locality_mismatch` check
+  independent of the 15km `far_from_center` threshold (webdata.py),
+  disclosed on the hotel page next to the existing far-from-center flag.
+  Configured for New York (`expected_region: NY`) since that's the bbox
+  known to reach into another US state. **Scale finding, bigger than the
+  single SpringHill Suites example that prompted this:** 351 of New York's
+  2,194 hotels (16%) carry a New Jersey address region, and **188 of those
+  351 are within the 15km far_from_center threshold** — meaning until this
+  fix, those 188 had no disclosure of any kind. This is now caught and
+  disclosed for all 351, but the scale suggests the New York bbox itself
+  may be worth revisiting (tightening the New Jersey-facing edge) as a
+  separate, later decision — not done here, since it's a data-scope change
+  beyond what was asked, and the disclosure now covers it either way.
+
+### Recommendation
+
+Ship `score_version` 1.1.0 as delivered — it is a genuine improvement
+(real bug fixed, verified against live Overture data, zero regressions in
+the diff) even though it does not clear the calibration bar. **Phase 3's
+calibration gate stays open on family_convenience specifically**, per the
+owner's own stated closing condition ("la Phase 3 se clôt quand famille
+passe"). Next decision is the owner's: accept family_convenience as a
+disclosed, imperfect dimension (same treatment as quietness_proxy) and
+close Phase 3 anyway, or commission a targeted re-labeling pass before
+closing. No further formula or taxonomy change is planned unless and until
+that decision is made.

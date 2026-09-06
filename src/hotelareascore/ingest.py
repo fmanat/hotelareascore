@@ -47,6 +47,7 @@ def _hotels_raw_sql(places_path: str, city: City) -> str:
             addresses[1].freeform AS address_freeform,
             addresses[1].locality AS address_locality,
             addresses[1].postcode AS address_postcode,
+            addresses[1].region AS address_region,
             addresses[1].country AS address_country
         FROM read_parquet('{places_path}')
         WHERE bbox.xmin BETWEEN {minx} AND {maxx}
@@ -62,6 +63,14 @@ def _poi_sql(places_path: str, city: City) -> str:
     quiet_cfg = taxonomy.quietness_config()
     airport_cats = ", ".join(f"'{c}'" for c in quiet_cfg["airport_categories"])
     preds.append(f"taxonomy.primary IN ({airport_cats})")
+    # family_convenience v2 (docs/adr/006): park/playground no longer score
+    # from these points (see green-space polygon extraction below), but they
+    # stay in the flat extract so the "Why?" section can still show a nearby
+    # named park -- display only, never scoring input.
+    display_only = taxonomy.family_convenience_display_only_categories()
+    if display_only:
+        cats = ", ".join(f"'{c}'" for c in display_only)
+        preds.append(f"taxonomy.primary IN ({cats})")
     predicate = "(" + " OR ".join(preds) + ")"
     return f"""
         SELECT
@@ -78,6 +87,40 @@ def _poi_sql(places_path: str, city: City) -> str:
           AND bbox.ymin BETWEEN {miny} AND {maxy}
           AND NOT list_contains(taxonomy.hierarchy, 'lodging')
           AND {predicate}
+    """
+
+
+def _green_spaces_sql(land_use_path: str, city: City) -> str:
+    """Polygon footprints for family_convenience v2 (docs/adr/006):
+    Overture's base/land_use theme, filtered to park/playground -- the same
+    real-world features `places` represents as points, here as their actual
+    area geometry. bbox.* columns are extracted directly (Overture already
+    computes them) rather than derived from geometry at score time, so
+    scoring's bbox prefilter is a plain column comparison."""
+    minx, miny, maxx, maxy = city.bbox
+    cfg = taxonomy.family_convenience_land_use_config()
+    subtypes = ", ".join(f"'{s}'" for s in cfg["subtypes"])
+    rec_classes = cfg.get("recreation_classes", [])
+    predicate = f"(subtype IN ({subtypes}))"
+    if rec_classes:
+        classes = ", ".join(f"'{c}'" for c in rec_classes)
+        predicate += f" OR (subtype = 'recreation' AND class IN ({classes}))"
+    return f"""
+        SELECT
+            id,
+            names.primary AS name,
+            subtype,
+            class,
+            ST_AsText(geometry) AS geometry_wkt,
+            bbox.xmin AS bbox_xmin,
+            bbox.ymin AS bbox_ymin,
+            bbox.xmax AS bbox_xmax,
+            bbox.ymax AS bbox_ymax,
+            '{city.id}' AS city_id
+        FROM read_parquet('{land_use_path}')
+        WHERE bbox.xmin BETWEEN {minx} AND {maxx}
+          AND bbox.ymin BETWEEN {miny} AND {maxy}
+          AND ({predicate})
     """
 
 
@@ -108,13 +151,16 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
 
     places_path = overture.places_path(release)
     segments_path = overture.segments_path(release)
+    land_use_path = overture.land_use_path(release)
     overture.check_schema(con, places_path, overture.REQUIRED_PLACE_COLUMNS, "places theme")
     overture.check_schema(con, segments_path, overture.REQUIRED_SEGMENT_COLUMNS, "transportation theme")
+    overture.check_schema(con, land_use_path, overture.REQUIRED_LAND_USE_COLUMNS, "base/land_use theme")
 
     t0 = time.time()
     con.execute(f"CREATE OR REPLACE TEMP TABLE hotels_raw AS {_hotels_raw_sql(places_path, city)}")
     con.execute(f"CREATE OR REPLACE TEMP TABLE pois AS {_poi_sql(places_path, city)}")
     con.execute(f"CREATE OR REPLACE TEMP TABLE segments AS {_segment_sql(segments_path, city)}")
+    con.execute(f"CREATE OR REPLACE TEMP TABLE green_spaces AS {_green_spaces_sql(land_use_path, city)}")
     extract_seconds = time.time() - t0
 
     hotels_raw_rows = con.execute(
@@ -170,10 +216,12 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
     con.execute(f"COPY hotels_final TO '{out_dir / 'hotels.parquet'}' (FORMAT PARQUET)")
     con.execute(f"COPY pois TO '{out_dir / 'pois.parquet'}' (FORMAT PARQUET)")
     con.execute(f"COPY segments TO '{out_dir / 'segments.parquet'}' (FORMAT PARQUET)")
+    con.execute(f"COPY green_spaces TO '{out_dir / 'green_spaces.parquet'}' (FORMAT PARQUET)")
 
     n_hotels_final = con.execute("SELECT count(*) FROM hotels_final").fetchone()[0]
     n_pois = con.execute("SELECT count(*) FROM pois").fetchone()[0]
     n_segments = con.execute("SELECT count(*) FROM segments").fetchone()[0]
+    n_green_spaces = con.execute("SELECT count(*) FROM green_spaces").fetchone()[0]
 
     manifest = {
         "release": release.id,
@@ -188,6 +236,7 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
         "entity_qa_excluded_names": [name for _, name in entity_qa_excluded],
         "pois": n_pois,
         "segments": n_segments,
+        "green_spaces": n_green_spaces,
     }
     with open(out_dir / "manifest.json", "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2)

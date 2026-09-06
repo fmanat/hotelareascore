@@ -17,13 +17,18 @@ from typing import Any
 from . import geo, overture, taxonomy
 from .config import City, DIMENSIONS, get_city, load_score_weights
 
-DENSITY_DIMENSIONS = ("food_essentials", "walkability_density", "nightlife_access", "family_convenience")
+# family_convenience moved to its own dedicated function in score_version
+# 1.1.0 (docs/adr/006): it now combines points (zoo/aquarium) with land_use
+# polygons (park/playground), which the generic point-only _density_dimension
+# below can't express.
+DENSITY_DIMENSIONS = ("food_essentials", "walkability_density", "nightlife_access")
 
 
 def _open_city_tables(con, etl_dir: Path) -> None:
     con.execute(f"CREATE OR REPLACE TEMP TABLE hotels AS SELECT * FROM read_parquet('{etl_dir / 'hotels.parquet'}')")
     con.execute(f"CREATE OR REPLACE TEMP TABLE pois AS SELECT * FROM read_parquet('{etl_dir / 'pois.parquet'}')")
     con.execute(f"CREATE OR REPLACE TEMP TABLE segments AS SELECT * FROM read_parquet('{etl_dir / 'segments.parquet'}')")
+    con.execute(f"CREATE OR REPLACE TEMP TABLE green_spaces AS SELECT * FROM read_parquet('{etl_dir / 'green_spaces.parquet'}')")
 
 
 def _density_dimension(con, city: City, dimension: str, weights: dict[str, Any], diversity_bonus: bool) -> None:
@@ -82,6 +87,76 @@ def _density_dimension(con, city: City, dimension: str, weights: dict[str, Any],
               FROM _dim_raw_{dimension})
         """
     )
+
+
+def _family_convenience_dimension(con, city: City, weights: dict[str, Any]) -> None:
+    """family_convenience v2 (score_version 1.1.0, docs/adr/006): combines
+    two POI sources into the same weighted-count -> saturating-curve ->
+    city-percentile hybrid every other density dimension uses (only the
+    source changed, not the formula shape or its constants):
+      - points (zoo/aquarium, Overture `places`) -- no polygon footprint
+        exists for these in Overture's base theme, so point distance is the
+        only option;
+      - green-space polygons (park/playground, Overture `base/land_use`) --
+        distance is measured to the polygon's own boundary via ST_Distance
+        (0 if the hotel is inside it), not to a centroid or a single
+        places-theme point, which is what caused 9/11 golden-set hotels with
+        a real nearby park to score exactly 0
+        (docs/reports/phase-3-family-surface-vs-point.json).
+    """
+    dim = "family_convenience"
+    cfg = taxonomy.dimension_config(dim)
+    radius_m = cfg["radius_m"]
+    decay_scale_m = weights["decay_scale_m"][dim]
+    saturation = weights["absolute_saturation"][dim]
+    hybrid_w = weights["hybrid_absolute_weight"]
+    point_predicate = taxonomy.poi_sql_predicate(dim, primary_col="p.taxonomy_primary", hierarchy_col="p.taxonomy_hierarchy")
+    dlat, dlon = geo.degree_margin(radius_m, city)
+    proj_h = geo.project_sql("ST_Point(h.lon, h.lat)", city)
+    proj_p = geo.project_sql("ST_Point(p.lon, p.lat)", city)
+    proj_g = geo.project_sql("ST_GeomFromText(g.geometry_wkt)", city)
+
+    sql = f"""
+        WITH point_hit AS (
+            SELECT h.id AS hotel_id, ST_Distance({proj_h}, {proj_p}) AS d, p.taxonomy_primary AS cat
+            FROM hotels h
+            JOIN pois p
+              ON p.lon BETWEEN h.lon - {dlon} AND h.lon + {dlon}
+             AND p.lat BETWEEN h.lat - {dlat} AND h.lat + {dlat}
+             AND {point_predicate}
+        ),
+        green_hit AS (
+            SELECT h.id AS hotel_id, ST_Distance({proj_h}, {proj_g}) AS d, g.subtype AS cat
+            FROM hotels h
+            JOIN green_spaces g
+              ON g.bbox_xmin <= h.lon + {dlon} AND g.bbox_xmax >= h.lon - {dlon}
+             AND g.bbox_ymin <= h.lat + {dlat} AND g.bbox_ymax >= h.lat - {dlat}
+        ),
+        combined AS (
+            SELECT hotel_id, d, cat FROM point_hit WHERE d <= {radius_m}
+            UNION ALL
+            SELECT hotel_id, d, cat FROM green_hit WHERE d <= {radius_m}
+        ),
+        agg AS (
+            SELECT hotel_id,
+                   sum({geo.decay_sql('d', decay_scale_m)}) AS raw_weighted_count,
+                   count(*) AS poi_count,
+                   count(DISTINCT cat) AS distinct_categories,
+                   min(d) AS nearest_m
+            FROM combined GROUP BY hotel_id
+        )
+        SELECT h.id AS hotel_id,
+               coalesce(a.raw_weighted_count, 0.0) AS wc,
+               100.0 * (1 - exp(-coalesce(a.raw_weighted_count, 0.0) / {saturation})) AS absolute_score,
+               percent_rank() OVER (ORDER BY coalesce(a.raw_weighted_count, 0.0)) * 100 AS city_percentile,
+               {hybrid_w} * (100.0 * (1 - exp(-coalesce(a.raw_weighted_count, 0.0) / {saturation})))
+                 + {1 - hybrid_w} * (percent_rank() OVER (ORDER BY coalesce(a.raw_weighted_count, 0.0)) * 100) AS score,
+               coalesce(a.poi_count, 0) AS poi_count,
+               coalesce(a.distinct_categories, 0) AS distinct_categories,
+               a.nearest_m
+        FROM hotels h LEFT JOIN agg a ON a.hotel_id = h.id
+    """
+    con.execute(f"CREATE OR REPLACE TEMP TABLE dim_family_convenience AS {sql}")
 
 
 def _transit_dimension(con, city: City, weights: dict[str, Any]) -> None:
@@ -277,6 +352,7 @@ def score_city(city_id: str, release: overture.Release) -> dict[str, Any]:
 
     for dim in DENSITY_DIMENSIONS:
         _density_dimension(con, city, dim, weights, diversity_bonus=(dim == "food_essentials"))
+    _family_convenience_dimension(con, city, weights)
     _transit_dimension(con, city, weights)
     _quietness_dimension(con, city, weights)
     _confidence_and_balanced(con, city, weights, release.id)
@@ -306,7 +382,10 @@ def _write_nearby_facts(con, city: City, release_id: str, etl_dir: Path, top_n: 
     """Top-N nearby POIs per hotel across all scored dimensions, for the
     'Why?' section (docs/data-and-costs.md §2 — nearby_facts is the ONLY
     per-hotel POI detail that ever reaches the serving DB)."""
-    radius_m = max(taxonomy.dimension_config(d)["radius_m"] for d in DENSITY_DIMENSIONS + ("transit_access",))
+    radius_m = max(
+        taxonomy.dimension_config(d)["radius_m"]
+        for d in DENSITY_DIMENSIONS + ("transit_access", "family_convenience")
+    )
     dlat, dlon = geo.degree_margin(radius_m, city)
     proj_h = geo.project_sql("ST_Point(h.lon, h.lat)", city)
     proj_p = geo.project_sql("ST_Point(p.lon, p.lat)", city)

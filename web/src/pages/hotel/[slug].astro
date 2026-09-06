@@ -41,6 +41,11 @@ const confidenceClass = hotel.confidence_label.toLowerCase();
             · {hotel.distance_from_center_km} km from central {hotel.city_name}
           </span>
         )}
+        {hotel.locality_mismatch && (
+          <span class="far-flag">
+            · {hotel.locality_mismatch_detail}
+          </span>
+        )}
       </p>
       <h1>{hotel.name}</h1>
       <p class="verdict">{hotel.verdict}</p>

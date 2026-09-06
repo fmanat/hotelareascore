@@ -31,6 +31,17 @@ N_COMPARABLE = 4
 # bbox-driven city assignment is what was misleading, not the address data).
 FAR_FROM_CENTER_KM = 15.0
 
+# docs/STATE.md entity-QA backlog: a hotel can sit under the km threshold
+# above and still be in the wrong place -- SpringHill Suites (Carlstadt, NJ)
+# is 13.6 km from the New York center point but is a different US state.
+# This checks address consistency directly, independent of distance.
+def _locality_mismatch(city, address_region: str | None, address_country: str | None) -> str | None:
+    if address_country and address_country != city.country:
+        return f"Address country ({address_country}) does not match {city.name} ({city.country})"
+    if city.expected_region and address_region and address_region != city.expected_region:
+        return f"Address region ({address_region}) does not match {city.name} ({city.expected_region})"
+    return None
+
 
 def confidence_label(confidence: float) -> str:
     if confidence >= 80:
@@ -42,7 +53,7 @@ def confidence_label(confidence: float) -> str:
 
 def _fetch_hotels(con, etl_dir: Path) -> list[dict[str, Any]]:
     q = f"""
-        SELECT h.id, h.name, h.lat, h.lon, h.address_locality, h.address_country,
+        SELECT h.id, h.name, h.lat, h.lon, h.address_locality, h.address_region, h.address_country,
                h.dedupe_confidence,
                s.walkability_density, s.transit_access, s.food_essentials,
                s.quietness_proxy, s.family_convenience, s.nightlife_access,
@@ -100,6 +111,7 @@ def export_city(city_id: str, release: overture.Release) -> list[dict[str, Any]]
         nearby = nearby_by_hotel.get(r["id"], [])
         confidence = round(r["confidence"], 1)
         distance_km = round(haversine_m(city.center_lat, city.center_lon, r["lat"], r["lon"]) / 1000, 1)
+        locality_mismatch = _locality_mismatch(city, r["address_region"], r["address_country"])
         hotel = {
             "id": r["id"],
             "slug": hotel_slug(r["name"] or "hotel", r["id"]),
@@ -107,11 +119,14 @@ def export_city(city_id: str, release: overture.Release) -> list[dict[str, Any]]
             "city_id": city.id,
             "city_name": city.name,
             "locality": r["address_locality"],
+            "region": r["address_region"],
             "country": r["address_country"],
             "lat": round(r["lat"], 6),
             "lon": round(r["lon"], 6),
             "distance_from_center_km": distance_km,
             "far_from_center": distance_km > FAR_FROM_CENTER_KM,
+            "locality_mismatch": locality_mismatch is not None,
+            "locality_mismatch_detail": locality_mismatch,
             "scores": scores,
             "balanced_score": round(r["balanced_score"], 1),
             "confidence": confidence,

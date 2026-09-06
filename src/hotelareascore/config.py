@@ -35,6 +35,12 @@ class City:
     center_lat: float
     center_lon: float
     bbox: tuple[float, float, float, float]  # minx, miny, maxx, maxy
+    # Optional: only set where a city's bbox is wide enough to plausibly
+    # catch a real place in a different first-level administrative region of
+    # the same country (docs/STATE.md entity-QA backlog — New York's bbox
+    # catches Carlstadt, NJ). None means "not checked" for that city, not
+    # "no mismatch possible".
+    expected_region: str | None = None
 
 
 @functools.lru_cache(maxsize=1)
@@ -50,6 +56,7 @@ def load_cities() -> dict[str, City]:
             center_lat=float(c["center"]["lat"]),
             center_lon=float(c["center"]["lon"]),
             bbox=(float(bbox["minx"]), float(bbox["miny"]), float(bbox["maxx"]), float(bbox["maxy"])),
+            expected_region=c.get("expected_region"),
         )
         if not (-90 <= city.center_lat <= 90 and -180 <= city.center_lon <= 180):
             raise ValueError(f"city {city.id}: center out of range")

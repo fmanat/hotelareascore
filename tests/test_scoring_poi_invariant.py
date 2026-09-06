@@ -77,7 +77,6 @@ def test_transit_access_positive_with_one_nearby_stop(con):
     ("food_essentials", True),
     ("walkability_density", False),
     ("nightlife_access", False),
-    ("family_convenience", False),
 ])
 def test_density_dimensions_are_zero_with_no_poi_nearby(con, dimension, diversity_bonus):
     _one_hotel(con)
@@ -95,7 +94,6 @@ def test_density_dimensions_are_zero_with_no_poi_nearby(con, dimension, diversit
     ("food_essentials", "restaurant", ["food_and_drink", "restaurant"]),
     ("walkability_density", "hair_salon", ["lifestyle_services", "hair_salon"]),
     ("nightlife_access", "bar", ["food_and_drink", "bar"]),
-    ("family_convenience", "park", ["sports_and_recreation", "park"]),
 ])
 def test_density_dimensions_positive_with_one_nearby_poi(con, dimension, category, hierarchy):
     _one_hotel(con)
@@ -113,3 +111,122 @@ def test_density_dimensions_positive_with_one_nearby_poi(con, dimension, categor
     row = con.execute(f"SELECT score, poi_count FROM dim_{dimension} WHERE hotel_id = 'h1'").fetchone()
     assert row[1] == 1
     assert row[0] > 0, f"{dimension}: expected a positive score with one nearby matching POI"
+
+
+# --- family_convenience v2 (score_version 1.1.0, docs/adr/006) ---------------
+# Its own dedicated function now: points (zoo/aquarium) + land_use polygons
+# (park/playground), distance to the polygon's own boundary, not a centroid.
+
+def _empty_green_spaces(con):
+    con.execute(
+        """
+        CREATE TEMP TABLE green_spaces AS
+        SELECT * FROM (
+            SELECT 'g'::VARCHAR AS id, ''::VARCHAR AS name, ''::VARCHAR AS subtype, ''::VARCHAR AS class,
+                   ''::VARCHAR AS geometry_wkt, 0.0::DOUBLE AS bbox_xmin, 0.0::DOUBLE AS bbox_ymin,
+                   0.0::DOUBLE AS bbox_xmax, 0.0::DOUBLE AS bbox_ymax
+        ) WHERE FALSE
+        """
+    )
+
+
+def test_family_convenience_zero_with_nothing_nearby(con):
+    _one_hotel(con)
+    _empty_pois(con)
+    _empty_green_spaces(con)
+    weights = load_score_weights()
+
+    scoring._family_convenience_dimension(con, CITY, weights)
+
+    row = con.execute("SELECT score, poi_count FROM dim_family_convenience WHERE hotel_id = 'h1'").fetchone()
+    assert row == (0.0, 0)
+
+
+def test_family_convenience_positive_with_nearby_zoo_point(con):
+    _one_hotel(con)
+    con.execute(
+        """
+        CREATE TEMP TABLE pois AS
+        SELECT 'p1' AS id, 51.5001 AS lat, -0.1001 AS lon, 'zoo' AS taxonomy_primary,
+               ['sports_and_recreation', 'zoo'] AS taxonomy_hierarchy, 'Test Zoo' AS name
+        """
+    )
+    _empty_green_spaces(con)
+    weights = load_score_weights()
+
+    scoring._family_convenience_dimension(con, CITY, weights)
+
+    row = con.execute("SELECT score, poi_count FROM dim_family_convenience WHERE hotel_id = 'h1'").fetchone()
+    assert row[1] == 1
+    assert row[0] > 0
+
+
+def test_family_convenience_ignores_park_points_display_only_category(con):
+    """park/playground stay places-theme points for the 'Why?' display
+    (docs/adr/006) but must NOT feed the score anymore -- that's the land_use
+    polygon's job now."""
+    _one_hotel(con)
+    con.execute(
+        """
+        CREATE TEMP TABLE pois AS
+        SELECT 'p1' AS id, 51.5001 AS lat, -0.1001 AS lon, 'park' AS taxonomy_primary,
+               ['sports_and_recreation', 'park'] AS taxonomy_hierarchy, 'Test Park Point' AS name
+        """
+    )
+    _empty_green_spaces(con)
+    weights = load_score_weights()
+
+    scoring._family_convenience_dimension(con, CITY, weights)
+
+    row = con.execute("SELECT score, poi_count FROM dim_family_convenience WHERE hotel_id = 'h1'").fetchone()
+    assert row == (0.0, 0)
+
+
+def test_family_convenience_hotel_inside_park_polygon_scores_at_zero_distance(con):
+    """A hotel inside a park polygon must score as if distance were 0 (the
+    formula's max weight for that hit) -- this is the whole point of
+    boundary-distance-based scoring vs. a centroid, which could be far away
+    for a large or oddly-shaped park even when the hotel sits inside it."""
+    _one_hotel(con, lat=51.5, lon=-0.1)
+    _empty_pois(con)
+    # A large square polygon that contains the hotel's coordinate, with a
+    # centroid ~1.1km away (10x further than the far corner) to prove
+    # distance is measured to the boundary/interior, not the centroid.
+    polygon_wkt = "POLYGON((-0.11 51.49, 0.11 51.49, 0.11 51.71, -0.11 51.71, -0.11 51.49))"
+    con.execute(
+        f"""
+        CREATE TEMP TABLE green_spaces AS
+        SELECT 'g1' AS id, 'Big Park' AS name, 'park' AS subtype, 'park' AS class,
+               '{polygon_wkt}' AS geometry_wkt,
+               -0.11 AS bbox_xmin, 51.49 AS bbox_ymin, 0.11 AS bbox_xmax, 51.71 AS bbox_ymax
+        """
+    )
+    weights = load_score_weights()
+
+    scoring._family_convenience_dimension(con, CITY, weights)
+
+    row = con.execute("SELECT score, poi_count, nearest_m FROM dim_family_convenience WHERE hotel_id = 'h1'").fetchone()
+    assert row[1] == 1
+    assert row[2] == pytest.approx(0.0, abs=1.0)  # inside the polygon -> ~0m to boundary
+    assert row[0] > 0
+
+
+def test_family_convenience_park_polygon_outside_radius_does_not_count(con):
+    _one_hotel(con, lat=51.5, lon=-0.1)
+    _empty_pois(con)
+    # A tiny polygon ~5km away, well outside family_convenience's 600m radius.
+    polygon_wkt = "POLYGON((-0.15 51.55, -0.149 51.55, -0.149 51.551, -0.15 51.551, -0.15 51.55))"
+    con.execute(
+        f"""
+        CREATE TEMP TABLE green_spaces AS
+        SELECT 'g1' AS id, 'Far Park' AS name, 'park' AS subtype, 'park' AS class,
+               '{polygon_wkt}' AS geometry_wkt,
+               -0.15 AS bbox_xmin, 51.55 AS bbox_ymin, -0.149 AS bbox_xmax, 51.551 AS bbox_ymax
+        """
+    )
+    weights = load_score_weights()
+
+    scoring._family_convenience_dimension(con, CITY, weights)
+
+    row = con.execute("SELECT score, poi_count FROM dim_family_convenience WHERE hotel_id = 'h1'").fetchone()
+    assert row == (0.0, 0)

@@ -3,26 +3,26 @@
   "variants": {
     "(a) all 50": {
       "transit_convenience vs transit_access (+)": 0.8090584522807485,
-      "nearby_restaurants vs food_essentials (+)": 0.8280878418112108,
+      "nearby_restaurants vs food_essentials (+)": 0.8304117784325051,
       "major_road_exposure vs quietness_proxy (-)": -0.35737082088258787,
       "nightlife_intensity vs nightlife_access (+)": 0.7950783696749086,
-      "park_family_convenience vs family_convenience (+)": -0.24847441672516007,
+      "park_family_convenience vs family_convenience (+)": 0.09514170974896599,
       "(d) composite(0.6*major_road_exposure+0.4*nightlife_intensity) vs quietness_proxy (-)": -0.21149525769026856
     },
     "(b) excl. 2 prior-exposure": {
       "transit_convenience vs transit_access (+)": 0.7938402225718885,
-      "nearby_restaurants vs food_essentials (+)": 0.8210565389916336,
+      "nearby_restaurants vs food_essentials (+)": 0.8235692081918529,
       "major_road_exposure vs quietness_proxy (-)": -0.360058823981474,
       "nightlife_intensity vs nightlife_access (+)": 0.7710835584401463,
-      "park_family_convenience vs family_convenience (+)": -0.218405857254059,
+      "park_family_convenience vs family_convenience (+)": 0.05952106615219791,
       "(d) composite(0.6*major_road_exposure+0.4*nightlife_intensity) vs quietness_proxy (-)": -0.2650952472431647
     },
     "(c) excl. 7 low-confidence": {
       "transit_convenience vs transit_access (+)": 0.8291667026880549,
-      "nearby_restaurants vs food_essentials (+)": 0.8032276510181167,
+      "nearby_restaurants vs food_essentials (+)": 0.806738261380958,
       "major_road_exposure vs quietness_proxy (-)": -0.4027602792390067,
       "nightlife_intensity vs nightlife_access (+)": 0.8236252469390104,
-      "park_family_convenience vs family_convenience (+)": -0.33216377807976,
+      "park_family_convenience vs family_convenience (+)": 0.09980121516049027,
       "(d) composite(0.6*major_road_exposure+0.4*nightlife_intensity) vs quietness_proxy (-)": -0.29822403486505444
     }
   },
@@ -32,84 +32,84 @@
       "nearby_restaurants": 16.5,
       "major_road_exposure": 14.1,
       "nightlife_intensity": 23.6,
-      "park_family_convenience": 38.1
+      "park_family_convenience": 37.4
     },
     "Bangkok": {
       "transit_convenience": 21.0,
       "nearby_restaurants": 18.4,
       "major_road_exposure": 21.5,
       "nightlife_intensity": 23.3,
-      "park_family_convenience": 24.6
+      "park_family_convenience": 12.4
     },
     "Paris": {
       "transit_convenience": 14.8,
       "nearby_restaurants": 13.1,
       "major_road_exposure": 24.4,
       "nightlife_intensity": 20.7,
-      "park_family_convenience": 54.1
+      "park_family_convenience": 41.5
     },
     "Rome": {
       "transit_convenience": 7.8,
       "nearby_restaurants": 16.4,
       "major_road_exposure": 27.4,
       "nightlife_intensity": 36.2,
-      "park_family_convenience": 34.9
+      "park_family_convenience": 36.2
     },
     "Barcelona": {
       "transit_convenience": 16.3,
       "nearby_restaurants": 14.8,
       "major_road_exposure": 21.5,
       "nightlife_intensity": 14.4,
-      "park_family_convenience": 37.0
+      "park_family_convenience": 44.3
     },
     "Amsterdam": {
       "transit_convenience": 13.5,
       "nearby_restaurants": 6.3,
       "major_road_exposure": 43.4,
       "nightlife_intensity": 6.9,
-      "park_family_convenience": 49.9
+      "park_family_convenience": 42.7
     },
     "Lisbon": {
       "transit_convenience": 8.6,
       "nearby_restaurants": 6.2,
       "major_road_exposure": 15.0,
       "nightlife_intensity": 34.4,
-      "park_family_convenience": 38.9
+      "park_family_convenience": 33.9
     },
     "Sydney": {
       "transit_convenience": 13.7,
       "nearby_restaurants": 10.1,
       "major_road_exposure": 25.2,
       "nightlife_intensity": 19.6,
-      "park_family_convenience": 36.5
+      "park_family_convenience": 38.5
     },
     "Tokyo": {
       "transit_convenience": 26.8,
       "nearby_restaurants": 29.3,
       "major_road_exposure": 24.9,
       "nightlife_intensity": 41.1,
-      "park_family_convenience": 45.6
+      "park_family_convenience": 43.1
     },
     "Dubai": {
       "transit_convenience": 34.5,
       "nearby_restaurants": 21.8,
       "major_road_exposure": 15.0,
       "nightlife_intensity": 26.8,
-      "park_family_convenience": 27.2
+      "park_family_convenience": 21.8
     },
     "New York": {
       "transit_convenience": 17.2,
       "nearby_restaurants": 17.7,
       "major_road_exposure": 12.5,
       "nightlife_intensity": 11.5,
-      "park_family_convenience": 35.2
+      "park_family_convenience": 37.8
     },
     "Singapore": {
       "transit_convenience": 23.3,
       "nearby_restaurants": 31.6,
       "major_road_exposure": 22.0,
       "nightlife_intensity": 25.4,
-      "park_family_convenience": 49.6
+      "park_family_convenience": 47.4
     }
   }
 }

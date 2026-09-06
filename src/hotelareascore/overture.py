@@ -25,6 +25,7 @@ REQUIRED_PLACE_COLUMNS = {
     "taxonomy", "basic_category", "sources", "bbox",
 }
 REQUIRED_SEGMENT_COLUMNS = {"id", "subtype", "class", "geometry", "bbox"}
+REQUIRED_LAND_USE_COLUMNS = {"id", "subtype", "class", "geometry", "names", "bbox"}
 
 
 class SchemaError(RuntimeError):
@@ -88,6 +89,16 @@ def places_path(release: Release) -> str:
 
 def segments_path(release: Release) -> str:
     return f"s3://overturemaps-us-west-2/release/{release.id}/theme=transportation/type=segment/*"
+
+
+def land_use_path(release: Release) -> str:
+    """base/land_use: polygon footprints (parks, playgrounds, etc.) — the
+    area-geometry counterpart to `places`' point POIs. Added for
+    family_convenience v2 (score_version 1.1.0, docs/adr/006): a park is a
+    polygon in reality, not a point, and scoring proximity to a places-theme
+    point undercounts (or overcounts, for heavily-mapped landmarks) real
+    green-space access."""
+    return f"s3://overturemaps-us-west-2/release/{release.id}/theme=base/type=land_use/*"
 
 
 def check_schema(con: duckdb.DuckDBPyConnection, path: str, required_columns: set[str], label: str) -> None:

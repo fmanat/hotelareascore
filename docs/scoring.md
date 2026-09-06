@@ -36,6 +36,18 @@ travel-time claims without routing data. Quietness penalty weights/scales in
 `data/config/score-weights.yml` (config, never hardcoded in UI); see §4.3 for
 a known simplification in that formula.
 
+**Family convenience v2 (score_version 1.1.0, docs/adr/006):** the same
+weighted-count formula above, but from two combined sources instead of one:
+`zoo`/`aquarium` stay points (Overture `places`, no polygon exists for
+these), while `park`/`playground` now score from Overture's `base/land_use`
+polygon footprints, distance measured to the **polygon's own boundary**
+(`ST_Distance`, 0 if the hotel is inside it) — never a centroid. v1 scored
+all four categories as `places`-theme points, which measurably undercounted
+real nearby parks with no correspondingly-placed point
+(`docs/reports/phase-3-family-surface-vs-point.json`: 9/11 golden-set
+zero-scores had a real polygon within 600-900m). No constant changed —
+same decay scale, saturation, and hybrid weight as before this version.
+
 **Status of every constant above: educated prior, not validated.** They exist
 to get to calibration, and calibration (§4) may change any of them. The
 `/methodology` page must be able to explain the formula in plain language.
@@ -109,6 +121,32 @@ current formula can't tell them apart — put it at the top of the §4.3
 perturbation list (try a density term, e.g. `count(venues within radius)`,
 alongside the pure-nearest version, and compare both against golden labels).
 Do not change the constant or formula outside that calibration pass.
+
+**Resolved 2026-09-06 (full sensitivity pass,
+`docs/reports/phase-3-calibration-sensitivity-report.md`): kept as-is, not
+tuned.** Every constant tested (decay scales, hybrid weight, all 4 quietness
+penalty weights, persona weights, and the density-term variant above) left
+per-city rankings stable (Kendall-tau ≥ 0.85 everywhere). The density-term
+nightlife-penalty variant was built and tested against the golden labels as
+instructed: no improvement (Spearman vs `major_road_exposure` −0.338 vs
+baseline −0.357, i.e. not better, within noise for n=50). **Known
+limitation, accepted rather than fixed:** `quietness_proxy`'s agreement with
+independent judgment of road/rail/nightlife exposure is directionally
+correct but only moderate (−0.36 to −0.40 vs the road-exposure label across
+sample variants, short of the 0.6 working bar) — it is an explicitly-labeled
+**proxy**, not a validated measurement, and `/methodology` says so. The
+nearest lead for a future improvement is modeling road *severity* (a
+motorway and a two-lane primary road currently get an identical penalty),
+not the nightlife term tested here.
+
+**family_convenience: real anomaly, root cause found, fixed as v2 — see
+docs/adr/006.** Wrong-signed against its label in all 3 calibration
+variants; traced to the v1 formula scoring point representations of an
+inherently areal feature (park/playground). v2 (score_version 1.1.0) scores
+from Overture's polygon land-use footprints instead, distance to the
+polygon boundary rather than a point or centroid. Re-calibration against the
+same 50 labels is required before this dimension — and Phase 3's calibration
+gate as a whole — can be considered closed (§5 below).
 
 ## 5. Score-version change protocol
 

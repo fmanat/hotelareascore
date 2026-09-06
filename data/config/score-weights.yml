@@ -2,7 +2,15 @@
 # educated prior, not validated." Calibration (Phase 3, golden set +
 # sensitivity analysis) may change any of these. Never edit this file without
 # bumping `score_version` (docs/scoring.md §5 / docs/adr/004).
-score_version: "1.0.1"
+#
+# 1.1.0 (docs/adr/006): family_convenience v2 -- park/playground now score
+# from Overture base/land_use polygon footprints (distance to the polygon's
+# boundary) instead of places-theme points. No constant below changed value:
+# decay_scale_m.family_convenience and absolute_saturation.family_convenience
+# are reused unchanged for the new polygon-distance input -- a deliberately
+# minimal change (new data source, same formula shape, no new tuning knob)
+# and still an unvalidated prior like everything else in this file.
+score_version: "1.1.0"
 
 # exp(-d/scale): distance (m) at which a single nearby POI's contribution has
 # decayed to ~37% (1/e). Larger scale = "being farther away still counts".

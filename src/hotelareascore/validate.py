@@ -123,6 +123,25 @@ def validate_city(city_id: str, release: overture.Release) -> dict[str, Any]:
         ORDER BY km DESC LIMIT 5
         """
     ).fetchall()
+    # docs/STATE.md entity-QA backlog: a locality consistency check
+    # independent of the km threshold above -- SpringHill Suites (Carlstadt,
+    # NJ) is 13.6km from the New York center, under FAR_FROM_CENTER_KM, but
+    # is a different US state. Country mismatch is checked for every city;
+    # region mismatch only where City.expected_region is configured.
+    mismatch_clauses = [f"address_country IS NOT NULL AND address_country != '{city.country}'"]
+    if city.expected_region:
+        mismatch_clauses.append(
+            f"address_region IS NOT NULL AND address_region != '{city.expected_region}'"
+        )
+    mismatch_sql = " OR ".join(mismatch_clauses)
+    n_locality_mismatch = _scalar(con, f"SELECT count(*) FROM hotels WHERE {mismatch_sql}")
+    locality_mismatch_samples = con.execute(
+        f"""
+        SELECT name, address_locality, address_region, address_country
+        FROM hotels WHERE {mismatch_sql} LIMIT 5
+        """
+    ).fetchall()
+
     coincident_clusters = con.execute(
         """
         SELECT lat, lon, list(name ORDER BY name) AS names, count(*) AS n
@@ -181,6 +200,10 @@ def validate_city(city_id: str, release: overture.Release) -> dict[str, Any]:
         "numeric_name_samples": [r[0] for r in numeric_name_samples],
         "n_far_from_center": n_far_from_center,
         "far_from_center_samples": [{"name": r[0], "locality": r[1], "km": r[2]} for r in far_from_center_samples],
+        "n_locality_mismatch": n_locality_mismatch,
+        "locality_mismatch_samples": [
+            {"name": r[0], "locality": r[1], "region": r[2], "country": r[3]} for r in locality_mismatch_samples
+        ],
         "entity_qa_excluded_count": manifest.get("entity_qa_excluded_count", 0),
         "entity_qa_excluded_names_sample": manifest.get("entity_qa_excluded_names", [])[:10],
         "coincident_coord_clusters_sample": [
