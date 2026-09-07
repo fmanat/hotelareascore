@@ -94,6 +94,15 @@ coverage KPI; a rescue rule gets reconsidered only against real demand
 data from that metric. Whoever picks up Phase 4: wire this in from the
 start.
 
+## Data freshness
+
+Checked 2026-09-07 against Overture's own release catalog (`overture.
+discover_latest_release()`, live S3 listing, not cached): **`2026-08-19.0`
+is still the latest release** — the catalog shows only `2026-07-22.0` and
+`2026-08-19.0`, roughly Overture's normal monthly cadence, next one not
+out yet. No re-ingestion needed or attempted. Re-check next time a session
+touches data freshness rather than assuming this is still current.
+
 ## Blockers / risks being watched
 
 - **AI Overviews (unmeasured):** could not observe whether Google AI
