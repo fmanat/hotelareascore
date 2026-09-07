@@ -2,7 +2,9 @@
 // A second hotel to compare against, picked from OUR index — same pattern
 // as SearchBox (autocomplete on /data/search-index.json, no server, no
 // external call). On selection, navigates to the Compare page
-// (docs/strategy.md §2 journey B) rather than a hotel page.
+// (docs/strategy.md §2 journey B) rather than a hotel page. Keyboard nav /
+// ARIA combobox / aria-live handled by ../lib/autocomplete.ts
+// (docs/reports/phase-4-accessibility-audit.md finding 1).
 interface Props {
   currentSlug: string;
 }
@@ -49,15 +51,14 @@ const { currentSlug } = Astro.props;
     border-radius: var(--radius);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   }
-  ul#compare-picker-results li a {
+  ul#compare-picker-results li[role='option'] {
     display: block;
     padding: 10px 12px;
     border-radius: 6px;
     color: var(--ink);
-    text-decoration: none;
+    cursor: pointer;
   }
-  ul#compare-picker-results li a:hover,
-  ul#compare-picker-results li a:focus {
+  ul#compare-picker-results li[role='option'].active {
     background: var(--bg);
   }
   ul#compare-picker-results .meta {
@@ -73,6 +74,8 @@ const { currentSlug } = Astro.props;
 </style>
 
 <script>
+  import { setupAutocomplete } from '../lib/autocomplete';
+
   interface SearchIndexEntry {
     slug: string;
     name: string;
@@ -82,11 +85,9 @@ const { currentSlug } = Astro.props;
 
   document.querySelectorAll<HTMLElement>('.compare-picker').forEach((container) => {
     const currentSlug = container.dataset.currentSlug ?? '';
-    const inputMaybe = container.querySelector<HTMLInputElement>('#compare-search');
-    const resultsMaybe = container.querySelector<HTMLUListElement>('#compare-picker-results');
-    if (!inputMaybe || !resultsMaybe) return;
-    const input: HTMLInputElement = inputMaybe;
-    const resultsEl: HTMLUListElement = resultsMaybe;
+    const input = container.querySelector<HTMLInputElement>('#compare-search');
+    const resultsEl = container.querySelector<HTMLUListElement>('#compare-picker-results');
+    if (!input || !resultsEl) return;
 
     let index: SearchIndexEntry[] | null = null;
     let indexPromise: Promise<SearchIndexEntry[]> | null = null;
@@ -103,54 +104,24 @@ const { currentSlug } = Astro.props;
       return indexPromise;
     }
 
-    function render(matches: SearchIndexEntry[], query: string) {
-      resultsEl.innerHTML = '';
-      if (query.length < 2) {
-        resultsEl.hidden = true;
-        input.setAttribute('aria-expanded', 'false');
-        return;
-      }
-      if (matches.length === 0) {
-        resultsEl.innerHTML = '<li class="empty">No hotels found in our index.</li>';
-        resultsEl.hidden = false;
-        input.setAttribute('aria-expanded', 'true');
-        return;
-      }
-      const frag = document.createDocumentFragment();
-      matches.slice(0, 8).forEach((m) => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = `/compare?a=${encodeURIComponent(currentSlug)}&b=${encodeURIComponent(m.slug)}`;
-        a.innerHTML = `${m.name}<span class="meta">${m.locality ? m.locality + ', ' : ''}${m.city}</span>`;
-        li.appendChild(a);
-        frag.appendChild(li);
-      });
-      resultsEl.appendChild(frag);
-      resultsEl.hidden = false;
-      input.setAttribute('aria-expanded', 'true');
-    }
-
-    let debounceTimer: number | undefined;
-    input.addEventListener('input', () => {
-      const query = input.value.trim().toLowerCase();
-      window.clearTimeout(debounceTimer);
-      debounceTimer = window.setTimeout(async () => {
+    setupAutocomplete<SearchIndexEntry>({
+      input,
+      resultsEl,
+      containerEl: container,
+      search: async (query) => {
         const data = index ?? (await loadIndex());
-        const matches =
-          query.length < 2
-            ? []
-            : data.filter((e) => e.slug !== currentSlug && e.name.toLowerCase().includes(query));
-        render(matches, query);
-      }, 120);
+        return data
+          .filter((e) => e.slug !== currentSlug && e.name.toLowerCase().includes(query))
+          .slice(0, 8);
+      },
+      label: (e) => e.name,
+      meta: (e) => (e.locality ? `${e.locality}, ${e.city}` : e.city),
+      onSelect: (e) => {
+        window.location.href = `/compare?a=${encodeURIComponent(currentSlug)}&b=${encodeURIComponent(e.slug)}`;
+      },
+      emptyMessage: 'No hotels found in our index.',
     });
 
     input.addEventListener('focus', () => loadIndex());
-
-    document.addEventListener('click', (e) => {
-      if (!(e.target instanceof Node)) return;
-      if (!container.contains(e.target)) {
-        resultsEl.hidden = true;
-      }
-    });
   });
 </script>

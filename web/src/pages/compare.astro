@@ -94,21 +94,14 @@ const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSI
     border-radius: var(--radius);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   }
-  .picker ul li a, .picker ul li button {
+  .picker ul li[role='option'] {
     display: block;
-    width: 100%;
-    text-align: left;
     padding: 10px 12px;
-    border: none;
-    background: none;
     border-radius: 6px;
     color: var(--ink);
-    text-decoration: none;
-    font: inherit;
     cursor: pointer;
   }
-  .picker ul li a:hover, .picker ul li a:focus,
-  .picker ul li button:hover, .picker ul li button:focus { background: var(--bg); }
+  .picker ul li[role='option'].active { background: var(--bg); }
   .picker ul li .meta { display: block; font-size: 0.8rem; color: var(--ink-muted); }
   .picker ul li.empty { padding: 10px 12px; color: var(--ink-muted); font-size: 0.9rem; }
 
@@ -145,6 +138,8 @@ const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSI
 </style>
 
 <script>
+  import { setupAutocomplete } from '../lib/autocomplete';
+
   interface SearchIndexEntry {
     slug: string;
     name: string;
@@ -170,50 +165,19 @@ const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSI
     const resultsEl = document.getElementById(resultsId) as HTMLUListElement | null;
     if (!input || !resultsEl) return;
 
-    function render(matches: SearchIndexEntry[], query: string) {
-      resultsEl!.innerHTML = '';
-      if (query.length < 2) {
-        resultsEl!.hidden = true;
-        return;
-      }
-      if (matches.length === 0) {
-        resultsEl!.innerHTML = '<li class="empty">No hotels found in our index.</li>';
-        resultsEl!.hidden = false;
-        return;
-      }
-      const frag = document.createDocumentFragment();
-      matches.slice(0, 8).forEach((m) => {
-        const li = document.createElement('li');
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.innerHTML = `${m.name}<span class="meta">${m.locality ? m.locality + ', ' : ''}${m.city}</span>`;
-        btn.addEventListener('click', () => {
-          input!.value = m.name;
-          resultsEl!.hidden = true;
-          onPick(m.slug);
-        });
-        li.appendChild(btn);
-        frag.appendChild(li);
-      });
-      resultsEl!.appendChild(frag);
-      resultsEl!.hidden = false;
-    }
-
-    let debounceTimer: number | undefined;
-    input.addEventListener('input', () => {
-      const query = input.value.trim().toLowerCase();
-      window.clearTimeout(debounceTimer);
-      debounceTimer = window.setTimeout(async () => {
+    setupAutocomplete<SearchIndexEntry>({
+      input,
+      resultsEl,
+      search: async (query) => {
         const data = await loadIndex();
-        const matches = query.length < 2 ? [] : data.filter((e) => e.name.toLowerCase().includes(query));
-        render(matches, query);
-      }, 120);
+        return data.filter((e) => e.name.toLowerCase().includes(query)).slice(0, 8);
+      },
+      label: (e) => e.name,
+      meta: (e) => (e.locality ? `${e.locality}, ${e.city}` : e.city),
+      onSelect: (e) => onPick(e.slug),
+      emptyMessage: 'No hotels found in our index.',
     });
     input.addEventListener('focus', () => loadIndex());
-    document.addEventListener('click', (e) => {
-      if (!(e.target instanceof Node)) return;
-      if (!input.parentElement?.contains(e.target)) resultsEl!.hidden = true;
-    });
   }
 
   function bandColor(score: number): string {
