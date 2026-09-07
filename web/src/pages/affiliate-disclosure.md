@@ -12,7 +12,7 @@ indexable: false
      is OFF (the independence story is part of the product), with the first
      paragraph adjusted; activate the full text at Phase 5. -->
 
-_Last updated: [date]_
+_Last updated: 2026-09-07_
 
 Some outbound links on this site — typically the "See rates at…" buttons on
 hotel pages — are **affiliate links**. If you click one and later make a

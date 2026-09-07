@@ -11,6 +11,8 @@ indexable: false
      French LCEN requirements apply because the director of publication is
      based in France; the page itself may be published in English. -->
 
+_Last updated: 2026-09-07_
+
 ## Site publisher
 
 This website is published by **FrenchSquare Ltd**, a private limited company

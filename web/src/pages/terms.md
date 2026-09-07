@@ -7,12 +7,12 @@ indexable: false
 
 <div class="draft-banner">DRAFT — owner review pending</div>
 
-<!-- TEMPLATE for owner review — not legal advice. Governing-law choice
-     ([England and Wales / France]) should be confirmed with an advisor;
-     consumer-protection rules of the visitor's country may apply
-     regardless of this choice. -->
+<!-- TEMPLATE for owner review — not legal advice. Governing law confirmed
+     by the owner as England and Wales (2026-09-07); consumer-protection
+     rules of the visitor's country may still apply regardless of this
+     choice -- that qualifier below is not a hedge to remove. -->
 
-_Last updated: [date]_
+_Last updated: 2026-09-07_
 
 By using this site you agree to these terms. If you do not agree, please do
 not use the site.
@@ -73,6 +73,6 @@ terms and privacy policies.
 ## 7. Changes and governing law
 
 We may update these terms; the current version is always at this address
-with its date. These terms are governed by the law of **[England and Wales /
-France — to confirm]**, without prejudice to mandatory consumer protections
-of your country of residence.
+with its date. These terms are governed by the law of **England and
+Wales**, without prejudice to mandatory consumer protections of your
+country of residence.

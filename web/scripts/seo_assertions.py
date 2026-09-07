@@ -137,7 +137,33 @@ def load_indexable_and_noindex_hotel_paths() -> tuple[set[str], set[str]]:
     return indexable, noindex
 
 
+SITEMAP_FILES = ["sitemap.xml", "sitemap-static.xml", "sitemap-cities.xml", "sitemap-hotels.xml"]
+
+
 def check_sitemap() -> list[str]:
+    """The 4 sitemap endpoints now 404 (no file written at all -- see
+    web/src/lib/sitemap.ts's sitemapResponse) whenever
+    FLAGS.PUBLIC_INDEXING_ENABLED is off, found and fixed during the
+    staycontext.com invisible-mode preflight (2026-09-07): they previously
+    always built, listing real page URLs regardless of the flag, reachable
+    by a direct URL guess even though robots.txt already disallowed
+    crawling and omitted the Sitemap: line. robots.txt's own built content
+    is the ground truth for which state to expect here -- it already
+    implements this exact flag check (web/src/pages/robots.txt.ts)."""
+    robots_path = DIST / "robots.txt"
+    if not robots_path.exists():
+        return ["robots.txt was not built"]
+    indexing_enabled = "Sitemap:" in robots_path.read_text(encoding="utf-8")
+
+    if not indexing_enabled:
+        leaked = [name for name in SITEMAP_FILES if (DIST / name).exists()]
+        if leaked:
+            return [
+                f"PUBLIC_INDEXING_ENABLED is off (robots.txt disallows everything) but "
+                f"{', '.join(leaked)} was still built and would be publicly reachable"
+            ]
+        return []
+
     errors = []
     hotels_sitemap = DIST / "sitemap-hotels.xml"
     if not hotels_sitemap.exists():

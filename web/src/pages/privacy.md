@@ -12,7 +12,7 @@ indexable: false
      first-party events). MUST be re-reviewed before enabling any
      consent-requiring technology (see final section). -->
 
-_Last updated: [date]_
+_Last updated: 2026-09-07_
 
 ## The short version
 
