@@ -45,10 +45,18 @@ vs structural-by-definition at this stage:
                                                      (no affiliate program
                                                      exists yet, AFFILIATE_
                                                      ENABLED is off)
+  12. Latin-script name (docs/seo-policy.md §2, owner decision           -- computed
+      2026-09-07): the English-language launch cohort requires a
+      Latin-script name -- non-Latin-script hotels stay fully searchable
+      and scored, just not pilot-cohort-eligible until a reliable
+      transliteration exists. Added after an owner audit found 19/200 v1
+      candidates in non-Latin scripts (11 Thai, 8 Japanese), several of
+      them non-hotels the script itself couldn't catch (see
+      entity_qa.is_non_latin_name and docs/STATE.md's entity-QA specimens).
 
-Gates 1/2/3/4/6/8 are the only ones that actually filter candidates below;
-5/7/9/10/11 are recorded as satisfied-by-construction for every row in the
-output, not fabricated per-hotel detail.
+Gates 1/2/3/4/6/8/12 are the only ones that actually filter candidates
+below; 5/7/9/10/11 are recorded as satisfied-by-construction for every row
+in the output, not fabricated per-hotel detail.
 """
 from __future__ import annotations
 
@@ -62,7 +70,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from hotelareascore.config import DIMENSIONS, ETL_DIR, load_cities  # noqa: E402
-from hotelareascore.entity_qa import HOSPITALITY_BRANDS, _fold  # noqa: E402
+from hotelareascore.entity_qa import HOSPITALITY_BRANDS, _fold, is_non_latin_name  # noqa: E402
 
 RELEASE = "2026-08-19.0"
 TARGET_TOTAL = 200
@@ -130,6 +138,10 @@ def load_city_candidates(city_id: str) -> list[dict]:
             continue
         # Gate 8: no unresolved canonical-duplicate coordinate cluster
         if rec["is_coincident"]:
+            continue
+        # Gate 12: Latin-script name (docs/seo-policy.md §2, owner decision
+        # 2026-09-07) -- stays searchable/scored, just not cohort-eligible.
+        if is_non_latin_name(rec["name"]):
             continue
 
         # Distinctiveness: max absolute deviation from city median across
@@ -223,17 +235,28 @@ def main() -> None:
     n_independent = sum(1 for c in selection if not c["chain"])
     n_chain = len(selection) - n_independent
     lines = [
-        "# Pilot cohort proposal (Bloc D, overnight mission)",
+        "# Pilot cohort proposal v2 (Bloc D, overnight mission; revised 2026-09-07)",
         "",
         f"> **{len(selection)} hotels proposed** across {len(set(c['city_id'] for c in selection))} cities. "
         "Report only -- no page_publication change, no indexing flag touched. "
         "Full detail: [pilot-cohort-proposal.csv](pilot-cohort-proposal.csv).",
         "",
+        "> **v2 changes from v1 (owner audit, 2026-09-07):** added gate 12 "
+        "(Latin-script name -- v1 had 19/200 non-Latin-script entries, "
+        "several non-hotels); excluded 3 known-bad-geocode records "
+        "(entity_qa.KNOWN_BAD_GEOCODE) that were never valid candidates in "
+        "the first place -- full detail in "
+        "[destination-name-mismatch-audit.md](destination-name-mismatch-audit.md) "
+        "and `docs/STATE.md`'s entity-QA specimens.",
+        "",
         "## Method",
         "",
         "Gates 1 (confidence >= 80), 2 (identity reliable -- no dedupe merge "
         "needed), 3 (all 6 dimensions present), 4 (>=1 nearby fact), 6 (not a "
-        "numeric-name record), 8 (no unresolved duplicate-coordinate cluster) "
+        "numeric-name record), 8 (no unresolved duplicate-coordinate cluster), "
+        "12 (Latin-script name -- added 2026-09-07 after an owner audit found "
+        "19/200 v1 candidates in non-Latin scripts, several of them non-hotels; "
+        "see docs/seo-policy.md §2 and docs/STATE.md's entity-QA specimens) "
         "from docs/seo-policy.md §4 were computed per hotel and used to filter "
         "candidates. Gates 5, 9, 10 are structurally true for every city in "
         "this dataset (baseline exists, >=1000 hotels means comparison content "

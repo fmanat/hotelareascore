@@ -196,6 +196,79 @@ def _fold(name: str) -> str:
     return unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode("ascii")
 
 
+# Known bad-geocode exclusions (owner audit on the pilot cohort, this
+# session): a DIFFERENT bug class from is_likely_non_hotel above -- these
+# are real hotels, correctly recognized as hotels, whose Overture SOURCE
+# RECORD puts them in the wrong city entirely. Found via a name-based
+# search for famous-destination words (bora bora/maldives/santorini/bali/
+# tahiti/zanzibar/seychelles/mykonos/fiji/phuket/ibiza/cancun/goa) across
+# all 12 cities, then verified against each record's OWN address_freeform
+# field (not guessed from the name alone -- most hits from that search were
+# false positives, e.g. "The Goat Kensington High Street" substring-
+# matching "goa", or real locally-themed businesses like Tokyo's "Petit
+# Bali" love-hotel pattern or Lisbon's "Pensão Nova Goa", which are not
+# excluded here for exactly that reason -- see
+# docs/reports/destination-name-mismatch-audit.md for the full triage).
+# Each entry below has its OWN address_freeform contradicting its
+# extraction city, not just a suggestive name:
+KNOWN_BAD_GEOCODE: dict[str, str] = {
+    # Sydney extract, address_freeform = "BP 502 Vaitape, Bora Bora, 98730,
+    # French Polynesia" -- a real Hilton property, ~14,000 km from Sydney.
+    "a89707ca-d74e-43f7-a6bb-4c9026608941": "Bora Bora Nui Hilton Resort And Spa",
+    # Sydney extract, address_freeform = "Danareu Island, Fiji" -- a real
+    # Sheraton property (Denarau Island), not Sydney.
+    "c2e5184a-5962-4aad-83c1-71176704035a": "Sheraton Fiji Resort",
+    # Singapore extract, name self-declares "Bali, Indonesia" while
+    # address_freeform says "Singapore Botanic Gardens, 1 Cluny Rd" --
+    # internally contradictory record either way, excluded rather than
+    # guessed at.
+    "70797625-ea8d-431d-8ffd-378eb3851e74": "Kartika Plaza Hotel, Bali, Indonesia",
+    # London extract, address_freeform = "Jalan Goa Tegeh, Banjar Kampial
+    # Jimbaran, Jimbaran, South Kuta, Badung Regency" -- Jimbaran/Badung
+    # Regency/South Kuta are real, specific Bali (Indonesia) sub-districts,
+    # not London. Below the pilot-cohort confidence gate anyway (72.0), but
+    # excluded from the dataset entirely, not just cohort candidacy -- the
+    # same reasoning as the other 3: this is a dataset-correctness issue
+    # (a Bali villa listed as "a hotel in London"), independent of whether
+    # it would ever have been cohort-eligible.
+    "48900f9a-8968-49e7-bffa-46c93e62e59d": "Villa Uma Nina Bali",
+}
+
+
+def is_known_bad_geocode(hotel_id: str) -> bool:
+    """True if `hotel_id` is a documented case of a real hotel whose own
+    address_freeform contradicts the city it was extracted into (see
+    KNOWN_BAD_GEOCODE above) -- excluded from that city's dataset entirely,
+    not just from pilot-cohort candidacy, since showing it as "a hotel in
+    Sydney" at all would be actively misleading, not merely non-indexable."""
+    return hotel_id in KNOWN_BAD_GEOCODE
+
+
+def is_non_latin_name(name: str | None) -> bool:
+    """True if `name` contains any alphabetic character outside the Latin
+    script (docs/seo-policy.md §2, owner decision this session): the pilot
+    cohort for the English-language launch requires a Latin-script name --
+    not a judgment about the hotel's legitimacy (these hotels stay fully
+    searchable and scored, exactly like every other hotel), only about
+    whether an English-reading pilot audience can read the name on a
+    results page, and whether we have any reliable way to romanize it.
+
+    Checked per-character via Unicode character names rather than a
+    hardcoded script-range regex, so it correctly allows Latin names with
+    real diacritics ("Hôtel Le Méridien", "Château de Something") while
+    catching CJK, Thai, Arabic, Cyrillic, etc. -- every character in this
+    project's own examples (桝本屋酒店, ท่าเริอพูลพิพัฒ) has a Unicode name
+    that does NOT start with "LATIN"; every accented Latin letter's name
+    does (e.g. "LATIN SMALL LETTER O WITH CIRCUMFLEX").
+    """
+    if not name:
+        return False
+    for ch in name:
+        if ch.isalpha() and not unicodedata.name(ch, "").startswith("LATIN"):
+            return True
+    return False
+
+
 def is_likely_non_hotel(name: str | None) -> bool:
     """True if `name` looks like a business/institution swept up by a
     hotel-family taxonomy leaf rather than an actual lodging business.

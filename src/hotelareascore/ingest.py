@@ -21,7 +21,7 @@ from typing import Any
 from . import overture, taxonomy
 from .config import City, ETL_DIR, get_city
 from .dedupe import HotelRecord, dedupe_hotels
-from .entity_qa import is_likely_non_hotel
+from .entity_qa import is_known_bad_geocode, is_likely_non_hotel
 
 
 def city_dir(release: overture.Release, city: City) -> Path:
@@ -210,7 +210,17 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
     # limitations. Every exclusion is logged so it can be found and
     # reverted if it turns out to be a real hotel.
     entity_qa_excluded = [(r[0], r[1]) for r in hotels_raw_rows if is_likely_non_hotel(r[1])]
-    excluded_ids = {eid for eid, _ in entity_qa_excluded}
+
+    # Known bad-geocode exclusions (owner audit, this session, docs/reports/
+    # destination-name-mismatch-audit.md): a different bug class -- real
+    # hotels, correctly recognized as hotels, whose own Overture record
+    # contradicts the city they were extracted into (entity_qa.py's
+    # KNOWN_BAD_GEOCODE docstring has the evidence per record). Logged
+    # separately from entity_qa_excluded since it's a different QA category,
+    # not merged into the same count.
+    bad_geocode_excluded = [(r[0], r[1]) for r in hotels_raw_rows if is_known_bad_geocode(r[0])]
+
+    excluded_ids = {eid for eid, _ in entity_qa_excluded} | {eid for eid, _ in bad_geocode_excluded}
     if excluded_ids:
         hotels_raw_rows = [r for r in hotels_raw_rows if r[0] not in excluded_ids]
         con.execute("CREATE OR REPLACE TEMP TABLE _entity_qa_excluded (id VARCHAR)")
@@ -271,6 +281,8 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
         "dedupe_records_absorbed": sum(len(d.member_ids) for d in merged_groups) - len(merged_groups),
         "entity_qa_excluded_count": len(entity_qa_excluded),
         "entity_qa_excluded_names": [name for _, name in entity_qa_excluded],
+        "bad_geocode_excluded_count": len(bad_geocode_excluded),
+        "bad_geocode_excluded_names": [name for _, name in bad_geocode_excluded],
         "pois": n_pois,
         "segments": n_segments,
         "green_spaces": n_green_spaces,

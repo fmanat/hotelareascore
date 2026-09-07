@@ -68,9 +68,17 @@ Full detail in `docs/reports/phase-3-batch-1-ingestion-report.md` and
 `tests/golden/LABELS-PROVENANCE.md` §"Data-quality specimens". Summary:
 
 - **English-market-only name filter** (`entity_qa.py`): near-zero recall on
-  CJK/Arabic/etc. non-hotel names. Two known live specimens (a Tokyo
-  liquor shop and bathhouse misclassified as hotels), one with an honest
-  `xfail` test (`test_known_limitation_cjk_liquor_shop_not_caught`).
+  CJK/Arabic/etc. non-hotel names. Original 2 specimens (Tokyo liquor shop
+  + bathhouse), `xfail`-tested. **6 more found in the pilot-cohort v1 audit
+  (2026-09-07)**, all non-Latin-script non-hotels: `a995410c…` an
+  archaeological site, `dd23804b…` a sake shop, `7c60ea93…` a share house
+  (all Tokyo); `02f2535f…` a boat pier, `c4ce64a3…` a housing estate,
+  `6679c755…` a university residence complex (all Bangkok) — full names in
+  `docs/reports/destination-name-mismatch-audit.md`. All 8 now excluded
+  from pilot-cohort candidacy by gate 12 (Latin-script name,
+  `docs/seo-policy.md §2`), but remain in the full dataset as "hotels" —
+  gate 12 is a cohort-eligibility rule, not an entity-QA fix; the
+  still-unattempted language-specific marker list is the real fix.
 - **Brand-allowlist short-circuit**: ~33 hotel sub-venues (restaurant/spa/
   parking sharing a parent brand name) pass through across all 12 cities;
   one additional case (Souq Madinat Jumeirah) confirmed not caught because
@@ -83,6 +91,18 @@ Full detail in `docs/reports/phase-3-batch-1-ingestion-report.md` and
   `hotel-`); whether a numeric name should be a hard non-indexable gate in
   `page_publication` is still an open publication-policy question, not a
   data bug.
+- **Bad-geocode records — fixed, not just logged (2026-09-07 owner
+  audit):** 4 real hotels whose own `address_freeform` contradicted their
+  extraction city (a Bora Bora resort and a Fiji resort both in the
+  "Sydney" extract; a Bali villa in "London"; a Bali hotel whose name and
+  address disagreed, in "Singapore") — found via a systematic
+  destination-name search, verified per-record before exclusion, not
+  guessed from the name alone. Now excluded from their cities' datasets
+  entirely via `entity_qa.KNOWN_BAD_GEOCODE`, re-ingested. Full triage
+  (including same-pattern hits checked and NOT excluded — Tokyo's "Petit
+  Bali" love-hotel naming convention, Lisbon's "Pensão Nova Goa", etc. —
+  for insufficient evidence of an actual mismatch) in
+  [destination-name-mismatch-audit.md](reports/destination-name-mismatch-audit.md).
 
 ## Phase 4 commitment: `search_events` as the coverage KPI
 
@@ -94,17 +114,11 @@ coverage KPI; a rescue rule gets reconsidered only against real demand
 data from that metric. Whoever picks up Phase 4: wire this in from the
 start.
 
-## Data freshness
-
-Checked 2026-09-07 against Overture's own release catalog (`overture.
-discover_latest_release()`, live S3 listing, not cached): **`2026-08-19.0`
-is still the latest release** — the catalog shows only `2026-07-22.0` and
-`2026-08-19.0`, roughly Overture's normal monthly cadence, next one not
-out yet. No re-ingestion needed or attempted. Re-check next time a session
-touches data freshness rather than assuming this is still current.
-
 ## Blockers / risks being watched
 
+- **Data freshness (checked 2026-09-07):** `2026-08-19.0` is still
+  Overture's latest release (live catalog check, not cached) — no
+  re-ingestion needed. Re-check next time rather than assuming still true.
 - **AI Overviews (unmeasured):** could not observe whether Google AI
   Overviews already answer cluster-2 queries. Mandatory AI-Overview column
   in the day-90 cohort measurement (`docs/seo-policy.md §5`); if AI
@@ -116,6 +130,19 @@ touches data freshness rather than assuming this is still current.
   sequencing in `docs/affiliate-matching.md §5`.
 - Supabase free-tier fit depends on keeping POIs out of the serving DB —
   `docs/data-and-costs.md §2`.
+- **New, found 2026-09-07 while regenerating the cohort v2 pack:**
+  `web/src/lib/data.ts`'s `ALL_HOTELS` still hardcodes only 2 imports
+  (`hotels-london.json`, `hotels-bangkok.json`) — a Phase 2 leftover. The
+  pilot cohort spans all 12 cities (`compute_publication.py` correctly
+  marks ~200 hotels indexable across all 12), but **only London/Bangkok
+  hotels actually get a built page and a sitemap entry today** — the
+  other 10 cities' indexable hotels have no route at all. Not fixed this
+  session (out of scope: building pages for all 12 cities' hotel sets is
+  its own review, not a one-line change). CI doesn't catch this because
+  its fixture data never includes all 12 cities at once; only surfaced by
+  running the real build locally. **Needs a decision before Phase 4
+  launch**, separate from the legal-placeholder and cohort-review items
+  above.
 
 ## Cost tracker (update monthly)
 

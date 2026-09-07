@@ -1,0 +1,2455 @@
+{
+  "generated_at": "2026-09-07",
+  "version": "v2",
+  "v1_pack": "docs/reports/cohort-inspection-12.json (superseded)",
+  "changes_from_v1": "v1's cohort (pilot-cohort-proposal.md v1) had 19/200 non-Latin-script hotels (11 Thai, 8 Japanese), several confirmed non-hotels -- fixed by adding gate 12 (Latin-script name, docs/seo-policy.md §2). Also: 4 real hotels whose own source address contradicted their extraction city (a Bora Bora resort + a Fiji resort in 'Sydney', a Bali villa in 'London', a Bali hotel with a self-contradicting address in 'Singapore') were found via a systematic destination-name search and excluded from the dataset entirely -- docs/reports/destination-name-mismatch-audit.md. This pack was regenerated against the resulting v2 200-hotel proposal: London and New York picks changed (their v1 picks weren't in v2's top selection); the other 10 cities' picks are unchanged and still valid against v2 data (Rome, Tokyo, Bangkok, Dubai, Singapore, Barcelona, Sydney, Paris, Lisbon, Amsterdam weren't affected by either fix).",
+  "source": "docs/reports/pilot-cohort-proposal.csv + .md v2 (this session)",
+  "selection_method": "12 of the 200 v2 pilot-cohort hotels, one per launch city, chosen to cover: varied cities (all 12 represented), both independent and chain-flagged entities, both high and gate-borderline confidence, and 2 cases judged the most discutable in the full list -- see each hotel's selection_reason. Not a random or statistically representative sample; a deliberately varied inspection set, same spirit as Phase 2's 18-hotel inspection.",
+  "gate_definitions_source": "docs/seo-policy.md §4",
+  "hotels": [
+    {
+      "city_id": "singapore",
+      "selection_reason": "Most discutable pick #1 (unchanged from v1). The name (\"Boys' Home\") strongly suggests a juvenile residential-care institution, not a bookable hotel -- despite formally passing every automated gate (confidence 81.8, dedupe 100, matched Overture's lodging taxonomy, and a Latin-script name so gate 12 doesn't catch it either). This is exactly the failure mode entity_qa.py's English-market name-pattern filter is built to catch, and \"home\" isn't currently one of its exclusion markers -- adding it isn't done here, only flagged, since a blind marker addition risks new false exclusions elsewhere. If this is genuinely a hotel with an unfortunate name, publishing it is harmless; if it's a mislabeled institution, publishing it would be a real, reputationally serious category error. Recommend the owner verify this one specifically before it goes live, independent of its gate status.",
+      "page": {
+        "id": "2511f051-4294-4d3c-8b4c-bc553ba67d6c",
+        "slug": "singapore-boys-home-3ba67d6c",
+        "name": "Singapore Boys' Home",
+        "city_id": "singapore",
+        "city_name": "Singapore",
+        "locality": "Singapore",
+        "region": null,
+        "country": "SG",
+        "lat": 1.350037,
+        "lon": 103.706985,
+        "distance_from_center_km": 12.5,
+        "far_from_center": false,
+        "locality_mismatch": false,
+        "locality_mismatch_detail": null,
+        "publication_status": "indexable",
+        "scores": {
+          "walkability_density": 3.3,
+          "transit_access": 13.9,
+          "food_essentials": 0.0,
+          "quietness_proxy": 92.1,
+          "family_convenience": 95.4,
+          "nightlife_access": 0.0
+        },
+        "balanced_score": 26.8,
+        "confidence": 81.8,
+        "confidence_label": "High",
+        "dedupe_confidence": 100.0,
+        "score_version": "1.2.1",
+        "source_release": "2026-08-19.0",
+        "verdict": "Excellent for family convenience; quiet surroundings.",
+        "reason_codes": [
+          "QUIET_SURROUNDINGS",
+          "FAMILY_FRIENDLY_SURROUNDINGS"
+        ],
+        "nearby_facts": [
+          {
+            "rank": 1,
+            "category": "park",
+            "name": "Windy Park",
+            "distance_m": 291.3
+          },
+          {
+            "rank": 2,
+            "category": "shopping",
+            "name": "Jiahe Econ Minimart",
+            "distance_m": 298.2
+          },
+          {
+            "rank": 3,
+            "category": "playground",
+            "name": "Playground",
+            "distance_m": 390.8
+          },
+          {
+            "rank": 4,
+            "category": "betting_center",
+            "name": "Singapore Pools",
+            "distance_m": 402.7
+          },
+          {
+            "rank": 5,
+            "category": "grocery_store",
+            "name": "Sheng Siong Supermarket",
+            "distance_m": 406.8
+          },
+          {
+            "rank": 6,
+            "category": "doctors_office",
+            "name": "Boon Lay Clinic and Surgery",
+            "distance_m": 410.2
+          },
+          {
+            "rank": 7,
+            "category": "gift_shop",
+            "name": "Chase Collectibles",
+            "distance_m": 436.5
+          },
+          {
+            "rank": 8,
+            "category": "music_venue",
+            "name": "Tak Takut Kids Club",
+            "distance_m": 436.6
+          },
+          {
+            "rank": 9,
+            "category": "dental_clinic",
+            "name": "Community Dental Care",
+            "distance_m": 438.6
+          },
+          {
+            "rank": 10,
+            "category": "gift_shop",
+            "name": "Daimonji Collectibles",
+            "distance_m": 439.3
+          },
+          {
+            "rank": 11,
+            "category": "nail_salon",
+            "name": "Luv Nail",
+            "distance_m": 441.2
+          },
+          {
+            "rank": 12,
+            "category": "mobile_phone_store",
+            "name": "Lite Mobile",
+            "distance_m": 447.9
+          }
+        ],
+        "comparable": [
+          {
+            "slug": "gallop-kranji-farm-resort-8fba8c13",
+            "name": "Gallop Kranji Farm Resort",
+            "balanced_score": 26.8
+          },
+          {
+            "slug": "hotel-ramada-by-wyndham-meridin-johor-bahru-2f92d377",
+            "name": "Hotel Ramada by Wyndham Meridin Johor Bahru",
+            "balanced_score": 27.1
+          },
+          {
+            "slug": "keppel-bungalow-d1e6826f",
+            "name": "Keppel Bungalow",
+            "balanced_score": 26.6
+          },
+          {
+            "slug": "legoland-homestay-meridian-f5553286",
+            "name": "Legoland Homestay Meridian",
+            "balanced_score": 27.5
+          }
+        ]
+      },
+      "gates": [
+        {
+          "gate": 1,
+          "name": "confidence >= 80",
+          "status": "PASS",
+          "detail": "confidence = 81.8"
+        },
+        {
+          "gate": 2,
+          "name": "hotel identity highly reliable (no dedupe merge needed)",
+          "status": "PASS",
+          "detail": "dedupe_confidence = 100.0 (100 = single source, no merge)"
+        },
+        {
+          "gate": 3,
+          "name": "all critical score dimensions present",
+          "status": "PASS",
+          "detail": "all 6 dimensions computed"
+        },
+        {
+          "gate": 4,
+          "name": "unique location facts present",
+          "status": "PASS",
+          "detail": "12 nearby facts on page"
+        },
+        {
+          "gate": 5,
+          "name": "city baseline available",
+          "status": "PASS",
+          "detail": "Singapore baseline exists (all 12 launch cities do)"
+        },
+        {
+          "gate": 6,
+          "name": "automated content QA passes",
+          "status": "PASS",
+          "detail": "not a numeric-only name, no draft-QA flag (recorded in page_publication)"
+        },
+        {
+          "gate": 7,
+          "name": "demonstrated demand OR editorial pilot selection",
+          "status": "EDITORIAL",
+          "detail": "editorial pilot selection branch -- no live traffic exists yet to demonstrate demand"
+        },
+        {
+          "gate": 8,
+          "name": "no canonical duplicate",
+          "status": "PASS",
+          "detail": "no unresolved duplicate-coordinate cluster"
+        },
+        {
+          "gate": 9,
+          "name": "meaningful comparison/context on page",
+          "status": "PASS",
+          "detail": "4 comparable hotels shown (Singapore has 1000+ scored hotels)"
+        },
+        {
+          "gate": 10,
+          "name": "user value independent of keyword targeting",
+          "status": "PASS",
+          "detail": "deterministic reason-code templates from structured facts, never keyword-targeted prose"
+        },
+        {
+          "gate": 11,
+          "name": "affiliate deep-link resolvable OR consciously published without CTA",
+          "status": "WITHOUT-CTA",
+          "detail": "AFFILIATE_ENABLED is off -- published deliberately without a booking CTA"
+        },
+        {
+          "gate": 12,
+          "name": "Latin-script name (new, docs/seo-policy.md §2)",
+          "status": "PASS",
+          "detail": "name is Latin-script"
+        }
+      ]
+    },
+    {
+      "city_id": "dubai",
+      "selection_reason": "Most discutable pick #2 (unchanged from v1). The name pattern (\"OYO ### Home <unit>, <building>, <bedroom count>\") reads as a single furnished apartment / short-term-rental unit under the OYO brand, not a traditional multi-room hotel. All gates pass mechanically (confidence exactly 82.0, dedupe 100, Latin-script name) -- this is a product-scope question (does a single short-term-rental unit count as \"a hotel\" here?) more than a data bug.",
+      "page": {
+        "id": "49f0cc99-3544-482f-aaac-72302cac9c87",
+        "slug": "oyo-968-home-2005a-sobha-creek-vistas-1br-2cac9c87",
+        "name": "OYO 968 Home 2005A Sobha creek Vistas 1BR",
+        "city_id": "dubai",
+        "city_name": "Dubai",
+        "locality": "Dubai",
+        "region": null,
+        "country": "AE",
+        "lat": 25.179886,
+        "lon": 55.30534,
+        "distance_from_center_km": 4.4,
+        "far_from_center": false,
+        "locality_mismatch": false,
+        "locality_mismatch_detail": null,
+        "publication_status": "indexable",
+        "scores": {
+          "walkability_density": 1.5,
+          "transit_access": 0.0,
+          "food_essentials": 4.1,
+          "quietness_proxy": 91.2,
+          "family_convenience": 78.7,
+          "nightlife_access": 0.0
+        },
+        "balanced_score": 22.7,
+        "confidence": 82.0,
+        "confidence_label": "High",
+        "dedupe_confidence": 100.0,
+        "score_version": "1.2.1",
+        "source_release": "2026-08-19.0",
+        "verdict": "Good for family convenience; quiet surroundings.",
+        "reason_codes": [
+          "QUIET_SURROUNDINGS",
+          "FAMILY_FRIENDLY_SURROUNDINGS"
+        ],
+        "nearby_facts": [
+          {
+            "rank": 1,
+            "category": "pharmacy",
+            "name": "Binsina Pharmacy One Park Avenue",
+            "distance_m": 372.1
+          },
+          {
+            "rank": 2,
+            "category": "internet_cafe",
+            "name": "Silent Game Arena",
+            "distance_m": 425.6
+          },
+          {
+            "rank": 3,
+            "category": "beauty_salon",
+            "name": "Hair Coloring Ladies Salon",
+            "distance_m": 601.6
+          },
+          {
+            "rank": 4,
+            "category": "beauty_salon",
+            "name": "Carpe Diem Beauty Lounge",
+            "distance_m": 621.2
+          },
+          {
+            "rank": 5,
+            "category": "pharmacy",
+            "name": "Aster Pharmacy",
+            "distance_m": 632.8
+          },
+          {
+            "rank": 6,
+            "category": "coffee_shop",
+            "name": "ayoya_cafe",
+            "distance_m": 684.1
+          },
+          {
+            "rank": 7,
+            "category": "cafe",
+            "name": "Waffle and Beans Cafe",
+            "distance_m": 755.3
+          }
+        ],
+        "comparable": [
+          {
+            "slug": "oyo-962-home-wings-1br-ba651acd",
+            "name": "OYO 962 Home Wings 1br",
+            "balanced_score": 22.7
+          },
+          {
+            "slug": "premium-2bed-apartment-at-dubai-creek-harbour-5b39cad0",
+            "name": "Premium 2bed Apartment At Dubai Creek Harbour",
+            "balanced_score": 22.7
+          },
+          {
+            "slug": "ja-the-manor-hotel-db5492e1",
+            "name": "JA The Manor Hotel",
+            "balanced_score": 22.7
+          },
+          {
+            "slug": "oyo-955-home-canal-residence-ec7bc82d",
+            "name": "OYO 955 Home Canal residence",
+            "balanced_score": 22.8
+          }
+        ]
+      },
+      "gates": [
+        {
+          "gate": 1,
+          "name": "confidence >= 80",
+          "status": "PASS",
+          "detail": "confidence = 82.0"
+        },
+        {
+          "gate": 2,
+          "name": "hotel identity highly reliable (no dedupe merge needed)",
+          "status": "PASS",
+          "detail": "dedupe_confidence = 100.0 (100 = single source, no merge)"
+        },
+        {
+          "gate": 3,
+          "name": "all critical score dimensions present",
+          "status": "PASS",
+          "detail": "all 6 dimensions computed"
+        },
+        {
+          "gate": 4,
+          "name": "unique location facts present",
+          "status": "PASS",
+          "detail": "7 nearby facts on page"
+        },
+        {
+          "gate": 5,
+          "name": "city baseline available",
+          "status": "PASS",
+          "detail": "Dubai baseline exists (all 12 launch cities do)"
+        },
+        {
+          "gate": 6,
+          "name": "automated content QA passes",
+          "status": "PASS",
+          "detail": "not a numeric-only name, no draft-QA flag (recorded in page_publication)"
+        },
+        {
+          "gate": 7,
+          "name": "demonstrated demand OR editorial pilot selection",
+          "status": "EDITORIAL",
+          "detail": "editorial pilot selection branch -- no live traffic exists yet to demonstrate demand"
+        },
+        {
+          "gate": 8,
+          "name": "no canonical duplicate",
+          "status": "PASS",
+          "detail": "no unresolved duplicate-coordinate cluster"
+        },
+        {
+          "gate": 9,
+          "name": "meaningful comparison/context on page",
+          "status": "PASS",
+          "detail": "4 comparable hotels shown (Dubai has 1000+ scored hotels)"
+        },
+        {
+          "gate": 10,
+          "name": "user value independent of keyword targeting",
+          "status": "PASS",
+          "detail": "deterministic reason-code templates from structured facts, never keyword-targeted prose"
+        },
+        {
+          "gate": 11,
+          "name": "affiliate deep-link resolvable OR consciously published without CTA",
+          "status": "WITHOUT-CTA",
+          "detail": "AFFILIATE_ENABLED is off -- published deliberately without a booking CTA"
+        },
+        {
+          "gate": 12,
+          "name": "Latin-script name (new, docs/seo-policy.md §2)",
+          "status": "PASS",
+          "detail": "name is Latin-script"
+        }
+      ]
+    },
+    {
+      "city_id": "london",
+      "selection_reason": "v2 replacement pick (v1's London pick, The Hindes Hotel, isn't in v2's top selection this round -- reshuffled distinctiveness ranking, unrelated to the Latin-script gate). Holiday Inn Express London - Epsom Downs: high-confidence (87.1) global chain, clean positive-baseline example -- the kind of page this cohort is meant to produce at its best.",
+      "page": {
+        "id": "fd9fd012-bd68-4bf5-8b14-11dca7e185f6",
+        "slug": "holiday-inn-express-london-epsom-downs-a7e185f6",
+        "name": "Holiday Inn Express London - Epsom Downs",
+        "city_id": "london",
+        "city_name": "London",
+        "locality": "Surrey",
+        "region": "",
+        "country": "GB",
+        "lat": 51.314022,
+        "lon": -0.253668,
+        "distance_from_center_km": 23.2,
+        "far_from_center": true,
+        "locality_mismatch": false,
+        "locality_mismatch_detail": null,
+        "publication_status": "indexable",
+        "scores": {
+          "walkability_density": 18.4,
+          "transit_access": 0.0,
+          "food_essentials": 0.0,
+          "quietness_proxy": 83.1,
+          "family_convenience": 70.4,
+          "nightlife_access": 22.0
+        },
+        "balanced_score": 26.5,
+        "confidence": 87.1,
+        "confidence_label": "High",
+        "dedupe_confidence": 100.0,
+        "score_version": "1.2.1",
+        "source_release": "2026-08-19.0",
+        "verdict": "Good for family convenience; quiet surroundings.",
+        "reason_codes": [
+          "QUIET_SURROUNDINGS",
+          "FAMILY_FRIENDLY_SURROUNDINGS"
+        ],
+        "nearby_facts": [
+          {
+            "rank": 1,
+            "category": "beauty_salon",
+            "name": "Secret Garden Beauty",
+            "distance_m": 64.7
+          },
+          {
+            "rank": 2,
+            "category": "flea_market",
+            "name": "Epsom Antiques and collectors Fair",
+            "distance_m": 68.6
+          },
+          {
+            "rank": 3,
+            "category": "pub",
+            "name": "Derby Arms Epsom",
+            "distance_m": 87.0
+          },
+          {
+            "rank": 4,
+            "category": "theatre_venue",
+            "name": "Theatre Box",
+            "distance_m": 99.0
+          },
+          {
+            "rank": 5,
+            "category": "stadium_arena",
+            "name": "Duchess Stand",
+            "distance_m": 106.6
+          },
+          {
+            "rank": 6,
+            "category": "horse_trainer",
+            "name": "Simon Dow",
+            "distance_m": 280.6
+          },
+          {
+            "rank": 7,
+            "category": "pub",
+            "name": "Rubbing House",
+            "distance_m": 343.7
+          },
+          {
+            "rank": 8,
+            "category": "park",
+            "name": "Epsom Downs",
+            "distance_m": 361.1
+          },
+          {
+            "rank": 9,
+            "category": "tea_room",
+            "name": "Tea Hut Epsom Downs",
+            "distance_m": 638.4
+          },
+          {
+            "rank": 10,
+            "category": "cafe",
+            "name": "The Downs Lunch Box",
+            "distance_m": 640.2
+          },
+          {
+            "rank": 11,
+            "category": "naturopathic_medicine",
+            "name": "Silkinesiology",
+            "distance_m": 671.9
+          },
+          {
+            "rank": 12,
+            "category": "building_supply_store",
+            "name": "Arthouse Interiors",
+            "distance_m": 701.0
+          }
+        ],
+        "comparable": [
+          {
+            "slug": "premier-inn-6873a78b",
+            "name": "Premier Inn",
+            "balanced_score": 26.4
+          },
+          {
+            "slug": "oyo-flexistay-aparthotel-sutton-3c69357d",
+            "name": "OYO Flexistay Aparthotel Sutton",
+            "balanced_score": 26.5
+          },
+          {
+            "slug": "camborne-guest-house-7105c68a",
+            "name": "Camborne Guest House",
+            "balanced_score": 26.4
+          },
+          {
+            "slug": "number-forty-seven-952d5964",
+            "name": "Number Forty Seven",
+            "balanced_score": 26.5
+          }
+        ]
+      },
+      "gates": [
+        {
+          "gate": 1,
+          "name": "confidence >= 80",
+          "status": "PASS",
+          "detail": "confidence = 87.1"
+        },
+        {
+          "gate": 2,
+          "name": "hotel identity highly reliable (no dedupe merge needed)",
+          "status": "PASS",
+          "detail": "dedupe_confidence = 100.0 (100 = single source, no merge)"
+        },
+        {
+          "gate": 3,
+          "name": "all critical score dimensions present",
+          "status": "PASS",
+          "detail": "all 6 dimensions computed"
+        },
+        {
+          "gate": 4,
+          "name": "unique location facts present",
+          "status": "PASS",
+          "detail": "12 nearby facts on page"
+        },
+        {
+          "gate": 5,
+          "name": "city baseline available",
+          "status": "PASS",
+          "detail": "London baseline exists (all 12 launch cities do)"
+        },
+        {
+          "gate": 6,
+          "name": "automated content QA passes",
+          "status": "PASS",
+          "detail": "not a numeric-only name, no draft-QA flag (recorded in page_publication)"
+        },
+        {
+          "gate": 7,
+          "name": "demonstrated demand OR editorial pilot selection",
+          "status": "EDITORIAL",
+          "detail": "editorial pilot selection branch -- no live traffic exists yet to demonstrate demand"
+        },
+        {
+          "gate": 8,
+          "name": "no canonical duplicate",
+          "status": "PASS",
+          "detail": "no unresolved duplicate-coordinate cluster"
+        },
+        {
+          "gate": 9,
+          "name": "meaningful comparison/context on page",
+          "status": "PASS",
+          "detail": "4 comparable hotels shown (London has 1000+ scored hotels)"
+        },
+        {
+          "gate": 10,
+          "name": "user value independent of keyword targeting",
+          "status": "PASS",
+          "detail": "deterministic reason-code templates from structured facts, never keyword-targeted prose"
+        },
+        {
+          "gate": 11,
+          "name": "affiliate deep-link resolvable OR consciously published without CTA",
+          "status": "WITHOUT-CTA",
+          "detail": "AFFILIATE_ENABLED is off -- published deliberately without a booking CTA"
+        },
+        {
+          "gate": 12,
+          "name": "Latin-script name (new, docs/seo-policy.md §2)",
+          "status": "PASS",
+          "detail": "name is Latin-script"
+        }
+      ]
+    },
+    {
+      "city_id": "bangkok",
+      "selection_reason": "Lowest confidence in the entire 200-hotel v2 cohort (80.62, barely clearing the >=80 gate), paired with a globally recognized chain brand -- a useful contrast to the Dubai OYO pick above, which sits at a similarly borderline 82.0 confidence but for a much more debatable entity.",
+      "page": {
+        "id": "af88de0a-b52f-4b25-bbe1-66a09d3145cd",
+        "slug": "hilton-bangkok-suvarnabhumi-golf-resort-spa-9d3145cd",
+        "name": "Hilton Bangkok Suvarnabhumi Golf Resort & Spa",
+        "city_id": "bangkok",
+        "city_name": "Bangkok",
+        "locality": "Bangkok",
+        "region": null,
+        "country": "TH",
+        "lat": 13.656662,
+        "lon": 100.706802,
+        "distance_from_center_km": 24.8,
+        "far_from_center": true,
+        "locality_mismatch": false,
+        "locality_mismatch_detail": null,
+        "publication_status": "indexable",
+        "scores": {
+          "walkability_density": 10.8,
+          "transit_access": 0.0,
+          "food_essentials": 21.6,
+          "quietness_proxy": 83.3,
+          "family_convenience": 0.0,
+          "nightlife_access": 0.0
+        },
+        "balanced_score": 19.0,
+        "confidence": 80.6,
+        "confidence_label": "High",
+        "dedupe_confidence": 100.0,
+        "score_version": "1.2.1",
+        "source_release": "2026-08-19.0",
+        "verdict": "Mixed surroundings; quiet surroundings — see the full scores below.",
+        "reason_codes": [
+          "QUIET_SURROUNDINGS"
+        ],
+        "nearby_facts": [
+          {
+            "rank": 1,
+            "category": "auto_dealer",
+            "name": "Deepal Rungcharoen Bangna by เจเจ",
+            "distance_m": 107.3
+          },
+          {
+            "rank": 2,
+            "category": "convenience_store",
+            "name": "7-11 ข้างโลตัสราม2",
+            "distance_m": 126.9
+          },
+          {
+            "rank": 3,
+            "category": "restaurant",
+            "name": "Palm Breeze Restaurant",
+            "distance_m": 136.4
+          },
+          {
+            "rank": 4,
+            "category": "restaurant",
+            "name": "The Fountain",
+            "distance_m": 163.7
+          },
+          {
+            "rank": 5,
+            "category": "bakery",
+            "name": "พิมานดาเซน",
+            "distance_m": 442.4
+          },
+          {
+            "rank": 6,
+            "category": "vegetarian_restaurant",
+            "name": "Mommy Clean Food สาขาบางพลี/สมุทรปราการ",
+            "distance_m": 458.9
+          },
+          {
+            "rank": 7,
+            "category": "buffet_restaurant",
+            "name": "หมูกระทะ&สุกี้โบราณ ซอยกิ่งแก้ว ซ.10 เบอร์โทร.0638311585 // 0971052898",
+            "distance_m": 458.9
+          },
+          {
+            "rank": 8,
+            "category": "bakery",
+            "name": "85 Bake Story",
+            "distance_m": 694.7
+          },
+          {
+            "rank": 9,
+            "category": "restaurant",
+            "name": "Megachef",
+            "distance_m": 739.4
+          }
+        ],
+        "comparable": [
+          {
+            "slug": "hotel-416f99fa",
+            "name": "โรงแรม สวิฟโฮเทล",
+            "balanced_score": 19.0
+          },
+          {
+            "slug": "hotel-596d2bd6",
+            "name": "โรแมนติกโฮม",
+            "balanced_score": 19.1
+          },
+          {
+            "slug": "hotel-ae7ffed5",
+            "name": "บ้านประสิทธิ์วรนันท์",
+            "balanced_score": 18.8
+          },
+          {
+            "slug": "sirarom-land-167ebb72",
+            "name": "Sirarom Land",
+            "balanced_score": 19.1
+          }
+        ]
+      },
+      "gates": [
+        {
+          "gate": 1,
+          "name": "confidence >= 80",
+          "status": "PASS",
+          "detail": "confidence = 80.6"
+        },
+        {
+          "gate": 2,
+          "name": "hotel identity highly reliable (no dedupe merge needed)",
+          "status": "PASS",
+          "detail": "dedupe_confidence = 100.0 (100 = single source, no merge)"
+        },
+        {
+          "gate": 3,
+          "name": "all critical score dimensions present",
+          "status": "PASS",
+          "detail": "all 6 dimensions computed"
+        },
+        {
+          "gate": 4,
+          "name": "unique location facts present",
+          "status": "PASS",
+          "detail": "9 nearby facts on page"
+        },
+        {
+          "gate": 5,
+          "name": "city baseline available",
+          "status": "PASS",
+          "detail": "Bangkok baseline exists (all 12 launch cities do)"
+        },
+        {
+          "gate": 6,
+          "name": "automated content QA passes",
+          "status": "PASS",
+          "detail": "not a numeric-only name, no draft-QA flag (recorded in page_publication)"
+        },
+        {
+          "gate": 7,
+          "name": "demonstrated demand OR editorial pilot selection",
+          "status": "EDITORIAL",
+          "detail": "editorial pilot selection branch -- no live traffic exists yet to demonstrate demand"
+        },
+        {
+          "gate": 8,
+          "name": "no canonical duplicate",
+          "status": "PASS",
+          "detail": "no unresolved duplicate-coordinate cluster"
+        },
+        {
+          "gate": 9,
+          "name": "meaningful comparison/context on page",
+          "status": "PASS",
+          "detail": "4 comparable hotels shown (Bangkok has 1000+ scored hotels)"
+        },
+        {
+          "gate": 10,
+          "name": "user value independent of keyword targeting",
+          "status": "PASS",
+          "detail": "deterministic reason-code templates from structured facts, never keyword-targeted prose"
+        },
+        {
+          "gate": 11,
+          "name": "affiliate deep-link resolvable OR consciously published without CTA",
+          "status": "WITHOUT-CTA",
+          "detail": "AFFILIATE_ENABLED is off -- published deliberately without a booking CTA"
+        },
+        {
+          "gate": 12,
+          "name": "Latin-script name (new, docs/seo-policy.md §2)",
+          "status": "PASS",
+          "detail": "name is Latin-script"
+        }
+      ]
+    },
+    {
+      "city_id": "rome",
+      "selection_reason": "Real, unambiguous hotel (dedupe 100, no name-pattern flags) but the single lowest balanced_score in the full 200-hotel cohort (7.0/100). Selected to surface pilot-cohort-proposal.md's own flagged concern directly: \"distinctiveness\" is undirected, so a hotel distinctly BAD on every dimension qualifies exactly as strongly as one distinctly good. Product-policy question for the owner, not a data bug.",
+      "page": {
+        "id": "3b2b29ec-47e5-48cf-84c0-0f01dfe439a4",
+        "slug": "oc-hotel-dfe439a4",
+        "name": "OC Hotel",
+        "city_id": "rome",
+        "city_name": "Rome",
+        "locality": "Roma",
+        "region": "62",
+        "country": "IT",
+        "lat": 41.93758,
+        "lon": 12.619842,
+        "distance_from_center_km": 10.9,
+        "far_from_center": false,
+        "locality_mismatch": false,
+        "locality_mismatch_detail": null,
+        "publication_status": "indexable",
+        "scores": {
+          "walkability_density": 6.0,
+          "transit_access": 0.0,
+          "food_essentials": 0.0,
+          "quietness_proxy": 26.1,
+          "family_convenience": 18.9,
+          "nightlife_access": 0.0
+        },
+        "balanced_score": 7.0,
+        "confidence": 82.0,
+        "confidence_label": "High",
+        "dedupe_confidence": 100.0,
+        "score_version": "1.2.1",
+        "source_release": "2026-08-19.0",
+        "verdict": "Mixed surroundings; busy surroundings — see the full scores below.",
+        "reason_codes": [
+          "BUSY_SURROUNDINGS"
+        ],
+        "nearby_facts": [
+          {
+            "rank": 1,
+            "category": "movie_theater",
+            "name": "Studi Elios di Roma",
+            "distance_m": 43.8
+          },
+          {
+            "rank": 2,
+            "category": "clothing_store",
+            "name": "Madis",
+            "distance_m": 333.3
+          },
+          {
+            "rank": 3,
+            "category": "distillery",
+            "name": "Pallini S.p.A.",
+            "distance_m": 376.1
+          },
+          {
+            "rank": 4,
+            "category": "produce_store",
+            "name": "Il mio orto a casa tua",
+            "distance_m": 419.5
+          },
+          {
+            "rank": 5,
+            "category": "italian_restaurant",
+            "name": "Passione Toscana",
+            "distance_m": 539.9
+          },
+          {
+            "rank": 6,
+            "category": "bakery",
+            "name": "Biscotti Gentilini",
+            "distance_m": 581.9
+          },
+          {
+            "rank": 7,
+            "category": "sandwich_shop",
+            "name": "Para Magnum Panini & Bibite",
+            "distance_m": 630.7
+          },
+          {
+            "rank": 8,
+            "category": "fast_food_restaurant",
+            "name": "il  fienile",
+            "distance_m": 799.9
+          }
+        ],
+        "comparable": [
+          {
+            "slug": "casa-per-ferie-eremo-santa-rosa-da-lima-61684928",
+            "name": "Casa per Ferie Eremo Santa Rosa da Lima",
+            "balanced_score": 11.0
+          },
+          {
+            "slug": "locanda-delle-corse-73fc5d8c",
+            "name": "Locanda delle Corse",
+            "balanced_score": 12.7
+          },
+          {
+            "slug": "agriturismo-muratella-roma-1b7785bf",
+            "name": "Agriturismo Muratella Roma",
+            "balanced_score": 13.7
+          },
+          {
+            "slug": "marriott-5c97bc8c",
+            "name": "Marriott",
+            "balanced_score": 14.2
+          }
+        ]
+      },
+      "gates": [
+        {
+          "gate": 1,
+          "name": "confidence >= 80",
+          "status": "PASS",
+          "detail": "confidence = 82.0"
+        },
+        {
+          "gate": 2,
+          "name": "hotel identity highly reliable (no dedupe merge needed)",
+          "status": "PASS",
+          "detail": "dedupe_confidence = 100.0 (100 = single source, no merge)"
+        },
+        {
+          "gate": 3,
+          "name": "all critical score dimensions present",
+          "status": "PASS",
+          "detail": "all 6 dimensions computed"
+        },
+        {
+          "gate": 4,
+          "name": "unique location facts present",
+          "status": "PASS",
+          "detail": "8 nearby facts on page"
+        },
+        {
+          "gate": 5,
+          "name": "city baseline available",
+          "status": "PASS",
+          "detail": "Rome baseline exists (all 12 launch cities do)"
+        },
+        {
+          "gate": 6,
+          "name": "automated content QA passes",
+          "status": "PASS",
+          "detail": "not a numeric-only name, no draft-QA flag (recorded in page_publication)"
+        },
+        {
+          "gate": 7,
+          "name": "demonstrated demand OR editorial pilot selection",
+          "status": "EDITORIAL",
+          "detail": "editorial pilot selection branch -- no live traffic exists yet to demonstrate demand"
+        },
+        {
+          "gate": 8,
+          "name": "no canonical duplicate",
+          "status": "PASS",
+          "detail": "no unresolved duplicate-coordinate cluster"
+        },
+        {
+          "gate": 9,
+          "name": "meaningful comparison/context on page",
+          "status": "PASS",
+          "detail": "4 comparable hotels shown (Rome has 1000+ scored hotels)"
+        },
+        {
+          "gate": 10,
+          "name": "user value independent of keyword targeting",
+          "status": "PASS",
+          "detail": "deterministic reason-code templates from structured facts, never keyword-targeted prose"
+        },
+        {
+          "gate": 11,
+          "name": "affiliate deep-link resolvable OR consciously published without CTA",
+          "status": "WITHOUT-CTA",
+          "detail": "AFFILIATE_ENABLED is off -- published deliberately without a booking CTA"
+        },
+        {
+          "gate": 12,
+          "name": "Latin-script name (new, docs/seo-policy.md §2)",
+          "status": "PASS",
+          "detail": "name is Latin-script"
+        }
+      ]
+    },
+    {
+      "city_id": "tokyo",
+      "selection_reason": "Borderline confidence (81.2) independent hotel with a plausible but very generic single-word name (\"Eurasian\") -- worth a human glance to confirm it's a real, findable property. Also a useful data point for gate 12: this survived the Latin-script filter (it IS Latin-script) while 8 of Tokyo's original candidates did not -- see docs/reports/destination-name-mismatch-audit.md for why some of Tokyo's Bali-themed love-hotel names were checked and NOT excluded as bad-geocode despite the destination-name pattern.",
+      "page": {
+        "id": "865775fd-9802-4082-b525-d811285b5997",
+        "slug": "eurasian-285b5997",
+        "name": "Eurasian",
+        "city_id": "tokyo",
+        "city_name": "Tokyo",
+        "locality": "浦安市",
+        "region": null,
+        "country": "JP",
+        "lat": 35.627426,
+        "lon": 139.895584,
+        "distance_from_center_km": 22.8,
+        "far_from_center": true,
+        "locality_mismatch": false,
+        "locality_mismatch_detail": null,
+        "publication_status": "indexable",
+        "scores": {
+          "walkability_density": 25.9,
+          "transit_access": 73.1,
+          "food_essentials": 0.0,
+          "quietness_proxy": 94.6,
+          "family_convenience": 98.2,
+          "nightlife_access": 0.0
+        },
+        "balanced_score": 43.8,
+        "confidence": 81.2,
+        "confidence_label": "High",
+        "dedupe_confidence": 100.0,
+        "score_version": "1.2.1",
+        "source_release": "2026-08-19.0",
+        "verdict": "Excellent for family convenience; good for transit access; quiet surroundings.",
+        "reason_codes": [
+          "GOOD_TRANSIT_ACCESS",
+          "VERY_CLOSE_TRANSIT",
+          "QUIET_SURROUNDINGS",
+          "FAMILY_FRIENDLY_SURROUNDINGS"
+        ],
+        "nearby_facts": [
+          {
+            "rank": 1,
+            "category": "spa",
+            "name": "スパ＆エステ　ハナハナ",
+            "distance_m": 7.9
+          },
+          {
+            "rank": 2,
+            "category": "spa",
+            "name": "ナリスビューティールーム",
+            "distance_m": 8.3
+          },
+          {
+            "rank": 3,
+            "category": "spa",
+            "name": "舞浜ユーラシア",
+            "distance_m": 8.5
+          },
+          {
+            "rank": 4,
+            "category": "shopping",
+            "name": "舞浜ユーラシアペットスクエア・ムーワン",
+            "distance_m": 11.3
+          },
+          {
+            "rank": 5,
+            "category": "cafeteria",
+            "name": "ポネンティオ",
+            "distance_m": 20.3
+          },
+          {
+            "rank": 6,
+            "category": "beauty_supply_store",
+            "name": "ラッシュイクスピアリ舞浜店（Lushイクスピアリ舞浜店）",
+            "distance_m": 65.5
+          },
+          {
+            "rank": 7,
+            "category": "warehouse_club_store",
+            "name": "フレネットhibiya 東京営業所",
+            "distance_m": 105.3
+          },
+          {
+            "rank": 8,
+            "category": "bus_station",
+            "name": "千鳥車庫",
+            "distance_m": 171.6
+          },
+          {
+            "rank": 9,
+            "category": "warehouse_club_store",
+            "name": "渋井鋼材店営業第一部",
+            "distance_m": 254.4
+          },
+          {
+            "rank": 10,
+            "category": "track_stadium",
+            "name": "ブリオベッカ浦安競技場",
+            "distance_m": 297.9
+          },
+          {
+            "rank": 11,
+            "category": "fishmonger",
+            "name": "大川水産",
+            "distance_m": 421.2
+          },
+          {
+            "rank": 12,
+            "category": "arts_and_entertainment",
+            "name": "舞スタジオ",
+            "distance_m": 480.4
+          }
+        ],
+        "comparable": [
+          {
+            "slug": "hotel-cda03bf4",
+            "name": "アパホテル東京大島",
+            "balanced_score": 43.6
+          },
+          {
+            "slug": "hotel-a33b3b68",
+            "name": "吉泰酒店",
+            "balanced_score": 43.8
+          },
+          {
+            "slug": "hotel-e244ccc0",
+            "name": "サンルートプラザ東京",
+            "balanced_score": 43.5
+          },
+          {
+            "slug": "hotel555-7b175b26",
+            "name": "Hotel555",
+            "balanced_score": 44.0
+          }
+        ]
+      },
+      "gates": [
+        {
+          "gate": 1,
+          "name": "confidence >= 80",
+          "status": "PASS",
+          "detail": "confidence = 81.2"
+        },
+        {
+          "gate": 2,
+          "name": "hotel identity highly reliable (no dedupe merge needed)",
+          "status": "PASS",
+          "detail": "dedupe_confidence = 100.0 (100 = single source, no merge)"
+        },
+        {
+          "gate": 3,
+          "name": "all critical score dimensions present",
+          "status": "PASS",
+          "detail": "all 6 dimensions computed"
+        },
+        {
+          "gate": 4,
+          "name": "unique location facts present",
+          "status": "PASS",
+          "detail": "12 nearby facts on page"
+        },
+        {
+          "gate": 5,
+          "name": "city baseline available",
+          "status": "PASS",
+          "detail": "Tokyo baseline exists (all 12 launch cities do)"
+        },
+        {
+          "gate": 6,
+          "name": "automated content QA passes",
+          "status": "PASS",
+          "detail": "not a numeric-only name, no draft-QA flag (recorded in page_publication)"
+        },
+        {
+          "gate": 7,
+          "name": "demonstrated demand OR editorial pilot selection",
+          "status": "EDITORIAL",
+          "detail": "editorial pilot selection branch -- no live traffic exists yet to demonstrate demand"
+        },
+        {
+          "gate": 8,
+          "name": "no canonical duplicate",
+          "status": "PASS",
+          "detail": "no unresolved duplicate-coordinate cluster"
+        },
+        {
+          "gate": 9,
+          "name": "meaningful comparison/context on page",
+          "status": "PASS",
+          "detail": "4 comparable hotels shown (Tokyo has 1000+ scored hotels)"
+        },
+        {
+          "gate": 10,
+          "name": "user value independent of keyword targeting",
+          "status": "PASS",
+          "detail": "deterministic reason-code templates from structured facts, never keyword-targeted prose"
+        },
+        {
+          "gate": 11,
+          "name": "affiliate deep-link resolvable OR consciously published without CTA",
+          "status": "WITHOUT-CTA",
+          "detail": "AFFILIATE_ENABLED is off -- published deliberately without a booking CTA"
+        },
+        {
+          "gate": 12,
+          "name": "Latin-script name (new, docs/seo-policy.md §2)",
+          "status": "PASS",
+          "detail": "name is Latin-script"
+        }
+      ]
+    },
+    {
+      "city_id": "new_york",
+      "selection_reason": "v2 replacement pick, chosen specifically to keep exercising the \"New York City metro\" market label (docs/adr/010) on a real candidate after v1's example (Sheraton East Rutherford NJ) didn't make v2's top selection: SpringHill Suites, locality Newark NJ, 13.8 km from the New York center point. Page shows \"New York City metro . Newark\" plus the locality-mismatch disclosure (\"Address region (NJ) does not match New York City metro (NY)\") exactly as designed. (Also the same hotel brand as the historical Carlstadt-NJ specimen logged early in docs/STATE.md's entity-QA backlog -- a different individual record, same recurring pattern.)",
+      "page": {
+        "id": "e982c988-a147-4a6f-a601-6f53d327f087",
+        "slug": "springhill-suites-d327f087",
+        "name": "SpringHill Suites",
+        "city_id": "new_york",
+        "city_name": "New York City metro",
+        "locality": "Newark",
+        "region": "NJ",
+        "country": "US",
+        "lat": 40.70929,
+        "lon": -74.170166,
+        "distance_from_center_km": 13.8,
+        "far_from_center": false,
+        "locality_mismatch": true,
+        "locality_mismatch_detail": "Address region (NJ) does not match New York City metro (NY)",
+        "publication_status": "indexable",
+        "scores": {
+          "walkability_density": 7.8,
+          "transit_access": 0.0,
+          "food_essentials": 0.0,
+          "quietness_proxy": 52.2,
+          "family_convenience": 66.1,
+          "nightlife_access": 0.0
+        },
+        "balanced_score": 16.0,
+        "confidence": 81.9,
+        "confidence_label": "High",
+        "dedupe_confidence": 100.0,
+        "score_version": "1.2.1",
+        "source_release": "2026-08-19.0",
+        "verdict": "Good for family convenience; moderate surrounding activity.",
+        "reason_codes": [],
+        "nearby_facts": [
+          {
+            "rank": 1,
+            "category": "ambulance_or_ems_service",
+            "name": "Uh Ems - Mic5",
+            "distance_m": 180.7
+          },
+          {
+            "rank": 2,
+            "category": "burger_restaurant",
+            "name": "Burger King",
+            "distance_m": 185.0
+          },
+          {
+            "rank": 3,
+            "category": "clothing_store",
+            "name": "BOSS Store",
+            "distance_m": 243.3
+          },
+          {
+            "rank": 4,
+            "category": "pizza_restaurant",
+            "name": "Villa Pizza",
+            "distance_m": 246.4
+          },
+          {
+            "rank": 5,
+            "category": "rehabilitation_center",
+            "name": "Gateway Foundation",
+            "distance_m": 403.0
+          },
+          {
+            "rank": 6,
+            "category": "airport",
+            "name": "Hunky Dory Hangar Complex",
+            "distance_m": 441.2
+          },
+          {
+            "rank": 7,
+            "category": "american_restaurant",
+            "name": "Steak Escape",
+            "distance_m": 522.1
+          },
+          {
+            "rank": 8,
+            "category": "beer_bar",
+            "name": "Ted's Bar & Grill",
+            "distance_m": 525.9
+          },
+          {
+            "rank": 9,
+            "category": "restaurant",
+            "name": "Garden State Food Group Llc",
+            "distance_m": 531.3
+          },
+          {
+            "rank": 10,
+            "category": "airport",
+            "name": "United Building 154",
+            "distance_m": 547.3
+          },
+          {
+            "rank": 11,
+            "category": "restaurant",
+            "name": "Bistro 128",
+            "distance_m": 614.5
+          },
+          {
+            "rank": 12,
+            "category": "bar_and_grill_restaurant",
+            "name": "Gateway City Kitchen & Bar",
+            "distance_m": 627.4
+          }
+        ],
+        "comparable": [
+          {
+            "slug": "sheraton-hotel-east-rutherford-nj-6203d1d1",
+            "name": "Sheraton Hotel, East Rutherford, NJ",
+            "balanced_score": 15.8
+          },
+          {
+            "slug": "hampton-inn-carlstadt-at-the-meadowlands-ad8e8c1e",
+            "name": "Hampton Inn Carlstadt At The Meadowlands",
+            "balanced_score": 16.8
+          },
+          {
+            "slug": "courtyard-by-marriott-2d2f3ca4",
+            "name": "Courtyard By Marriott",
+            "balanced_score": 15.7
+          },
+          {
+            "slug": "home2-suites-by-hilton-newark-airport-891aac0d",
+            "name": "Home2 Suites by Hilton Newark Airport",
+            "balanced_score": 17.0
+          }
+        ]
+      },
+      "gates": [
+        {
+          "gate": 1,
+          "name": "confidence >= 80",
+          "status": "PASS",
+          "detail": "confidence = 81.9"
+        },
+        {
+          "gate": 2,
+          "name": "hotel identity highly reliable (no dedupe merge needed)",
+          "status": "PASS",
+          "detail": "dedupe_confidence = 100.0 (100 = single source, no merge)"
+        },
+        {
+          "gate": 3,
+          "name": "all critical score dimensions present",
+          "status": "PASS",
+          "detail": "all 6 dimensions computed"
+        },
+        {
+          "gate": 4,
+          "name": "unique location facts present",
+          "status": "PASS",
+          "detail": "12 nearby facts on page"
+        },
+        {
+          "gate": 5,
+          "name": "city baseline available",
+          "status": "PASS",
+          "detail": "New York City metro baseline exists (all 12 launch cities do)"
+        },
+        {
+          "gate": 6,
+          "name": "automated content QA passes",
+          "status": "PASS",
+          "detail": "not a numeric-only name, no draft-QA flag (recorded in page_publication)"
+        },
+        {
+          "gate": 7,
+          "name": "demonstrated demand OR editorial pilot selection",
+          "status": "EDITORIAL",
+          "detail": "editorial pilot selection branch -- no live traffic exists yet to demonstrate demand"
+        },
+        {
+          "gate": 8,
+          "name": "no canonical duplicate",
+          "status": "PASS",
+          "detail": "no unresolved duplicate-coordinate cluster"
+        },
+        {
+          "gate": 9,
+          "name": "meaningful comparison/context on page",
+          "status": "PASS",
+          "detail": "4 comparable hotels shown (New York City metro has 1000+ scored hotels)"
+        },
+        {
+          "gate": 10,
+          "name": "user value independent of keyword targeting",
+          "status": "PASS",
+          "detail": "deterministic reason-code templates from structured facts, never keyword-targeted prose"
+        },
+        {
+          "gate": 11,
+          "name": "affiliate deep-link resolvable OR consciously published without CTA",
+          "status": "WITHOUT-CTA",
+          "detail": "AFFILIATE_ENABLED is off -- published deliberately without a booking CTA"
+        },
+        {
+          "gate": 12,
+          "name": "Latin-script name (new, docs/seo-policy.md §2)",
+          "status": "PASS",
+          "detail": "name is Latin-script"
+        }
+      ]
+    },
+    {
+      "city_id": "barcelona",
+      "selection_reason": "High-confidence (94.0), unambiguous global chain hotel -- a second clean positive-baseline pick, different city and brand family from the London example.",
+      "page": {
+        "id": "7dc2eae0-7ce4-445c-bfe0-cbfef6024c7b",
+        "slug": "hampton-by-hilton-barcelona-fira-gran-via-f6024c7b",
+        "name": "Hampton by Hilton Barcelona Fira Gran Via",
+        "city_id": "barcelona",
+        "city_name": "Barcelona",
+        "locality": "l'Hospitalet de Llobregat",
+        "region": null,
+        "country": "ES",
+        "lat": 41.355705,
+        "lon": 2.127133,
+        "distance_from_center_km": 4.9,
+        "far_from_center": false,
+        "locality_mismatch": false,
+        "locality_mismatch_detail": null,
+        "publication_status": "indexable",
+        "scores": {
+          "walkability_density": 63.9,
+          "transit_access": 81.7,
+          "food_essentials": 36.9,
+          "quietness_proxy": 83.4,
+          "family_convenience": 71.6,
+          "nightlife_access": 0.0
+        },
+        "balanced_score": 56.2,
+        "confidence": 94.0,
+        "confidence_label": "High",
+        "dedupe_confidence": 100.0,
+        "score_version": "1.2.1",
+        "source_release": "2026-08-19.0",
+        "verdict": "Excellent for transit access; good for family convenience; quiet surroundings.",
+        "reason_codes": [
+          "GOOD_TRANSIT_ACCESS",
+          "QUIET_SURROUNDINGS",
+          "FAMILY_FRIENDLY_SURROUNDINGS"
+        ],
+        "nearby_facts": [
+          {
+            "rank": 1,
+            "category": "building_supply_store",
+            "name": "Porcelanosa",
+            "distance_m": 70.8
+          },
+          {
+            "rank": 2,
+            "category": "health_care",
+            "name": "Dentsply Iberia",
+            "distance_m": 81.1
+          },
+          {
+            "rank": 3,
+            "category": "italian_restaurant",
+            "name": "Mangia € Bevi - Página Oficial.",
+            "distance_m": 99.7
+          },
+          {
+            "rank": 4,
+            "category": "european_restaurant",
+            "name": "Nuclo Restaurant",
+            "distance_m": 104.9
+          },
+          {
+            "rank": 5,
+            "category": "spanish_restaurant",
+            "name": "La Pepa Restaurante",
+            "distance_m": 114.6
+          },
+          {
+            "rank": 6,
+            "category": "furniture_store",
+            "name": "Schmidt",
+            "distance_m": 115.1
+          },
+          {
+            "rank": 7,
+            "category": "hospital",
+            "name": "Extel Contact Center",
+            "distance_m": 117.3
+          },
+          {
+            "rank": 8,
+            "category": "hospital",
+            "name": "Izasa Hospital",
+            "distance_m": 118.1
+          },
+          {
+            "rank": 9,
+            "category": "fairgrounds",
+            "name": "Fira de Barcelona",
+            "distance_m": 123.2
+          },
+          {
+            "rank": 10,
+            "category": "coffee_shop",
+            "name": "McCafé",
+            "distance_m": 130.4
+          },
+          {
+            "rank": 11,
+            "category": "cafe",
+            "name": "Faborit Fira",
+            "distance_m": 148.4
+          },
+          {
+            "rank": 12,
+            "category": "coffee_shop",
+            "name": "El Roble",
+            "distance_m": 150.5
+          }
+        ],
+        "comparable": [
+          {
+            "slug": "hotel-ciutat-de-sant-adria-f4086fc8",
+            "name": "Hotel Ciutat de Sant Adrià",
+            "balanced_score": 55.9
+          },
+          {
+            "slug": "art-turis-252940c6",
+            "name": "Art Turis",
+            "balanced_score": 56.3
+          },
+          {
+            "slug": "occidental-atenea-mar-adults-only-34eca18b",
+            "name": "Occidental Atenea Mar - Adults Only",
+            "balanced_score": 55.9
+          },
+          {
+            "slug": "hostal-lami-5ddb5cae",
+            "name": "Hostal Lami",
+            "balanced_score": 56.5
+          }
+        ]
+      },
+      "gates": [
+        {
+          "gate": 1,
+          "name": "confidence >= 80",
+          "status": "PASS",
+          "detail": "confidence = 94.0"
+        },
+        {
+          "gate": 2,
+          "name": "hotel identity highly reliable (no dedupe merge needed)",
+          "status": "PASS",
+          "detail": "dedupe_confidence = 100.0 (100 = single source, no merge)"
+        },
+        {
+          "gate": 3,
+          "name": "all critical score dimensions present",
+          "status": "PASS",
+          "detail": "all 6 dimensions computed"
+        },
+        {
+          "gate": 4,
+          "name": "unique location facts present",
+          "status": "PASS",
+          "detail": "12 nearby facts on page"
+        },
+        {
+          "gate": 5,
+          "name": "city baseline available",
+          "status": "PASS",
+          "detail": "Barcelona baseline exists (all 12 launch cities do)"
+        },
+        {
+          "gate": 6,
+          "name": "automated content QA passes",
+          "status": "PASS",
+          "detail": "not a numeric-only name, no draft-QA flag (recorded in page_publication)"
+        },
+        {
+          "gate": 7,
+          "name": "demonstrated demand OR editorial pilot selection",
+          "status": "EDITORIAL",
+          "detail": "editorial pilot selection branch -- no live traffic exists yet to demonstrate demand"
+        },
+        {
+          "gate": 8,
+          "name": "no canonical duplicate",
+          "status": "PASS",
+          "detail": "no unresolved duplicate-coordinate cluster"
+        },
+        {
+          "gate": 9,
+          "name": "meaningful comparison/context on page",
+          "status": "PASS",
+          "detail": "4 comparable hotels shown (Barcelona has 1000+ scored hotels)"
+        },
+        {
+          "gate": 10,
+          "name": "user value independent of keyword targeting",
+          "status": "PASS",
+          "detail": "deterministic reason-code templates from structured facts, never keyword-targeted prose"
+        },
+        {
+          "gate": 11,
+          "name": "affiliate deep-link resolvable OR consciously published without CTA",
+          "status": "WITHOUT-CTA",
+          "detail": "AFFILIATE_ENABLED is off -- published deliberately without a booking CTA"
+        },
+        {
+          "gate": 12,
+          "name": "Latin-script name (new, docs/seo-policy.md §2)",
+          "status": "PASS",
+          "detail": "name is Latin-script"
+        }
+      ]
+    },
+    {
+      "city_id": "sydney",
+      "selection_reason": "A bed & breakfast rather than a \"hotel\" in the conventional sense -- legitimate lodging, passes every gate (confidence 84.8), included as a reminder that \"hotel\" in this dataset's taxonomy is broader than the word implies to most readers. Also: Sydney is where 2 of the 4 confirmed bad-geocode exclusions were found this session (a Bora Bora resort, a Fiji resort) -- this pick is a genuinely-Sydney control example from the same city.",
+      "page": {
+        "id": "4a3a5bd2-9eb6-4e71-b4ea-bc3659fd8655",
+        "slug": "lyrebird-bed-breakfast-59fd8655",
+        "name": "Lyrebird Bed & Breakfast",
+        "city_id": "sydney",
+        "city_name": "Sydney",
+        "locality": "Sydney",
+        "region": "NSW",
+        "country": "AU",
+        "lat": -33.789562,
+        "lon": 151.175995,
+        "distance_from_center_km": 9.3,
+        "far_from_center": false,
+        "locality_mismatch": false,
+        "locality_mismatch_detail": null,
+        "publication_status": "indexable",
+        "scores": {
+          "walkability_density": 11.1,
+          "transit_access": 22.2,
+          "food_essentials": 0.0,
+          "quietness_proxy": 87.8,
+          "family_convenience": 76.5,
+          "nightlife_access": 11.1
+        },
+        "balanced_score": 29.1,
+        "confidence": 84.8,
+        "confidence_label": "High",
+        "dedupe_confidence": 100.0,
+        "score_version": "1.2.1",
+        "source_release": "2026-08-19.0",
+        "verdict": "Good for family convenience; quiet surroundings.",
+        "reason_codes": [
+          "QUIET_SURROUNDINGS",
+          "FAMILY_FRIENDLY_SURROUNDINGS"
+        ],
+        "nearby_facts": [
+          {
+            "rank": 1,
+            "category": "massage_therapy",
+            "name": "Rebecca Della-Franca Massage Therapy",
+            "distance_m": 163.7
+          },
+          {
+            "rank": 2,
+            "category": "park",
+            "name": "Blue Gum Reserve",
+            "distance_m": 197.2
+          },
+          {
+            "rank": 3,
+            "category": "music_and_dvd_store",
+            "name": "Sydney Fine Violins",
+            "distance_m": 234.1
+          },
+          {
+            "rank": 4,
+            "category": "bar",
+            "name": "Gotham City",
+            "distance_m": 304.4
+          },
+          {
+            "rank": 5,
+            "category": "furniture_store",
+            "name": "The Mirror Factory",
+            "distance_m": 333.3
+          },
+          {
+            "rank": 6,
+            "category": "auto_dealer",
+            "name": "Lexus of Chatswood",
+            "distance_m": 355.6
+          },
+          {
+            "rank": 7,
+            "category": "beer_wine_spirits_store",
+            "name": "Vintage Cellars Chatswood North",
+            "distance_m": 375.5
+          },
+          {
+            "rank": 8,
+            "category": "auto_dealer",
+            "name": "Zeekr Chatswood",
+            "distance_m": 380.6
+          },
+          {
+            "rank": 9,
+            "category": "furniture_store",
+            "name": "Roche Bobois Australia",
+            "distance_m": 380.9
+          },
+          {
+            "rank": 10,
+            "category": "convenience_store",
+            "name": "7-Eleven",
+            "distance_m": 402.4
+          },
+          {
+            "rank": 11,
+            "category": "personal_or_beauty_service",
+            "name": "Bupa Aged Care Roseville",
+            "distance_m": 404.1
+          },
+          {
+            "rank": 12,
+            "category": "spa",
+            "name": "Escape Bathhouse",
+            "distance_m": 406.5
+          }
+        ],
+        "comparable": [
+          {
+            "slug": "bondi-hotel-a83e17be",
+            "name": "Bondi Hotel",
+            "balanced_score": 29.0
+          },
+          {
+            "slug": "mantra-on-sydney-airport-28ff7791",
+            "name": "Mantra on Sydney Airport",
+            "balanced_score": 29.2
+          },
+          {
+            "slug": "tamarama-apartments-73f23056",
+            "name": "Tamarama Apartments",
+            "balanced_score": 29.0
+          },
+          {
+            "slug": "fairmont-resort-blue-mountain-57085042",
+            "name": "Fairmont Resort Blue Mountain",
+            "balanced_score": 29.4
+          }
+        ]
+      },
+      "gates": [
+        {
+          "gate": 1,
+          "name": "confidence >= 80",
+          "status": "PASS",
+          "detail": "confidence = 84.8"
+        },
+        {
+          "gate": 2,
+          "name": "hotel identity highly reliable (no dedupe merge needed)",
+          "status": "PASS",
+          "detail": "dedupe_confidence = 100.0 (100 = single source, no merge)"
+        },
+        {
+          "gate": 3,
+          "name": "all critical score dimensions present",
+          "status": "PASS",
+          "detail": "all 6 dimensions computed"
+        },
+        {
+          "gate": 4,
+          "name": "unique location facts present",
+          "status": "PASS",
+          "detail": "12 nearby facts on page"
+        },
+        {
+          "gate": 5,
+          "name": "city baseline available",
+          "status": "PASS",
+          "detail": "Sydney baseline exists (all 12 launch cities do)"
+        },
+        {
+          "gate": 6,
+          "name": "automated content QA passes",
+          "status": "PASS",
+          "detail": "not a numeric-only name, no draft-QA flag (recorded in page_publication)"
+        },
+        {
+          "gate": 7,
+          "name": "demonstrated demand OR editorial pilot selection",
+          "status": "EDITORIAL",
+          "detail": "editorial pilot selection branch -- no live traffic exists yet to demonstrate demand"
+        },
+        {
+          "gate": 8,
+          "name": "no canonical duplicate",
+          "status": "PASS",
+          "detail": "no unresolved duplicate-coordinate cluster"
+        },
+        {
+          "gate": 9,
+          "name": "meaningful comparison/context on page",
+          "status": "PASS",
+          "detail": "4 comparable hotels shown (Sydney has 1000+ scored hotels)"
+        },
+        {
+          "gate": 10,
+          "name": "user value independent of keyword targeting",
+          "status": "PASS",
+          "detail": "deterministic reason-code templates from structured facts, never keyword-targeted prose"
+        },
+        {
+          "gate": 11,
+          "name": "affiliate deep-link resolvable OR consciously published without CTA",
+          "status": "WITHOUT-CTA",
+          "detail": "AFFILIATE_ENABLED is off -- published deliberately without a booking CTA"
+        },
+        {
+          "gate": 12,
+          "name": "Latin-script name (new, docs/seo-policy.md §2)",
+          "status": "PASS",
+          "detail": "name is Latin-script"
+        }
+      ]
+    },
+    {
+      "city_id": "paris",
+      "selection_reason": "The name itself is suspicious: \"ALL\" is Accor's loyalty-program brand (Accor Live Limitless), not a hotel name -- this record may be a mis-parsed or placeholder entity rather than one specific bookable property. Every gate passes mechanically (confidence 86.3, dedupe 100), which is exactly the point: gate-passing isn't the same as \"this is definitely a real, distinct hotel.\" A third, milder instance of the same underlying risk as the 2 headline discutable cases.",
+      "page": {
+        "id": "b909e498-b100-46aa-b14e-093f4a53dcc0",
+        "slug": "all-accor-4a53dcc0",
+        "name": "ALL Accor",
+        "city_id": "paris",
+        "city_name": "Paris",
+        "locality": "Issy-les-Moulineaux",
+        "region": null,
+        "country": "FR",
+        "lat": 48.832844,
+        "lon": 2.26933,
+        "distance_from_center_km": 6.6,
+        "far_from_center": false,
+        "locality_mismatch": false,
+        "locality_mismatch_detail": null,
+        "publication_status": "indexable",
+        "scores": {
+          "walkability_density": 16.8,
+          "transit_access": 34.1,
+          "food_essentials": 0.0,
+          "quietness_proxy": 75.1,
+          "family_convenience": 94.6,
+          "nightlife_access": 0.0
+        },
+        "balanced_score": 30.9,
+        "confidence": 86.3,
+        "confidence_label": "High",
+        "dedupe_confidence": 100.0,
+        "score_version": "1.2.1",
+        "source_release": "2026-08-19.0",
+        "verdict": "Excellent for family convenience; moderate surrounding activity.",
+        "reason_codes": [
+          "FAMILY_FRIENDLY_SURROUNDINGS"
+        ],
+        "nearby_facts": [
+          {
+            "rank": 1,
+            "category": "french_restaurant",
+            "name": "Archibald",
+            "distance_m": 143.1
+          },
+          {
+            "rank": 2,
+            "category": "vietnamese_restaurant",
+            "name": "Restaurant Goude",
+            "distance_m": 150.9
+          },
+          {
+            "rank": 3,
+            "category": "japanese_restaurant",
+            "name": "Yuki Fusion",
+            "distance_m": 171.7
+          },
+          {
+            "rank": 4,
+            "category": "vietnamese_restaurant",
+            "name": "Team Tam",
+            "distance_m": 172.7
+          },
+          {
+            "rank": 5,
+            "category": "japanese_restaurant",
+            "name": "Sakura",
+            "distance_m": 176.0
+          },
+          {
+            "rank": 6,
+            "category": "fish_and_chips_restaurant",
+            "name": "Ozzy’s",
+            "distance_m": 301.9
+          },
+          {
+            "rank": 7,
+            "category": "park",
+            "name": "Parc omnisports Suzanne Lenglen",
+            "distance_m": 315.2
+          },
+          {
+            "rank": 8,
+            "category": "french_restaurant",
+            "name": "Cojean Sways",
+            "distance_m": 331.3
+          },
+          {
+            "rank": 9,
+            "category": "spa",
+            "name": "Comédie +",
+            "distance_m": 342.1
+          },
+          {
+            "rank": 10,
+            "category": "building_supply_store",
+            "name": "Raboni",
+            "distance_m": 373.2
+          },
+          {
+            "rank": 11,
+            "category": "eyewear_store",
+            "name": "Jean Lucas Opticien",
+            "distance_m": 389.9
+          },
+          {
+            "rank": 12,
+            "category": "lingerie_store",
+            "name": "Solenee Beauty",
+            "distance_m": 396.3
+          }
+        ],
+        "comparable": [
+          {
+            "slug": "adoma-66a632ec",
+            "name": "Adoma",
+            "balanced_score": 30.7
+          },
+          {
+            "slug": "la-ferme-des-barmonts-c29cbc86",
+            "name": "La Ferme Des Barmonts",
+            "balanced_score": 30.9
+          },
+          {
+            "slug": "cote-marne-5539fb5a",
+            "name": "Cote Marne",
+            "balanced_score": 30.7
+          },
+          {
+            "slug": "premiere-classe-paris-drancy-b5281cad",
+            "name": "Premiere Classe Paris Drancy",
+            "balanced_score": 31.0
+          }
+        ]
+      },
+      "gates": [
+        {
+          "gate": 1,
+          "name": "confidence >= 80",
+          "status": "PASS",
+          "detail": "confidence = 86.3"
+        },
+        {
+          "gate": 2,
+          "name": "hotel identity highly reliable (no dedupe merge needed)",
+          "status": "PASS",
+          "detail": "dedupe_confidence = 100.0 (100 = single source, no merge)"
+        },
+        {
+          "gate": 3,
+          "name": "all critical score dimensions present",
+          "status": "PASS",
+          "detail": "all 6 dimensions computed"
+        },
+        {
+          "gate": 4,
+          "name": "unique location facts present",
+          "status": "PASS",
+          "detail": "12 nearby facts on page"
+        },
+        {
+          "gate": 5,
+          "name": "city baseline available",
+          "status": "PASS",
+          "detail": "Paris baseline exists (all 12 launch cities do)"
+        },
+        {
+          "gate": 6,
+          "name": "automated content QA passes",
+          "status": "PASS",
+          "detail": "not a numeric-only name, no draft-QA flag (recorded in page_publication)"
+        },
+        {
+          "gate": 7,
+          "name": "demonstrated demand OR editorial pilot selection",
+          "status": "EDITORIAL",
+          "detail": "editorial pilot selection branch -- no live traffic exists yet to demonstrate demand"
+        },
+        {
+          "gate": 8,
+          "name": "no canonical duplicate",
+          "status": "PASS",
+          "detail": "no unresolved duplicate-coordinate cluster"
+        },
+        {
+          "gate": 9,
+          "name": "meaningful comparison/context on page",
+          "status": "PASS",
+          "detail": "4 comparable hotels shown (Paris has 1000+ scored hotels)"
+        },
+        {
+          "gate": 10,
+          "name": "user value independent of keyword targeting",
+          "status": "PASS",
+          "detail": "deterministic reason-code templates from structured facts, never keyword-targeted prose"
+        },
+        {
+          "gate": 11,
+          "name": "affiliate deep-link resolvable OR consciously published without CTA",
+          "status": "WITHOUT-CTA",
+          "detail": "AFFILIATE_ENABLED is off -- published deliberately without a booking CTA"
+        },
+        {
+          "gate": 12,
+          "name": "Latin-script name (new, docs/seo-policy.md §2)",
+          "status": "PASS",
+          "detail": "name is Latin-script"
+        }
+      ]
+    },
+    {
+      "city_id": "lisbon",
+      "selection_reason": "Highest confidence in the entire 200-hotel cohort (99.99) -- the cleanest possible anchor example, included so the pack has at least one hotel with essentially zero ambiguity on any axis.",
+      "page": {
+        "id": "7ccfcf88-4a98-4f05-b8ec-ecf360a28b75",
+        "slug": "radisson-blu-hotel-lisbon-60a28b75",
+        "name": "Radisson Blu Hotel, Lisbon",
+        "city_id": "lisbon",
+        "city_name": "Lisbon",
+        "locality": "Lisboa",
+        "region": null,
+        "country": "PT",
+        "lat": 38.75943,
+        "lon": -9.153714,
+        "distance_from_center_km": 4.3,
+        "far_from_center": false,
+        "locality_mismatch": false,
+        "locality_mismatch_detail": null,
+        "publication_status": "indexable",
+        "scores": {
+          "walkability_density": 58.1,
+          "transit_access": 41.6,
+          "food_essentials": 53.5,
+          "quietness_proxy": 36.3,
+          "family_convenience": 98.9,
+          "nightlife_access": 6.3
+        },
+        "balanced_score": 46.9,
+        "confidence": 100.0,
+        "confidence_label": "High",
+        "dedupe_confidence": 100.0,
+        "score_version": "1.2.1",
+        "source_release": "2026-08-19.0",
+        "verdict": "Excellent for family convenience; decent for walking to everyday places; busy surroundings.",
+        "reason_codes": [
+          "BUSY_SURROUNDINGS",
+          "FAMILY_FRIENDLY_SURROUNDINGS"
+        ],
+        "nearby_facts": [
+          {
+            "rank": 1,
+            "category": "restaurant",
+            "name": "O Nosso Prego",
+            "distance_m": 23.7
+          },
+          {
+            "rank": 2,
+            "category": "medical_service_organization",
+            "name": "Saude Prime",
+            "distance_m": 28.2
+          },
+          {
+            "rank": 3,
+            "category": "doctors_office",
+            "name": "FHVC - Future Healthcare Virtual Clinic",
+            "distance_m": 30.3
+          },
+          {
+            "rank": 4,
+            "category": "chinese_restaurant",
+            "name": "Hao Hua",
+            "distance_m": 42.5
+          },
+          {
+            "rank": 5,
+            "category": "computer_store",
+            "name": "AssisMática",
+            "distance_m": 67.4
+          },
+          {
+            "rank": 6,
+            "category": "restaurant",
+            "name": "Campo Grande Cafe",
+            "distance_m": 71.5
+          },
+          {
+            "rank": 7,
+            "category": "doner_kebab_restaurant",
+            "name": "Zahir Kebab",
+            "distance_m": 73.0
+          },
+          {
+            "rank": 8,
+            "category": "museum",
+            "name": "Museu Bordalo Pinheiro",
+            "distance_m": 74.6
+          },
+          {
+            "rank": 9,
+            "category": "restaurant",
+            "name": "Go Tasty",
+            "distance_m": 76.7
+          },
+          {
+            "rank": 10,
+            "category": "bookstore",
+            "name": "Loja Lusófona",
+            "distance_m": 77.1
+          },
+          {
+            "rank": 11,
+            "category": "computer_store",
+            "name": "Protótipo - Sistemas de Informação",
+            "distance_m": 82.9
+          },
+          {
+            "rank": 12,
+            "category": "health_care",
+            "name": "Neuroclin - Clínica Neurológica de Lisboa",
+            "distance_m": 83.4
+          }
+        ],
+        "comparable": [
+          {
+            "slug": "palacio-do-governador-an-slh-hotel-3acaafe3",
+            "name": "Palacio do Governador, an SLH Hotel",
+            "balanced_score": 46.9
+          },
+          {
+            "slug": "lisbon-marriott-hotel-c9b68109",
+            "name": "Lisbon Marriott Hotel",
+            "balanced_score": 47.3
+          },
+          {
+            "slug": "corpo-santo-lisbon-hotel-cb9c141c",
+            "name": "Corpo Santo Lisbon Hotel",
+            "balanced_score": 46.8
+          },
+          {
+            "slug": "yassin-muslim-hotel-60f498ff",
+            "name": "Yassin Muslim Hotel",
+            "balanced_score": 47.7
+          }
+        ]
+      },
+      "gates": [
+        {
+          "gate": 1,
+          "name": "confidence >= 80",
+          "status": "PASS",
+          "detail": "confidence = 100.0"
+        },
+        {
+          "gate": 2,
+          "name": "hotel identity highly reliable (no dedupe merge needed)",
+          "status": "PASS",
+          "detail": "dedupe_confidence = 100.0 (100 = single source, no merge)"
+        },
+        {
+          "gate": 3,
+          "name": "all critical score dimensions present",
+          "status": "PASS",
+          "detail": "all 6 dimensions computed"
+        },
+        {
+          "gate": 4,
+          "name": "unique location facts present",
+          "status": "PASS",
+          "detail": "12 nearby facts on page"
+        },
+        {
+          "gate": 5,
+          "name": "city baseline available",
+          "status": "PASS",
+          "detail": "Lisbon baseline exists (all 12 launch cities do)"
+        },
+        {
+          "gate": 6,
+          "name": "automated content QA passes",
+          "status": "PASS",
+          "detail": "not a numeric-only name, no draft-QA flag (recorded in page_publication)"
+        },
+        {
+          "gate": 7,
+          "name": "demonstrated demand OR editorial pilot selection",
+          "status": "EDITORIAL",
+          "detail": "editorial pilot selection branch -- no live traffic exists yet to demonstrate demand"
+        },
+        {
+          "gate": 8,
+          "name": "no canonical duplicate",
+          "status": "PASS",
+          "detail": "no unresolved duplicate-coordinate cluster"
+        },
+        {
+          "gate": 9,
+          "name": "meaningful comparison/context on page",
+          "status": "PASS",
+          "detail": "4 comparable hotels shown (Lisbon has 1000+ scored hotels)"
+        },
+        {
+          "gate": 10,
+          "name": "user value independent of keyword targeting",
+          "status": "PASS",
+          "detail": "deterministic reason-code templates from structured facts, never keyword-targeted prose"
+        },
+        {
+          "gate": 11,
+          "name": "affiliate deep-link resolvable OR consciously published without CTA",
+          "status": "WITHOUT-CTA",
+          "detail": "AFFILIATE_ENABLED is off -- published deliberately without a booking CTA"
+        },
+        {
+          "gate": 12,
+          "name": "Latin-script name (new, docs/seo-policy.md §2)",
+          "status": "PASS",
+          "detail": "name is Latin-script"
+        }
+      ]
+    },
+    {
+      "city_id": "amsterdam",
+      "selection_reason": "Flagged chain:False in pilot-cohort-proposal.csv despite \"Campanile\" being a real, recognized French hotel chain brand -- checked directly against entity_qa.py's HOSPITALITY_BRANDS regex: \"Campanile\" does not match it, while \"Radisson\" (the Lisbon pick above) does. A real, unambiguous hotel -- only the independent/chain classification looks like a brand-list gap.",
+      "page": {
+        "id": "e7b1cbcd-340f-4e51-baea-e05e96f444cb",
+        "slug": "hotel-campanile-amsterdam-96f444cb",
+        "name": "Hotel Campanile Amsterdam",
+        "city_id": "amsterdam",
+        "city_name": "Amsterdam",
+        "locality": "Amsterdam",
+        "region": null,
+        "country": "NL",
+        "lat": 52.311218,
+        "lon": 4.985933,
+        "distance_from_center_km": 8.4,
+        "far_from_center": false,
+        "locality_mismatch": false,
+        "locality_mismatch_detail": null,
+        "publication_status": "indexable",
+        "scores": {
+          "walkability_density": 17.9,
+          "transit_access": 0.0,
+          "food_essentials": 0.0,
+          "quietness_proxy": 50.1,
+          "family_convenience": 99.7,
+          "nightlife_access": 0.0
+        },
+        "balanced_score": 21.1,
+        "confidence": 82.0,
+        "confidence_label": "High",
+        "dedupe_confidence": 100.0,
+        "score_version": "1.2.1",
+        "source_release": "2026-08-19.0",
+        "verdict": "Excellent for family convenience; moderate surrounding activity.",
+        "reason_codes": [
+          "FAMILY_FRIENDLY_SURROUNDINGS"
+        ],
+        "nearby_facts": [
+          {
+            "rank": 1,
+            "category": "shopping",
+            "name": "Nannybag Luggage Storage",
+            "distance_m": 14.2
+          },
+          {
+            "rank": 2,
+            "category": "european_restaurant",
+            "name": "PopUp Pannenkoek",
+            "distance_m": 129.6
+          },
+          {
+            "rank": 3,
+            "category": "doctors_office",
+            "name": "De Herbergier",
+            "distance_m": 129.9
+          },
+          {
+            "rank": 4,
+            "category": "doctors_office",
+            "name": "Sanical Health",
+            "distance_m": 131.5
+          },
+          {
+            "rank": 5,
+            "category": "doctors_office",
+            "name": "FemmePrex",
+            "distance_m": 131.5
+          },
+          {
+            "rank": 6,
+            "category": "playground",
+            "name": "Waterspeelplaats Gaasperpark",
+            "distance_m": 246.6
+          },
+          {
+            "rank": 7,
+            "category": "dental_clinic",
+            "name": "Tandheelkunde Nellestein",
+            "distance_m": 301.1
+          },
+          {
+            "rank": 8,
+            "category": "dental_clinic",
+            "name": "Implantologie Amsterdam Zuidoost",
+            "distance_m": 305.1
+          },
+          {
+            "rank": 9,
+            "category": "astrological_advising",
+            "name": "Wróżka Anna",
+            "distance_m": 333.0
+          },
+          {
+            "rank": 10,
+            "category": "park",
+            "name": "Gaasperplas Park",
+            "distance_m": 346.4
+          },
+          {
+            "rank": 11,
+            "category": "park",
+            "name": "Gaasperplaspark. Amsterdam Zuidoost",
+            "distance_m": 381.2
+          },
+          {
+            "rank": 12,
+            "category": "spa",
+            "name": "Pedicure Denise Nails",
+            "distance_m": 432.4
+          }
+        ],
+        "comparable": [
+          {
+            "slug": "renaissance-hotels-0abef966",
+            "name": "Renaissance Hotels",
+            "balanced_score": 20.9
+          },
+          {
+            "slug": "house-of-hotels-e6d7c007",
+            "name": "House of Hotels",
+            "balanced_score": 21.8
+          },
+          {
+            "slug": "mercure-hotel-amsterdam-west-efe17cec",
+            "name": "Mercure Hotel Amsterdam West",
+            "balanced_score": 19.8
+          },
+          {
+            "slug": "boathouse-amsterdam-1a07191b",
+            "name": "Boathouse Amsterdam",
+            "balanced_score": 22.1
+          }
+        ]
+      },
+      "gates": [
+        {
+          "gate": 1,
+          "name": "confidence >= 80",
+          "status": "PASS",
+          "detail": "confidence = 82.0"
+        },
+        {
+          "gate": 2,
+          "name": "hotel identity highly reliable (no dedupe merge needed)",
+          "status": "PASS",
+          "detail": "dedupe_confidence = 100.0 (100 = single source, no merge)"
+        },
+        {
+          "gate": 3,
+          "name": "all critical score dimensions present",
+          "status": "PASS",
+          "detail": "all 6 dimensions computed"
+        },
+        {
+          "gate": 4,
+          "name": "unique location facts present",
+          "status": "PASS",
+          "detail": "12 nearby facts on page"
+        },
+        {
+          "gate": 5,
+          "name": "city baseline available",
+          "status": "PASS",
+          "detail": "Amsterdam baseline exists (all 12 launch cities do)"
+        },
+        {
+          "gate": 6,
+          "name": "automated content QA passes",
+          "status": "PASS",
+          "detail": "not a numeric-only name, no draft-QA flag (recorded in page_publication)"
+        },
+        {
+          "gate": 7,
+          "name": "demonstrated demand OR editorial pilot selection",
+          "status": "EDITORIAL",
+          "detail": "editorial pilot selection branch -- no live traffic exists yet to demonstrate demand"
+        },
+        {
+          "gate": 8,
+          "name": "no canonical duplicate",
+          "status": "PASS",
+          "detail": "no unresolved duplicate-coordinate cluster"
+        },
+        {
+          "gate": 9,
+          "name": "meaningful comparison/context on page",
+          "status": "PASS",
+          "detail": "4 comparable hotels shown (Amsterdam has 1000+ scored hotels)"
+        },
+        {
+          "gate": 10,
+          "name": "user value independent of keyword targeting",
+          "status": "PASS",
+          "detail": "deterministic reason-code templates from structured facts, never keyword-targeted prose"
+        },
+        {
+          "gate": 11,
+          "name": "affiliate deep-link resolvable OR consciously published without CTA",
+          "status": "WITHOUT-CTA",
+          "detail": "AFFILIATE_ENABLED is off -- published deliberately without a booking CTA"
+        },
+        {
+          "gate": 12,
+          "name": "Latin-script name (new, docs/seo-policy.md §2)",
+          "status": "PASS",
+          "detail": "name is Latin-script"
+        }
+      ]
+    }
+  ]
+}

@@ -37,6 +37,29 @@ long-tail wins — weight toward them ~70/30), spread across cities, high
 confidence, distinctive surroundings (a hotel where our data tells a story
 beats a generic one).
 
+**Latin-script name required for pilot-cohort eligibility (owner decision,
+2026-09-07).** The launch cohort is for an English-language audience; a
+hotel whose name has no Latin-script rendering isn't legible to that
+audience on a results page, and we have no reliable transliteration
+pipeline to produce one honestly (a machine transliteration presented as
+the hotel's name would itself be an invented fact, CLAUDE.md hard rule 3).
+This is a **cohort-eligibility rule, not a data-quality judgment**: a
+non-Latin-script hotel is not excluded from the dataset, stays fully
+searchable, and is scored identically to every other hotel — it simply
+cannot be promoted to the indexable pilot cohort until either (a) it has
+a genuine Latin-script name in the source data, or (b) a reviewed
+transliteration pipeline exists (not built, not scoped yet). Implemented
+as gate 12 in §4, checked by `entity_qa.is_non_latin_name` (per-character
+Unicode-script check, not a hardcoded alphabet list — deliberately admits
+Latin names with real diacritics, e.g. "Hôtel Le Méridien", while
+excluding CJK/Thai/Arabic/Cyrillic/etc.). Added after an owner audit of
+`pilot-cohort-proposal.md` v1 found 19/200 selected hotels in non-Latin
+scripts (11 Thai, 8 Japanese) — several of them not hotels at all (an
+archaeological site, a liquor shop, a share house, a boat pier, a housing
+estate, a university residence hall), a failure mode `entity_qa.py`'s
+English-only marker list structurally cannot catch (see
+`docs/STATE.md`'s entity-QA specimens).
+
 ## 3. Page types
 
 **Always potentially indexable:** `/`, `/hotel-location-checker`,
@@ -64,6 +87,10 @@ page; 10. user value independent of keyword targeting;
 **11. (new) affiliate deep-link resolvable OR page consciously published
 without CTA** — see `docs/affiliate-matching.md`; an indexable page that can
 never monetize should be a deliberate choice, not an accident.
+**12. (new, 2026-09-07) Latin-script name** — see §2 above; a cohort-
+eligibility rule for the English-language launch, not a data-quality
+exclusion — non-Latin-script hotels stay searchable and scored, just not
+pilot-cohort-eligible.
 
 ## 5. Pilot cohort measurement (90 days from indexing)
 
