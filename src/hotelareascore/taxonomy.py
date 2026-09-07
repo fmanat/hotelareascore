@@ -119,6 +119,52 @@ def family_convenience_land_config() -> dict:
     return load_taxonomy_mapping()["dimensions"]["family_convenience"]["land"]
 
 
+def family_convenience_land_weights_config() -> dict:
+    """docs/adr/009 (score_version 1.2.1): per-class weight for
+    family_convenience green-space polygons. v1.2.0 counted every class in
+    family_convenience_land_use_config/family_convenience_land_config
+    equally; this differentiates by how directly a class matches "a park a
+    family would visit" -- see taxonomy-mapping.yml's comment block for the
+    real per-city area medians this was checked against."""
+    return load_taxonomy_mapping()["dimensions"]["family_convenience"]["land_weights"]
+
+
+def _class_predicate_sql(entries: list[dict], subtype_col: str, class_col: str) -> str:
+    """OR-predicate from a list of {subtype[, class]} dicts -- a bare
+    {subtype: X} matches any class; {subtype: X, class: Y} matches only
+    that pair."""
+    clauses = []
+    for entry in entries:
+        subtype = entry["subtype"]
+        cls = entry.get("class")
+        if cls is None:
+            clauses.append(f"{subtype_col} = '{subtype}'")
+        else:
+            clauses.append(f"({subtype_col} = '{subtype}' AND {class_col} = '{cls}')")
+    return "(" + " OR ".join(clauses) + ")"
+
+
+def family_convenience_land_weight_sql(subtype_col: str, class_col: str, area_expr: str) -> str:
+    """SQL CASE expression giving a green_spaces polygon its
+    family_convenience weight (docs/adr/009, v1.2.1): 1.0 for a designed
+    public leisure feature, reduced_weight_value for built recreation
+    infrastructure or land-cover at/above min_area_m2, 0.0 (doesn't count
+    at all) for a land-cover sliver under that area."""
+    cfg = family_convenience_land_weights_config()
+    full = _class_predicate_sql(cfg["full_weight"], subtype_col, class_col)
+    reduced = _class_predicate_sql(cfg["reduced_weight"], subtype_col, class_col)
+    reduced_min_area = _class_predicate_sql(cfg["reduced_weight_min_area"], subtype_col, class_col)
+    w = cfg["reduced_weight_value"]
+    min_area = cfg["min_area_m2"]
+    return (
+        "CASE "
+        f"WHEN {full} THEN 1.0 "
+        f"WHEN {reduced} THEN {w} "
+        f"WHEN {reduced_min_area} AND {area_expr} >= {min_area} THEN {w} "
+        "ELSE 0.0 END"
+    )
+
+
 def family_convenience_display_only_categories() -> list[str]:
     """places-theme categories kept in the flat POI extract for the "Why?"
     nearby-facts display only -- they no longer feed the family_convenience

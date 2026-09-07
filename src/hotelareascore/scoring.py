@@ -93,12 +93,13 @@ def _density_dimension(con, city: City, dimension: str, weights: dict[str, Any],
 
 def _family_convenience_dimension(con, city: City, weights: dict[str, Any]) -> None:
     """family_convenience (score_version 1.1.0, docs/adr/006; classes
-    expanded in 1.2.0, docs/adr/007): combines two POI sources into the
-    same weighted-count -> saturating-curve -> city-percentile hybrid every
-    other density dimension uses (only the source changed, not the formula
-    shape or its constants):
+    expanded in 1.2.0, docs/adr/007; per-class weight in 1.2.1, docs/adr/009):
+    combines two POI sources into the same weighted-count -> saturating-curve
+    -> city-percentile hybrid every other density dimension uses (only the
+    source changed, not the formula shape or its constants):
       - points (`aquarium` only -- no polygon footprint exists for it in
-        Overture's base theme, so point distance is the only option);
+        Overture's base theme, so point distance is the only option), always
+        full weight;
       - green-space polygons (`green_spaces` table, built in ingest.py from
         base/land_use + base/land: park/playground/pitch/track/nature
         reserve/managed grass/zoo, and forest/grass/beach) -- distance is
@@ -106,7 +107,13 @@ def _family_convenience_dimension(con, city: City, weights: dict[str, Any]) -> N
         hotel is inside it), not to a centroid or a single places-theme
         point, which is what caused 9/11 golden-set hotels with a real
         nearby park to score exactly 0 under the pre-1.1.0 formula
-        (docs/reports/phase-3-family-surface-vs-point.json).
+        (docs/reports/phase-3-family-surface-vs-point.json). Each polygon's
+        contribution is scaled by taxonomy.family_convenience_land_weight_sql:
+        1.0 for a designed public leisure feature (park/protected/zoo/
+        playground), 0.4 for built recreation infrastructure or land-cover
+        above a minimum area, 0.0 (doesn't count) for a land-cover sliver
+        below it -- v1.2.0 counted all of these equally, which let small,
+        non-family-relevant grass/pitch fragments saturate the score.
     """
     dim = "family_convenience"
     cfg = taxonomy.dimension_config(dim)
@@ -119,10 +126,11 @@ def _family_convenience_dimension(con, city: City, weights: dict[str, Any]) -> N
     proj_h = geo.project_sql("ST_Point(h.lon, h.lat)", city)
     proj_p = geo.project_sql("ST_Point(p.lon, p.lat)", city)
     proj_g = geo.project_sql("ST_GeomFromText(g.geometry_wkt)", city)
+    weight_sql = taxonomy.family_convenience_land_weight_sql("g.subtype", "g.class", f"ST_Area({proj_g})")
 
     sql = f"""
         WITH point_hit AS (
-            SELECT h.id AS hotel_id, ST_Distance({proj_h}, {proj_p}) AS d, p.taxonomy_primary AS cat
+            SELECT h.id AS hotel_id, ST_Distance({proj_h}, {proj_p}) AS d, p.taxonomy_primary AS cat, 1.0 AS weight
             FROM hotels h
             JOIN pois p
               ON p.lon BETWEEN h.lon - {dlon} AND h.lon + {dlon}
@@ -130,20 +138,21 @@ def _family_convenience_dimension(con, city: City, weights: dict[str, Any]) -> N
              AND {point_predicate}
         ),
         green_hit AS (
-            SELECT h.id AS hotel_id, ST_Distance({proj_h}, {proj_g}) AS d, g.subtype AS cat
+            SELECT h.id AS hotel_id, ST_Distance({proj_h}, {proj_g}) AS d, g.subtype AS cat,
+                   {weight_sql} AS weight
             FROM hotels h
             JOIN green_spaces g
               ON g.bbox_xmin <= h.lon + {dlon} AND g.bbox_xmax >= h.lon - {dlon}
              AND g.bbox_ymin <= h.lat + {dlat} AND g.bbox_ymax >= h.lat - {dlat}
         ),
         combined AS (
-            SELECT hotel_id, d, cat FROM point_hit WHERE d <= {radius_m}
+            SELECT hotel_id, d, cat, weight FROM point_hit WHERE d <= {radius_m}
             UNION ALL
-            SELECT hotel_id, d, cat FROM green_hit WHERE d <= {radius_m}
+            SELECT hotel_id, d, cat, weight FROM green_hit WHERE d <= {radius_m} AND weight > 0
         ),
         agg AS (
             SELECT hotel_id,
-                   sum({geo.decay_sql('d', decay_scale_m)}) AS raw_weighted_count,
+                   sum(weight * {geo.decay_sql('d', decay_scale_m)}) AS raw_weighted_count,
                    count(*) AS poi_count,
                    count(DISTINCT cat) AS distinct_categories,
                    min(d) AS nearest_m

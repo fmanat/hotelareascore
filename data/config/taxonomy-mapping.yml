@@ -131,6 +131,39 @@ dimensions:
     land:
       subtypes: [forest, grass]  # any class: forest/wood, forest/forest, grass/grass, grass/grassland, grass/meadow
       sand_classes: [beach]      # sand/beach only -- NOT sand/sand (desert/generic sand, not a recreational beach)
+    # v1.2.1 (docs/adr/009): the v1.2.0 class expansion above is real,
+    # verified green space, but not all of it is a "park to walk to" --
+    # median polygon area (all 12 cities, docs/reports/family-v1.2.1-*)
+    # shows most `managed/grass` hits are 100-700m2 street verges/traffic
+    # islands/lawn slivers, not a place a family visits, while `recreation/
+    # pitch`+`track`+`recreation_ground` are real infrastructure but often
+    # private/school/club access, not general public family space. Every
+    # class below is still counted (nothing removed from v1.2.0's filter)
+    # but weighted by how directly it matches "a park a family would visit":
+    land_weights:
+      full_weight:  # designed public leisure space -- weight 1.0, no area floor
+        - {subtype: park}                             # any class
+        - {subtype: protected}                         # any class
+        - {subtype: entertainment, class: zoo}
+        - {subtype: recreation, class: playground}
+      reduced_weight:  # built recreation infrastructure, real but often
+                       # restricted-access -- weight 0.4, no area floor (a
+                       # single pitch/track is already a real, self-limiting
+                       # feature; filtering by area would just re-exclude
+                       # legitimate small facilities)
+        - {subtype: recreation, class: pitch}
+        - {subtype: recreation, class: track}
+        - {subtype: recreation, class: recreation_ground}
+        - {subtype: sand, class: beach}
+      reduced_weight_min_area:  # raw land cover, no designed leisure purpose
+                                # -- weight 0.4, but only above min_area_m2;
+                                # below it, doesn't count at all (excludes
+                                # slivers, see medians above)
+        - {subtype: managed, class: grass}
+        - {subtype: grass}                             # any class
+        - {subtype: forest}                             # any class
+      reduced_weight_value: 0.4
+      min_area_m2: 2000
 
   quietness_proxy:
     major_road_radius_m: 150

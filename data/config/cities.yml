@@ -80,12 +80,20 @@ cities:
     bbox: { minx: 55.10, miny: 24.95, maxx: 55.42, maxy: 25.30 }
 
   - id: new_york
-    name: New York
+    name: New York City metro
     country: US
     center: { lat: 40.7128, lon: -74.0060 }
     # The 5 boroughs proper -- Staten Island south to the Bronx/Westchester
-    # line, the NJ waterline to eastern Queens. Not shrunk further: unlike
-    # London's commuter-belt overreach, this genuinely is "New York."
+    # line, the NJ waterline to eastern Queens. A rectangle can't stop at
+    # the state line here: Staten Island and the New Jersey cities in this
+    # bbox occupy the same longitude band (docs/reports/nyc-bbox-options.md),
+    # so 351/2,194 hotels (16%) are actually in NJ -- Jersey City, Newark,
+    # Secaucus, Hoboken, etc. Owner decision (docs/adr/010, this session):
+    # option (c) from that report -- keep the bbox, rename the market label
+    # from the literal "New York" to "New York City metro" so the product
+    # claim matches what's actually inside it. Per-hotel disclosure
+    # (webdata.py's _locality_mismatch, unchanged by this decision) still
+    # flags every NJ hotel individually against `expected_region: NY` below.
     bbox: { minx: -74.28, miny: 40.49, maxx: -73.70, maxy: 40.92 }
     # docs/STATE.md entity-QA backlog: the NJ waterline is close enough that
     # a hotel can sit inside this bbox while being in a different US state

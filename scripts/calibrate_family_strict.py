@@ -112,7 +112,7 @@ def main() -> None:
     out_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(f"\nWrote {out_path}")
 
-    joined_path = ROOT / "tests/golden/joined-scores-1.2.0-family-strict.csv"
+    joined_path = ROOT / "tests/golden/joined-scores-1.2.1-family-strict.csv"
     with open(joined_path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=["hotel_id", "city", "family_strict", "family_convenience"])
         w.writeheader()

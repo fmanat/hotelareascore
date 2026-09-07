@@ -139,21 +139,34 @@ nearest lead for a future improvement is modeling road *severity* (a
 motorway and a two-lane primary road currently get an identical penalty),
 not the nightlife term tested here.
 
-**family_convenience: real anomaly, root cause found, fixed twice, still
-open — see docs/adr/006, docs/adr/007.** Wrong-signed against its label in
-all 3 calibration variants; traced to the v1 formula scoring point
-representations of an inherently areal feature (park/playground). v2
-(score_version 1.1.0) scores from Overture's polygon land-use footprints
-instead, distance to the polygon boundary rather than a point or centroid —
-this fixed the sign but not the magnitude. v1.2.0 expanded the green-space
-class list further (verified against a live extract, `docs/adr/007`) and
-was recalibrated against a fresh, stricter re-labeling
-(`tests/golden/family_strict.csv`, "reachable on foot only"): Spearman
-0.209, still short of the owner's 0.5 bar. Per the owner's own
-pre-authorized rule, no further tuning without another explicit review —
-see `docs/reports/family-v1.2.0-recalibration.md` for the full result and
-candidate next steps. **Phase 3's calibration gate stays open on this
-dimension**; the rest of the gate (§4.2 above) is unaffected.
+**family_convenience: real anomaly, root cause found, fixed three times,
+closed as a documented thin-margin pass — see docs/adr/006, docs/adr/007,
+docs/adr/009.** Wrong-signed against its label in all 3 initial calibration
+variants; traced to the v1 formula scoring point representations of an
+inherently areal feature (park/playground). v2 (score_version 1.1.0) scores
+from Overture's polygon land-use footprints instead, distance to the
+polygon boundary rather than a point or centroid — this fixed the sign but
+not the magnitude. v1.2.0 expanded the green-space class list further
+(verified against a live extract, `docs/adr/007`) and was recalibrated
+against a fresh, stricter re-labeling (`tests/golden/family_strict.csv`,
+"reachable on foot only"): Spearman 0.209, still short of the owner's 0.5
+bar. v1.2.1 (`docs/adr/009`) added a per-class weight instead of counting
+every included class equally (1.0 for a designed public leisure feature,
+0.4 for built recreation infrastructure or land-cover above a real,
+data-derived minimum area, 0 below it) — recalibrated: **Spearman 0.5052,
+passes the 0.5 bar by a 0.005 margin.**
+
+**This is a documented thin-margin pass, not a validated dimension**, on
+the same footing as quietness_proxy's proxy limitation above: per-city
+Spearman remains highly volatile (−0.632 to +1.0 across cities with only
+3-5 golden hotels each — see `docs/reports/family-v1.2.1-recalibration.md`)
+and the aggregate crossing the line does not mean the underlying noise
+resolved. Per the owner's explicit instruction, this was the **last
+authorized iteration** on family_convenience for Phase 3 — no further
+class, weight, or threshold tuning without another explicit review,
+regardless of outcome. **Phase 3's calibration gate is closed** (see
+`docs/STATE.md`); `/methodology` states the thin-margin caveat alongside
+the quietness proxy note.
 
 ## 5. Score-version change protocol
 

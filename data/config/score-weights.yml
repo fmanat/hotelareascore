@@ -18,7 +18,7 @@
 # filter missed. No constant below changed value -- still the same formula
 # shape and constants as 1.1.0, only the green_spaces.parquet input is
 # broader.
-score_version: "1.2.0"
+score_version: "1.2.1"
 
 # exp(-d/scale): distance (m) at which a single nearby POI's contribution has
 # decayed to ~37% (1/e). Larger scale = "being farther away still counts".
