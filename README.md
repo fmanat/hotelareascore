@@ -60,7 +60,12 @@ make web-dev             # same export, then a live dev server
 Static Astro site (docs/adr/001), no live backend: every hotel page is
 prerendered at build time from the Phase 1 ETL output via
 `src/hotelareascore/webdata.py` (no Supabase yet — see `docs/adr/002` for why
-that's deliberate at this phase). All feature flags
+that's deliberate at this phase). `web/src/data/*.json` + `web/public/data/
+search-index.json` are committed (not gitignored) since 2026-09-07's first
+deploy — a build host like Cloudflare Pages has no `data/etl/` to export
+from; see `web/README.md`'s "Committed artifacts" section for the exact
+files, the regen command, and the build guard that fails fast if one is
+missing. All feature flags
 (`PUBLIC_INDEXING_ENABLED`, `MAP_ENABLED`, `AFFILIATE_ENABLED`, …) default
 off, so every page ships `noindex, nofollow` and the map/CTA sections render
 as disabled placeholders until an owner decision turns them on.

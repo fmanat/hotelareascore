@@ -90,13 +90,25 @@ secret store (CLAUDE.md hard rule 8).
 **What:** Connect the repo to a Pages project, deploy the current build
 exactly as it is today — every flag OFF, every page `noindex, nofollow`,
 `SITE_URL` already `https://staycontext.com` (`docs/adr/012`) even though
-nothing is attached to that domain yet. Verify on the `*.pages.dev`
-preview URL: robots.txt still disallows everything, spot-check a few page
-types render correctly.
+nothing is attached to that domain yet. Build settings: root directory
+`web`, build command `npm run build`, output directory `dist`, env var
+`NODE_VERSION=22`. Verify on the `*.pages.dev` preview URL: robots.txt
+still disallows everything, spot-check a few page types render correctly.
 **Guardrail:** this step makes the *build* live at a Cloudflare-assigned
 URL, not at staycontext.com — no real-world visibility change yet, no
 confirmation needed beyond the standard build/typecheck/e2e/seo-assertions
 gates already in CI.
+**Data dependency (found the hard way on the first deploy attempt,
+2026-09-07):** Cloudflare's checkout has no `data/etl/` (gitignored,
+`docs/adr/002`), so `web/src/data/*.json` + `web/public/data/
+search-index.json` must already be committed — they're the frozen
+snapshot exception in `web/.gitignore`, see `web/README.md`'s "Committed
+artifacts" section. `npm run build`'s `prebuild` hook
+(`web/scripts/check-data-exports.mjs`) fails fast with an explicit
+message if one is missing, rather than a bare bundler `UNRESOLVED_IMPORT`.
+Re-freshing that snapshot (new score_version, new hotels) is a manual
+`python3 -m hotelareascore.cli webdata --city london,bangkok` + commit +
+push, same as any other source change — Cloudflare does not regenerate it.
 
 ### B2. Attach staycontext.com as the custom domain
 **Prerequisite:** A2 (DNS pointed).

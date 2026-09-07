@@ -16,9 +16,33 @@ make web-build     # exports web/src/data + web/public/data, then `astro build`
 make web-dev        # same export, then a live dev server on :4321
 ```
 
-`web/src/data/*.json` and `web/public/data/search-index.json` are generated,
-gitignored, and regenerated from whatever Overture release is in
-`data/etl/` — never hand-edit them.
+`web/src/data/*.json` and `web/public/data/search-index.json` are generated
+from whatever Overture release is in `data/etl/` — never hand-edit them.
+
+**Committed artifacts, not gitignored (2026-09-07 — the first Cloudflare
+Pages deploy, docs/adr/012 and docs/reports/phase-4-launch-runbook.md):**
+`data/etl/` isn't committed (it's the ETL world, deliberately separate —
+`docs/adr/002`), so a fresh checkout on a build host like Cloudflare Pages
+has nothing to export from. Rather than run the full ingest+score
+pipeline inside that build (network-dependent, several minutes, exactly
+the scope this deploy was kept out of — see the runbook), the current
+export is committed: `web/src/data/{hotels-london,hotels-bangkok,
+city-baselines,city-pages,meta,personas}.json` and
+`web/public/data/search-index.json`, un-ignored in `web/.gitignore` with
+a comment. Scoped to `--city london,bangkok` (matching which cities
+actually get individual hotel pages — see `src/lib/data.ts`'s
+`ALL_HOTELS`), not `--city all`: including every city's hotel export
+would bloat the commit for data no page ever reads. Regenerate and
+recommit with:
+
+```bash
+python3 -m hotelareascore.cli webdata --city london,bangkok  # from the repo root, needs data/etl/
+```
+
+`npm run build` runs `scripts/check-data-exports.mjs` first (an npm
+`prebuild` hook) — it fails fast with an explicit message naming the
+missing file and the command above, instead of a bare bundler
+`UNRESOLVED_IMPORT` several build-minutes in.
 
 ## Structure
 
