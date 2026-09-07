@@ -6,4 +6,12 @@ import { defineConfig } from 'astro/config';
 // `make webdata` (see src/hotelareascore/webdata.py).
 export default defineConfig({
   output: 'static',
+  // Phase 4 performance audit (docs/reports/phase-4-performance-audit.md):
+  // Astro's default 'auto' left one page type (hotel) with a small extra
+  // external stylesheet request that every other page type didn't have.
+  // 'always' inlines every page's CSS uniformly -- same rules, no visual
+  // or functional change, one fewer request on hotel pages.
+  build: {
+    inlineStylesheets: 'always',
+  },
 });
