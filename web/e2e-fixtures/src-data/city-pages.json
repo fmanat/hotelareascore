@@ -97,7 +97,8 @@
       }
     ],
     "center_lat": 51.5074,
-    "center_lon": -0.1278
+    "center_lon": -0.1278,
+    "publication_status": "noindex"
   },
   "bangkok": {
     "city_id": "bangkok",
@@ -191,6 +192,7 @@
       }
     ],
     "center_lat": 13.7563,
-    "center_lon": 100.5018
+    "center_lon": 100.5018,
+    "publication_status": "noindex"
   }
 }

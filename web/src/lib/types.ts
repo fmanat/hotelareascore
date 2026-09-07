@@ -88,6 +88,10 @@ export interface CityPage {
   dimensions: Record<DimensionKey, { median: number | null; mean: number | null }>;
   top_by_dimension: Record<DimensionKey, CityPageHotelRef[]>;
   representative_hotels: CityPageHotelRef[];
+  /** page_publication's recorded decision (CLAUDE.md hard rule 2) --
+   * 'indexable' or 'noindex'. Read directly by city/[id].astro's
+   * `indexable` prop; PUBLIC_INDEXING_ENABLED still ANDs on top of it. */
+  publication_status: string;
 }
 
 export type PersonaWeights = Record<DimensionKey, number>;

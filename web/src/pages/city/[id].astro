@@ -2,11 +2,16 @@
 // City page template (Bloc C item 4, overnight mission; docs/seo-policy.md
 // §3: "generated from aggregate data ... never 'the best neighborhood'
 // without an explicit criterion; prefer 'highest-scoring areas for X in
-// our dataset'"). Generated for all 12 launch cities, ALL noindex --
-// page_publication (src/hotelareascore/publication.py,
-// scripts/compute_publication.py) already records every city as noindex
-// ("not yet measured against real search demand"), and `indexable` here
-// reads that recorded status directly, same pattern as the hotel page.
+// our dataset'"). Generated for all 12 launch cities. `indexable` reads
+// page.publication_status (webdata.py's export_city_pages, which reads
+// page_publication -- CLAUDE.md hard rule 2: indexability is a recorded
+// decision, never a side effect of a route existing), same pattern as the
+// hotel page's `hotel.publication_status`. Fixed 2026-09-07: this
+// previously hardcoded `indexable={false}` as a literal while its own
+// comment claimed it read the recorded status -- true today (every city
+// is currently recorded noindex, "not yet measured against real search
+// demand"), but the flag never would have responded to a future
+// page_publication change without this fix.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { CITY_PAGES } from '../../lib/data';
 import { DIMENSION_KEYS } from '../../lib/types';
@@ -36,7 +41,7 @@ function fmt(n: number | null): string {
 <BaseLayout
   title={`Hotel surroundings in ${page.city_name}`}
   description={`Aggregate surroundings data for ${page.n_hotels.toLocaleString()} hotels scored in ${page.city_name}: walkability, transit, food, quiet, family, and nightlife score distributions, computed from open geospatial data.`}
-  indexable={false}
+  indexable={page.publication_status === 'indexable'}
 >
   <Fragment slot="head">
     <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />

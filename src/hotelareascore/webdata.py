@@ -246,10 +246,23 @@ def export_city_pages(release: overture.Release, hotel_pages_built: set[str]) ->
     from .config import load_cities
 
     WEB_SRC_DATA.mkdir(parents=True, exist_ok=True)
+
+    # Indexability is a decision recorded in page_publication, never a side
+    # effect of a route existing (CLAUDE.md hard rule 2) -- read here, same
+    # as _fetch_hotels does for hotel pages, instead of the page template
+    # hardcoding a literal. Still only HALF the gate: BaseLayout.astro ANDs
+    # this with FLAGS.PUBLIC_INDEXING_ENABLED before a page actually
+    # renders index,follow.
+    with publication.connect() as pub_con:
+        indexable_city_ids = {
+            row["page_id"] for row in publication.list_by_status(pub_con, "indexable", "city")
+        }
+
     pages = {}
     for city_id in load_cities():
         agg = _city_page_aggregate(city_id, release, hotel_pages_built)
         if agg is not None:
+            agg["publication_status"] = "indexable" if city_id in indexable_city_ids else "noindex"
             pages[city_id] = agg
     with open(WEB_SRC_DATA / "city-pages.json", "w", encoding="utf-8") as f:
         json.dump(pages, f, ensure_ascii=False)
