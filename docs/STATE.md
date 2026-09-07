@@ -47,7 +47,12 @@ of time and stays fully inert (flags off) — see open decisions below.
       not technical work
 - [ ] **(b) Pilot cohort review**: sanity-check a sample of the 200
       proposed hotels before any Phase 4 flag is turned on —
-      [pilot-cohort-proposal.md](reports/pilot-cohort-proposal.md)
+      [pilot-cohort-proposal.md](reports/pilot-cohort-proposal.md). A
+      12-hotel inspection pack is ready to support this review — full
+      published-page fiche, 11 gates, and selection reasoning per hotel,
+      including 2 flagged as most discutable (a likely non-hotel
+      institution, an ambiguous short-term-rental listing) —
+      [cohort-inspection-12.json](reports/cohort-inspection-12.json).
 
 Resolved this session, no longer open: family_convenience gate (closed,
 `docs/adr/009`); New York/New Jersey market label (`docs/adr/010` — market
