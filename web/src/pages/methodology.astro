@@ -55,8 +55,9 @@ import { BUILD_META } from '../lib/data';
     The family-convenience score checks only thinly against independent judgment so far — green,
     open space near a hotel does not always mean a park a family would actually walk to, and the
     weight it gives different kinds of green space (a park vs. a sports pitch vs. a patch of grass)
-    was set from real but limited data. Treat it, like quiet-surroundings, as a rough signal rather
-    than a precise ranking.
+    was set from real but limited data. It also only looks within a fixed 600 m radius: a real,
+    walkable park just outside that line counts for nothing, the same as if no park existed at all.
+    Treat it, like quiet-surroundings, as a rough signal rather than a precise ranking.
   </p>
 
   <h2>Confidence</h2>

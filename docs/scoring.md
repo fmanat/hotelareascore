@@ -164,7 +164,19 @@ and the aggregate crossing the line does not mean the underlying noise
 resolved. Per the owner's explicit instruction, this was the **last
 authorized iteration** on family_convenience for Phase 3 — no further
 class, weight, or threshold tuning without another explicit review,
-regardless of outcome. **Phase 3's calibration gate is closed** (see
+regardless of outcome.
+
+**Known open limitation: hard-radius cliff effect.** One of the largest
+remaining label/computed gaps (Changi Lodge, Singapore) is not a label
+error — it's the 600 m search radius being a hard cutoff rather than a
+soft edge: a real, walkable green space at ~635 m gets exactly zero
+credit, identical to no green space existing at all, while one at 599 m
+scores normally. v1.2.1's per-class weighting doesn't touch this (it only
+changes the value of a polygon already inside the radius). Logged as a
+candidate for a future v2 (soft radius taper, or a wider radius for the
+full-weight tier specifically) — not evaluated this session.
+
+**Phase 3's calibration gate is closed** (see
 `docs/STATE.md`); `/methodology` states the thin-margin caveat alongside
 the quietness proxy note.
 

@@ -55,7 +55,7 @@ Ran the full protocol: `python3 -m hotelareascore.cli score --city all`
 | Prediction | Predicted | Actual | Verdict |
 |---|---|---|---|
 | Golden-50 median `family_convenience` | ~60-65 | **74.3** | **wrong** — direction right (dropped from 82.3), magnitude overshot: the 0.4 partial weight still credits most hits, it doesn't zero them out, so the drop was gentler than expected |
-| 5 named hotels stay ≥ 55 | all 5 | **4/5** — Charenton pin 73.6, Crowne Plaza Rome 86.6, Hotel Gilinsky 95.1, Lisboa Camping 83.4, **Changi Lodge 33.4** | **wrong for 1/5** — Changi Lodge fell below 55. Not a new problem: the Bloc A diagnostic already flagged Changi Lodge's `family_strict` label of 5/5 as very likely a labeling-construct mismatch (no real green space within radius even under the expanded v1.2.0 filter, nearest usable candidate 635m+, outside the 600m radius) — this hotel was already a known label/data disagreement, not a fix regression |
+| 5 named hotels stay ≥ 55 | all 5 | **4/5** — Charenton pin 73.6, Crowne Plaza Rome 86.6, Hotel Gilinsky 95.1, Lisboa Camping 83.4, **Changi Lodge 33.4** | **wrong for 1/5** — Changi Lodge fell below 55. Corrected diagnosis (owner review): the Bloc A diagnostic's original framing ("likely a labeling-construct issue") was wrong. The real cause is a **hard-radius cliff effect**: Changi Lodge's nearest genuinely green polygon (`managed/grass`) sits at ~635 m, and the `family_convenience` search radius is a hard cutoff at 600 m — a real park 35 m outside that line gets exactly zero credit, the same as no park existing at all. This is not a label error and not something v1.2.1's per-class weighting touches (weighting only changes what a polygon is worth once it's inside the radius); it's a separate, still-open formula limitation — see `docs/scoring.md` and candidate v2 fixes below |
 | Spearman(`family_strict`, `family_convenience`) ≥ 0.5 | ≥ 0.5 | **0.5052** | **correct, but barely** — a 0.005 margin above the threshold |
 
 **Full-dataset impact** (`docs/reports/score-diff-1.2.0-to-1.2.1.md`, all
@@ -88,3 +88,18 @@ note), not as a reason to keep the gate open or to tune further.
 No further class, weight, or area-threshold changes to family_convenience
 without another explicit owner review — this ADR (docs/adr/009) is the
 last one authorized for Phase 3.
+
+## Known open limitation: hard-radius cliff effect (not tuned this session)
+
+Changi Lodge is the named, verified instance, but the mechanism is
+general: `family_convenience`'s 600 m radius is a hard cutoff, not a soft
+edge — a real, walkable green space at 601 m contributes exactly as much
+as one that doesn't exist (zero), while one at 599 m contributes at
+whatever its decay-discounted weight is. Nothing in v1.2.1's per-class
+weighting addresses this; it only changes the weight of a polygon that is
+already inside the radius. Logged here as a **candidate for a future v2**
+(e.g. a soft radius taper instead of a hard cutoff, or widening the radius
+specifically for the `full_weight` tier) — not evaluated or implemented
+this session, per the "last authorized iteration" instruction; any change
+needs its own verification pass against real data, same as every other
+constant in this dimension.

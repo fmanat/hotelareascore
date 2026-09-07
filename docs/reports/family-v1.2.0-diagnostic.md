@@ -32,6 +32,12 @@ filter or not. Likely explanation: a labeling-construct issue (see the
 calibration report's earlier hypothesis), not a data or filter gap for this
 specific case.
 
+> **Correction (owner review, v1.2.1 session):** this "labeling-construct
+> issue" framing was wrong. 635 m is 35 m outside the 600 m radius — the
+> real cause is the radius's hard cutoff, not the label. See
+> `docs/reports/family-v1.2.1-recalibration.md`'s "known open limitation"
+> section and `docs/scoring.md`.
+
 ## Crowne Plaza Rome St. Peter's (Rome, 41.88878, 12.42598)
 
 | Source | Name | subtype/class | ~distance |

@@ -127,9 +127,10 @@ never hidden keyword-rich links, never link schemes.
 ## 8. Owner legal checklist (owner homework — not Claude's decisions)
 
 Decide before public launch (Phase 4); none of it blocks Phases 0–3:
-1. **Legal vehicle** for the site and its revenue (existing SAS / UK Ltd /
-   micro-entreprise / new entity) — affects VAT treatment of affiliate income,
-   invoicing currency, and liability.
+1. ~~**Legal vehicle** for the site and its revenue~~ — **decided
+   2026-09-07: FrenchSquare Ltd** (existing UK Ltd), `docs/adr/011`. The 4
+   legal-page templates below already name it; items 2-5 still need real
+   placeholder values (company number, address, contact, dates) filled in.
 2. **Mentions légales / imprint** — an FR-based publisher of a worldwide site
    needs editor identity, host, contact (French LCEN requirements apply to the
    publisher regardless of audience language).

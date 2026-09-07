@@ -39,22 +39,24 @@ of time and stays fully inert (flags off) — see open decisions below.
 
 ## Open owner decisions (blocking Phase 4, nothing else)
 
-- [ ] **Domain/brand name** — also blocks giving `web/src/lib/site.ts`'s
+- [ ] **(a) Domain/brand name** — also blocks giving `web/src/lib/site.ts`'s
       `SITE_URL` a real value (currently RFC 2606 placeholder
       `example.invalid`)
-- [ ] **Legal vehicle & jurisdiction** for the site and affiliate revenue
-      (`docs/strategy.md §8` — owner homework)
-- [ ] **Pilot cohort review**: sanity-check a sample of the 200 proposed
-      hotels before any Phase 4 flag is turned on —
+- [ ] **(b) Legal placeholders on the 4 legal pages** (`/legal-notice`,
+      `/privacy`, `/affiliate-disclosure`, `/terms`) — publisher is settled
+      (FrenchSquare Ltd, `docs/adr/011`) but Companies House number,
+      registered office address, contact email, "last updated" dates, and
+      `/terms`'s governing-law line are still owner-provided placeholders,
+      not technical work
+- [ ] **(c) Pilot cohort review**: sanity-check a sample of the 200
+      proposed hotels before any Phase 4 flag is turned on —
       [pilot-cohort-proposal.md](reports/pilot-cohort-proposal.md)
-- [ ] **4 legal pages** (`/legal-notice`, `/privacy`, `/affiliate-disclosure`,
-      `/terms`) are owner-provided templates with every `[bracket]`
-      placeholder still open — technical integration done (noindex,
-      DRAFT-banner), need real legal review
 
 Resolved this session, no longer open: family_convenience gate (closed,
 `docs/adr/009`); New York/New Jersey market label (`docs/adr/010` — market
-renamed "New York City metro", per-hotel disclosure unchanged).
+renamed "New York City metro", per-hotel disclosure unchanged); legal
+vehicle (`docs/adr/011` — FrenchSquare Ltd, an existing English company;
+the 4 DRAFT legal templates already name it as publisher/data controller).
 
 ## Entity QA — known limitations (not blockers, tracked for a future pass)
 
@@ -110,7 +112,7 @@ start.
 
 ## Decision & session history
 
-Full narrative history lives in `docs/adr/001` through `010` (each records
+Full narrative history lives in `docs/adr/001` through `011` (each records
 context/decision/consequences) and the dated reports under `docs/reports/`
 they reference. Batch ingestion, golden-set construction, and calibration
 runs are documented in `docs/reports/phase-3-*` and
