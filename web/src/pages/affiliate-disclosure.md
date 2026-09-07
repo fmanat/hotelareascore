@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/BaseLayout.astro
 title: Affiliate disclosure
-description: How affiliate links work on HotelAreaScore, and the guarantee that affiliate relationships never influence a score.
+description: How affiliate links work on StayContext, and the guarantee that affiliate relationships never influence a score.
 indexable: false
 ---
 

@@ -1,8 +1,12 @@
-# HotelAreaScore (working name)
+# StayContext
 
 Independent hotel-location intelligence: before you book, understand the
 surroundings. Computed scores from open geospatial data — not reviews, not
 prices, not a booking engine.
+
+Brand/domain: **StayContext**, staycontext.com (`docs/adr/012`). The repo,
+Python package (`src/hotelareascore/`), and internal docs keep the
+`hotelareascore` code name — only the product-facing brand changed.
 
 **Status: Phase 2 (product proof — London + Bangkok). Phase 1's Data Proof
 Report was accepted by the owner; see `docs/STATE.md` for what's next.**

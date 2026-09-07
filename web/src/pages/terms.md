@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/BaseLayout.astro
 title: Terms of use
-description: Terms of use for HotelAreaScore — what the site is and isn't, accuracy limits, corrections, acceptable use.
+description: Terms of use for StayContext — what the site is and isn't, accuracy limits, corrections, acceptable use.
 indexable: false
 ---
 

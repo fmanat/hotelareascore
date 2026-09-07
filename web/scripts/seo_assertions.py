@@ -142,12 +142,13 @@ def check_sitemap() -> list[str]:
     hotels_sitemap = DIST / "sitemap-hotels.xml"
     if not hotels_sitemap.exists():
         return ["sitemap-hotels.xml was not built"]
+    # Normalize to path-only -- strip any absolute host generically rather
+    # than hardcoding the current SITE_URL (web/src/lib/site.ts), so this
+    # doesn't need editing again on the next rebrand/domain change.
     sitemap_paths = {
-        (loc if loc.startswith("/") else "/" + loc.split("example.invalid", 1)[-1].lstrip("/"))
+        re.sub(r"^https?://[^/]+", "", loc)
         for loc in LOC_RE.findall(hotels_sitemap.read_text(encoding="utf-8"))
     }
-    # Normalize to path-only (strip the https://example.invalid host).
-    sitemap_paths = {re.sub(r"^https?://[^/]+", "", p) for p in sitemap_paths}
 
     indexable, noindex = load_indexable_and_noindex_hotel_paths()
 

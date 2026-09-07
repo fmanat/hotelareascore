@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/BaseLayout.astro
 title: Legal notice
-description: Legal notice (mentions légales) for HotelAreaScore — site publisher, hosting, contact, and intellectual property.
+description: Legal notice (mentions légales) for StayContext — site publisher, hosting, contact, and intellectual property.
 indexable: false
 ---
 

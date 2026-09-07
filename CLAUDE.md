@@ -1,6 +1,9 @@
 # CLAUDE.md — HotelAreaScore (operating rules)
 
-> Working name: `HotelAreaScore` (temporary). Launch language: English.
+> Brand: **StayContext**, staycontext.com — decided 2026-09-07, `docs/adr/012`.
+> `HotelAreaScore`/`hotelareascore` remains the internal code name only (repo
+> name, Python package `src/hotelareascore/`, this file's own title) — never
+> change that to match the brand. Launch language: English.
 > Owner budget: ≤ €200 setup, ≤ €50/month before meaningful revenue (target ≤ €35 steady-state, rest is reserve).
 > This file contains ONLY operating rules. Strategy, scoring, SEO policy, data
 > architecture and validation live in `docs/`. Read them when the task touches them.

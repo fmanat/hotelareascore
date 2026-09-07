@@ -10,7 +10,7 @@ export function websiteJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'HotelAreaScore',
+    name: 'StayContext',
     url: SITE_URL,
   };
 }
@@ -72,7 +72,7 @@ export function lodgingBusinessJsonLd(opts: {
       : {}),
     additionalProperty: {
       '@type': 'PropertyValue',
-      name: 'HotelAreaScore surroundings balanced score',
+      name: 'StayContext surroundings balanced score',
       description:
         'An independently computed score of the area surrounding this hotel (walkability, transit, food, quiet, family, nightlife) — not a guest review or star rating.',
       value: opts.balancedScore,

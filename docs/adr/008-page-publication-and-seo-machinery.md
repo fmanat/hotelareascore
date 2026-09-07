@@ -53,6 +53,9 @@ never launch anything.
    'https://example.invalid'` — the IANA/RFC 2606 reserved domain
    guaranteed to never resolve, never a real-looking placeholder. One
    constant to update when the domain is chosen.
+   **Update 2026-09-07:** the domain decision landed — `docs/adr/012` —
+   `SITE_URL` is now `https://staycontext.com`. The single-constant design
+   described above is exactly what made that a one-line change.
 6. **Structured data is Hotel/LodgingBusiness/Place/BreadcrumbList/WebSite
    only** (`web/src/lib/jsonld.ts`) — no `aggregateRating`/`review`/rating
    fields anywhere, ever (CLAUDE.md hard rule 3, 7). Enforced twice: the

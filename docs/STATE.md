@@ -39,16 +39,13 @@ of time and stays fully inert (flags off) — see open decisions below.
 
 ## Open owner decisions (blocking Phase 4, nothing else)
 
-- [ ] **(a) Domain/brand name** — also blocks giving `web/src/lib/site.ts`'s
-      `SITE_URL` a real value (currently RFC 2606 placeholder
-      `example.invalid`)
-- [ ] **(b) Legal placeholders on the 4 legal pages** (`/legal-notice`,
+- [ ] **(a) Legal placeholders on the 4 legal pages** (`/legal-notice`,
       `/privacy`, `/affiliate-disclosure`, `/terms`) — publisher is settled
       (FrenchSquare Ltd, `docs/adr/011`) but Companies House number,
       registered office address, contact email, "last updated" dates, and
       `/terms`'s governing-law line are still owner-provided placeholders,
       not technical work
-- [ ] **(c) Pilot cohort review**: sanity-check a sample of the 200
+- [ ] **(b) Pilot cohort review**: sanity-check a sample of the 200
       proposed hotels before any Phase 4 flag is turned on —
       [pilot-cohort-proposal.md](reports/pilot-cohort-proposal.md)
 
@@ -57,6 +54,8 @@ Resolved this session, no longer open: family_convenience gate (closed,
 renamed "New York City metro", per-hotel disclosure unchanged); legal
 vehicle (`docs/adr/011` — FrenchSquare Ltd, an existing English company;
 the 4 DRAFT legal templates already name it as publisher/data controller).
+Resolved this session (see below): brand & domain (`docs/adr/012` —
+StayContext / staycontext.com, owned).
 
 ## Entity QA — known limitations (not blockers, tracked for a future pass)
 
@@ -112,7 +111,7 @@ start.
 
 ## Decision & session history
 
-Full narrative history lives in `docs/adr/001` through `011` (each records
+Full narrative history lives in `docs/adr/001` through `012` (each records
 context/decision/consequences) and the dated reports under `docs/reports/`
 they reference. Batch ingestion, golden-set construction, and calibration
 runs are documented in `docs/reports/phase-3-*` and

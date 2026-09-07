@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/BaseLayout.astro
 title: Privacy & cookies
-description: Privacy and cookies policy for HotelAreaScore — no accounts, cookieless analytics, no personal data sold or shared.
+description: Privacy and cookies policy for StayContext — no accounts, cookieless analytics, no personal data sold or shared.
 indexable: false
 ---
 
