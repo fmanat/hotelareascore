@@ -134,6 +134,14 @@ start.
   sequencing in `docs/affiliate-matching.md §5`.
 - Supabase free-tier fit depends on keeping POIs out of the serving DB —
   `docs/data-and-costs.md §2`.
+- **Night mission #2, Bloc B was cut off mid-instruction** ("CSP en
+  Report-Only d'abord av...") — implemented what was unambiguous
+  (`web/public/_headers`: HSTS w/o `preload` — deliberately, that's a
+  harder-to-reverse commitment than one truncated line should authorize —
+  X-Content-Type-Options, Referrer-Policy, a minimal Permissions-Policy,
+  and CSP in Report-Only mode with no `report-uri` since wiring one needs
+  a new service). Whatever came after "av" in the original order is
+  unknown — re-issue Bloc B in full if there was more to it.
 
 ## Cost tracker (update monthly)
 
