@@ -1,0 +1,183 @@
+---
+// docs/adr/013 / docs/reports/hotel-pages-architecture-options.md option
+// (c): the long tail of hotels outside the static-page file budget has no
+// built page at all -- this is the ONE shared static route all of them
+// resolve to (`/hotel/limited?slug=...`), hydrated client-side from
+// `/data/search-index.json` (same file SearchBox/ComparePicker/compare
+// already fetch -- no second data shape, no server, no external call).
+//
+// Deliberately, always noindex: no `indexable` prop is passed, so
+// BaseLayout's robots meta is always "noindex, nofollow" regardless of
+// PUBLIC_INDEXING_ENABLED/HOTEL_PAGE_INDEXING_ENABLED -- this is
+// intentionally thinner content (no nearby facts, no map, no comparable
+// hotels) that should never compete with a real hotel page in search
+// results, not a page waiting on a flag flip.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { DIMENSION_KEYS } from '../../lib/types';
+import { DIMENSION_META } from '../../lib/dimensions';
+
+const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSION_META[k].label]));
+---
+
+<BaseLayout
+  title="Hotel profile (limited data)"
+  description="A limited surroundings profile: computed scores only. This hotel's full profile — nearby facts, map, comparable hotels — isn't built yet."
+>
+  <p id="limited-loading">Loading…</p>
+
+  <article id="limited-card" hidden data-dimension-keys={JSON.stringify(DIMENSION_KEYS)} data-dimension-labels={JSON.stringify(dimensionLabels)}>
+    <h1 id="limited-name"></h1>
+    <p id="limited-meta" class="meta"></p>
+    <p class="notice">
+      <strong>Limited profile.</strong> This hotel isn't part of our fully profiled set yet, so there's no
+      nearby-facts list, map, or comparable-hotels list for it — only the computed scores below, from the
+      same data and formula as every other hotel (<a href="/methodology">methodology</a>).
+    </p>
+    <p id="limited-verdict" class="verdict"></p>
+    <div id="limited-score-row" class="score-row"></div>
+    <ul id="limited-dims"></ul>
+    <p><a href="/">← Back to search</a></p>
+  </article>
+
+  <p id="limited-notfound" hidden>
+    We couldn't find a hotel matching that link — it may have moved or the link is malformed.
+    <a href="/">Search again</a>.
+  </p>
+</BaseLayout>
+
+<style>
+  .meta { color: var(--ink-muted); margin: 0 0 16px; }
+  .notice {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    margin: 0 0 20px;
+  }
+  .verdict { font-size: 1.05rem; font-weight: 600; margin: 0 0 12px; }
+  .score-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 20px; }
+  .score-row .value { font-size: 2rem; font-weight: 700; }
+  #limited-dims { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  #limited-dims li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  #limited-dims .dim-value { color: var(--ink-muted); }
+</style>
+
+<script>
+  interface SearchIndexEntry {
+    slug: string;
+    name: string;
+    city: string;
+    city_id: string;
+    locality: string | null;
+    has_static_page: boolean;
+    scores: Record<string, number>;
+    balanced_score: number;
+    confidence: number;
+    confidence_label: 'High' | 'Medium' | 'Low';
+    verdict: string;
+  }
+
+  const loadingEl = document.getElementById('limited-loading');
+  const cardEl = document.getElementById('limited-card');
+  const notFoundEl = document.getElementById('limited-notfound');
+
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+  const cityId = params.get('city');
+
+  function showNotFound(): void {
+    if (loadingEl) loadingEl.hidden = true;
+    if (notFoundEl) notFoundEl.hidden = false;
+  }
+
+  // docs/adr/013 perf fix: the merged /data/search-index.json is ~17 MB
+  // across all 12 cities (measured Lighthouse perf 37, LCP 10.5s on this
+  // page fetching it just to find one row) -- fetch the small per-city
+  // shard first when we know the city, and only fall back to the full
+  // index for a stale/malformed link that's missing it.
+  function findHotel(slug: string, cityId: string | null): Promise<SearchIndexEntry | undefined> {
+    const shard = cityId ? fetch(`/data/search-index-${encodeURIComponent(cityId)}.json`) : null;
+    const lookup = shard
+      ? shard
+          .then((r) => (r.ok ? r.json() : Promise.reject(new Error('shard not found'))))
+          .then((data: SearchIndexEntry[]) => data.find((h) => h.slug === slug))
+      : Promise.resolve(undefined);
+
+    return lookup.then((hotel) => {
+      if (hotel) return hotel;
+      // No city param, or the shard didn't have this slug (e.g. a stale
+      // link from before a data refresh moved the hotel) -- full index,
+      // not a second failure.
+      return fetch('/data/search-index.json')
+        .then((r) => r.json())
+        .then((data: SearchIndexEntry[]) => data.find((h) => h.slug === slug));
+    });
+  }
+
+  if (!slug || !cardEl) {
+    showNotFound();
+  } else {
+    findHotel(slug, cityId)
+      .then((hotel) => {
+        if (!hotel) {
+          showNotFound();
+          return;
+        }
+        // A slug that DOES have a static page belongs at its real URL, not
+        // here -- redirect rather than duplicate content at two URLs.
+        if (hotel.has_static_page) {
+          window.location.replace(`/hotel/${encodeURIComponent(hotel.slug)}`);
+          return;
+        }
+
+        document.title = `${hotel.name} · StayContext`;
+        const nameEl = document.getElementById('limited-name');
+        if (nameEl) nameEl.textContent = hotel.name;
+        const metaEl = document.getElementById('limited-meta');
+        if (metaEl) metaEl.textContent = hotel.locality ? `${hotel.locality}, ${hotel.city}` : hotel.city;
+        const verdictEl = document.getElementById('limited-verdict');
+        if (verdictEl) verdictEl.textContent = hotel.verdict;
+
+        const scoreRow = document.getElementById('limited-score-row');
+        if (scoreRow) {
+          const badgeClass = hotel.confidence_label.toLowerCase();
+          scoreRow.innerHTML = '';
+          const value = document.createElement('span');
+          value.className = 'value';
+          value.textContent = String(Math.round(hotel.balanced_score));
+          const badge = document.createElement('span');
+          badge.className = `badge ${badgeClass}`;
+          badge.textContent = `${hotel.confidence_label} confidence`;
+          scoreRow.append(value, badge);
+        }
+
+        const dimKeys: string[] = JSON.parse(cardEl.dataset.dimensionKeys ?? '[]');
+        const dimLabels: Record<string, string> = JSON.parse(cardEl.dataset.dimensionLabels ?? '{}');
+        const dimsEl = document.getElementById('limited-dims');
+        if (dimsEl) {
+          dimsEl.innerHTML = '';
+          for (const key of dimKeys) {
+            const li = document.createElement('li');
+            const label = document.createElement('span');
+            label.textContent = dimLabels[key] ?? key;
+            const value = document.createElement('span');
+            value.className = 'dim-value';
+            value.textContent = String(Math.round(hotel.scores[key] ?? 0));
+            li.append(label, value);
+            dimsEl.appendChild(li);
+          }
+        }
+
+        if (loadingEl) loadingEl.hidden = true;
+        cardEl.hidden = false;
+      })
+      .catch(() => showNotFound());
+  }
+</script>

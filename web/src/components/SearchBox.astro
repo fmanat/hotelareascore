@@ -11,7 +11,7 @@
   <input
     id="hotel-search"
     type="search"
-    placeholder="Search a hotel in London or Bangkok…"
+    placeholder="Search a hotel…"
     autocomplete="off"
     aria-expanded="false"
     aria-controls="search-results"
@@ -80,7 +80,9 @@
     slug: string;
     name: string;
     city: string;
+    city_id: string;
     locality: string | null;
+    has_static_page: boolean;
   }
 
   const input = document.getElementById('hotel-search') as HTMLInputElement | null;
@@ -111,7 +113,14 @@
       label: (e) => e.name,
       meta: (e) => (e.locality ? `${e.locality}, ${e.city}` : e.city),
       onSelect: (e) => {
-        window.location.href = `/hotel/${encodeURIComponent(e.slug)}`;
+        // docs/adr/013: the long tail outside the static-page budget has
+        // no built `/hotel/{slug}` page -- route those to the
+        // client-rendered limited-data card instead of a 404. `city`
+        // lets that page fetch a small per-city index shard instead of
+        // the full ~17 MB merged one (perf fix, see webdata.py).
+        window.location.href = e.has_static_page
+          ? `/hotel/${encodeURIComponent(e.slug)}`
+          : `/hotel/limited?slug=${encodeURIComponent(e.slug)}&city=${encodeURIComponent(e.city_id)}`;
       },
       emptyMessage: 'No hotels found in our index.',
     });

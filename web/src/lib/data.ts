@@ -4,13 +4,42 @@
 // external call (CLAUDE.md §6).
 import hotelsLondon from '../data/hotels-london.json';
 import hotelsBangkok from '../data/hotels-bangkok.json';
+import hotelsParis from '../data/hotels-paris.json';
+import hotelsRome from '../data/hotels-rome.json';
+import hotelsBarcelona from '../data/hotels-barcelona.json';
+import hotelsAmsterdam from '../data/hotels-amsterdam.json';
+import hotelsLisbon from '../data/hotels-lisbon.json';
+import hotelsSydney from '../data/hotels-sydney.json';
+import hotelsTokyo from '../data/hotels-tokyo.json';
+import hotelsDubai from '../data/hotels-dubai.json';
+import hotelsNewYork from '../data/hotels-new_york.json';
+import hotelsSingapore from '../data/hotels-singapore.json';
 import cityBaselines from '../data/city-baselines.json';
 import personas from '../data/personas.json';
 import meta from '../data/meta.json';
 import cityPages from '../data/city-pages.json';
 import type { CityBaseline, CityPage, Hotel, Personas } from './types';
 
-export const ALL_HOTELS: Hotel[] = [...(hotelsLondon as Hotel[]), ...(hotelsBangkok as Hotel[])];
+// Each hotels-{city}.json is already the static-subset filtered export
+// (src/hotelareascore/webdata.py's select_static_subset, docs/adr/013) --
+// not "every hotel in the city," so this array is exactly the set of
+// hotels with a real built page. Every other hotel in the full 12-city
+// dataset is still in /data/search-index.json and gets the client-rendered
+// limited-data card (web/src/pages/hotel/limited.astro) instead.
+export const ALL_HOTELS: Hotel[] = [
+  ...(hotelsLondon as Hotel[]),
+  ...(hotelsBangkok as Hotel[]),
+  ...(hotelsParis as Hotel[]),
+  ...(hotelsRome as Hotel[]),
+  ...(hotelsBarcelona as Hotel[]),
+  ...(hotelsAmsterdam as Hotel[]),
+  ...(hotelsLisbon as Hotel[]),
+  ...(hotelsSydney as Hotel[]),
+  ...(hotelsTokyo as Hotel[]),
+  ...(hotelsDubai as Hotel[]),
+  ...(hotelsNewYork as Hotel[]),
+  ...(hotelsSingapore as Hotel[]),
+];
 
 export const HOTELS_BY_SLUG: Map<string, Hotel> = new Map(ALL_HOTELS.map((h) => [h.slug, h]));
 

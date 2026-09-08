@@ -32,6 +32,7 @@
     "reason_codes": [],
     "nearby_facts": [],
     "comparable": [],
-    "publication_status": "noindex"
+    "publication_status": "noindex",
+    "has_static_page": true
   }
 ]

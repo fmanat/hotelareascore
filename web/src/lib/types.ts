@@ -31,6 +31,10 @@ export interface ComparableHotel {
   slug: string;
   name: string;
   balanced_score: number;
+  /** docs/adr/013: whether this comparable hotel has a real built page
+   * (`/hotel/{slug}`) or should link to the client-rendered limited-data
+   * card (`/hotel/limited?slug={slug}`) instead. */
+  has_static_page: boolean;
 }
 
 export interface Hotel {
@@ -60,6 +64,10 @@ export interface Hotel {
   reason_codes: string[];
   nearby_facts: NearbyFact[];
   comparable: ComparableHotel[];
+  /** Always true for anything in hotels-{city}.json (docs/adr/013) --
+   * present for consistency with SearchIndexEntry, not because a hotel
+   * page ever needs to branch on it. */
+  has_static_page: boolean;
 }
 
 export interface CityBaseline {
@@ -101,9 +109,19 @@ export interface SearchIndexEntry {
   slug: string;
   name: string;
   city: string;
+  /** Machine city id (e.g. "new_york"), not the display name in `city` --
+   * lets the limited-data card (docs/adr/013) fetch that one city's
+   * `/data/search-index-{city_id}.json` shard instead of the full
+   * ~17 MB merged index. */
+  city_id: string;
   locality: string | null;
-  // Present so the Compare page (docs/strategy.md §2 journey B) can reuse
-  // this same fetched index instead of a second file.
+  /** docs/adr/013: false for the long tail outside the static-page budget
+   * -- SearchBox/ComparableHotels route these to
+   * `/hotel/limited?slug={slug}&city={city_id}` instead of `/hotel/{slug}`. */
+  has_static_page: boolean;
+  // Present so the Compare page (docs/strategy.md §2 journey B) and the
+  // limited-data card (web/src/pages/hotel/limited.astro) can reuse this
+  // same fetched index instead of a second file.
   scores: Scores;
   balanced_score: number;
   confidence: number;

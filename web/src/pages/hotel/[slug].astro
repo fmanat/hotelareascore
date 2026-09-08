@@ -108,7 +108,9 @@ const lodgingBusiness = lodgingBusinessJsonLd({
 
     {baseline && <CityComparison scores={hotel.scores} cityName={hotel.city_name} baseline={baseline} />}
 
-    {hotel.comparable.length > 0 && <ComparableHotels hotels={hotel.comparable} currentSlug={hotel.slug} />}
+    {hotel.comparable.length > 0 && (
+      <ComparableHotels hotels={hotel.comparable} currentSlug={hotel.slug} cityId={hotel.city_id} />
+    )}
 
     <ComparePicker currentSlug={hotel.slug} />
 

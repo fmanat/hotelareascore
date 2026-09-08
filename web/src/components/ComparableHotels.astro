@@ -7,8 +7,13 @@ import type { ComparableHotel } from '../lib/types';
 interface Props {
   hotels: ComparableHotel[];
   currentSlug: string;
+  /** _attach_comparable_hotels only ever picks peers from the SAME city,
+   * so the current page's own city_id is always correct for every entry
+   * here -- lets a non-static comparable hotel's limited-data card
+   * (docs/adr/013) fetch its small per-city index shard. */
+  cityId: string;
 }
-const { hotels, currentSlug } = Astro.props;
+const { hotels, currentSlug, cityId } = Astro.props;
 ---
 
 <section class="comparable">
@@ -17,7 +22,13 @@ const { hotels, currentSlug } = Astro.props;
     {
       hotels.map((h) => (
         <li>
-          <a href={`/hotel/${h.slug}`}>{h.name}</a>
+          <a
+            href={h.has_static_page
+              ? `/hotel/${h.slug}`
+              : `/hotel/limited?slug=${encodeURIComponent(h.slug)}&city=${encodeURIComponent(cityId)}`}
+          >
+            {h.name}
+          </a>
           <span class="right">
             <span class="score">{Math.round(h.balanced_score)}</span>
             <a class="compare-link" href={`/compare?a=${currentSlug}&b=${h.slug}`}>

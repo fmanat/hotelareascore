@@ -18,13 +18,19 @@ dist/
 # Re-freshing this snapshot (or replacing it with a real pipeline) is a
 # separate decision -- do not silently regenerate and recommit without
 # that decision being made again.
-!src/data/hotels-london.json
-!src/data/hotels-bangkok.json
+#
+# UPDATED 2026-09-08 (docs/adr/013, night mission #2 Bloc A): the frozen
+# snapshot grows from the 2-city hardcoded set to all 12 launch cities'
+# static-subset hotel sets, per that ADR -- this IS the decision above
+# being revisited, explicitly, not a silent regeneration. Cloudflare's
+# build command is unchanged (`npm run build`, no Python, no network).
+!src/data/hotels-*.json
 !src/data/city-baselines.json
 !src/data/personas.json
 !src/data/meta.json
 !src/data/city-pages.json
 !public/data/search-index.json
+!public/data/search-index-*.json
 
 # dependencies
 node_modules/

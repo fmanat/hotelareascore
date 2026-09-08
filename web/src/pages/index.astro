@@ -1,13 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SearchBox from '../components/SearchBox.astro';
-import { BUILD_META } from '../lib/data';
+import { BUILD_META, CITY_PAGES } from '../lib/data';
 import { websiteJsonLd } from '../lib/jsonld';
 
 // docs/seo-policy.md §3: home is an "always potentially indexable" page
 // type; docs/adr (Bloc C, page_publication) records it as such --
 // PUBLIC_INDEXING_ENABLED being off still keeps this noindex in practice.
 const website = websiteJsonLd();
+
+// City display names, not raw ids ("new_york") -- BUILD_META.cities is
+// exactly the 12 launch cities as of docs/adr/013 (fixed the Phase 2
+// leftover that hardcoded "London and Bangkok" here after data.ts itself
+// was fixed to import all 12 cities' static subsets).
+const cityNames = BUILD_META.cities.map((id) => CITY_PAGES[id]?.city_name ?? id).sort();
 ---
 
 <BaseLayout
@@ -26,8 +32,8 @@ const website = websiteJsonLd();
     </p>
     <SearchBox />
     <p class="scope">
-      Currently covering hotels in <strong>London</strong> and <strong>Bangkok</strong> (product proof,
-      release {BUILD_META.release}).
+      Currently covering hotels in <strong>{cityNames.length} cities</strong>: {cityNames.join(', ')}
+      (release {BUILD_META.release}).
     </p>
   </section>
 </BaseLayout>

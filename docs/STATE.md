@@ -60,7 +60,11 @@ renamed "New York City metro", per-hotel disclosure unchanged); legal
 vehicle (`docs/adr/011` — FrenchSquare Ltd, an existing English company;
 the 4 DRAFT legal templates already name it as publisher/data controller).
 Resolved this session (see below): brand & domain (`docs/adr/012` —
-StayContext / staycontext.com, owned).
+StayContext / staycontext.com, owned). Resolved night mission #2, Bloc A:
+`web/src/lib/data.ts`'s 2-city hardcoding, and the 10-cities-with-no-built-
+hotel-page bug it caused — all 12 cities now have real pages for every
+indexable hotel, via a static-subset + client-rendered-long-tail
+architecture (`docs/adr/013`, `docs/reports/hotel-pages-architecture-options.md`).
 
 ## Entity QA — known limitations (not blockers, tracked for a future pass)
 
@@ -130,19 +134,6 @@ start.
   sequencing in `docs/affiliate-matching.md §5`.
 - Supabase free-tier fit depends on keeping POIs out of the serving DB —
   `docs/data-and-costs.md §2`.
-- **New, found 2026-09-07 while regenerating the cohort v2 pack:**
-  `web/src/lib/data.ts`'s `ALL_HOTELS` still hardcodes only 2 imports
-  (`hotels-london.json`, `hotels-bangkok.json`) — a Phase 2 leftover. The
-  pilot cohort spans all 12 cities (`compute_publication.py` correctly
-  marks ~200 hotels indexable across all 12), but **only London/Bangkok
-  hotels actually get a built page and a sitemap entry today** — the
-  other 10 cities' indexable hotels have no route at all. Not fixed this
-  session (out of scope: building pages for all 12 cities' hotel sets is
-  its own review, not a one-line change). CI doesn't catch this because
-  its fixture data never includes all 12 cities at once; only surfaced by
-  running the real build locally. **Needs a decision before Phase 4
-  launch**, separate from the legal-placeholder and cohort-review items
-  above.
 
 ## Cost tracker (update monthly)
 
@@ -152,7 +143,7 @@ start.
 
 ## Decision & session history
 
-Full narrative history lives in `docs/adr/001` through `012` (each records
+Full narrative history lives in `docs/adr/001` through `013` (each records
 context/decision/consequences) and the dated reports under `docs/reports/`
 they reference. Batch ingestion, golden-set construction, and calibration
 runs are documented in `docs/reports/phase-3-*` and
