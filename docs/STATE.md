@@ -129,27 +129,39 @@ start.
 
 ## Blockers / risks being watched
 
-- **PROD DOWN (found 2026-09-09):** `https://staycontext.com` returns
-  **521** on every path since some point after the `3d18c8d` push
-  (Cloudflare Pages redeploy failed or custom-domain attachment broke —
-  unconfirmed). Not the repo: a clean `git clone` + `npm ci` + `npm run
-  build` from the committed snapshot succeeds (15,769 pages). Needs
-  Cloudflare Pages dashboard access this session doesn't have.
-  `make verify-prod` (new, `scripts/verify_prod.py`) confirms it in
-  detail: 3/28 checks pass. Two separate findings surfaced by the same
-  tooling, independent of the outage: **`/robots.txt` may be served by
-  Cloudflare's own "Managed robots.txt" zone feature** (`Allow: /` for
-  `*`, only named AI bots disallowed), not `robots.txt.ts` — confirm which
-  one wins once the origin is back, before any indexing decision. **And
-  `http://www.staycontext.com` (plain HTTP, www) currently serves an
-  unrelated OVHcloud "Site en construction" placeholder page** (200, not
-  even a redirect) while `https://www` 521s like the apex — DNS for both
-  resolves to Cloudflare's own anycast IPs, so this is a Cloudflare-side
-  routing/origin config gap for that specific host+scheme combination, not
-  a DNS-registrar issue; needs the Cloudflare dashboard (DNS records +
-  Pages custom domains + any Page Rules/Bulk Redirects) to fix. `http
-  apex` does redirect, but to `http://www` (still unencrypted) — not
-  straight to `https://` apex.
+- **Cloudflare Pages platform incident, INTERMITTENT, ongoing since
+  ~08:00 UTC 2026-09-09** (their platform, not us — the owner's own
+  Cloudflare support draft confirms every Pages project on the account,
+  including a brand-new throwaway one, 503s on its own `*.pages.dev` URL,
+  which rules out zone/DNS/custom-domain config). Not the repo: a clean
+  `git clone` + `npm ci` + `npm run build` from the committed snapshot
+  succeeds every time this has been checked. **The production Cloudflare
+  Pages project is named `staycontext`** — an older project,
+  `hotelareascorec`, is dead/unused; do not delete it, just don't confuse
+  it for prod (no reference to it exists in this repo either way). Seen
+  so far: sustained 521 for the ~24h up to 2026-09-09 09:00 UTC, then
+  200 on every check since — but per the incident's own description
+  ("intermittent"), do not treat a period of 200s as resolved. A
+  continuous background probe (`scripts/prod_probe.py` +
+  `prod_probe_loop.sh`, every 30s against home/a nonexistent path/
+  sitemap-static.xml/the `.pages.dev` URL) is running for the rest of
+  night mission #3 — raw log and hourly up/down summary in
+  `docs/reports/incident-2026-09-09-cloudflare-pages/`, the evidence for
+  the support ticket.
+  **Two anomalies found while the site was briefly reachable, NEITHER
+  confirmed yet — both marked "re-measure once the probe shows ≥30
+  continuous minutes of 200s", not acted on**: (1) `_headers`
+  (HSTS/CSP-Report-Only/Permissions-Policy) present on
+  `staycontext.pages.dev` but missing on `staycontext.com` itself in one
+  check; (2) a nonsense path and the sitemap endpoints returned 200 with
+  the home page's HTML instead of 404 in one check (custom `404.astro`
+  never served) — looked like a Cloudflare Pages "serve index.html for
+  unmatched routes" (SPA-fallback) setting, but a LATER check on the same
+  URLs correctly returned 404, so this may just be more of the same
+  platform instability rather than a real project-config bug. Do not
+  trust either finding until re-measured on a stable window
+  (`docs/reports/incident-2026-09-09-cloudflare-pages/` records the
+  re-measurement once it happens).
 - **Data freshness (checked 2026-09-07):** `2026-08-19.0` is still
   Overture's latest release (live catalog check, not cached) — no
   re-ingestion needed. Re-check next time rather than assuming still true.

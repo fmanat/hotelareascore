@@ -1,10 +1,19 @@
 # Phase 4 launch runbook
 
 > Ordered checklist from "brand/domain decided" (`docs/adr/012`) to a live,
-> indexed pilot cohort. Nothing in this document has been executed —
-> report only, per this session's instructions. Every step below still
+> indexed pilot cohort. Report only when written — every step below still
 > respects CLAUDE.md §8 (flags default OFF, flip deliberately) and §2 rule
 > 2 (indexability is a recorded decision, never a side effect).
+>
+> **Status update, 2026-09-09 (night mission #3):** B1/B2 below are done —
+> the site is deployed and `staycontext.com` is attached. **The production
+> Cloudflare Pages project is named `staycontext`** (an older project,
+> `hotelareascorec`, is dead/unused — don't confuse it for prod, and don't
+> delete it either). Currently affected by a Cloudflare Pages platform
+> incident (their side, intermittent, since ~08:00 UTC 2026-09-09) —
+> `docs/STATE.md` "Blockers" and `docs/reports/incident-2026-09-09-cloudflare-pages/`
+> have the live detail. Still noindex/all-flags-off throughout, per every
+> guardrail below — the incident doesn't change that.
 
 ## How to read this
 
