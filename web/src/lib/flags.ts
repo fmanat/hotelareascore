@@ -18,4 +18,9 @@ export const FLAGS = {
   MAP_ENABLED: flag('MAP_ENABLED'),
   DATA_REFRESH_ENABLED: flag('DATA_REFRESH_ENABLED'),
   SEO_AUTOMATION_ENABLED: flag('SEO_AUTOMATION_ENABLED'),
+  // Night mission #3, Tache 4: gates BOTH the Cloudflare Web Analytics
+  // beacon script (BaseLayout.astro) AND whether lib/events.ts's captured
+  // search_events/outbound_clicks are even logged locally -- see that
+  // file's comment for why "enabled" still sends nothing today.
+  ANALYTICS_ENABLED: flag('ANALYTICS_ENABLED'),
 } as const;

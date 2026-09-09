@@ -44,6 +44,16 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const canonicalUrl = new URL(path, SITE_URL).toString();
 const ogImageUrl = new URL('/og-default.svg', SITE_URL).toString();
 const pageTitle = `${title} · StayContext`;
+
+// Cloudflare Web Analytics (CLAUDE.md §5), night mission #3 Tache 4: only
+// rendered when ANALYTICS_ENABLED is on AND a token is configured -- no
+// Cloudflare Web Analytics site exists yet, so PUBLIC_CF_ANALYTICS_TOKEN
+// is an empty placeholder in .env.example today, and the flag itself
+// defaults off regardless. If this is ever turned on, the beacon script's
+// origin (static.cloudflareinsights.com) also needs adding to
+// web/public/_headers's script-src -- not done here since the flag is off.
+const analyticsToken = (import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN as string | undefined) ?? '';
+const showAnalytics = FLAGS.ANALYTICS_ENABLED && analyticsToken.length > 0;
 ---
 
 <!doctype html>
@@ -71,6 +81,14 @@ const pageTitle = `${title} · StayContext`;
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+    {showAnalytics && (
+      <script
+        is:inline
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: analyticsToken })}
+      />
+    )}
     <slot name="head" />
     <style>
       :root {

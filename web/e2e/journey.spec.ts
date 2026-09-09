@@ -113,3 +113,24 @@ test('search box: full keyboard navigation, no mouse', async ({ page }) => {
   await search.press('Enter');
   await expect(page).toHaveURL(/\/hotel\//);
 });
+
+test('searching never sends an analytics/events request (night mission #3 Tache 4)', async ({ page }) => {
+  // ANALYTICS_ENABLED defaults off (CLAUDE.md §8) -- no Cloudflare Web
+  // Analytics beacon, and lib/events.ts's captured search_events never
+  // dispatch anywhere regardless of the flag (no storage destination is
+  // configured yet, docs/reports/analytics-storage-options.md). This
+  // test's job is to fail loudly the day a real network call is added
+  // without that decision being made first.
+  const requestUrls: string[] = [];
+  page.on('request', (req) => requestUrls.push(req.url()));
+
+  await page.goto('/');
+  const search = page.getByLabel('Search for a hotel');
+  await search.fill('Fixture Park');
+  await expect(page.getByRole('option', { name: /Fixture Park Hotel/ })).toBeVisible();
+
+  const suspect = requestUrls.filter(
+    (u) => /cloudflareinsights|analytics|search_events|outbound_click/i.test(u),
+  );
+  expect(suspect).toEqual([]);
+});

@@ -5,6 +5,10 @@
 // affiliate link; since there is no real link yet, we render a disabled
 // placeholder rather than invent one, and never gate the score behind it
 // (docs/strategy.md §6).
+// Night mission #3, Tache 4: once a real link exists here, its click
+// handler should call recordOutboundClick(hotel.slug, target, tagged)
+// (web/src/lib/events.ts) -- not wired to this disabled placeholder,
+// since there is nothing real to attach it to yet.
 import { FLAGS } from '../lib/flags';
 ---
 

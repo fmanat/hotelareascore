@@ -114,7 +114,7 @@ on changed/high-value pages, always generated from a structured facts payload.
 - Feature flags default OFF for new/dangerous behavior:
   `PUBLIC_INDEXING_ENABLED, HOTEL_PAGE_INDEXING_ENABLED, AFFILIATE_ENABLED,
   AI_SUMMARIES_ENABLED, MISSING_HOTEL_GEOCODING_ENABLED, MAP_ENABLED,
-  DATA_REFRESH_ENABLED, SEO_AUTOMATION_ENABLED`.
+  DATA_REFRESH_ENABLED, SEO_AUTOMATION_ENABLED, ANALYTICS_ENABLED`.
 
 ## 9. Testing gates (CI must stay green)
 
