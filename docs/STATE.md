@@ -136,11 +136,20 @@ start.
   build` from the committed snapshot succeeds (15,769 pages). Needs
   Cloudflare Pages dashboard access this session doesn't have.
   `make verify-prod` (new, `scripts/verify_prod.py`) confirms it in
-  detail: 3/27 checks pass. Separate finding surfaced by the same check:
-  **`/robots.txt` may be served by Cloudflare's own "Managed robots.txt"
-  zone feature** (`Allow: /` for `*`, only named AI bots disallowed), not
-  `robots.txt.ts` — confirm which one wins once the origin is back, before
-  any indexing decision.
+  detail: 3/28 checks pass. Two separate findings surfaced by the same
+  tooling, independent of the outage: **`/robots.txt` may be served by
+  Cloudflare's own "Managed robots.txt" zone feature** (`Allow: /` for
+  `*`, only named AI bots disallowed), not `robots.txt.ts` — confirm which
+  one wins once the origin is back, before any indexing decision. **And
+  `http://www.staycontext.com` (plain HTTP, www) currently serves an
+  unrelated OVHcloud "Site en construction" placeholder page** (200, not
+  even a redirect) while `https://www` 521s like the apex — DNS for both
+  resolves to Cloudflare's own anycast IPs, so this is a Cloudflare-side
+  routing/origin config gap for that specific host+scheme combination, not
+  a DNS-registrar issue; needs the Cloudflare dashboard (DNS records +
+  Pages custom domains + any Page Rules/Bulk Redirects) to fix. `http
+  apex` does redirect, but to `http://www` (still unencrypted) — not
+  straight to `https://` apex.
 - **Data freshness (checked 2026-09-07):** `2026-08-19.0` is still
   Overture's latest release (live catalog check, not cached) — no
   re-ingestion needed. Re-check next time rather than assuming still true.

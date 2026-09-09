@@ -42,6 +42,8 @@ const robotsContent =
 // the same page.
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const canonicalUrl = new URL(path, SITE_URL).toString();
+const ogImageUrl = new URL('/og-default.svg', SITE_URL).toString();
+const pageTitle = `${title} · StayContext`;
 ---
 
 <!doctype html>
@@ -51,8 +53,24 @@ const canonicalUrl = new URL(path, SITE_URL).toString();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content={robotsContent} />
     <link rel="canonical" href={canonicalUrl} />
-    <title>{title} · StayContext</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    <!-- Open Graph / Twitter — a plain, on-brand default image
+         (web/public/og-default.svg, "sobre" per the night mission order) so
+         a shared link never renders with a blank/broken preview card. No
+         per-page OG image variant yet; every page shares this one. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="StayContext" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <slot name="head" />
     <style>
       :root {

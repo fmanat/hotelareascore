@@ -260,16 +260,32 @@ def check_redirects(base: str) -> None:
     apex = f"https://{APEX_HOST}"
     www = f"https://www.{APEX_HOST}"
     http_apex = f"http://{APEX_HOST}"
+    http_www = f"http://www.{APEX_HOST}"
 
     f = fetch(www, "/", follow_redirects=False)
     loc = f.headers.get("location", "")
     ok = f.status in (301, 308) and loc.startswith(apex)
-    record("redirects", "www -> apex", ok, f"status={f.status} location={loc!r}")
+    record("redirects", "https www -> apex", ok, f"status={f.status} location={loc!r}")
 
     f = fetch(http_apex, "/", follow_redirects=False)
     loc = f.headers.get("location", "")
     ok = f.status in (301, 308) and loc.startswith(apex)
-    record("redirects", "http -> https", ok, f"status={f.status} location={loc!r}")
+    record("redirects", "http apex -> https apex", ok, f"status={f.status} location={loc!r}")
+
+    # Found 2026-09-09: http://www currently serves a 200 with an UNRELATED
+    # OVHcloud "Site en construction" placeholder page -- not a redirect,
+    # not our Cloudflare Pages deployment, not even the same origin as
+    # https://www (which 521s like the apex). Checked separately from the
+    # https-www case above because it's a genuinely different failure mode
+    # (wrong content served, not "no content").
+    f = fetch(http_www, "/", follow_redirects=False)
+    loc = f.headers.get("location", "")
+    is_wrong_origin = "ovhcloud" in f.body.lower() or "site en construction" in f.body.lower()
+    ok = f.status in (301, 308) and loc.startswith(apex)
+    detail = f"status={f.status} location={loc!r}"
+    if is_wrong_origin:
+        detail += " -- body looks like an OVHcloud placeholder page, not this site"
+    record("redirects", "http www -> https apex", ok, detail)
 
 
 def main() -> int:
