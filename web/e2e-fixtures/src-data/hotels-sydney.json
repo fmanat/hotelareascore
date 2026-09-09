@@ -1,1 +1,45 @@
-[]
+[
+  {
+    "id": "e2e-sydney-1",
+    "slug": "fixture-sydney-hotel-e2e",
+    "name": "Fixture Sydney Hotel",
+    "city_id": "sydney",
+    "city_name": "Sydney",
+    "locality": "Sydney",
+    "region": null,
+    "country": "AU",
+    "lat": -33.8678,
+    "lon": 151.21030000000002,
+    "distance_from_center_km": 0.1,
+    "far_from_center": false,
+    "locality_mismatch": false,
+    "locality_mismatch_detail": null,
+    "scores": {
+      "walkability_density": 75.0,
+      "transit_access": 70.0,
+      "food_essentials": 72.0,
+      "quietness_proxy": 50.0,
+      "family_convenience": 55.0,
+      "nightlife_access": 45.0
+    },
+    "balanced_score": 70.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "dedupe_confidence": 100,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity.",
+    "reason_codes": [],
+    "nearby_facts": [
+      {
+        "rank": 1,
+        "category": "cafe",
+        "name": "Fixture Sydney Cafe",
+        "distance_m": 80.0
+      }
+    ],
+    "comparable": [],
+    "has_static_page": true,
+    "publication_status": "noindex"
+  }
+]

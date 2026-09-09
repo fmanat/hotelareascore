@@ -194,5 +194,955 @@
     "center_lat": 13.7563,
     "center_lon": 100.5018,
     "publication_status": "noindex"
+  },
+  "paris": {
+    "city_id": "paris",
+    "city_name": "Paris",
+    "country": "FR",
+    "n_hotels": 1,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "dimensions": {
+      "walkability_density": {
+        "median": 75.0,
+        "mean": 75.0
+      },
+      "transit_access": {
+        "median": 70.0,
+        "mean": 70.0
+      },
+      "food_essentials": {
+        "median": 72.0,
+        "mean": 72.0
+      },
+      "quietness_proxy": {
+        "median": 50.0,
+        "mean": 50.0
+      },
+      "family_convenience": {
+        "median": 55.0,
+        "mean": 55.0
+      },
+      "nightlife_access": {
+        "median": 45.0,
+        "mean": 45.0
+      }
+    },
+    "top_by_dimension": {
+      "walkability_density": [
+        {
+          "name": "Fixture Paris Hotel",
+          "locality": "Paris",
+          "slug": "fixture-paris-hotel-e2e",
+          "score": 75.0
+        }
+      ],
+      "transit_access": [
+        {
+          "name": "Fixture Paris Hotel",
+          "locality": "Paris",
+          "slug": "fixture-paris-hotel-e2e",
+          "score": 70.0
+        }
+      ],
+      "food_essentials": [
+        {
+          "name": "Fixture Paris Hotel",
+          "locality": "Paris",
+          "slug": "fixture-paris-hotel-e2e",
+          "score": 72.0
+        }
+      ],
+      "quietness_proxy": [
+        {
+          "name": "Fixture Paris Hotel",
+          "locality": "Paris",
+          "slug": "fixture-paris-hotel-e2e",
+          "score": 50.0
+        }
+      ],
+      "family_convenience": [
+        {
+          "name": "Fixture Paris Hotel",
+          "locality": "Paris",
+          "slug": "fixture-paris-hotel-e2e",
+          "score": 55.0
+        }
+      ],
+      "nightlife_access": [
+        {
+          "name": "Fixture Paris Hotel",
+          "locality": "Paris",
+          "slug": "fixture-paris-hotel-e2e",
+          "score": 45.0
+        }
+      ]
+    },
+    "representative_hotels": [
+      {
+        "name": "Fixture Paris Hotel",
+        "locality": "Paris",
+        "slug": "fixture-paris-hotel-e2e",
+        "balanced_score": 70.0
+      }
+    ],
+    "center_lat": 48.8566,
+    "center_lon": 2.3522,
+    "publication_status": "noindex"
+  },
+  "rome": {
+    "city_id": "rome",
+    "city_name": "Rome",
+    "country": "IT",
+    "n_hotels": 1,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "dimensions": {
+      "walkability_density": {
+        "median": 75.0,
+        "mean": 75.0
+      },
+      "transit_access": {
+        "median": 70.0,
+        "mean": 70.0
+      },
+      "food_essentials": {
+        "median": 72.0,
+        "mean": 72.0
+      },
+      "quietness_proxy": {
+        "median": 50.0,
+        "mean": 50.0
+      },
+      "family_convenience": {
+        "median": 55.0,
+        "mean": 55.0
+      },
+      "nightlife_access": {
+        "median": 45.0,
+        "mean": 45.0
+      }
+    },
+    "top_by_dimension": {
+      "walkability_density": [
+        {
+          "name": "Fixture Rome Hotel",
+          "locality": "Rome",
+          "slug": "fixture-rome-hotel-e2e",
+          "score": 75.0
+        }
+      ],
+      "transit_access": [
+        {
+          "name": "Fixture Rome Hotel",
+          "locality": "Rome",
+          "slug": "fixture-rome-hotel-e2e",
+          "score": 70.0
+        }
+      ],
+      "food_essentials": [
+        {
+          "name": "Fixture Rome Hotel",
+          "locality": "Rome",
+          "slug": "fixture-rome-hotel-e2e",
+          "score": 72.0
+        }
+      ],
+      "quietness_proxy": [
+        {
+          "name": "Fixture Rome Hotel",
+          "locality": "Rome",
+          "slug": "fixture-rome-hotel-e2e",
+          "score": 50.0
+        }
+      ],
+      "family_convenience": [
+        {
+          "name": "Fixture Rome Hotel",
+          "locality": "Rome",
+          "slug": "fixture-rome-hotel-e2e",
+          "score": 55.0
+        }
+      ],
+      "nightlife_access": [
+        {
+          "name": "Fixture Rome Hotel",
+          "locality": "Rome",
+          "slug": "fixture-rome-hotel-e2e",
+          "score": 45.0
+        }
+      ]
+    },
+    "representative_hotels": [
+      {
+        "name": "Fixture Rome Hotel",
+        "locality": "Rome",
+        "slug": "fixture-rome-hotel-e2e",
+        "balanced_score": 70.0
+      }
+    ],
+    "center_lat": 41.9028,
+    "center_lon": 12.4964,
+    "publication_status": "noindex"
+  },
+  "barcelona": {
+    "city_id": "barcelona",
+    "city_name": "Barcelona",
+    "country": "ES",
+    "n_hotels": 1,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "dimensions": {
+      "walkability_density": {
+        "median": 75.0,
+        "mean": 75.0
+      },
+      "transit_access": {
+        "median": 70.0,
+        "mean": 70.0
+      },
+      "food_essentials": {
+        "median": 72.0,
+        "mean": 72.0
+      },
+      "quietness_proxy": {
+        "median": 50.0,
+        "mean": 50.0
+      },
+      "family_convenience": {
+        "median": 55.0,
+        "mean": 55.0
+      },
+      "nightlife_access": {
+        "median": 45.0,
+        "mean": 45.0
+      }
+    },
+    "top_by_dimension": {
+      "walkability_density": [
+        {
+          "name": "Fixture Barcelona Hotel",
+          "locality": "Barcelona",
+          "slug": "fixture-barcelona-hotel-e2e",
+          "score": 75.0
+        }
+      ],
+      "transit_access": [
+        {
+          "name": "Fixture Barcelona Hotel",
+          "locality": "Barcelona",
+          "slug": "fixture-barcelona-hotel-e2e",
+          "score": 70.0
+        }
+      ],
+      "food_essentials": [
+        {
+          "name": "Fixture Barcelona Hotel",
+          "locality": "Barcelona",
+          "slug": "fixture-barcelona-hotel-e2e",
+          "score": 72.0
+        }
+      ],
+      "quietness_proxy": [
+        {
+          "name": "Fixture Barcelona Hotel",
+          "locality": "Barcelona",
+          "slug": "fixture-barcelona-hotel-e2e",
+          "score": 50.0
+        }
+      ],
+      "family_convenience": [
+        {
+          "name": "Fixture Barcelona Hotel",
+          "locality": "Barcelona",
+          "slug": "fixture-barcelona-hotel-e2e",
+          "score": 55.0
+        }
+      ],
+      "nightlife_access": [
+        {
+          "name": "Fixture Barcelona Hotel",
+          "locality": "Barcelona",
+          "slug": "fixture-barcelona-hotel-e2e",
+          "score": 45.0
+        }
+      ]
+    },
+    "representative_hotels": [
+      {
+        "name": "Fixture Barcelona Hotel",
+        "locality": "Barcelona",
+        "slug": "fixture-barcelona-hotel-e2e",
+        "balanced_score": 70.0
+      }
+    ],
+    "center_lat": 41.3874,
+    "center_lon": 2.1686,
+    "publication_status": "noindex"
+  },
+  "amsterdam": {
+    "city_id": "amsterdam",
+    "city_name": "Amsterdam",
+    "country": "NL",
+    "n_hotels": 1,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "dimensions": {
+      "walkability_density": {
+        "median": 75.0,
+        "mean": 75.0
+      },
+      "transit_access": {
+        "median": 70.0,
+        "mean": 70.0
+      },
+      "food_essentials": {
+        "median": 72.0,
+        "mean": 72.0
+      },
+      "quietness_proxy": {
+        "median": 50.0,
+        "mean": 50.0
+      },
+      "family_convenience": {
+        "median": 55.0,
+        "mean": 55.0
+      },
+      "nightlife_access": {
+        "median": 45.0,
+        "mean": 45.0
+      }
+    },
+    "top_by_dimension": {
+      "walkability_density": [
+        {
+          "name": "Fixture Amsterdam Hotel",
+          "locality": "Amsterdam",
+          "slug": "fixture-amsterdam-hotel-e2e",
+          "score": 75.0
+        }
+      ],
+      "transit_access": [
+        {
+          "name": "Fixture Amsterdam Hotel",
+          "locality": "Amsterdam",
+          "slug": "fixture-amsterdam-hotel-e2e",
+          "score": 70.0
+        }
+      ],
+      "food_essentials": [
+        {
+          "name": "Fixture Amsterdam Hotel",
+          "locality": "Amsterdam",
+          "slug": "fixture-amsterdam-hotel-e2e",
+          "score": 72.0
+        }
+      ],
+      "quietness_proxy": [
+        {
+          "name": "Fixture Amsterdam Hotel",
+          "locality": "Amsterdam",
+          "slug": "fixture-amsterdam-hotel-e2e",
+          "score": 50.0
+        }
+      ],
+      "family_convenience": [
+        {
+          "name": "Fixture Amsterdam Hotel",
+          "locality": "Amsterdam",
+          "slug": "fixture-amsterdam-hotel-e2e",
+          "score": 55.0
+        }
+      ],
+      "nightlife_access": [
+        {
+          "name": "Fixture Amsterdam Hotel",
+          "locality": "Amsterdam",
+          "slug": "fixture-amsterdam-hotel-e2e",
+          "score": 45.0
+        }
+      ]
+    },
+    "representative_hotels": [
+      {
+        "name": "Fixture Amsterdam Hotel",
+        "locality": "Amsterdam",
+        "slug": "fixture-amsterdam-hotel-e2e",
+        "balanced_score": 70.0
+      }
+    ],
+    "center_lat": 52.3676,
+    "center_lon": 4.9041,
+    "publication_status": "noindex"
+  },
+  "lisbon": {
+    "city_id": "lisbon",
+    "city_name": "Lisbon",
+    "country": "PT",
+    "n_hotels": 1,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "dimensions": {
+      "walkability_density": {
+        "median": 75.0,
+        "mean": 75.0
+      },
+      "transit_access": {
+        "median": 70.0,
+        "mean": 70.0
+      },
+      "food_essentials": {
+        "median": 72.0,
+        "mean": 72.0
+      },
+      "quietness_proxy": {
+        "median": 50.0,
+        "mean": 50.0
+      },
+      "family_convenience": {
+        "median": 55.0,
+        "mean": 55.0
+      },
+      "nightlife_access": {
+        "median": 45.0,
+        "mean": 45.0
+      }
+    },
+    "top_by_dimension": {
+      "walkability_density": [
+        {
+          "name": "Fixture Lisbon Hotel",
+          "locality": "Lisbon",
+          "slug": "fixture-lisbon-hotel-e2e",
+          "score": 75.0
+        }
+      ],
+      "transit_access": [
+        {
+          "name": "Fixture Lisbon Hotel",
+          "locality": "Lisbon",
+          "slug": "fixture-lisbon-hotel-e2e",
+          "score": 70.0
+        }
+      ],
+      "food_essentials": [
+        {
+          "name": "Fixture Lisbon Hotel",
+          "locality": "Lisbon",
+          "slug": "fixture-lisbon-hotel-e2e",
+          "score": 72.0
+        }
+      ],
+      "quietness_proxy": [
+        {
+          "name": "Fixture Lisbon Hotel",
+          "locality": "Lisbon",
+          "slug": "fixture-lisbon-hotel-e2e",
+          "score": 50.0
+        }
+      ],
+      "family_convenience": [
+        {
+          "name": "Fixture Lisbon Hotel",
+          "locality": "Lisbon",
+          "slug": "fixture-lisbon-hotel-e2e",
+          "score": 55.0
+        }
+      ],
+      "nightlife_access": [
+        {
+          "name": "Fixture Lisbon Hotel",
+          "locality": "Lisbon",
+          "slug": "fixture-lisbon-hotel-e2e",
+          "score": 45.0
+        }
+      ]
+    },
+    "representative_hotels": [
+      {
+        "name": "Fixture Lisbon Hotel",
+        "locality": "Lisbon",
+        "slug": "fixture-lisbon-hotel-e2e",
+        "balanced_score": 70.0
+      }
+    ],
+    "center_lat": 38.7223,
+    "center_lon": -9.1393,
+    "publication_status": "noindex"
+  },
+  "sydney": {
+    "city_id": "sydney",
+    "city_name": "Sydney",
+    "country": "AU",
+    "n_hotels": 1,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "dimensions": {
+      "walkability_density": {
+        "median": 75.0,
+        "mean": 75.0
+      },
+      "transit_access": {
+        "median": 70.0,
+        "mean": 70.0
+      },
+      "food_essentials": {
+        "median": 72.0,
+        "mean": 72.0
+      },
+      "quietness_proxy": {
+        "median": 50.0,
+        "mean": 50.0
+      },
+      "family_convenience": {
+        "median": 55.0,
+        "mean": 55.0
+      },
+      "nightlife_access": {
+        "median": 45.0,
+        "mean": 45.0
+      }
+    },
+    "top_by_dimension": {
+      "walkability_density": [
+        {
+          "name": "Fixture Sydney Hotel",
+          "locality": "Sydney",
+          "slug": "fixture-sydney-hotel-e2e",
+          "score": 75.0
+        }
+      ],
+      "transit_access": [
+        {
+          "name": "Fixture Sydney Hotel",
+          "locality": "Sydney",
+          "slug": "fixture-sydney-hotel-e2e",
+          "score": 70.0
+        }
+      ],
+      "food_essentials": [
+        {
+          "name": "Fixture Sydney Hotel",
+          "locality": "Sydney",
+          "slug": "fixture-sydney-hotel-e2e",
+          "score": 72.0
+        }
+      ],
+      "quietness_proxy": [
+        {
+          "name": "Fixture Sydney Hotel",
+          "locality": "Sydney",
+          "slug": "fixture-sydney-hotel-e2e",
+          "score": 50.0
+        }
+      ],
+      "family_convenience": [
+        {
+          "name": "Fixture Sydney Hotel",
+          "locality": "Sydney",
+          "slug": "fixture-sydney-hotel-e2e",
+          "score": 55.0
+        }
+      ],
+      "nightlife_access": [
+        {
+          "name": "Fixture Sydney Hotel",
+          "locality": "Sydney",
+          "slug": "fixture-sydney-hotel-e2e",
+          "score": 45.0
+        }
+      ]
+    },
+    "representative_hotels": [
+      {
+        "name": "Fixture Sydney Hotel",
+        "locality": "Sydney",
+        "slug": "fixture-sydney-hotel-e2e",
+        "balanced_score": 70.0
+      }
+    ],
+    "center_lat": -33.8688,
+    "center_lon": 151.2093,
+    "publication_status": "noindex"
+  },
+  "tokyo": {
+    "city_id": "tokyo",
+    "city_name": "Tokyo",
+    "country": "JP",
+    "n_hotels": 1,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "dimensions": {
+      "walkability_density": {
+        "median": 75.0,
+        "mean": 75.0
+      },
+      "transit_access": {
+        "median": 70.0,
+        "mean": 70.0
+      },
+      "food_essentials": {
+        "median": 72.0,
+        "mean": 72.0
+      },
+      "quietness_proxy": {
+        "median": 50.0,
+        "mean": 50.0
+      },
+      "family_convenience": {
+        "median": 55.0,
+        "mean": 55.0
+      },
+      "nightlife_access": {
+        "median": 45.0,
+        "mean": 45.0
+      }
+    },
+    "top_by_dimension": {
+      "walkability_density": [
+        {
+          "name": "Fixture Tokyo Hotel",
+          "locality": "Tokyo",
+          "slug": "fixture-tokyo-hotel-e2e",
+          "score": 75.0
+        }
+      ],
+      "transit_access": [
+        {
+          "name": "Fixture Tokyo Hotel",
+          "locality": "Tokyo",
+          "slug": "fixture-tokyo-hotel-e2e",
+          "score": 70.0
+        }
+      ],
+      "food_essentials": [
+        {
+          "name": "Fixture Tokyo Hotel",
+          "locality": "Tokyo",
+          "slug": "fixture-tokyo-hotel-e2e",
+          "score": 72.0
+        }
+      ],
+      "quietness_proxy": [
+        {
+          "name": "Fixture Tokyo Hotel",
+          "locality": "Tokyo",
+          "slug": "fixture-tokyo-hotel-e2e",
+          "score": 50.0
+        }
+      ],
+      "family_convenience": [
+        {
+          "name": "Fixture Tokyo Hotel",
+          "locality": "Tokyo",
+          "slug": "fixture-tokyo-hotel-e2e",
+          "score": 55.0
+        }
+      ],
+      "nightlife_access": [
+        {
+          "name": "Fixture Tokyo Hotel",
+          "locality": "Tokyo",
+          "slug": "fixture-tokyo-hotel-e2e",
+          "score": 45.0
+        }
+      ]
+    },
+    "representative_hotels": [
+      {
+        "name": "Fixture Tokyo Hotel",
+        "locality": "Tokyo",
+        "slug": "fixture-tokyo-hotel-e2e",
+        "balanced_score": 70.0
+      }
+    ],
+    "center_lat": 35.6762,
+    "center_lon": 139.6503,
+    "publication_status": "noindex"
+  },
+  "dubai": {
+    "city_id": "dubai",
+    "city_name": "Dubai",
+    "country": "AE",
+    "n_hotels": 1,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "dimensions": {
+      "walkability_density": {
+        "median": 75.0,
+        "mean": 75.0
+      },
+      "transit_access": {
+        "median": 70.0,
+        "mean": 70.0
+      },
+      "food_essentials": {
+        "median": 72.0,
+        "mean": 72.0
+      },
+      "quietness_proxy": {
+        "median": 50.0,
+        "mean": 50.0
+      },
+      "family_convenience": {
+        "median": 55.0,
+        "mean": 55.0
+      },
+      "nightlife_access": {
+        "median": 45.0,
+        "mean": 45.0
+      }
+    },
+    "top_by_dimension": {
+      "walkability_density": [
+        {
+          "name": "Fixture Dubai Hotel",
+          "locality": "Dubai",
+          "slug": "fixture-dubai-hotel-e2e",
+          "score": 75.0
+        }
+      ],
+      "transit_access": [
+        {
+          "name": "Fixture Dubai Hotel",
+          "locality": "Dubai",
+          "slug": "fixture-dubai-hotel-e2e",
+          "score": 70.0
+        }
+      ],
+      "food_essentials": [
+        {
+          "name": "Fixture Dubai Hotel",
+          "locality": "Dubai",
+          "slug": "fixture-dubai-hotel-e2e",
+          "score": 72.0
+        }
+      ],
+      "quietness_proxy": [
+        {
+          "name": "Fixture Dubai Hotel",
+          "locality": "Dubai",
+          "slug": "fixture-dubai-hotel-e2e",
+          "score": 50.0
+        }
+      ],
+      "family_convenience": [
+        {
+          "name": "Fixture Dubai Hotel",
+          "locality": "Dubai",
+          "slug": "fixture-dubai-hotel-e2e",
+          "score": 55.0
+        }
+      ],
+      "nightlife_access": [
+        {
+          "name": "Fixture Dubai Hotel",
+          "locality": "Dubai",
+          "slug": "fixture-dubai-hotel-e2e",
+          "score": 45.0
+        }
+      ]
+    },
+    "representative_hotels": [
+      {
+        "name": "Fixture Dubai Hotel",
+        "locality": "Dubai",
+        "slug": "fixture-dubai-hotel-e2e",
+        "balanced_score": 70.0
+      }
+    ],
+    "center_lat": 25.2048,
+    "center_lon": 55.2708,
+    "publication_status": "noindex"
+  },
+  "new_york": {
+    "city_id": "new_york",
+    "city_name": "New York City metro",
+    "country": "US",
+    "n_hotels": 1,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "dimensions": {
+      "walkability_density": {
+        "median": 75.0,
+        "mean": 75.0
+      },
+      "transit_access": {
+        "median": 70.0,
+        "mean": 70.0
+      },
+      "food_essentials": {
+        "median": 72.0,
+        "mean": 72.0
+      },
+      "quietness_proxy": {
+        "median": 50.0,
+        "mean": 50.0
+      },
+      "family_convenience": {
+        "median": 55.0,
+        "mean": 55.0
+      },
+      "nightlife_access": {
+        "median": 45.0,
+        "mean": 45.0
+      }
+    },
+    "top_by_dimension": {
+      "walkability_density": [
+        {
+          "name": "Fixture New York City metro Hotel",
+          "locality": "New York City metro",
+          "slug": "fixture-new-york-hotel-e2e",
+          "score": 75.0
+        }
+      ],
+      "transit_access": [
+        {
+          "name": "Fixture New York City metro Hotel",
+          "locality": "New York City metro",
+          "slug": "fixture-new-york-hotel-e2e",
+          "score": 70.0
+        }
+      ],
+      "food_essentials": [
+        {
+          "name": "Fixture New York City metro Hotel",
+          "locality": "New York City metro",
+          "slug": "fixture-new-york-hotel-e2e",
+          "score": 72.0
+        }
+      ],
+      "quietness_proxy": [
+        {
+          "name": "Fixture New York City metro Hotel",
+          "locality": "New York City metro",
+          "slug": "fixture-new-york-hotel-e2e",
+          "score": 50.0
+        }
+      ],
+      "family_convenience": [
+        {
+          "name": "Fixture New York City metro Hotel",
+          "locality": "New York City metro",
+          "slug": "fixture-new-york-hotel-e2e",
+          "score": 55.0
+        }
+      ],
+      "nightlife_access": [
+        {
+          "name": "Fixture New York City metro Hotel",
+          "locality": "New York City metro",
+          "slug": "fixture-new-york-hotel-e2e",
+          "score": 45.0
+        }
+      ]
+    },
+    "representative_hotels": [
+      {
+        "name": "Fixture New York City metro Hotel",
+        "locality": "New York City metro",
+        "slug": "fixture-new-york-hotel-e2e",
+        "balanced_score": 70.0
+      }
+    ],
+    "center_lat": 40.7128,
+    "center_lon": -74.006,
+    "publication_status": "noindex"
+  },
+  "singapore": {
+    "city_id": "singapore",
+    "city_name": "Singapore",
+    "country": "SG",
+    "n_hotels": 1,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "dimensions": {
+      "walkability_density": {
+        "median": 75.0,
+        "mean": 75.0
+      },
+      "transit_access": {
+        "median": 70.0,
+        "mean": 70.0
+      },
+      "food_essentials": {
+        "median": 72.0,
+        "mean": 72.0
+      },
+      "quietness_proxy": {
+        "median": 50.0,
+        "mean": 50.0
+      },
+      "family_convenience": {
+        "median": 55.0,
+        "mean": 55.0
+      },
+      "nightlife_access": {
+        "median": 45.0,
+        "mean": 45.0
+      }
+    },
+    "top_by_dimension": {
+      "walkability_density": [
+        {
+          "name": "Fixture Singapore Hotel",
+          "locality": "Singapore",
+          "slug": "fixture-singapore-hotel-e2e",
+          "score": 75.0
+        }
+      ],
+      "transit_access": [
+        {
+          "name": "Fixture Singapore Hotel",
+          "locality": "Singapore",
+          "slug": "fixture-singapore-hotel-e2e",
+          "score": 70.0
+        }
+      ],
+      "food_essentials": [
+        {
+          "name": "Fixture Singapore Hotel",
+          "locality": "Singapore",
+          "slug": "fixture-singapore-hotel-e2e",
+          "score": 72.0
+        }
+      ],
+      "quietness_proxy": [
+        {
+          "name": "Fixture Singapore Hotel",
+          "locality": "Singapore",
+          "slug": "fixture-singapore-hotel-e2e",
+          "score": 50.0
+        }
+      ],
+      "family_convenience": [
+        {
+          "name": "Fixture Singapore Hotel",
+          "locality": "Singapore",
+          "slug": "fixture-singapore-hotel-e2e",
+          "score": 55.0
+        }
+      ],
+      "nightlife_access": [
+        {
+          "name": "Fixture Singapore Hotel",
+          "locality": "Singapore",
+          "slug": "fixture-singapore-hotel-e2e",
+          "score": 45.0
+        }
+      ]
+    },
+    "representative_hotels": [
+      {
+        "name": "Fixture Singapore Hotel",
+        "locality": "Singapore",
+        "slug": "fixture-singapore-hotel-e2e",
+        "balanced_score": 70.0
+      }
+    ],
+    "center_lat": 1.3521,
+    "center_lon": 103.8198,
+    "publication_status": "noindex"
   }
 }

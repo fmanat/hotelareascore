@@ -1,1 +1,45 @@
-[]
+[
+  {
+    "id": "e2e-tokyo-1",
+    "slug": "fixture-tokyo-hotel-e2e",
+    "name": "Fixture Tokyo Hotel",
+    "city_id": "tokyo",
+    "city_name": "Tokyo",
+    "locality": "Tokyo",
+    "region": null,
+    "country": "JP",
+    "lat": 35.6772,
+    "lon": 139.6513,
+    "distance_from_center_km": 0.1,
+    "far_from_center": false,
+    "locality_mismatch": false,
+    "locality_mismatch_detail": null,
+    "scores": {
+      "walkability_density": 75.0,
+      "transit_access": 70.0,
+      "food_essentials": 72.0,
+      "quietness_proxy": 50.0,
+      "family_convenience": 55.0,
+      "nightlife_access": 45.0
+    },
+    "balanced_score": 70.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "dedupe_confidence": 100,
+    "score_version": "e2e-fixture",
+    "source_release": "e2e-fixture",
+    "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity.",
+    "reason_codes": [],
+    "nearby_facts": [
+      {
+        "rank": 1,
+        "category": "cafe",
+        "name": "Fixture Tokyo Cafe",
+        "distance_m": 80.0
+      }
+    ],
+    "comparable": [],
+    "has_static_page": true,
+    "publication_status": "noindex"
+  }
+]
