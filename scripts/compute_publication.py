@@ -28,15 +28,26 @@ from hotelareascore.config import ETL_DIR, load_cities  # noqa: E402
 RELEASE = "2026-08-19.0"
 DECIDER = "system:compute_publication"
 
-STATIC_PAGES_INDEXABLE = {
-    "home": "Always-potentially-indexable page type (docs/seo-policy.md §3).",
-    "methodology": "Always-potentially-indexable page type (docs/seo-policy.md §3).",
-}
+STAGED_REASON = (
+    "Staged for go-live (docs/reports/go-live-seo-checklist.md, night mission #2 "
+    "Tache 3) -- ready, but 'draft' not 'indexable' because the owner cohort "
+    "review (docs/STATE.md open decision (b)) has not happened yet. 'indexable' "
+    "is the recorded decision that flips this AFTER that review, one deliberate "
+    "step at a time per the checklist -- never a side effect of this script."
+)
+
+# home/methodology were previously seeded straight to "indexable" (Bloc C,
+# before the pilot-cohort review existed as an explicit open decision) --
+# that was premature per CLAUDE.md hard rule 2 (a recorded decision, not a
+# default). "draft" is the honest state until the owner checklist runs --
+# see STATIC_PAGES_DRAFT below, not a separate "indexable" bucket anymore.
 STATIC_PAGES_NOINDEX = {
     "compare": "Combinatorial comparison page -- never create indexable URLs merely "
                "because they can be generated (CLAUDE.md hard rule 2).",
 }
 STATIC_PAGES_DRAFT = {
+    "home": STAGED_REASON,
+    "methodology": STAGED_REASON,
     "legal-notice": "Owner-provided template, not yet reviewed (overnight mission Bloc C item 5).",
     "privacy": "Owner-provided template, not yet reviewed (overnight mission Bloc C item 5).",
     "affiliate-disclosure": "Owner-provided template, not yet reviewed (overnight mission Bloc C item 5).",
@@ -57,23 +68,20 @@ def main() -> None:
     pilot_ids = load_pilot_cohort_ids()
     con_duck = duckdb.connect()
 
+    live_hotel_ids: set[str] = set()
+
     with publication.connect() as con:
-        for page_id, reason in STATIC_PAGES_INDEXABLE.items():
-            publication.set_status(con, "static", page_id, "indexable", reason, DECIDER)
         for page_id, reason in STATIC_PAGES_NOINDEX.items():
             publication.set_status(con, "static", page_id, "noindex", reason, DECIDER)
         for page_id, reason in STATIC_PAGES_DRAFT.items():
             publication.set_status(con, "static", page_id, "draft", reason, DECIDER)
 
         for city_id in load_cities():
-            # Bloc C item 4: all 12 city pages generated, all noindex.
-            publication.set_status(
-                con, "city", city_id, "noindex",
-                "City page template shipped this session but not yet measured "
-                "against real search demand (docs/seo-policy.md §3) -- noindex "
-                "until a Phase 4 decision.",
-                DECIDER,
-            )
+            # All 12 city pages are part of the go-live package (night
+            # mission #2 Tache 3) -- "draft", not "indexable", for the same
+            # reason as the static pages above: staged, pending the owner
+            # cohort review, flipped deliberately by the checklist.
+            publication.set_status(con, "city", city_id, "draft", STAGED_REASON, DECIDER)
 
             etl_dir = ETL_DIR / RELEASE / city_id
             hotels_path = etl_dir / "hotels.parquet"
@@ -94,10 +102,12 @@ def main() -> None:
             """).fetchall()
 
             for hotel_id, score_version, is_numeric_name, is_coincident in rows:
+                live_hotel_ids.add(hotel_id)
                 if hotel_id in pilot_ids:
                     publication.set_status(
-                        con, "hotel", hotel_id, "indexable",
-                        "Pilot cohort selection (docs/reports/pilot-cohort-proposal.md).",
+                        con, "hotel", hotel_id, "draft",
+                        "Pilot cohort v2 selection (docs/reports/pilot-cohort-proposal.md, "
+                        "Latin-script gate + bad-geocode fixes applied) -- " + STAGED_REASON,
                         "system:pilot_cohort_selection", score_version,
                     )
                 elif is_numeric_name or is_coincident:
@@ -113,6 +123,38 @@ def main() -> None:
                         "Default noindex outside the pilot cohort (docs/seo-policy.md §3).",
                         DECIDER, score_version,
                     )
+
+    # Retire any recorded hotel decision whose hotel_id no longer exists in
+    # ANY current city's ETL output (e.g. entity-QA exclusions re-ingested
+    # out from under an old id, docs/STATE.md "Bad-geocode records").
+    # publication.py's own docstring promises a page that stops qualifying
+    # "moves to noindex/draft, it doesn't disappear from the audit trail" --
+    # found here as a real gap during Tache 3: a hotel that's gone from the
+    # dataset ENTIRELY (not just excluded from the cohort) was never
+    # revisited by the loop above at all, leaving a stale "indexable" row
+    # for a hotel_id no page can ever be built for. "retired" (already in
+    # publication.py's Status enum, unused until now) is the correct state
+    # -- distinct from noindex/draft, which both imply "the page still
+    # exists, just not indexed/not ready".
+    with publication.connect() as con:
+        stale = [
+            r for r in publication.list_by_status(con, "indexable", "hotel")
+            + publication.list_by_status(con, "draft", "hotel")
+            + publication.list_by_status(con, "noindex", "hotel")
+            if r["page_id"] not in live_hotel_ids
+        ]
+        for r in stale:
+            publication.set_status(
+                con, "hotel", r["page_id"], "retired",
+                f"No longer present in any city's current ETL output (was {r['status']!r}, "
+                f"decided {r['decided_at']} by {r['decided_by']}) -- likely an entity-QA "
+                "exclusion re-ingested under a different id set.",
+                DECIDER, r.get("score_version"),
+            )
+        if stale:
+            print(f"Retired {len(stale)} stale hotel record(s) no longer in any city's ETL output:")
+            for r in stale:
+                print(f"  {r['page_id']} (was {r['status']})")
 
     with publication.connect() as con:
         for status in ("draft", "noindex", "indexable", "retired"):

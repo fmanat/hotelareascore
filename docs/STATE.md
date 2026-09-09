@@ -52,7 +52,16 @@ of time and stays fully inert (flags off) — see open decisions below.
       published-page fiche, 11 gates, and selection reasoning per hotel,
       including 2 flagged as most discutable (a likely non-hotel
       institution, an ambiguous short-term-rental listing) —
-      [cohort-inspection-12.json](reports/cohort-inspection-12.json).
+      [cohort-inspection-12.json](reports/cohort-inspection-12.json). **This
+      is now the ONLY remaining blocker before go-live** —
+      [go-live-seo-checklist.md](reports/go-live-seo-checklist.md) (night
+      mission #2 Tache 3) is the exact 6-step sequence from here to the
+      90-day clock starting. The package is staged (`page_publication`:
+      home/methodology/12 cities/200-cohort all `draft`, re-run via
+      `python3 scripts/compute_publication.py`) and dry-run verified —
+      [go-live-sitemap-dry-run-report.md](reports/go-live-sitemap-dry-run-report.md):
+      all 214 staged URLs resolve to a real built page, 0 consistency
+      issues.
 
 Resolved this session, no longer open: family_convenience gate (closed,
 `docs/adr/009`); New York/New Jersey market label (`docs/adr/010` — market
@@ -120,24 +129,18 @@ start.
 
 ## Blockers / risks being watched
 
-- **PROD DOWN (found 2026-09-09, night mission #2 follow-up):**
-  `https://staycontext.com` returns **521 "Web server is down"** on every
-  path, since some point after the `3d18c8d` push this morning (auto
-  Cloudflare Pages redeploy presumably triggered and failed, or the
-  custom-domain attachment broke — cause unconfirmed). Ruled out: the repo
-  itself — a clean `git clone` + `npm ci` + `npm run build` from the
-  committed snapshot alone succeeds (15,769 pages, no errors), and DNS/TLS
-  resolve correctly to Cloudflare's own edge (valid cert, no Cloudflare
-  status-page incident). This needs the Cloudflare Pages dashboard
-  (Deployments tab, build log) — outside what this session can reach or
-  fix. `make verify-prod` (`scripts/verify_prod.py`, new this session)
-  confirms the outage in detail: 3/27 checks pass. One extra finding
-  independent of the outage: **`/robots.txt` is currently served by
-  Cloudflare's own "Managed robots.txt" / Content-Signal zone feature**,
-  not `robots.txt.ts` — it `Allow: /` for `User-agent: *` (only named AI
-  bots are disallowed). Whether this zone feature overrides or merges with
-  the origin's own Disallow-all robots.txt once the origin is back up is
-  unconfirmed and needs checking before any indexing decision.
+- **PROD DOWN (found 2026-09-09):** `https://staycontext.com` returns
+  **521** on every path since some point after the `3d18c8d` push
+  (Cloudflare Pages redeploy failed or custom-domain attachment broke —
+  unconfirmed). Not the repo: a clean `git clone` + `npm ci` + `npm run
+  build` from the committed snapshot succeeds (15,769 pages). Needs
+  Cloudflare Pages dashboard access this session doesn't have.
+  `make verify-prod` (new, `scripts/verify_prod.py`) confirms it in
+  detail: 3/27 checks pass. Separate finding surfaced by the same check:
+  **`/robots.txt` may be served by Cloudflare's own "Managed robots.txt"
+  zone feature** (`Allow: /` for `*`, only named AI bots disallowed), not
+  `robots.txt.ts` — confirm which one wins once the origin is back, before
+  any indexing decision.
 - **Data freshness (checked 2026-09-07):** `2026-08-19.0` is still
   Overture's latest release (live catalog check, not cached) — no
   re-ingestion needed. Re-check next time rather than assuming still true.
