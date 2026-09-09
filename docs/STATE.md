@@ -7,15 +7,18 @@
 
 ## Session checkpoint (long-session discipline — overwritten hourly, not accumulated)
 
-**Last updated:** 2026-09-09 22:10 UTC
-**Bloc en cours:** G (golden set élargi) — just started.
-**Poussé sur origin/main:** `1f141b2` (probe checkpoint, 760 min tracked).
-Everything before that is pushed too — see `git log`.
-**Reste à faire (ce soir):** Bloc G (selection.json + candidate rows, no
-self-labeling) → Bloc H (1. typecheck CI verify, 2. E2E 12-city expansion,
-3. commit joined calibration tables, 4. stale-conclusion pass over
-docs/reports/) → Bloc I (pre-launch-readiness.md) → if time remains,
-probe continuation + "idées non autorisées" list.
+**Last updated:** 2026-09-09 22:40 UTC
+**Bloc en cours:** G, H, I all done and pushed. Moving to the fallback
+instruction (probe continuation + "idées non autorisées" list) — nothing
+authorized left to build.
+**Poussé sur origin/main:** `e70c8df` (Bloc I, pre-launch readiness
+report). Full chain this session: `5ba4a65` (checkpoint) → `ed76d23`
+(Bloc G) → `b1a8a76` (Bloc H items 1-2) → `43caf10` (Bloc H item 3) →
+`ae05f49` (Bloc H item 4) → `e70c8df` (Bloc I). CI green on every one —
+`gh run list --branch main`.
+**Reste à faire (ce soir):** rien d'autorisé — cf. "idées non autorisées"
+plus bas pour ce que je ferais avec un go-ahead. Sonde de prod continue en
+tâche de fond, checkpoints horaires continuent.
 **Note on "blocs A-F":** the original A-F lettering (this repo's very
 first overnight mission, before this saga) maps to work already
 long-shipped (C = SEO machinery ADR-008, D = pilot cohort proposal, E =
@@ -207,6 +210,37 @@ start.
   and CSP in Report-Only mode with no `report-uri` since wiring one needs
   a new service). Whatever came after "av" in the original order is
   unknown — re-issue Bloc B in full if there was more to it.
+
+## Idées non autorisées (2026-09-10) — pour décision propriétaire, rien lancé
+
+Blocs G/H/I terminés et poussés (`e70c8df`), rien d'autre n'était
+explicitement autorisé cette nuit. Voici ce que je ferais ensuite avec un
+go-ahead, par ordre d'impact perçu — aucune de ces actions n'a été
+commencée :
+
+1. **Corriger les 2 findings a11y encore ouverts** (persona tablist sans
+   modèle clavier flèche gauche/droite ; contraste de bordure
+   `--border` vs `--bg`, jamais re-mesuré contre WCAG 1.4.11) —
+   `docs/reports/pre-launch-readiness.md`. Petit, scopé, déjà identifié
+   précisément (fichier + ligne).
+2. **Affiner la détection destination/resort** selon les correctifs
+   listés dans `docs/reports/destination-type-detection-feasibility.md`
+   §6 (rayon par catégorie, vraie distance au polygone, seuil de
+   surface), puis re-mesurer le taux de faux positifs sur un nouvel
+   échantillon. Ne coderait PAS le type lui-même (présentation) sans
+   nouvelle revue — juste la détection.
+3. **Publier `tools/golden-labeler`** comme Artifact (capabilities `db` +
+   `downloads`) pour que les 56 hôtels (dont les 6 nouveaux) soient
+   labellisables dans un vrai outil, pas juste un JSON.
+4. **Investiguer un fix `_redirects` pour www→apex** avant de supposer
+   qu'il faut absolument passer par le dashboard Cloudflare — pas vérifié
+   si un fichier `_redirects` dans le repo peut gérer une redirection
+   cross-host sur Cloudflare Pages ; si oui, ça sort ce point de la liste
+   "dépend du propriétaire".
+5. **Prototyper le schéma D1/Analytics Engine** pour `search_events`/
+   `outbound_clicks` (option (c) de `docs/reports/analytics-storage-options.md`)
+   localement, sans le connecter — pour raccourcir la décision propriétaire
+   à "oui/non" plutôt que "oui/non + comment".
 
 ## Cost tracker (update monthly)
 
