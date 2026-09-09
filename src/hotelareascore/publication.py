@@ -69,16 +69,39 @@ def set_status(
     reason: str,
     decided_by: str,
     score_version: str | None = None,
+    hotel_name: str | None = None,
 ) -> None:
     """The only way a page's publication status changes. Always requires a
     reason and a decider -- there is no code path that flips a status
-    silently."""
+    silently.
+
+    `hotel_name`, when given, enforces docs/adr/014's hard gate: a hotel
+    whose name is purely numeric (slug.py's `is_numeric_name` -- an
+    unresolved Overture source reference, not a real name,
+    docs/reports/nyc-bbox-options.md) can never be recorded 'indexable',
+    independent of confidence or any other signal -- that report found
+    "low confidence stays non-indexable" does NOT structurally protect
+    against this, since a numeric-name record can still score high
+    confidence on every other signal. Optional (not every caller knows the
+    name -- static/city pages have none) but every hotel-indexable call
+    that CAN pass it should, so this is the actual backstop, not just a
+    convention callers might forget."""
     if page_type not in _PAGE_TYPES:
         raise ValueError(f"page_type must be one of {_PAGE_TYPES}, got {page_type!r}")
     if status not in _STATUSES:
         raise ValueError(f"status must be one of {_STATUSES}, got {status!r}")
     if not reason.strip():
         raise ValueError("reason is required (CLAUDE.md hard rule 2: a recorded decision, not a side effect)")
+    if page_type == "hotel" and status == "indexable" and hotel_name is not None:
+        from .slug import is_numeric_name
+
+        if is_numeric_name(hotel_name):
+            raise ValueError(
+                f"Refusing to mark hotel {page_id!r} (name={hotel_name!r}) indexable -- "
+                "docs/adr/014: numeric-name records are structurally barred from indexing, "
+                "independent of confidence. Not a bug in this hotel's data; fix the name "
+                "resolution upstream (entity_qa.py) before ever indexing this record."
+            )
     con.execute(
         """
         INSERT INTO page_publication (page_type, page_id, status, reason, decided_by, decided_at, score_version)

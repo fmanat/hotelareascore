@@ -106,11 +106,12 @@ Full detail in `docs/reports/phase-3-batch-1-ingestion-report.md` and
 - **Corporate-entity records**: at least one (`Holiday Inn Paris CDG
   S.A.R.L.`, pin ~25 km from the airport at Porte de Charenton) looks like
   a legal-entity record, not a bookable property.
-- **Numeric-name records**: 9 hotels with a purely-numeric `name` (Overture
-  reference number, not a real name) — slug fix shipped (`slug.py` prefixes
-  `hotel-`); whether a numeric name should be a hard non-indexable gate in
-  `page_publication` is still an open publication-policy question, not a
-  data bug.
+- **Numeric-name records — RESOLVED 2026-09-09 (`docs/adr/014`):** 9
+  hotels with a purely-numeric `name` (Overture reference number, not a
+  real name) — slug fix (`hotel-` prefix) plus a hard, structural
+  indexability gate now enforced in `publication.set_status()` (raises
+  rather than allowing `'indexable'`) and re-checked in `webdata.py`'s
+  export as a second layer. No longer an open question.
 - **Bad-geocode records — fixed, not just logged (2026-09-07 owner
   audit):** 4 real hotels whose own `address_freeform` contradicted their
   extraction city (a Bora Bora resort and a Fiji resort both in the

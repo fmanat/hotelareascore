@@ -16,7 +16,7 @@ from . import overture, publication
 from .config import DIMENSIONS, ETL_DIR, REPO_ROOT, get_city, load_score_weights
 from .dedupe import haversine_m
 from .reason_codes import compute_reason_codes
-from .slug import hotel_slug
+from .slug import hotel_slug, is_numeric_name
 from .verdict import build_verdict
 
 WEB_SRC_DATA = REPO_ROOT / "web" / "src" / "data"
@@ -127,7 +127,12 @@ def select_static_subset(hotels_by_city: dict[str, list[dict[str, Any]]]) -> set
     Selection, in priority order:
     1. Every indexable hotel (page_publication decision) -- non-negotiable:
        the sitemap and canonical URLs must never point at a page that
-       wasn't actually built (CLAUDE.md hard rule 2).
+       wasn't actually built (CLAUDE.md hard rule 2). NOTE (found night
+       mission #3, Tache 6): a hotel merely staged 'draft' for a future
+       go-live (compute_publication.py's STAGED_REASON) does NOT count
+       here -- only 'indexable' does. Running webdata while a cohort sits
+       staged risks silently dropping it from the static subset; see that
+       constant's comment before regenerating web data mid-staging.
     2. Every hotel one hop away via `comparable` from an already-included
        hotel -- so a full hotel page's "similar-scoring hotels nearby"
        list doesn't route straight into the thin experience (mission Bloc
@@ -226,7 +231,16 @@ def export_city(city_id: str, release: overture.Release) -> list[dict[str, Any]]
             "far_from_center": distance_km > FAR_FROM_CENTER_KM,
             "locality_mismatch": locality_mismatch is not None,
             "locality_mismatch_detail": locality_mismatch,
-            "publication_status": "indexable" if r["id"] in indexable_by_id else "noindex",
+            # docs/adr/014: numeric-name records are structurally never
+            # indexable -- checked again here, independent of whatever
+            # page_publication says, as the last line of defense before a
+            # page actually gets built as indexable (publication.set_status
+            # already refuses to record 'indexable' for one of these, but
+            # this export is what a template's `indexable` prop actually
+            # reads, so it fails closed here too, CLAUDE.md hard rule 10).
+            "publication_status": (
+                "indexable" if r["id"] in indexable_by_id and not is_numeric_name(r["name"]) else "noindex"
+            ),
             "scores": scores,
             "balanced_score": round(r["balanced_score"], 1),
             "confidence": confidence,

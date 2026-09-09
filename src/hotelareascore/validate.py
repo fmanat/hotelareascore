@@ -107,7 +107,11 @@ def validate_city(city_id: str, release: overture.Release) -> dict[str, Any]:
     )
     n_missing_name = _scalar(con, "SELECT count(*) FROM hotels WHERE name IS NULL OR trim(name) = ''")
     # Entity QA item (b): purely numeric names (e.g. "8468671") are a
-    # near-certain sign of a name Overture couldn't resolve properly.
+    # near-certain sign of a name Overture couldn't resolve properly. Same
+    # definition as slug.py's is_numeric_name() (docs/adr/014's hard
+    # indexability gate) -- a SQL aggregate here rather than a Python loop
+    # since this runs over the full per-city hotel table, but kept
+    # textually identical to that regex on purpose.
     n_numeric_name = _scalar(con, r"SELECT count(*) FROM hotels WHERE regexp_matches(trim(name), '^[0-9]+$')")
     numeric_name_samples = con.execute(
         r"SELECT name FROM hotels WHERE regexp_matches(trim(name), '^[0-9]+$') LIMIT 10"

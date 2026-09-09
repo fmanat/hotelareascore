@@ -1,4 +1,4 @@
-from hotelareascore.slug import hotel_slug, slugify
+from hotelareascore.slug import hotel_slug, is_numeric_name, slugify
 
 
 def test_slugify_basic():
@@ -37,3 +37,14 @@ def test_purely_numeric_name_gets_hotel_prefix():
 def test_name_with_a_number_but_not_purely_numeric_is_untouched():
     assert slugify("21 Club") == "21-club"
     assert slugify("Hotel 1898") == "hotel-1898"
+
+
+def test_is_numeric_name():
+    # docs/adr/014: single source of truth for the hard indexability gate
+    # (publication.py) and validate.py's n_numeric_name QA count.
+    assert is_numeric_name("8468671") is True
+    assert is_numeric_name("  86  ") is True  # trimmed, like validate.py's trim(name)
+    assert is_numeric_name("21 Club") is False
+    assert is_numeric_name("Hotel 1898") is False
+    assert is_numeric_name("") is False
+    assert is_numeric_name(None) is False

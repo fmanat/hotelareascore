@@ -24,6 +24,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from hotelareascore import publication  # noqa: E402
 from hotelareascore.config import ETL_DIR, load_cities  # noqa: E402
+from hotelareascore.slug import is_numeric_name  # noqa: E402
 
 RELEASE = "2026-08-19.0"
 DECIDER = "system:compute_publication"
@@ -35,6 +36,19 @@ STAGED_REASON = (
     "is the recorded decision that flips this AFTER that review, one deliberate "
     "step at a time per the checklist -- never a side effect of this script."
 )
+
+# TRAP, found the hard way (night mission #3, Tache 6): while the cohort
+# sits in this staged 'draft' state, `make webdata` / `python3 -m
+# hotelareascore.cli webdata` silently SHRINKS the static-page subset
+# (webdata.py's select_static_subset only forces a hotel in via the
+# publication_status == 'indexable' rule -- staged 'draft' doesn't count,
+# even though it's a curated real cohort). Re-running webdata now would
+# drop ~188 of the 200 cohort hotels' real pages, contradicting
+# docs/reports/go-live-sitemap-dry-run-report.md's "0 consistency issues"
+# until the checklist's step 5 actually flips these to 'indexable' first.
+# Do not run webdata as a side effect of an unrelated change while
+# anything here is staged -- only as directed, in the order the checklist
+# already specifies (flip to indexable, THEN re-run webdata).
 
 # home/methodology were previously seeded straight to "indexable" (Bloc C,
 # before the pilot-cohort review existed as an explicit open decision) --
@@ -94,34 +108,39 @@ def main() -> None:
                     SELECT lat, lon FROM read_parquet('{hotels_path.as_posix()}')
                     GROUP BY lat, lon HAVING count(*) > 1
                 )
-                SELECT h.id, s.score_version,
-                       regexp_matches(trim(h.name), '^[0-9]+$') AS is_numeric_name,
+                SELECT h.id, h.name, s.score_version,
                        (h.lat, h.lon) IN (SELECT (lat, lon) FROM coincident) AS is_coincident
                 FROM read_parquet('{hotels_path.as_posix()}') h
                 JOIN read_parquet('{scores_path.as_posix()}') s ON s.hotel_id = h.id
             """).fetchall()
 
-            for hotel_id, score_version, is_numeric_name, is_coincident in rows:
+            for hotel_id, hotel_name, score_version, is_coincident in rows:
                 live_hotel_ids.add(hotel_id)
+                # is_numeric_name: slug.py's single source of truth
+                # (docs/adr/014) -- also the hard gate publication.set_status
+                # itself enforces below via hotel_name, so this branch and
+                # that gate can never disagree.
+                numeric = is_numeric_name(hotel_name)
                 if hotel_id in pilot_ids:
                     publication.set_status(
                         con, "hotel", hotel_id, "draft",
                         "Pilot cohort v2 selection (docs/reports/pilot-cohort-proposal.md, "
                         "Latin-script gate + bad-geocode fixes applied) -- " + STAGED_REASON,
-                        "system:pilot_cohort_selection", score_version,
+                        "system:pilot_cohort_selection", score_version, hotel_name,
                     )
-                elif is_numeric_name or is_coincident:
+                elif numeric or is_coincident:
                     publication.set_status(
                         con, "hotel", hotel_id, "draft",
-                        "Numeric-only name or unresolved duplicate-coordinate cluster "
-                        "(validate.py QA flags) -- not ready to even be a noindex-but-visible page.",
-                        DECIDER, score_version,
+                        "Numeric-only name (docs/adr/014, structurally never indexable) or "
+                        "unresolved duplicate-coordinate cluster (validate.py QA flags) -- "
+                        "not ready to even be a noindex-but-visible page.",
+                        DECIDER, score_version, hotel_name,
                     )
                 else:
                     publication.set_status(
                         con, "hotel", hotel_id, "noindex",
                         "Default noindex outside the pilot cohort (docs/seo-policy.md §3).",
-                        DECIDER, score_version,
+                        DECIDER, score_version, hotel_name,
                     )
 
     # Retire any recorded hotel decision whose hotel_id no longer exists in

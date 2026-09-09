@@ -114,15 +114,21 @@ does not expose or index anything on its own.
   python3 -c "
   import sys, csv; sys.path.insert(0, 'src')
   from hotelareascore import publication
-  ids = [r['id'] for r in csv.DictReader(open('docs/reports/pilot-cohort-proposal.csv'))]
+  cohort = list(csv.DictReader(open('docs/reports/pilot-cohort-proposal.csv')))
   with publication.connect() as con:
-      for hid in ids:
-          row = publication.get_status(con, 'hotel', hid)
-          publication.set_status(con, 'hotel', hid, 'indexable',
+      for r in cohort:
+          row = publication.get_status(con, 'hotel', r['id'])
+          publication.set_status(con, 'hotel', r['id'], 'indexable',
               'Owner GO, go-live checklist step 5', 'owner:go-live',
-              row['score_version'] if row else None)
+              row['score_version'] if row else None, hotel_name=r['name'])
   "
   ```
+  `hotel_name=r['name']` matters here, not just documentation: `set_status`
+  enforces docs/adr/014's hard gate (a numeric-name hotel can never be
+  recorded indexable) only when a name is actually passed — the cohort CSV
+  already excludes numeric-name records by construction (gate 6,
+  `docs/seo-policy.md §4`), so this should never actually raise, but it's
+  the real backstop if that ever changes.
 - Re-run `make webdata` — this both regenerates the sitemap-eligible set
   AND re-runs `select_static_subset` (`docs/adr/013`), which will now
   force these 200 into the static subset again via the `indexable` rule
