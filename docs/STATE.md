@@ -74,6 +74,13 @@ StayContext / staycontext.com, owned). Resolved night mission #2, Bloc A:
 hotel-page bug it caused — all 12 cities now have real pages for every
 indexable hotel, via a static-subset + client-rendered-long-tail
 architecture (`docs/adr/013`, `docs/reports/hotel-pages-architecture-options.md`).
+**Night mission #3, Tache 5 note:** the requested ops-bot skeletons
+(monthly data-refresh, weekly health/cost) were already fully delivered
+an earlier session (commit `6321f9e`, "Bloc F") — verified still correct
+and re-ran `cost_bot.py` rather than duplicating the work. The one
+documented gap (a per-release score diff step in the monthly workflow) is
+still blocked on Supabase not being provisioned, unchanged from when that
+gap was first written down.
 
 ## Entity QA — known limitations (not blockers, tracked for a future pass)
 
@@ -189,7 +196,7 @@ start.
 
 | Month | Est. recurring € | Main driver | Notes |
 |---|---:|---|---|
-| 2026-09 | 0 | - | 33,970 hotels, ~131 MB ETL output, all free tiers |
+| 2026-09 | 0 | - | 33,966 hotels, 185 MB ETL output, all free tiers |
 
 ## Decision & session history
 
