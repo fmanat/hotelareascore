@@ -5,6 +5,27 @@
 > dashboard, not a journal. Move resolved history to `docs/adr/` or the
 > dated report it already lives in; don't re-narrate it here.
 
+## Session checkpoint (long-session discipline — overwritten hourly, not accumulated)
+
+**Last updated:** 2026-09-09 22:10 UTC
+**Bloc en cours:** G (golden set élargi) — just started.
+**Poussé sur origin/main:** `1f141b2` (probe checkpoint, 760 min tracked).
+Everything before that is pushed too — see `git log`.
+**Reste à faire (ce soir):** Bloc G (selection.json + candidate rows, no
+self-labeling) → Bloc H (1. typecheck CI verify, 2. E2E 12-city expansion,
+3. commit joined calibration tables, 4. stale-conclusion pass over
+docs/reports/) → Bloc I (pre-launch-readiness.md) → if time remains,
+probe continuation + "idées non autorisées" list.
+**Note on "blocs A-F":** the original A-F lettering (this repo's very
+first overnight mission, before this saga) maps to work already
+long-shipped (C = SEO machinery ADR-008, D = pilot cohort proposal, E =
+entity-QA hygiene, F = ops bots, verified again night mission #3 Tache 5)
+— nothing there is actually pending tonight. The mission text's "GO
+impossible du bloc E" reads instead as tonight's real remaining blocker:
+the owner cohort review / go-live GO (`docs/STATE.md` open decision (b))
+— not re-litigated here, just noted so this isn't silently reinterpreted
+later.
+
 ## Current phase
 
 **Phase 3 — launch dataset (~12 cities), golden set, calibration —
