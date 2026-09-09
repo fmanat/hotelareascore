@@ -62,6 +62,17 @@ of time and stays fully inert (flags off) — see open decisions below.
       [go-live-sitemap-dry-run-report.md](reports/go-live-sitemap-dry-run-report.md):
       all 214 staged URLs resolve to a real built page, 0 consistency
       issues.
+- [ ] **(c) "Destination/resort" hotel type — review the detection
+      feasibility report before any implementation** (not a go-live
+      blocker, a separate decision track). Owner-framed
+      (`docs/adr/015`): a hotel type changes presentation only, never
+      scores. Detection tested (isolation + real Overture amenity
+      adjacency) correctly catches the seed case but has a real
+      false-positive rate on hand inspection (~1/3 of a sample) —
+      [destination-type-detection-feasibility.md](reports/destination-type-detection-feasibility.md)
+      recommends specific fixes before implementing, not shipping as
+      tested. Also surfaced one new entity-QA specimen (a non-hotel
+      company record) — noted below, not fixed.
 
 Resolved this session, no longer open: family_convenience gate (closed,
 `docs/adr/009`); New York/New Jersey market label (`docs/adr/010` — market
@@ -98,7 +109,11 @@ Full detail in `docs/reports/phase-3-batch-1-ingestion-report.md` and
   from pilot-cohort candidacy by gate 12 (Latin-script name,
   `docs/seo-policy.md §2`), but remain in the full dataset as "hotels" —
   gate 12 is a cohort-eligibility rule, not an entity-QA fix; the
-  still-unattempted language-specific marker list is the real fix.
+  still-unattempted language-specific marker list is the real fix. **1
+  more found (2026-09, destination-type detection feasibility pass)**:
+  a Bangkok record named "บริษัทไฮเทคเอ็มบรอยเดอร์ จำกัด" ("Hi-Tech
+  Embroidery Co., Ltd") — a company, not a hotel — same
+  non-Latin-script-filter gap.
 - **Brand-allowlist short-circuit**: ~33 hotel sub-venues (restaurant/spa/
   parking sharing a parent brand name) pass through across all 12 cities;
   one additional case (Souq Madinat Jumeirah) confirmed not caught because
@@ -137,27 +152,18 @@ start.
 
 ## Blockers / risks being watched
 
-- **Cloudflare Pages platform incident, INTERMITTENT since ~08:00 UTC
-  2026-09-09** (their platform, not us — the owner's own Cloudflare
-  support draft confirms every Pages project on the account, including a
-  brand-new throwaway one, 503s on its own `*.pages.dev` URL). **The
-  production Cloudflare Pages project is named `staycontext`** — an older
-  project, `hotelareascorec`, is dead/unused; do not delete it. Timeline
-  so far: sustained 521 for ~24h up to 2026-09-09 09:00 UTC, then stable
-  200 since (≥30 continuous minutes confirmed 10:12 UTC via the
-  background probe, `scripts/prod_probe.py`/`prod_probe_loop.sh`, still
-  running for the rest of night mission #3 — raw log + hourly summary in
-  `docs/reports/incident-2026-09-09-cloudflare-pages/`). **Because the
-  incident is described as intermittent, do not assume it stays resolved
-  without checking `probe-summary.md` again.** The two header/404
-  anomalies noticed during the outage were re-measured once stable
-  (`make verify-prod`: 48/50 now, was 3/28) and **both confirmed
-  transient, not real config bugs** — full writeup:
+- **Cloudflare Pages platform incident (2026-09-09, ~08:00–09:00 UTC),
+  their platform not us — recovered, stable since, still monitored**
+  (background probe running, `docs/reports/incident-2026-09-09-cloudflare-pages/`
+  has the raw log/summary; check `probe-summary.md` before assuming it's
+  still fine, since it's described as intermittent). **Production
+  Cloudflare Pages project is named `staycontext`** — `hotelareascorec` is
+  an older, dead/unused project, don't delete it, don't confuse it for
+  prod. Two header/404 anomalies noticed during the outage were confirmed
+  transient (not real config bugs) once stable — full writeup:
   [tache3-anomaly-recheck.md](../reports/incident-2026-09-09-cloudflare-pages/tache3-anomaly-recheck.md).
-  Genuinely still open, unrelated to either anomaly: `https://www` serves
-  correctly now but doesn't redirect to the apex (no SEO risk — canonicals
-  already point at the apex — but worth a Cloudflare dashboard redirect
-  rule at some point).
+  Still open, minor, unrelated to the incident: `https://www` doesn't
+  redirect to the apex (no SEO risk, canonicals already handle it).
 - **Data freshness (checked 2026-09-07):** `2026-08-19.0` is still
   Overture's latest release (live catalog check, not cached) — no
   re-ingestion needed. Re-check next time rather than assuming still true.
@@ -189,7 +195,7 @@ start.
 
 ## Decision & session history
 
-Full narrative history lives in `docs/adr/001` through `013` (each records
+Full narrative history lives in `docs/adr/001` through `015` (each records
 context/decision/consequences) and the dated reports under `docs/reports/`
 they reference. Batch ingestion, golden-set construction, and calibration
 runs are documented in `docs/reports/phase-3-*` and
