@@ -180,11 +180,22 @@ def check_no_sitemap_exposed(base: str) -> None:
     for path in SITEMAP_PATHS:
         f = fetch(base, path)
         # sitemapResponse() (web/src/lib/sitemap.ts) returns a bare 404 with
-        # an empty body while PUBLIC_INDEXING_ENABLED is off -- anything
-        # else (200, or a 4xx WITH a real XML body) is the leak this
-        # guards against.
-        ok = f.status == 404 and not f.body.strip()
-        record("no-sitemap-exposed", path, ok, f"status={f.status} body_len={len(f.body)}")
+        # an empty body while PUBLIC_INDEXING_ENABLED is off -- but since
+        # that route then has NO file written to dist/ at all (Astro skips
+        # writing output for a 404-status static response), the live edge
+        # never actually serves that empty body: an unmatched path on
+        # Cloudflare Pages goes through ITS OWN 404 handling instead --
+        # our real 404.html (web/src/pages/404.astro) once one exists,
+        # confirmed live 2026-09-09 after the platform incident settled.
+        # So the real invariant is "404 status AND not actual sitemap
+        # content" -- a real body (our 404 page) is fine, sitemap-shaped
+        # XML content or a 200 is the leak this guards against.
+        looks_like_sitemap = "<urlset" in f.body or "<loc>" in f.body or "<sitemapindex" in f.body
+        ok = f.status == 404 and not looks_like_sitemap
+        record(
+            "no-sitemap-exposed", path,
+            ok, f"status={f.status} body_len={len(f.body)} looks_like_sitemap={looks_like_sitemap}",
+        )
 
 
 def check_https_and_hsts(base: str) -> None:
