@@ -1,5 +1,12 @@
 # Phase 3 plan — launch dataset (~12 cities), golden set, calibration
 
+> **STALE STATUS LINE, kept for history — Phase 3 closed 2026-09-07**
+> (`docs/STATE.md`, `docs/adr/009`). The line below ("awaiting owner
+> approval, no ingest run") was true when this plan was written and is
+> **not true today** — all 12 cities are ingested/scored/validated on
+> score_version 1.2.1. Read this document as the original proposal that
+> was approved and executed, not as current status.
+
 **Status: proposal, awaiting owner approval. No `make ingest` has been run
 for any new city — every number below comes from read-only research queries
 against Overture (same mechanism as `make ingest`'s own bbox extraction),

@@ -1,5 +1,18 @@
 # family_convenience v1.2.0 — diagnostic (Bloc A step 1)
 
+> **Correction (2026-09-07, `docs/reports/family-v1.2.1-recalibration.md`
+> "Result" table):** the Changi Lodge conclusion below — "likely a
+> labeling-construct issue... not a data or filter gap" — **was wrong**.
+> Owner review after v1.2.1 traced the real cause: a **hard-radius cliff
+> effect**. Changi Lodge's nearest genuinely green polygon
+> (`managed/grass`) sits at ~635m, and `family_convenience`'s search
+> radius is a hard 600m cutoff — a real park 35m outside that line gets
+> exactly zero credit, same as no park existing at all. Not a label error.
+> Left unfixed as of v1.2.1 (a radius-decay change, not attempted this
+> session) — see that report's "Known open limitation" section. The
+> per-hotel polygon table below is still accurate data; only the
+> **explanation** at the end of the Changi Lodge section was incorrect.
+
 Owner ask: for 5 named hotels, list land_use polygons within ≤1km with
 subtype/class, and confirm whether large green spaces (forest/nature/beach/
 recreation) are excluded by the current (v1.1.0) filter or absent from the

@@ -118,6 +118,12 @@ report. No preference is recorded between (b) and (c) — they answer
 different questions (data correctness vs. product positioning) and are not
 mutually exclusive.
 
+> **RESOLVED 2026-09-07 — `docs/adr/010-new-york-metro-market-label.md`.**
+> Owner chose (c): market renamed "New York City metro", per-hotel
+> disclosure unchanged. (b) (bbox tightening) was not pursued. This
+> report's own framing was correct — it explicitly deferred the choice as
+> an owner call, not a data question — nothing here to correct.
+
 ---
 
 ## Numeric-name hotel slugs (Bloc E item 4)
@@ -165,3 +171,9 @@ one-line addition to whatever selection/publication logic Bloc C's
 `page_publication` table ends up enforcing (`n_numeric_name` is already
 computed by `validate.py`per hotel) — flagged here rather than decided,
 since it's a publication-policy call.
+
+> **RESOLVED 2026-09-09/10 — `docs/adr/014-numeric-name-hard-indexability-gate.md`.**
+> The owner approved this exact proposal; implemented as a hard gate in
+> `publication.set_status()` (refuses `'indexable'` for a numeric name),
+> re-checked again in `webdata.py`'s export as a second layer. Nothing in
+> this section was wrong — it's the open question that ADR now answers.
