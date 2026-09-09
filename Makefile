@@ -1,4 +1,4 @@
-.PHONY: install ingest score validate report all test
+.PHONY: install ingest score validate report all test verify-prod
 
 CITY ?= all
 RELEASE ?= latest
@@ -23,6 +23,14 @@ webdata:
 
 cost:
 	python3 scripts/cost_bot.py
+
+# Read-only checks against the LIVE deployed site (staycontext.com by
+# default) -- noindex/robots.txt/sitemap-exposure/HTTPS/HSTS/canonicals/
+# 404/redirects. GET requests only, no auth, no state change. Override the
+# target with BASE_URL=... for a staging check.
+BASE_URL ?= https://staycontext.com
+verify-prod:
+	python3 scripts/verify_prod.py --base-url $(BASE_URL)
 
 # Phase 2 product-proof site (web/) — static Astro build, no live backend.
 web-install:

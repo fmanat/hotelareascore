@@ -120,6 +120,24 @@ start.
 
 ## Blockers / risks being watched
 
+- **PROD DOWN (found 2026-09-09, night mission #2 follow-up):**
+  `https://staycontext.com` returns **521 "Web server is down"** on every
+  path, since some point after the `3d18c8d` push this morning (auto
+  Cloudflare Pages redeploy presumably triggered and failed, or the
+  custom-domain attachment broke — cause unconfirmed). Ruled out: the repo
+  itself — a clean `git clone` + `npm ci` + `npm run build` from the
+  committed snapshot alone succeeds (15,769 pages, no errors), and DNS/TLS
+  resolve correctly to Cloudflare's own edge (valid cert, no Cloudflare
+  status-page incident). This needs the Cloudflare Pages dashboard
+  (Deployments tab, build log) — outside what this session can reach or
+  fix. `make verify-prod` (`scripts/verify_prod.py`, new this session)
+  confirms the outage in detail: 3/27 checks pass. One extra finding
+  independent of the outage: **`/robots.txt` is currently served by
+  Cloudflare's own "Managed robots.txt" / Content-Signal zone feature**,
+  not `robots.txt.ts` — it `Allow: /` for `User-agent: *` (only named AI
+  bots are disallowed). Whether this zone feature overrides or merges with
+  the origin's own Disallow-all robots.txt once the origin is back up is
+  unconfirmed and needs checking before any indexing decision.
 - **Data freshness (checked 2026-09-07):** `2026-08-19.0` is still
   Overture's latest release (live catalog check, not cached) — no
   re-ingestion needed. Re-check next time rather than assuming still true.
