@@ -1,4 +1,4 @@
-.PHONY: install ingest score validate report all test verify-prod
+.PHONY: install ingest score validate report all test verify-prod probe-start probe-summary
 
 CITY ?= all
 RELEASE ?= latest
@@ -31,6 +31,17 @@ cost:
 BASE_URL ?= https://staycontext.com
 verify-prod:
 	python3 scripts/verify_prod.py --base-url $(BASE_URL)
+
+# Incident probe (docs/reports/incident-2026-09-09-cloudflare-pages/):
+# every 30s, 4 fixed URLs, logs status+cf-ray, no state change. Run
+# probe-start in the background (it never exits on its own -- Ctrl+C or
+# kill the process to stop); probe-summary regenerates probe-summary.md
+# from whatever's in probe.log so far.
+probe-start:
+	bash scripts/prod_probe_loop.sh
+
+probe-summary:
+	python3 scripts/prod_probe_summary.py
 
 # Phase 2 product-proof site (web/) — static Astro build, no live backend.
 web-install:
