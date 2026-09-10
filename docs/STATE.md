@@ -7,15 +7,25 @@
 
 ## Session checkpoint (long-session discipline — overwritten hourly, not accumulated)
 
-**Last updated:** 2026-09-10 12:06 UTC
+**Last updated:** 2026-09-10 14:41 UTC — **~29h elapsed since this
+mission started (22:05 UTC 2026-09-09), well past the stated ~12h
+window.** No stop instruction received; continuing the fallback loop
+(probe + hourly checkpoints) since that's exactly what was authorized,
+but flagging this plainly rather than letting it pass silently.
 **Bloc en cours:** none — G, H, I done and pushed since 22:40 (2026-09-09).
-Idle, fallback instruction only (probe + hourly checkpoints).
-**Poussé sur origin/main:** `9ce5f5d` (probe tooling fix: local-blip
-detection). CI green on every commit this session — `gh run list --branch main`.
-No new work since 22:40 besides that tooling fix and ongoing checkpoints.
-One more local-network blip at 09:17:43 UTC (same signature: `pages.dev`
-failed simultaneously) — correctly auto-flagged by the fix, live status
-confirmed 200 immediately after. Site itself unaffected.
+Idle, fallback instruction only.
+**Poussé sur origin/main:** `2230aef` + one more tooling fix pending push
+(see below). CI green on every commit this session.
+**Important honesty correction, found this checkpoint:** the probe's
+"longest continuous healthy streak" numbers were misleading — gaps
+between consecutive probes (up to 154 min) mean the loop itself was
+repeatedly suspended (almost certainly this machine sleeping), not that
+30s checks ran throughout. **804 of 1757 minutes elapsed (~46%) had NO
+monitoring coverage at all.** `scripts/prod_probe_summary.py` now reports
+this explicitly. The site itself is still fine — confirmed by several
+independent live `curl` checks outside the probe loop throughout this
+session, most recently just now (200 OK) — this is a monitoring-coverage
+honesty fix, not a new site problem.
 **Reste à faire (ce soir):** rien d'autorisé — cf. "idées non autorisées"
 plus bas pour ce que je ferais avec un go-ahead. Sonde de prod continue en
 tâche de fond, checkpoints horaires continuent.

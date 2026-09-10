@@ -100,6 +100,35 @@ def main() -> int:
         )
         lines.append("")
 
+    # Found 2026-09-10: gaps between consecutive probes far larger than the
+    # 30s loop cadence -- the probe_loop.sh process itself was suspended
+    # (almost certainly the host machine sleeping), not failing. This means
+    # "longest continuous healthy streak" below can SPAN a gap where nothing
+    # was actually checked -- it means "no failure was ever observed across
+    # this span," not "verified every 30 seconds throughout." Reported here
+    # so that distinction isn't silently lost.
+    GAP_THRESHOLD_S = 120  # a couple of missed 30s cycles is normal jitter, not a real gap
+    home_rows = by_url.get("https://staycontext.com/", [])
+    gaps = [
+        (a[0], b[0], (b[0] - a[0]).total_seconds())
+        for a, b in zip(home_rows, home_rows[1:])
+        if (b[0] - a[0]).total_seconds() > GAP_THRESHOLD_S
+    ]
+    if gaps:
+        total_gap_s = sum(g[2] for g in gaps)
+        lines.append(
+            f"**Monitoring coverage gaps (probe loop suspended, likely host sleep):** "
+            f"{len(gaps)} gaps > 2min between consecutive home-URL probes, "
+            f"{total_gap_s / 60:.0f} min of total non-coverage. Longest: "
+            f"{max(gaps, key=lambda g: g[2])[2] / 60:.1f} min "
+            f"({max(gaps, key=lambda g: g[2])[0].isoformat()} -> "
+            f"{max(gaps, key=lambda g: g[2])[1].isoformat()}). Every \"longest "
+            f"continuous healthy streak\" figure below can include time spent "
+            f"inside a gap like these -- read it as \"no failure observed,\" not "
+            f"\"checked every 30s without interruption.\""
+        )
+        lines.append("")
+
     overall_longest_up = None
     for url, rows in by_url.items():
         healthy = HEALTHY_STATUS[url]
