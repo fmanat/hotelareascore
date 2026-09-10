@@ -7,12 +7,12 @@
 
 ## Session checkpoint (long-session discipline — overwritten hourly, not accumulated)
 
-**Last updated:** 2026-09-09 23:42 UTC
-**Bloc en cours:** none — G, H, I done and pushed since 22:40. Idle,
-fallback instruction only (probe + hourly checkpoints).
-**Poussé sur origin/main:** `5123ac0` (checkpoint 22h40, idées non
-autorisées). CI green on every commit this session —
-`gh run list --branch main`. No new work since.
+**Last updated:** 2026-09-10 00:42 UTC
+**Bloc en cours:** none — G, H, I done and pushed since 22:40 (2026-09-09).
+Idle, fallback instruction only (probe + hourly checkpoints).
+**Poussé sur origin/main:** `67a3c28` (checkpoint 23h42). CI green on
+every commit this session — `gh run list --branch main`. No new work
+since 22:40.
 **Reste à faire (ce soir):** rien d'autorisé — cf. "idées non autorisées"
 plus bas pour ce que je ferais avec un go-ahead. Sonde de prod continue en
 tâche de fond, checkpoints horaires continuent.
