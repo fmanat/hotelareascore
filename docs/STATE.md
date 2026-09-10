@@ -7,25 +7,18 @@
 
 ## Session checkpoint (long-session discipline — overwritten hourly, not accumulated)
 
-**Last updated:** 2026-09-10 14:41 UTC — **~29h elapsed since this
-mission started (22:05 UTC 2026-09-09), well past the stated ~12h
-window.** No stop instruction received; continuing the fallback loop
-(probe + hourly checkpoints) since that's exactly what was authorized,
-but flagging this plainly rather than letting it pass silently.
-**Bloc en cours:** none — G, H, I done and pushed since 22:40 (2026-09-09).
-Idle, fallback instruction only.
-**Poussé sur origin/main:** `2230aef` + one more tooling fix pending push
-(see below). CI green on every commit this session.
-**Important honesty correction, found this checkpoint:** the probe's
-"longest continuous healthy streak" numbers were misleading — gaps
-between consecutive probes (up to 154 min) mean the loop itself was
-repeatedly suspended (almost certainly this machine sleeping), not that
-30s checks ran throughout. **804 of 1757 minutes elapsed (~46%) had NO
-monitoring coverage at all.** `scripts/prod_probe_summary.py` now reports
-this explicitly. The site itself is still fine — confirmed by several
-independent live `curl` checks outside the probe loop throughout this
-session, most recently just now (200 OK) — this is a monitoring-coverage
-honesty fix, not a new site problem.
+**Last updated:** 2026-09-10 16:05 UTC — ~30h elapsed since mission start
+(22:05 UTC 2026-09-09), well past the stated ~12h window. No stop
+instruction received (flagged twice already, 14h41/this entry);
+continuing the authorized fallback loop without re-belaboring the point
+every checkpoint.
+**Bloc en cours:** none — G, H, I done since 22:40 (2026-09-09). Idle.
+**Poussé sur origin/main:** `61f5e60` (probe honesty fix: coverage-gap
+reporting). CI green on every commit this session.
+**Probe status:** still healthy whenever actually checked (site confirmed
+200 OK live, just now). Coverage-gap reporting (added last checkpoint) now
+shows 885 min of the elapsed window had no monitoring at all (host sleep,
+not a site issue) — see `probe-summary.md` for current figures.
 **Reste à faire (ce soir):** rien d'autorisé — cf. "idées non autorisées"
 plus bas pour ce que je ferais avec un go-ahead. Sonde de prod continue en
 tâche de fond, checkpoints horaires continuent.
