@@ -7,18 +7,15 @@
 
 ## Session checkpoint (long-session discipline — overwritten hourly, not accumulated)
 
-**Last updated:** 2026-09-10 08:50 UTC
+**Last updated:** 2026-09-10 12:06 UTC
 **Bloc en cours:** none — G, H, I done and pushed since 22:40 (2026-09-09).
 Idle, fallback instruction only (probe + hourly checkpoints).
-**Poussé sur origin/main:** `407c740` (checkpoint 06h13). CI green on
-every commit this session — `gh run list --branch main`. No new work
-since 22:40, except a real probe-tooling fix just now (see Blockers
-below): 25 scattered `status=0` failures across ~07:10-08:29 UTC hit
-`staycontext.com` AND `staycontext.pages.dev` at the exact same
-timestamps — diagnosed as the probing machine's own local network (not a
-real site incident: two unrelated domains can't share a local-DNS-
-resolver failure). `scripts/prod_probe_summary.py` now auto-detects and
-flags this pattern so it's never mistaken for a platform incident again.
+**Poussé sur origin/main:** `9ce5f5d` (probe tooling fix: local-blip
+detection). CI green on every commit this session — `gh run list --branch main`.
+No new work since 22:40 besides that tooling fix and ongoing checkpoints.
+One more local-network blip at 09:17:43 UTC (same signature: `pages.dev`
+failed simultaneously) — correctly auto-flagged by the fix, live status
+confirmed 200 immediately after. Site itself unaffected.
 **Reste à faire (ce soir):** rien d'autorisé — cf. "idées non autorisées"
 plus bas pour ce que je ferais avec un go-ahead. Sonde de prod continue en
 tâche de fond, checkpoints horaires continuent.
