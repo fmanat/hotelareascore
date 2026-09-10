@@ -67,6 +67,39 @@ def main() -> int:
                  f"({(last_ts - first_ts).total_seconds() / 3600:.2f}h, {total_rows} data points across 4 URLs)")
     lines.append("")
 
+    # Found 2026-09-10: a status=0 (connection/DNS failure, not a real HTTP
+    # response) hitting ALL 4 URLs -- including staycontext.pages.dev, a
+    # completely different domain/zone from staycontext.com -- at the exact
+    # same probe timestamp is the signature of a LOCAL network/DNS problem
+    # on the machine running this probe, not a site-side incident (two
+    # unrelated domains cannot genuinely go down in the same second for the
+    # same local-resolver reason). Flagged explicitly so these windows are
+    # never mistaken for real Cloudflare-side incidents (they'd otherwise
+    # look identical to a down window in the per-URL sections below).
+    by_ts: dict[datetime, dict[str, int]] = defaultdict(dict)
+    for url, rows in by_url.items():
+        for ts, status, _ in rows:
+            by_ts[ts][url] = status
+    local_blip_ts = [
+        ts for ts, statuses in by_ts.items()
+        if len(statuses) == len(HEALTHY_STATUS) and all(s == 0 for s in statuses.values())
+    ]
+    if local_blip_ts:
+        local_blip_ts.sort()
+        lines.append(
+            f"**Likely local-probe network blip, not a site incident:** all 4 URLs "
+            f"(including the unrelated `pages.dev` domain) returned a connection/DNS "
+            f"failure (status=0) at the same instant, {len(local_blip_ts)} time(s) -- "
+            f"{local_blip_ts[0].isoformat()} to {local_blip_ts[-1].isoformat()}. Two "
+            f"independent domains cannot both genuinely go down together for a local-"
+            f"resolver reason; this is almost certainly the probing machine's own "
+            f"network (sleep/wake, Wi-Fi drop), not staycontext.com or Cloudflare. "
+            f"Still counted as \"down\" in the per-URL sections below (the probe "
+            f"genuinely couldn't verify anything during this window), but should NOT "
+            f"be reported to Cloudflare support as a platform incident."
+        )
+        lines.append("")
+
     overall_longest_up = None
     for url, rows in by_url.items():
         healthy = HEALTHY_STATUS[url]
