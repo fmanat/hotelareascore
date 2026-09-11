@@ -46,8 +46,8 @@ def audit(con, release_dir):
     return result
 
 
-def backup(path):
-    dest = path.parent/'institution-backup'/path.name
+def backup(path, family="institution"):
+    dest = path.parent/f"{family}-backup"/path.name
     dest.parent.mkdir(exist_ok=True)
     if not dest.exists():
         shutil.copy2(path, dest)
@@ -57,7 +57,7 @@ def write_json(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
 
 
-def purge_etl(con, release_dir, result):
+def purge_etl(con, release_dir, result, *, family="institution"):
     for city in load_cities():
         hits = [r for r in result['exclusions'] if r['city_id'] == city]
         if not hits:
@@ -68,26 +68,26 @@ def purge_etl(con, release_dir, result):
         for filename, key in [('hotels.parquet','id'),('hotel_scores.parquet','hotel_id'),('nearby_facts.parquet','hotel_id')]:
             path = folder/filename
             # Every dependent artifact must exist; fail before a build on partial ETL.
-            backup(path)
+            backup(path, family)
             con.execute(f'CREATE OR REPLACE TEMP TABLE kept AS SELECT * FROM read_parquet(?) WHERE "{key}" NOT IN (SELECT id FROM excluded)', [str(path)])
             temporary = path.with_suffix('.purged.parquet')
             con.execute('COPY kept TO ? (FORMAT PARQUET)', [str(temporary)])
             temporary.replace(path)
         path = folder/'manifest.json'
-        backup(path)
+        backup(path, family)
         manifest = json.loads(path.read_text())
         manifest['hotels_after_dedupe'] = result['cities'][city]['remaining']
-        manifest['institution_excluded_count'] = len(hits)
-        manifest['institution_exclusions'] = hits
-        manifest['institution_rules_sha256'] = result['rules_sha256']
-        manifest['institution_purge_note'] = 'Post-ingest removal; source ingestion time and existing scores unchanged. See institution-backup for pre-purge artifacts.'
+        manifest[f'{family}_excluded_count'] = len(hits)
+        manifest[f'{family}_exclusions'] = hits
+        manifest[f'{family}_rules_sha256'] = result['rules_sha256']
+        manifest[f'{family}_purge_note'] = f'Post-ingest removal; source ingestion time and existing scores unchanged. See {family}-backup for pre-purge artifacts.'
         write_json(path, manifest)
         scores = folder/'hotel_scores.parquet'
         fields = [f'avg({d}) AS {d}_mean, median({d}) AS {d}_median' for d in DIMENSIONS]
         cursor = con.execute('SELECT '+','.join(fields)+',avg(balanced_score) AS balanced_mean,median(confidence) AS confidence_median FROM read_parquet(?)', [str(scores)])
         values = dict(zip([c[0] for c in cursor.description], cursor.fetchone()))
         path = folder/'city_baseline.json'
-        backup(path)
+        backup(path, family)
         baseline = json.loads(path.read_text())
         baseline.update({k:round(v,2) if v is not None else None for k,v in values.items()})
         baseline['n_hotels'] = result['cities'][city]['remaining']
@@ -95,14 +95,14 @@ def purge_etl(con, release_dir, result):
         # Do not leave the old QA report claiming a clean, different dataset.
         qa = folder/'validation_report.json'
         if qa.exists():
-            backup(qa)
-            write_json(qa, {'city_id':city, 'status':'requires_revalidation_after_institution_purge', 'report':'docs/reports/bloc-a-institutions.md'})
+            backup(qa, family)
+            write_json(qa, {'city_id':city, 'status':f'requires_revalidation_after_{family}_purge', 'report':result.get('report_path', 'docs/reports/bloc-a-institutions.md')})
     with publication.connect() as pub:
         for row in result['exclusions']:
-            publication.set_status(pub, 'hotel', row['id'], 'retired', f"Bloc A institution exclusion: {row['primary_reason']}; see audit report", 'system:exclude_institutions')
+            publication.set_status(pub, 'hotel', row['id'], 'retired', f"{family} exclusion: {row['primary_reason']}; see audit report", f'system:exclude_{family}')
 
 
-def purge_web(result, release_dir, web_root=ROOT/'web'):
+def purge_web(result, release_dir, web_root=ROOT/'web', *, matcher=institution_matches):
     excluded_ids = {r['id'] for r in result['exclusions']}
     excluded_slugs = {r['slug'] for r in result['exclusions']}
     removed = Counter(result.get('removed_web_references_by_file', {}))
@@ -112,7 +112,7 @@ def purge_web(result, release_dir, web_root=ROOT/'web'):
         if not isinstance(obj, dict):
             return obj
         if (obj.get('id') in excluded_ids or obj.get('slug') in excluded_slugs
-                or institution_matches(obj.get('name'), obj.get('id') or obj.get('slug'))):
+                or matcher(obj.get('name'), obj.get('id') or obj.get('slug'))):
             removed[context] += 1
             return None
         return {k: v if k in ('nearby_facts','reason_codes') else clean(v, context) for k,v in obj.items()}

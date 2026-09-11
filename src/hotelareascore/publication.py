@@ -94,8 +94,10 @@ def set_status(
         raise ValueError("reason is required (CLAUDE.md hard rule 2: a recorded decision, not a side effect)")
     if page_type == "hotel" and status != "retired":
         from .institutions import assert_no_institutions
+        from .brands import assert_no_brands
 
         assert_no_institutions([{"id": page_id, "name": hotel_name}], context="publication")
+        assert_no_brands([{"id": page_id, "name": hotel_name}], context="publication")
     if page_type == "hotel" and status == "indexable" and hotel_name is not None:
         from .slug import is_numeric_name
 

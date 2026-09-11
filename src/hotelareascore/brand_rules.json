@@ -1,0 +1,3088 @@
+{
+  "version": 1,
+  "property_prefix_terms": [
+    "hotel",
+    "hotels",
+    "resort",
+    "resorts",
+    "suites",
+    "apartments",
+    "hostel",
+    "inn",
+    "by",
+    "member of",
+    "managed by",
+    "an accor hotel",
+    "hôtel",
+    "albergo",
+    "pousada"
+  ],
+  "rules": [
+    {
+      "reason": "loyalty_program",
+      "language": "en",
+      "terms": [
+        "ALL Accor",
+        "Accor Live Limitless",
+        "ALL Accor Live Limitless"
+      ],
+      "match": "word",
+      "group": "Accor",
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "en",
+      "terms": [
+        "Marriott Bonvoy",
+        "Club Marriott"
+      ],
+      "match": "word",
+      "group": "Marriott",
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "en",
+      "terms": [
+        "World of Hyatt"
+      ],
+      "match": "word",
+      "group": "Hyatt",
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "en",
+      "terms": [
+        "Hyatt Thailand"
+      ],
+      "match": "full",
+      "group": "Hyatt",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "en",
+      "terms": [
+        "IHG One Rewards",
+        "IHG Rewards Club"
+      ],
+      "match": "word",
+      "group": "IHG",
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "en",
+      "terms": [
+        "Hilton Honors",
+        "Hilton HHonors"
+      ],
+      "match": "word",
+      "group": "Hilton",
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "en",
+      "terms": [
+        "Wyndham Rewards"
+      ],
+      "match": "word",
+      "group": "Wyndham",
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "en",
+      "terms": [
+        "Choice Privileges"
+      ],
+      "match": "word",
+      "group": "Choice",
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "en",
+      "terms": [
+        "Premier Club Rewards"
+      ],
+      "match": "word",
+      "group": "Shaftesbury",
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "en",
+      "terms": [
+        "ALL"
+      ],
+      "match": "full",
+      "group": "Accor",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "en",
+      "terms": [
+        "corporate office",
+        "head office",
+        "headquarters",
+        "headquarter",
+        "regional office",
+        "central office",
+        "sales office",
+        "reservation office",
+        "reservations office",
+        "continent office",
+        "HQ",
+        "hotel management",
+        "hospitality management",
+        "reservation services",
+        "reservation worldwide",
+        "service reservations",
+        "international reservations",
+        "hotels reservation",
+        "hotel reservations",
+        "hotel reservation centre",
+        "hotel reservation center",
+        "sales & marketing"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "fr",
+      "terms": [
+        "siège social",
+        "siège administratif",
+        "bureau commercial",
+        "bureau de vente",
+        "centrale de réservation",
+        "service réservations",
+        "direction des ventes",
+        "gestion hôtelière"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "es",
+      "terms": [
+        "sede central",
+        "sede corporativa",
+        "oficinas centrales",
+        "oficina de ventas",
+        "central de reservas",
+        "gestión hotelera"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "ca",
+      "terms": [
+        "seu central",
+        "seu social",
+        "oficines centrals",
+        "oficina de vendes",
+        "central de reserves",
+        "gestió hotelera"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "it",
+      "terms": [
+        "sede centrale",
+        "sede amministrativa",
+        "ufficio vendite",
+        "ufficio prenotazioni",
+        "direzione commerciale",
+        "gestione alberghiera"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "pt",
+      "terms": [
+        "sede administrativa",
+        "sede corporativa",
+        "escritório central",
+        "escritório de vendas",
+        "central de reservas",
+        "gestão hoteleira"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "nl",
+      "terms": [
+        "hoofdkantoor",
+        "verkoopkantoor",
+        "reserveringskantoor",
+        "hotelbeheer"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "ar",
+      "terms": [
+        "المقر الرئيسي",
+        "المكتب الرئيسي",
+        "مكتب المبيعات",
+        "مكتب الحجوزات",
+        "إدارة الفنادق"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "ms",
+      "terms": [
+        "ibu pejabat",
+        "pejabat jualan",
+        "pejabat tempahan",
+        "pengurusan hotel"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "ja",
+      "terms": [
+        "本社",
+        "本部",
+        "営業所",
+        "営業オフィス",
+        "予約センター",
+        "ホテル運営会社"
+      ],
+      "match": "substring",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "zh",
+      "terms": [
+        "总部",
+        "總部",
+        "销售办事处",
+        "銷售辦事處",
+        "预订中心",
+        "預訂中心",
+        "酒店管理公司"
+      ],
+      "match": "substring",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "th",
+      "terms": [
+        "สำนักงานใหญ่",
+        "สำนักงานขาย",
+        "สำนักงานจอง",
+        "บริหารโรงแรม"
+      ],
+      "match": "substring",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "ta",
+      "terms": [
+        "தலைமை அலுவலகம்",
+        "விற்பனை அலுவலகம்",
+        "முன்பதிவு அலுவலகம்"
+      ],
+      "match": "substring",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "corporate_or_sales_office",
+      "language": "en",
+      "terms": [
+        "Bangkok Office",
+        "BKK office",
+        "Sydney Office",
+        "hotel services",
+        "hotel corporation",
+        "hotels corporation",
+        "hotel holdings",
+        "resort holdings"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "hotel group",
+        "hotels group",
+        "hospitality group",
+        "group of hotels"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "ja",
+      "terms": [
+        "ホテルグループ"
+      ],
+      "match": "substring",
+      "group": null,
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "zh",
+      "terms": [
+        "酒店集团",
+        "酒店集團"
+      ],
+      "match": "substring",
+      "group": null,
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "th",
+      "terms": [
+        "โฮเทลกรุ๊ป",
+        "โฮเทล กรุ๊ป"
+      ],
+      "match": "substring",
+      "group": null,
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Accor",
+        "AccorHotels",
+        "Accor Hotels",
+        "Accor London",
+        "Accor Hoteles España",
+        "Accor Academy & Hotel Services"
+      ],
+      "match": "full",
+      "group": "Accor",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Marriott International",
+        "Marriott International Inc",
+        "Marriott Hotels International",
+        "Marriott Hotels International Limited",
+        "Luxury Hotels International"
+      ],
+      "match": "full",
+      "group": "Marriott",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Hilton International",
+        "Hilton International Franchise Limited",
+        "Hilton Italiana",
+        "Hilton Italia SPA"
+      ],
+      "match": "full",
+      "group": "Hilton",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Hyatt Corporation",
+        "Hyatt Holdings",
+        "Hyatt Hotels Corporation"
+      ],
+      "match": "full",
+      "group": "Hyatt",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "IHG",
+        "InterContinental Hotels Group",
+        "IHG Hotels & Resorts"
+      ],
+      "match": "full",
+      "group": "IHG",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Choice Hotels International"
+      ],
+      "match": "full",
+      "group": "Choice",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Wyndham Hotels & Resorts",
+        "Ramada International"
+      ],
+      "match": "full",
+      "group": "Wyndham",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Warwick International Hotels"
+      ],
+      "match": "full",
+      "group": "Warwick",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Nikko Hotels International"
+      ],
+      "match": "full",
+      "group": "Okura Nikko",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Bayview International"
+      ],
+      "match": "full",
+      "group": "Bayview",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Millennium & Copthorne International"
+      ],
+      "match": "full",
+      "group": "Millennium & Copthorne",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "NNR Hotels International Thailand Co Ltd"
+      ],
+      "match": "full",
+      "group": "NNR Nishitetsu",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Arora Holdings"
+      ],
+      "match": "full",
+      "group": "Arora",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Bridgeton Holdings"
+      ],
+      "match": "full",
+      "group": "Bridgeton",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Mint House Corporate"
+      ],
+      "match": "full",
+      "group": "Mint House",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Semhotel Management"
+      ],
+      "match": "full",
+      "group": "Semhotel",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Beaufort International Hotels"
+      ],
+      "match": "full",
+      "group": "Beaufort",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Aurora Hotels International"
+      ],
+      "match": "full",
+      "group": "Aurora",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Singapore Meritus International Hotels"
+      ],
+      "match": "full",
+      "group": "Meritus",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "MGM Grand International"
+      ],
+      "match": "full",
+      "group": "MGM",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Concorde Hotels International"
+      ],
+      "match": "full",
+      "group": "Concorde",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "zh",
+      "terms": [
+        "雅高心悦界",
+        "雅高心悅界"
+      ],
+      "match": "full",
+      "group": "Accor",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "zh",
+      "terms": [
+        "万豪旅享家",
+        "萬豪旅享家"
+      ],
+      "match": "full",
+      "group": "Marriott",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "zh",
+      "terms": [
+        "凯悦天地",
+        "凱悅天地"
+      ],
+      "match": "full",
+      "group": "Hyatt",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "zh",
+      "terms": [
+        "希尔顿荣誉客会",
+        "希爾頓榮譽客會"
+      ],
+      "match": "full",
+      "group": "Hilton",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "zh",
+      "terms": [
+        "洲际优悦会",
+        "洲際優悅會",
+        "IHG优悦会",
+        "IHG優悅會"
+      ],
+      "match": "full",
+      "group": "IHG",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "zh",
+      "terms": [
+        "温德姆奖赏计划",
+        "溫德姆獎賞計劃"
+      ],
+      "match": "full",
+      "group": "Wyndham",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "ja",
+      "terms": [
+        "ヒルトン・オナーズ",
+        "ヒルトンオナーズ"
+      ],
+      "match": "full",
+      "group": "Hilton",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "ja",
+      "terms": [
+        "ワールド オブ ハイアット",
+        "ワールド・オブ・ハイアット"
+      ],
+      "match": "full",
+      "group": "Hyatt",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "loyalty_program",
+      "language": "ja",
+      "terms": [
+        "マリオット ボンヴォイ",
+        "マリオット・ボンヴォイ"
+      ],
+      "match": "full",
+      "group": "Marriott",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "fr",
+      "terms": [
+        "groupe hôtelier",
+        "groupe hotelier"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "es",
+      "terms": [
+        "grupo hotelero"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "ca",
+      "terms": [
+        "grup hoteler"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "it",
+      "terms": [
+        "gruppo alberghiero"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "pt",
+      "terms": [
+        "grupo hoteleiro"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "nl",
+      "terms": [
+        "hotelgroep"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "ar",
+      "terms": [
+        "مجموعة فنادق"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "ms",
+      "terms": [
+        "kumpulan hotel"
+      ],
+      "match": "word",
+      "group": null,
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "ta",
+      "terms": [
+        "ஹோட்டல் குழுமம்"
+      ],
+      "match": "substring",
+      "group": null,
+      "allow_property_prefix": true
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Minor Hotels"
+      ],
+      "match": "full",
+      "group": "Minor",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Best Western Asia"
+      ],
+      "match": "full",
+      "group": "Best Western",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "H10 Hotels"
+      ],
+      "match": "full",
+      "group": "H10",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Eurostars Hotels",
+        "Eurostars Hotel Company",
+        "Hotusa Hotels",
+        "Eurostars France",
+        "Eurostars Italia SRL"
+      ],
+      "match": "full",
+      "group": "Hotusa",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Dorchester Collection"
+      ],
+      "match": "full",
+      "group": "Dorchester",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Frasers Hospitality"
+      ],
+      "match": "full",
+      "group": "Frasers",
+      "allow_property_prefix": false
+    },
+    {
+      "reason": "umbrella_brand",
+      "language": "en",
+      "terms": [
+        "Gargallo Hotels"
+      ],
+      "match": "full",
+      "group": "Gargallo",
+      "allow_property_prefix": false
+    }
+  ],
+  "groups": {
+    "Accor": [
+      "accor",
+      "accorhotels",
+      "sofitel",
+      "novotel",
+      "mercure",
+      "ibis",
+      "pullman",
+      "fairmont",
+      "raffles",
+      "swissotel",
+      "banyan tree",
+      "movenpick"
+    ],
+    "Marriott": [
+      "marriott",
+      "sheraton",
+      "westin",
+      "ritz carlton",
+      "st regis",
+      "le meridien",
+      "aloft",
+      "moxy",
+      "courtyard",
+      "fairfield",
+      "residence inn",
+      "autograph collection",
+      "luxury collection",
+      "w hotel",
+      "w hotels",
+      "edition"
+    ],
+    "Hilton": [
+      "hilton",
+      "conrad",
+      "waldorf astoria",
+      "doubletree",
+      "hampton",
+      "homewood suites",
+      "home2 suites"
+    ],
+    "Hyatt": [
+      "hyatt",
+      "andaz",
+      "alila"
+    ],
+    "IHG": [
+      "ihg",
+      "intercontinental",
+      "crowne plaza",
+      "holiday inn",
+      "staybridge",
+      "kimpton",
+      "six senses"
+    ],
+    "Wyndham": [
+      "wyndham",
+      "ramada",
+      "days inn",
+      "super 8"
+    ],
+    "Choice": [
+      "choice hotels",
+      "choice privileges",
+      "comfort inn",
+      "comfort suites",
+      "quality inn",
+      "sleep inn",
+      "clarion",
+      "econo lodge"
+    ],
+    "Shaftesbury": [
+      "shaftesbury",
+      "premier club rewards"
+    ],
+    "Minor": [
+      "minor hotels",
+      "anantara",
+      "avani",
+      "oaks",
+      "tivoli",
+      "nh hotels",
+      "Minor Hotels"
+    ],
+    "Vincent": [
+      "vincent hotel group"
+    ],
+    "Eden": [
+      "eden hotels"
+    ],
+    "Parvena": [
+      "parvena"
+    ],
+    "Chada": [
+      "chada"
+    ],
+    "Fortune": [
+      "fortune hotel group"
+    ],
+    "Mida": [
+      "mida"
+    ],
+    "Griffin": [
+      "griffin hotel management"
+    ],
+    "Royal Cliff": [
+      "royal cliff"
+    ],
+    "Club Med": [
+      "club med"
+    ],
+    "Tongsai Bay": [
+      "tongsai bay"
+    ],
+    "Santhiya": [
+      "santhiya"
+    ],
+    "Best Western": [
+      "best western",
+      "bw samui",
+      "Best Western Asia"
+    ],
+    "Nongnooch": [
+      "nongnooch"
+    ],
+    "Veranda": [
+      "veranda"
+    ],
+    "Kasemkij": [
+      "เกษมกิจ"
+    ],
+    "SB Hotels": [
+      "sb hotels"
+    ],
+    "Acta": [
+      "acta hotels"
+    ],
+    "Sercotel": [
+      "sercotel"
+    ],
+    "Byblos": [
+      "byblos"
+    ],
+    "Discovery": [
+      "discovery hotel management",
+      "dhm"
+    ],
+    "Browns": [
+      "browns"
+    ],
+    "London Hotel Group": [
+      "london hotel group"
+    ],
+    "Splendid": [
+      "splendid"
+    ],
+    "Maybourne": [
+      "maybourne"
+    ],
+    "PPHE": [
+      "pphe",
+      "park plaza"
+    ],
+    "Clermont": [
+      "clermont"
+    ],
+    "Resident": [
+      "resident hotels"
+    ],
+    "Kempinski": [
+      "kempinski"
+    ],
+    "Real Hospitality": [
+      "real hospitality"
+    ],
+    "Morgans": [
+      "morgans"
+    ],
+    "Denihan": [
+      "denihan"
+    ],
+    "Sonder": [
+      "sonder"
+    ],
+    "Mandarin Oriental": [
+      "mandarin oriental"
+    ],
+    "Peninsula": [
+      "peninsula"
+    ],
+    "Park Hotel Group": [
+      "park hotel group"
+    ],
+    "Prince": [
+      "prince hotels"
+    ],
+    "Red Star": [
+      "red star"
+    ],
+    "Constellation": [
+      "constellation"
+    ],
+    "Kingfisher": [
+      "kingfisher"
+    ],
+    "Gallagher": [
+      "gallagher"
+    ],
+    "NLG": [
+      "nlg"
+    ],
+    "BAY HOTEL": [
+      "bay hotel"
+    ],
+    "Tokyo West": [
+      "tokyo west",
+      "東京ウエスト"
+    ],
+    "Thai Hotel Group": [
+      "thai hotel group"
+    ],
+    "Warwick": [
+      "Warwick International Hotels"
+    ],
+    "Okura Nikko": [
+      "Nikko Hotels International"
+    ],
+    "Bayview": [
+      "Bayview International"
+    ],
+    "Millennium & Copthorne": [
+      "Millennium & Copthorne International"
+    ],
+    "NNR Nishitetsu": [
+      "NNR Hotels International Thailand Co Ltd"
+    ],
+    "Arora": [
+      "Arora Holdings"
+    ],
+    "Bridgeton": [
+      "Bridgeton Holdings"
+    ],
+    "Mint House": [
+      "Mint House Corporate"
+    ],
+    "Semhotel": [
+      "Semhotel Management"
+    ],
+    "Beaufort": [
+      "Beaufort International Hotels"
+    ],
+    "Aurora": [
+      "Aurora Hotels International"
+    ],
+    "Meritus": [
+      "Singapore Meritus International Hotels"
+    ],
+    "MGM": [
+      "MGM Grand International"
+    ],
+    "Concorde": [
+      "Concorde Hotels International"
+    ],
+    "Travelodge (brand)": [
+      "travelodge"
+    ],
+    "Louvre": [
+      "louvre hotels",
+      "campanile",
+      "kyriad",
+      "premiere classe"
+    ],
+    "Regetel": [
+      "regetel"
+    ],
+    "Roscioli": [
+      "roscioli"
+    ],
+    "WIN": [
+      "win hotels"
+    ],
+    "Sunotel": [
+      "sunotel"
+    ],
+    "Real Hotels": [
+      "real hotels"
+    ],
+    "Euroconfort": [
+      "euroconfort"
+    ],
+    "Crown": [
+      "crown group"
+    ],
+    "Lords": [
+      "lords group"
+    ],
+    "Madras": [
+      "madras group"
+    ],
+    "Pan Pacific": [
+      "pan pacific"
+    ],
+    "Al Hayat": [
+      "al hayat"
+    ],
+    "Otsuka Shokai": [
+      "大塚商会"
+    ],
+    "Sunvalley": [
+      "サンバレー"
+    ],
+    "Hakuba Alps": [
+      "白馬アルプス"
+    ],
+    "Kanucha": [
+      "カヌチャ"
+    ],
+    "Urashima": [
+      "浦島"
+    ],
+    "Kusatsu Now": [
+      "草津ナウ"
+    ],
+    "Asaya": [
+      "あさや"
+    ],
+    "Koyo": [
+      "古窯"
+    ],
+    "H10": [
+      "H10 Hotels"
+    ],
+    "Hotusa": [
+      "Eurostars Hotels",
+      "Eurostars Hotel Company",
+      "Hotusa Hotels",
+      "Eurostars France",
+      "Eurostars Italia SRL"
+    ],
+    "Dorchester": [
+      "Dorchester Collection"
+    ],
+    "Frasers": [
+      "Frasers Hospitality"
+    ],
+    "Gargallo": [
+      "Gargallo Hotels"
+    ],
+    "Les Grillons": [
+      "les grillons"
+    ]
+  },
+  "reviewed_hotels": [
+    {
+      "id": "16312db0-247b-4d71-9872-d4be2e535d28",
+      "name": "Parvena Hotel Group",
+      "slug": "parvena-hotel-group-2e535d28",
+      "allowed_reasons": [
+        "umbrella_brand"
+      ],
+      "source": "https://www.booking.com/hotel/th/rachdaa-erschiednch.en-gb.html",
+      "note": "Parvena Ratchada is bookable at the exact source street and number; group wording is an alias."
+    },
+    {
+      "id": "466dd952-537f-4cc3-9d96-2009e07aacf9",
+      "name": "Hilton Italiana",
+      "slug": "hilton-italiana-e07aacf9",
+      "allowed_reasons": [
+        "umbrella_brand"
+      ],
+      "source": "https://romecavalieri.com/personal-data-collection-information/",
+      "note": "Property operator at Rome Cavalieri exact address; not evidence of a separate group office."
+    },
+    {
+      "id": "c9f80b99-e28f-427f-9376-47a0b662559b",
+      "name": "Nikko Hotels International",
+      "slug": "nikko-hotels-international-b662559b",
+      "allowed_reasons": [
+        "umbrella_brand"
+      ],
+      "source": "https://dmo-tokyo-odaiba.jp/en/facilities/detail.php?id=100019",
+      "note": "Grand Nikko Tokyo Daiba at 2-6-1 Daiba. Retain property-address alias; do not globally allow the umbrella name."
+    },
+    {
+      "id": "68a32013-4366-493f-9d58-0d60832c2602",
+      "name": "Bayview International",
+      "slug": "bayview-international-832c2602",
+      "allowed_reasons": [
+        "umbrella_brand"
+      ],
+      "source": "https://www.cnsneurosurgery.com.au/wp-content/uploads/2015/11/East-Sydney-Private-Hospital-Special-CNS-Neurosurgery-2015.pdf",
+      "note": "Sydney Boulevard Hotel at 90 William Street, managed by Bayview; property-address alias."
+    },
+    {
+      "id": "bc77a616-ba9e-4289-9d4d-be1c62e6a287",
+      "name": "Louvre Hotels Group complexe hotelier Suresnes",
+      "slug": "louvre-hotels-group-complexe-hotelier-suresnes-62e6a287",
+      "source": "https://www.kactus.com/fr/lieux/campanile-paris-ouest-pont-de-suresnes",
+      "note": "Name explicitly identifies the Suresnes hotel complex; same 15 Boulevard Henri Sellier property address. Headquarters separately identified at 1 Place des Degres. Retrieved Overture website points specifically to Campanile Paris Ouest Pont de Suresnes.",
+      "allowed_reasons": [
+        "umbrella_brand"
+      ]
+    },
+    {
+      "id": "e49d8ec1-86fd-4b55-aa6e-e680a22aaac0",
+      "name": "NH Hotels Group",
+      "slug": "nh-hotels-group-a22aaac0",
+      "source": "https://www.nh-collection.com/en/hotel/nh-collection-barcelona-constanza",
+      "note": "Source 69 Deu i Mata matches NH Collection Constanza 69-99; preserve this property-address alias only, no global allowance. Retrieved Overture contact has the exact Constanza property URL and phone 932811500.",
+      "allowed_reasons": [
+        "umbrella_brand"
+      ]
+    },
+    {
+      "id": "70fee6c3-2a24-4869-a434-b21e8d9770d8",
+      "name": "Eurostars Hotels",
+      "slug": "eurostars-hotels-8d9770d8",
+      "source": "https://www.eurostarshotels.com/Collection/files/eurostars%20hotels%202010-2011.pdf",
+      "note": "Eurostars Lex / Ikonik Lex: source address Buenos Aires 49-51 and phone 933318679 both match the named property.",
+      "allowed_reasons": [
+        "umbrella_brand"
+      ]
+    },
+    {
+      "id": "87e98f28-4308-47a3-9259-467e8914558e",
+      "name": "Eurostars Hotels",
+      "slug": "eurostars-hotels-8914558e",
+      "source": "https://www.eurostarshotels.co.uk/dorma-ramblas-boqueria.html",
+      "note": "Dorma / Eurostars Ramblas Boqueria: exact 91-93 Rambla de Sant Josep and 933435461 phone match.",
+      "allowed_reasons": [
+        "umbrella_brand"
+      ]
+    },
+    {
+      "id": "dd2721e1-1692-4445-a6c6-5e187fb3c794",
+      "name": "Gargallo Hotels",
+      "slug": "gargallo-hotels-7fb3c794",
+      "source": "https://www.casalitbarcelona.com/IT/contatti.html",
+      "note": "Casa Lit Barcelona: exact Arc del Teatre 58; source phone 934517923 corroborated by the Barcelona hotel guild programme https://mesqhotels.cat/wp-content/uploads/2026/06/OR-STH-Programa-Online-2026-2.pdf .",
+      "allowed_reasons": [
+        "umbrella_brand"
+      ]
+    },
+    {
+      "id": "0293e326-bd52-4fdd-b74c-221b18d26e78",
+      "name": "Dorchester Collection",
+      "slug": "dorchester-collection-18d26e78",
+      "source": "https://www.dorchestercollection.com/fr/paris/hotel-plaza-athenee",
+      "note": "Plaza Athenee: exact 25 Avenue Montaigne property address, distinct from the London group office.",
+      "allowed_reasons": [
+        "umbrella_brand"
+      ]
+    },
+    {
+      "id": "78187d5c-3f13-4dba-9af0-68c6fbbfc53d",
+      "name": "Dorchester Collection",
+      "slug": "dorchester-collection-fbbfc53d",
+      "source": "https://media.dorchestercollection.com/wp-content/uploads/2025/10/98f471598f7754d5fd9e2358e3fea650.pdf",
+      "note": "Hotel Eden: exact Via Ludovisi 49 property address, distinct from the London group office.",
+      "allowed_reasons": [
+        "umbrella_brand"
+      ]
+    }
+  ],
+  "quarantined_records": [
+    {
+      "id": "0af32922-342d-40c9-9e8b-041543d98303",
+      "slug": "eden-hotels-corporate-office-43d98303",
+      "name": "Eden Hotels - Corporate Office",
+      "city_id": "amsterdam",
+      "reason": "corporate_or_sales_office",
+      "group": "Eden",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "36bfd61a-440c-4cb7-8c3a-c5fe5e1631b6",
+      "slug": "the-vincent-hotel-group-5e1631b6",
+      "name": "The Vincent Hotel Group",
+      "city_id": "amsterdam",
+      "reason": "umbrella_brand",
+      "group": "Vincent",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://thevincenthotelgroup.nl/contact/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "ad5505ee-aa2d-46e9-96c0-2e6087a412e4",
+      "slug": "accor-academy-hotel-services-87a412e4",
+      "name": "Accor Academy & Hotel Services",
+      "city_id": "amsterdam",
+      "reason": "corporate_or_sales_office",
+      "group": "Accor",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "c3939359-7138-4c0e-8755-6786db7e8f61",
+      "slug": "win-hotels-group-amsterdam-db7e8f61",
+      "name": "WIN Hotels Group Amsterdam",
+      "city_id": "amsterdam",
+      "reason": "umbrella_brand",
+      "group": "WIN",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.hotelspeconline.com/company/hotelgroup/12729"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "c3d84942-29cb-4461-a7c4-115d71212baa",
+      "slug": "intercontinental-crowne-plaza-holiday-hotels-reservation-71212baa",
+      "name": "Intercontinental Crowne Plaza Holiday Hotels Reservation",
+      "city_id": "amsterdam",
+      "reason": "corporate_or_sales_office",
+      "group": "IHG",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "12ce47cb-4285-41d2-bf33-34d21ca89ed9",
+      "slug": "hotel-1ca89ed9",
+      "name": "ออโรร่า รีสอร์ท สำนักงานใหญ่",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "23071872-a12c-46bf-9806-a10ed598e87f",
+      "slug": "hotel-d598e87f",
+      "name": "ตึกเกษมกิจ สำนักงานใหญ่สีลม",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "Kasemkij",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "3240dbb1-0115-48f8-856c-7497b25b6e82",
+      "slug": "royal-cliff-bangkok-office-b25b6e82",
+      "name": "Royal Cliff Bangkok Office",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "Royal Cliff",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "36e2af59-54bf-4fb6-be96-ce5b780556cb",
+      "slug": "hotel-780556cb",
+      "name": "สยามแมคโคร สำนักงานใหญ่ ธาราพัฒนาการ",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "3bf9abf0-39f4-4f64-9712-ed6f10c1fd56",
+      "slug": "thai-hotel-group-10c1fd56",
+      "name": "Thai Hotel Group",
+      "city_id": "bangkok",
+      "reason": "umbrella_brand",
+      "group": "Thai Hotel Group",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://data.creden.co/company/general/0105563004901"
+      ],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Thai Hotel Group\" \"Gateway\""
+    },
+    {
+      "id": "47c21c5a-e4a2-4348-a44b-cb6c9e5a72d3",
+      "name": "Minor Hotels",
+      "city_id": "bangkok",
+      "slug": "minor-hotels-9e5a72d3",
+      "reason": "umbrella_brand",
+      "group": "Minor",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://www.minorhotelgroup-news.com/eblast/16/edm_7day/"
+      ],
+      "review_note": "Group reservations office on Soi Rubia/Sukhumvit 42; truncated source address does not establish a specific property.",
+      "review_query": "Minor Hotels bangkok"
+    },
+    {
+      "id": "49a71a43-f424-4187-87db-7c6168f41d3a",
+      "slug": "hyatt-thailand-68f41d3a",
+      "name": "Hyatt Thailand",
+      "city_id": "bangkok",
+      "reason": "loyalty_program",
+      "group": "Hyatt",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://page.line.me/hyatt_thailand"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "56de6238-3cea-4ae3-ad6f-ba9937b48723",
+      "slug": "grand-dimond-37b48723",
+      "name": "Grand Dimond สำนักงานใหญ่ หลักสี่",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "6b249c95-4fae-497b-8349-b75bb2cfa6e3",
+      "slug": "nnr-hotels-international-thailand-co-ltd-b2cfa6e3",
+      "name": "NNR Hotels International (Thailand) Co., Ltd.",
+      "city_id": "bangkok",
+      "reason": "umbrella_brand",
+      "group": "NNR Nishitetsu",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.linkedin.com/company/nnr-h/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "76dbb99f-5087-4918-8b8c-399c56f2daea",
+      "slug": "santhiya-resort-spa-bangkok-office-56f2daea",
+      "name": "Santhiya Resort & Spa Bangkok Office",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "Santhiya",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "8c2de276-4630-48f5-9206-49b50b046622",
+      "name": "Best Western Asia",
+      "city_id": "bangkok",
+      "slug": "best-western-asia-0b046622",
+      "reason": "umbrella_brand",
+      "group": "Best Western",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.travel-impact-newswire.com/wp-content/uploads/2013/01/ATF-2013-Sellers.pdf"
+      ],
+      "review_note": "Tourism trade directory identifies the Asia office at Gaysorn Place, Ploenchit; source is a regional brand page, not a named hotel.",
+      "review_query": "Best Western Asia bangkok"
+    },
+    {
+      "id": "9d6f8756-2d73-4268-9c1f-3b15fc2f1202",
+      "slug": "bw-samui-bayview-samui-laguna-resort-bkk-office-fc2f1202",
+      "name": "BW Samui Bayview & Samui Laguna Resort Bkk office",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "Best Western",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "b71ea1da-2ce3-4b7b-b6af-bf62d3f50b5e",
+      "slug": "hotel-d3f50b5e",
+      "name": "ระบบบริหารโรงแรมครบวงจร",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "bc89cb40-a364-436c-b6de-db2cbb4238cd",
+      "slug": "minor-hotels-regional-office-bangkok-bb4238cd",
+      "name": "Minor Hotels Regional Office Bangkok",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "Minor",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "c89155e2-2792-47ea-91a9-360621321a44",
+      "slug": "nongnooch-village-bangkok-office-21321a44",
+      "name": "Nongnooch Village - Bangkok Office",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "Nongnooch",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "ca612679-716b-46f0-b805-60e8dd1d0cfb",
+      "slug": "the-griffin-hotel-management-dd1d0cfb",
+      "name": "The Griffin Hotel Management",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "Griffin",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "cf6af3bc-e67a-4ef6-9bf2-3ebb7db501b5",
+      "slug": "fortune-hotel-group-7db501b5",
+      "name": "Fortune Hotel Group โรงแรมในเครือ ฟอร์จูน กรุ๊ป",
+      "city_id": "bangkok",
+      "reason": "umbrella_brand",
+      "group": "Fortune",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.fortunehotelgroup.com/en/contact-us/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "cf86a724-bd95-44f3-83e2-19e2c2d6f313",
+      "slug": "club-med-bangkok-office-c2d6f313",
+      "name": "Club Med Bangkok Office",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "Club Med",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "e170aa8b-4e1b-4127-bd52-eca53688a975",
+      "slug": "mida-hospitality-group-hotel-management-3688a975",
+      "name": "Mida Hospitality Group Hotel Management",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "Mida",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "e526ad1e-1fc0-4965-afaa-0e6408e68d44",
+      "slug": "h-hotel-plus-08e68d44",
+      "name": "H+ Hotel Plus ทีมบริหารโรงแรมมืออาชีพ",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "f5eced20-ffc2-407f-b75a-8975e67e4a91",
+      "slug": "the-tongsai-bay-bangkok-office-e67e4a91",
+      "name": "The Tongsai Bay Bangkok Office",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "Tongsai Bay",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "f6e0038c-ed02-4f02-b8d6-15f063d6671c",
+      "slug": "chada-hotel-group-63d6671c",
+      "name": "Chada Hotel Group",
+      "city_id": "bangkok",
+      "reason": "umbrella_brand",
+      "group": "Chada",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.chadahotelgroup.com/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "f8f3cc95-6290-451a-8acb-02f01f9989d0",
+      "slug": "veranda-resort-spa-bkk-sales-office-1f9989d0",
+      "name": "Veranda Resort & Spa, BKK Sales Office",
+      "city_id": "bangkok",
+      "reason": "corporate_or_sales_office",
+      "group": "Veranda",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "14ca40b9-d93f-47bd-9e9c-6f57d7289c64",
+      "slug": "gestion-hotelera-sunotel-s-l-d7289c64",
+      "name": "GESTIÓN HOTELERA SUNOTEL S.L.",
+      "city_id": "barcelona",
+      "reason": "corporate_or_sales_office",
+      "group": "Sunotel",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "2a8ac27b-6771-4448-814d-178df64375f8",
+      "slug": "acta-hotels-central-office-f64375f8",
+      "name": "Acta Hotels - Central Office",
+      "city_id": "barcelona",
+      "reason": "corporate_or_sales_office",
+      "group": "Acta",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "47407b2c-5afc-43e2-8a65-7834c710cdbc",
+      "slug": "sb-hotels-headquarters-c710cdbc",
+      "name": "SB Hotels Headquarters",
+      "city_id": "barcelona",
+      "reason": "corporate_or_sales_office",
+      "group": "SB Hotels",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "5d6c27eb-0de6-4844-80de-e9f641dfb057",
+      "slug": "marriott-hotels-international-41dfb057",
+      "name": "Marriott Hotels International",
+      "city_id": "barcelona",
+      "reason": "umbrella_brand",
+      "group": "Marriott",
+      "review_status": "uncertain_quarantine",
+      "sources": [],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Marriott Hotels International\" \"Carrer Gran de Gràcia, 53\""
+    },
+    {
+      "id": "718de33e-796b-4dee-a5a8-e387b7f2b253",
+      "slug": "marriott-bonvoy-b7f2b253",
+      "name": "Marriott Bonvoy",
+      "city_id": "barcelona",
+      "reason": "loyalty_program",
+      "group": "Marriott",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.marriott.com/loyalty/terms/default.mi"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "97d2cb76-5bbf-4d29-946f-0c4191aeb385",
+      "slug": "accor-hoteles-espana-91aeb385",
+      "name": "Accor Hoteles España",
+      "city_id": "barcelona",
+      "reason": "umbrella_brand",
+      "group": "Accor",
+      "review_status": "uncertain_quarantine",
+      "sources": [],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Accor Hoteles España\" \"Calle Fructuos Gelabert, 2\""
+    },
+    {
+      "id": "a85f895a-5bad-43e7-b565-a30be1deda6a",
+      "name": "Eurostars Hotel Company",
+      "city_id": "barcelona",
+      "slug": "eurostars-hotel-company-e1deda6a",
+      "reason": "umbrella_brand",
+      "group": "Hotusa",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.eurostarshotels.co.uk/legal-warning.html"
+      ],
+      "review_note": "Company legal address Mallorca 351 matches the source exactly.",
+      "review_query": "Eurostars Hotel Company barcelona"
+    },
+    {
+      "id": "b0dbb166-4806-4dae-9362-4d2592014af5",
+      "slug": "sercotel-hotel-group-92014af5",
+      "name": "Sercotel Hotel Group",
+      "city_id": "barcelona",
+      "reason": "umbrella_brand",
+      "group": "Sercotel",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.sercotelhotelgroup.com/aviso-legal/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "b80571e3-39d2-4ee6-817e-619bce0f2578",
+      "name": "H10 Hotels",
+      "city_id": "barcelona",
+      "slug": "h10-hotels-ce0f2578",
+      "reason": "umbrella_brand",
+      "group": "H10",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.h10horizonscollection.com/es/condiciones-contratacion"
+      ],
+      "review_note": "Corporate legal address Numancia 185, first floor matches the source exactly.",
+      "review_query": "H10 Hotels barcelona"
+    },
+    {
+      "id": "e4fe1b9d-2178-4cae-9bb3-0ecc37631350",
+      "name": "Hotusa Hotels",
+      "city_id": "barcelona",
+      "slug": "hotusa-hotels-37631350",
+      "reason": "umbrella_brand",
+      "group": "Hotusa",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.eurostarshotels.com/Collection/files/eurostars%20hotels%202010-2011.pdf"
+      ],
+      "review_note": "Historic group contact at Princesa 58 principal; distinct from the individual properties in its catalogue.",
+      "review_query": "Hotusa Hotels barcelona"
+    },
+    {
+      "id": "fae86948-22b1-4803-b2a9-51c369833803",
+      "name": "Grupo Hotelero Gargallo",
+      "city_id": "barcelona",
+      "slug": "grupo-hotelero-gargallo-69833803",
+      "reason": "umbrella_brand",
+      "group": "unresolved",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.gargallo-hotels.com/templates/cadenas/corporativaair/images/hotels/gargallo-hotels/informacion_financiera.pdf"
+      ],
+      "review_note": "Corporate financial document identifies Via Laietana 23, fourth floor; Casa Lit property alias is retained separately.",
+      "review_query": "Grupo Hotelero Gargallo barcelona"
+    },
+    {
+      "id": "01ded11a-b1c6-4eab-be07-11f3f260be3e",
+      "slug": "marriott-international-mea-continent-office-emaar-square-f260be3e",
+      "name": "Marriott International, MEA Continent Office, Emaar Square",
+      "city_id": "dubai",
+      "reason": "corporate_or_sales_office",
+      "group": "Marriott",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "2c63810f-c002-4495-8920-7bad7cd68454",
+      "slug": "byblos-hospitality-group-7cd68454",
+      "name": "Byblos Hospitality Group",
+      "city_id": "dubai",
+      "reason": "umbrella_brand",
+      "group": "Byblos",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://bybloshospitality.com/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "5ea90fcc-d34a-4dab-b6e3-1f85e0b44523",
+      "slug": "byblos-hospitality-group-e0b44523",
+      "name": "Byblos Hospitality Group",
+      "city_id": "dubai",
+      "reason": "umbrella_brand",
+      "group": "Byblos",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://bybloshospitality.com/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "cbace57b-40ad-404c-97d8-b6614676e6ce",
+      "slug": "al-hayat-group-of-hotels-sharjah-4676e6ce",
+      "name": "Al Hayat Group of Hotels Sharjah",
+      "city_id": "dubai",
+      "reason": "umbrella_brand",
+      "group": "Al Hayat",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://www.linkedin.com/posts/al-hayat-hotel-74296624b_sharjah-uae-special-offer-al-hayat-activity-6986305946754924545-VJxT"
+      ],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Al Hayat Group of Hotels Sharjah\" \"dubai\""
+    },
+    {
+      "id": "ce1ea7b5-4992-4d61-922f-d992e974216c",
+      "slug": "intercontinental-hotel-group-accommodation-e974216c",
+      "name": "Intercontinental Hotel Group Accommodation",
+      "city_id": "dubai",
+      "reason": "umbrella_brand",
+      "group": "IHG",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://www.bayut.com/property-market-analysis/transactions/rent/apartments/dubai/dubai-silicon-oasis-dso/intercontinental-hotel-group-accommodation/"
+      ],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Intercontinental Hotel Group Accommodation\" \"Dubai Silicon Oasis\""
+    },
+    {
+      "id": "31ddb6ee-e410-41a4-bb9a-15b49a3318d4",
+      "slug": "discovery-hotel-management-9a3318d4",
+      "name": "Discovery Hotel Management",
+      "city_id": "lisbon",
+      "reason": "corporate_or_sales_office",
+      "group": "Discovery",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.dhmportugal.com/contactos/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "34c1905f-5367-4b79-8255-5ee3dfd17cd3",
+      "slug": "euroconfort-hotel-services-dfd17cd3",
+      "name": "Euroconfort-Hotel Services",
+      "city_id": "lisbon",
+      "reason": "corporate_or_sales_office",
+      "group": "Euroconfort",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://files.diariodarepublica.pt/gratuitos/3s/1993/12/1993d304s003.pdf"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "b6ae4207-1e3a-4fbf-892e-28a0e1e94deb",
+      "slug": "browns-hotel-group-e1e94deb",
+      "name": "Browns Hotel Group",
+      "city_id": "lisbon",
+      "reason": "umbrella_brand",
+      "group": "Browns",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://www.brownshotelgroup.com/en/"
+      ],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Browns Hotel Group\" \"Rua dos Sapateiros\""
+    },
+    {
+      "id": "b9895e75-e4e6-45c2-8c24-fa843b17e531",
+      "slug": "emprego-real-hotels-group-3b17e531",
+      "name": "Emprego Real Hotels Group",
+      "city_id": "lisbon",
+      "reason": "umbrella_brand",
+      "group": "Real Hotels",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.realhotelsgroup.com/pt-pt/carreiras/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "ca6ca400-2334-4cf2-9ba5-3e9ec2bfdeae",
+      "slug": "dhm-discovery-hotel-management-c2bfdeae",
+      "name": "DHM - Discovery Hotel Management",
+      "city_id": "lisbon",
+      "reason": "corporate_or_sales_office",
+      "group": "Discovery",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.dhmportugal.com/contactos/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "04cd46c7-b441-4c24-85f7-73d4126bf5c0",
+      "slug": "london-hotel-reservation-centre-126bf5c0",
+      "name": "London Hotel Reservation Centre",
+      "city_id": "london",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "12659b77-2066-4bc6-997d-1abf9fd8137f",
+      "slug": "accor-london-9fd8137f",
+      "name": "Accor London",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "Accor",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://www.sevenoaks.gov.uk/download/downloads/id/28/hotel_futures_study_2007_update.pdf"
+      ],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Accor London\" \"255 Hammersmith Rd\""
+    },
+    {
+      "id": "14f6e4ac-ca44-4746-9e9e-0ec8c535c061",
+      "slug": "london-hotel-group-c535c061",
+      "name": "London Hotel Group",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "London Hotel Group",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://lhg.co.uk/about-us/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "29ba9e2b-ffa2-469a-afee-cdd137ccaafe",
+      "slug": "maybourne-hotel-group-37ccaafe",
+      "name": "Maybourne Hotel Group",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "Maybourne",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://find-and-update.company-information.service.gov.uk/company/03669284/filing-history?page=3"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "313c5bcd-b681-4b75-952d-c7b060b7ec28",
+      "slug": "resident-hotels-hq-60b7ec28",
+      "name": "Resident Hotels HQ",
+      "city_id": "london",
+      "reason": "corporate_or_sales_office",
+      "group": "Resident",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "360b0207-8a13-42d2-acca-890c1476efb6",
+      "slug": "rainbird-hq-1476efb6",
+      "name": "Rainbird Hq",
+      "city_id": "london",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "46d322a7-b917-4fd6-8816-7c3f75d6f595",
+      "slug": "clermont-hotel-group-75d6f595",
+      "name": "Clermont Hotel Group",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "Clermont",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.clermonthotel.group/about-us"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "5165cc87-d35c-4358-8616-fe82e537eb0f",
+      "slug": "sofitel-hotels-international-reservations-e537eb0f",
+      "name": "Sofitel Hotels International Reservations",
+      "city_id": "london",
+      "reason": "corporate_or_sales_office",
+      "group": "Accor",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "5a5d6033-294a-4b0c-a01e-0aa6b53f7ac8",
+      "slug": "concorde-hotels-international-b53f7ac8",
+      "name": "Concorde Hotels International",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "Concorde",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://www.bizseek.co.uk/concorde-hotels-international_2q-020-7630-1704"
+      ],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence. Directory corroborates name/address but does not establish a specific hotel.",
+      "review_query": "\"Concorde Hotels International\" \"35-37 Grosvenor Gardens\""
+    },
+    {
+      "id": "60c5d54e-a9c4-430c-a270-6908c8909551",
+      "slug": "arora-holdings-c8909551",
+      "name": "Arora Holdings",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "Arora",
+      "review_status": "uncertain_quarantine",
+      "sources": [],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Arora Holdings\" \"2 World Business Centre Heathrow\""
+    },
+    {
+      "id": "75fcf6e3-681f-4063-916d-f8fbe50d8859",
+      "slug": "simply-london-hotel-reservations-e50d8859",
+      "name": "Simply London Hotel Reservations",
+      "city_id": "london",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "89c96123-9b45-41c1-b0db-ecaab2ece0ce",
+      "slug": "premier-club-rewards-london-b2ece0ce",
+      "name": "Premier Club Rewards London",
+      "city_id": "london",
+      "reason": "loyalty_program",
+      "group": "Shaftesbury",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.bizify.co.uk/hotels/london/W2-3DP/premier-club-rewards-london-hotels"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "9392b758-9acd-46fa-8a95-cb3f8dde70ee",
+      "slug": "hyatt-holdings-8dde70ee",
+      "name": "Hyatt Holdings",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "Hyatt",
+      "review_status": "uncertain_quarantine",
+      "sources": [],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Hyatt Holdings\" \"The Courtyard, 7 Francis Grove 6th Floor\""
+    },
+    {
+      "id": "93de18b3-b814-4886-87fc-f075de8de5b5",
+      "name": "Dorchester Collection",
+      "city_id": "london",
+      "slug": "dorchester-collection-de8de5b5",
+      "reason": "umbrella_brand",
+      "group": "Dorchester",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.dorchestercollection.com/media/danphchj/hotel-eden-groups-brochure-2023-dorchester-collection-3.pdf"
+      ],
+      "review_note": "Official brochure identifies corporate office at Lansdowne House, Berkeley Square. Paris and Rome property aliases are separately protected.",
+      "review_query": "Dorchester Collection london"
+    },
+    {
+      "id": "9a07a1e9-359c-4ccd-8000-242587b6cb65",
+      "slug": "splendid-hospitality-group-87b6cb65",
+      "name": "Splendid Hospitality Group",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "Splendid",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://shg.co.uk/group-policies/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "b31d6f66-2b99-40bb-be9d-dc9414867c82",
+      "slug": "sofitel-hotels-international-reservations-14867c82",
+      "name": "Sofitel Hotels International Reservations",
+      "city_id": "london",
+      "reason": "corporate_or_sales_office",
+      "group": "Accor",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "baeafb95-07c8-460d-904e-4637514b579e",
+      "slug": "lords-group-of-hotels-514b579e",
+      "name": "Lords Group of Hotels",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "Lords",
+      "review_status": "uncertain_quarantine",
+      "sources": [],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Lords Group of Hotels\" \"100 College Rd\""
+    },
+    {
+      "id": "be46e6c8-e6b4-42b5-bf3c-540b97ec5f1d",
+      "slug": "crown-group-of-hotels-97ec5f1d",
+      "name": "Crown Group of Hotels",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "Crown",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://crowngroupofhotels.com/contact/"
+      ],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Crown Group of Hotels\" \"36 Great St\""
+    },
+    {
+      "id": "c6f41963-2d03-46b0-b3d8-cc0569bad812",
+      "slug": "marriott-hotels-international-limited-69bad812",
+      "name": "Marriott Hotels International Limited",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "Marriott",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://find-and-update.company-information.service.gov.uk/company/01673907/filing-history?page=6"
+      ],
+      "review_note": "Companies House records 7 Albemarle Street as a former registered office. Historic corporate identity; not evidence of a bookable hotel.",
+      "review_query": "\"Marriott Hotels International Limited\" \"7 Albemarle Street\""
+    },
+    {
+      "id": "cc9089f1-d926-4ee1-9067-820fe9a80247",
+      "slug": "intercontinental-hotels-group-e9a80247",
+      "name": "InterContinental Hotels Group",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "IHG",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.sec.gov/Archives/edgar/data/858446/000165495417004488/0001654954-17-004488-index.html"
+      ],
+      "review_note": "SEC filing identifies the corporate address at Broadwater Park; historic evidence, not a current hotel claim.",
+      "review_query": "\"InterContinental Hotels Group\" \"Broadwater Park\""
+    },
+    {
+      "id": "d1b5bfba-2f43-4113-8102-8756e18a626f",
+      "slug": "marriott-hotels-e18a626f",
+      "name": "Marriott Hotels",
+      "city_id": "london",
+      "reason": "corporate_or_sales_office",
+      "group": "Marriott",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://www.vat-lookup.co.uk/verify/vat_check.php/VATNumber/GB310227363"
+      ],
+      "review_note": "Barnards Inn, 86 Fetter Lane is listed as Marriott Hotels International registered address; no individual bookable property established. Quarantine only this ID.",
+      "review_query": "\"Marriott Hotels\" \"Barnards Inn, 86 Fetter Ln\""
+    },
+    {
+      "id": "d3c0fda7-145b-42ba-aac9-68b4b671f405",
+      "slug": "ramada-international-b671f405",
+      "name": "Ramada International",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "Ramada International (operator unresolved)",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://www.bizseek.co.uk/ramada-international-020-7591-1100"
+      ],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence. Source website points to Marriott; do not attribute this historic corporate record to Wyndham on the brand word alone.",
+      "review_query": "\"Ramada International\" \"Bowater House\""
+    },
+    {
+      "id": "d4a7c4c1-aa3c-4376-8f75-e77540e0c9f9",
+      "slug": "kempinski-global-sales-office-40e0c9f9",
+      "name": "Kempinski Global Sales Office",
+      "city_id": "london",
+      "reason": "corporate_or_sales_office",
+      "group": "Kempinski",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "e3d22076-10af-4639-a156-ccba045fde5d",
+      "slug": "hilton-international-franchise-limited-045fde5d",
+      "name": "Hilton International Franchise Limited",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "Hilton",
+      "review_status": "uncertain_quarantine",
+      "sources": [],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Hilton International Franchise Limited\" \"Maple Ct\""
+    },
+    {
+      "id": "e8d9699f-3ba9-4dce-9328-4d429cd25ff1",
+      "slug": "pphe-hotel-group-9cd25ff1",
+      "name": "PPHE Hotel Group",
+      "city_id": "london",
+      "reason": "umbrella_brand",
+      "group": "PPHE",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.pphe.com/contact-us"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "03e64bab-5c66-4139-8feb-4c23fa9290b0",
+      "slug": "washington-hotel-corporation-fa9290b0",
+      "name": "Washington Hotel Corporation",
+      "city_id": "new_york",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "105ffbdf-49e9-4e25-9e36-9ec96021373e",
+      "slug": "associated-hotel-services-6021373e",
+      "name": "Associated Hotel Services",
+      "city_id": "new_york",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "10f21308-fa85-4601-b8e4-e10332c9bb8d",
+      "slug": "real-hospitality-group-nyc-32c9bb8d",
+      "name": "Real Hospitality Group NYC",
+      "city_id": "new_york",
+      "reason": "umbrella_brand",
+      "group": "Real Hospitality",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.co.worcester.md.us/sites/default/files/2023-10/081820_0.pdf"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "1bff1d17-1e52-474e-9501-32bff9006581",
+      "slug": "morgans-hotel-group-f9006581",
+      "name": "Morgans Hotel Group",
+      "city_id": "new_york",
+      "reason": "umbrella_brand",
+      "group": "Morgans",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.sec.gov/Archives/edgar/data/1342126/0001047469-06-001175-index.htm"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "3cde3e89-aa7f-4d32-978b-f97694ebb7ff",
+      "slug": "denihan-hospitality-group-94ebb7ff",
+      "name": "Denihan Hospitality Group",
+      "city_id": "new_york",
+      "reason": "umbrella_brand",
+      "group": "Denihan",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.sps.nyu.edu/content/dam/nyusps/emailblast/a1718-hospconf/08/AdvanceRelease_FullAttendeeList_05_25_2018.pdf"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "3cdf0f14-3352-4e07-85e5-10aefbbd4ef6",
+      "slug": "api-hotel-reservations-fbbd4ef6",
+      "name": "API Hotel Reservations",
+      "city_id": "new_york",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "5ba40dd9-c6ed-46c9-9810-625de643f123",
+      "slug": "sonder-hq-new-york-city-e643f123",
+      "name": "Sonder Hq - New York City",
+      "city_id": "new_york",
+      "reason": "corporate_or_sales_office",
+      "group": "Sonder",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "7360552e-4f8f-4d3a-8017-d6b0602ba170",
+      "slug": "mandarin-oriental-hotel-group-602ba170",
+      "name": "Mandarin Oriental Hotel Group",
+      "city_id": "new_york",
+      "reason": "umbrella_brand",
+      "group": "Mandarin Oriental",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://photos.mandarinoriental.com/is/content/MandarinOriental/corporate-08annualReport"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "7a54a925-2001-4ba1-9494-3cd61a0344a7",
+      "slug": "ultimate-resort-holdings-1a0344a7",
+      "name": "Ultimate Resort Holdings",
+      "city_id": "new_york",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "942389df-f0b3-4c80-8a31-457dc7ff5c95",
+      "slug": "bridgeton-holdings-c7ff5c95",
+      "name": "Bridgeton Holdings",
+      "city_id": "new_york",
+      "reason": "umbrella_brand",
+      "group": "Bridgeton",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://commercialobserver.com/2023/09/riyad-bank-refinances-tribeca-hotel-with-60m-loan/"
+      ],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Bridgeton Holdings\" \"77 Walker St\""
+    },
+    {
+      "id": "b5126101-7783-4d74-9378-6f10cbd6fc64",
+      "slug": "hyatt-corporation-cbd6fc64",
+      "name": "Hyatt Corporation",
+      "city_id": "new_york",
+      "reason": "umbrella_brand",
+      "group": "Hyatt",
+      "review_status": "uncertain_quarantine",
+      "sources": [],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Hyatt Corporation\" \"33 W 55th St\""
+    },
+    {
+      "id": "d1af7e4d-2a3c-4219-ae3a-4ea47f2d2d28",
+      "slug": "marriott-hq-7f2d2d28",
+      "name": "Marriott HQ",
+      "city_id": "new_york",
+      "reason": "corporate_or_sales_office",
+      "group": "Marriott",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "d5c2a056-4fd7-49f3-98e7-d2788d788aa6",
+      "slug": "marriott-international-8d788aa6",
+      "name": "Marriott International",
+      "city_id": "new_york",
+      "reason": "umbrella_brand",
+      "group": "Marriott",
+      "review_status": "uncertain_quarantine",
+      "sources": [],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Marriott International\" \"45-20 Astoria Blvd S\""
+    },
+    {
+      "id": "e43e58e7-05ff-4714-98a2-92269b445e0e",
+      "slug": "mint-house-corporate-9b445e0e",
+      "name": "Mint House Corporate",
+      "city_id": "new_york",
+      "reason": "umbrella_brand",
+      "group": "Mint House",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://apps.dfi.wi.gov/apps/CorpSearch/Details.aspx?entityID=M108505&hash=1967821712&q=M108505&searchFunctionID=6539a482-4a1d-42e0-925c-ebebb3068e15&type=Simple"
+      ],
+      "review_note": "State registry identifies 25 West 39th Street, Suite 700 as principal office, matching this corporate listing.",
+      "review_query": "\"Mint House Corporate\" \"25 W 39th St  Ste 700\""
+    },
+    {
+      "id": "f4d345ba-224f-41c7-80e8-f87a8a7fd831",
+      "slug": "marriott-hotel-services-8a7fd831",
+      "name": "Marriott Hotel Services",
+      "city_id": "new_york",
+      "reason": "corporate_or_sales_office",
+      "group": "Marriott",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "2472082e-bb7f-4702-afdf-514927aa41f3",
+      "name": "Groupe Hotelier Les Grillons",
+      "city_id": "paris",
+      "slug": "groupe-hotelier-les-grillons-27aa41f3",
+      "reason": "umbrella_brand",
+      "group": "Les Grillons",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://annuaire-entreprises.data.gouv.fr/etablissement/51840126000022"
+      ],
+      "review_note": "Registry identifies headquarters, but historic hotel activity also exists at 60 Rue Sedaine (Hotel Le Grillon Sedaine / Bourgogne). Cannot distinguish property alias from company record. Exclude pending verification; not a confirmed non-hotel.",
+      "review_query": "Groupe Hotelier Les Grillons paris"
+    },
+    {
+      "id": "2658d331-3862-42e8-bcc0-ce8f84eac519",
+      "slug": "regetel-hotel-management-84eac519",
+      "name": "Regetel Hôtel Management",
+      "city_id": "paris",
+      "reason": "corporate_or_sales_office",
+      "group": "Regetel",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "59c933ba-932c-442b-8b98-fdcfb2443eaa",
+      "slug": "peninsula-paris-hotel-management-sarl-b2443eaa",
+      "name": "Peninsula Paris Hotel Management Sarl",
+      "city_id": "paris",
+      "reason": "corporate_or_sales_office",
+      "group": "Peninsula",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "5c58ba36-1404-4b2d-825d-4156d1a5375d",
+      "slug": "warwick-international-hotels-d1a5375d",
+      "name": "Warwick International Hotels",
+      "city_id": "paris",
+      "reason": "umbrella_brand",
+      "group": "Warwick",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://api-avis-situation-sirene.insee.fr/identification/pdf/33473680800018"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "7d6ffcb5-49af-4d82-a92a-e27ef4ed3e2f",
+      "slug": "luxury-hotels-international-f4ed3e2f",
+      "name": "Luxury Hotels International",
+      "city_id": "paris",
+      "reason": "umbrella_brand",
+      "group": "Marriott",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.bodacc.fr/telechargements/COMMERCIALES/PDF/C/BODACC-C_20150086_0001_p000.pdf"
+      ],
+      "review_note": "BODACC identifies 11/15 Quai de Dion Bouton as company headquarters; historic corporate identity, not a hotel.",
+      "review_query": "\"Luxury Hotels International\" \"11 Quai de Dion Bouton\""
+    },
+    {
+      "id": "b909e498-b100-46aa-b14e-093f4a53dcc0",
+      "slug": "all-accor-4a53dcc0",
+      "name": "ALL Accor",
+      "city_id": "paris",
+      "reason": "loyalty_program",
+      "group": "Accor",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://all.accor.com/a/en/loyalty-program/accor-live-limitless-hotel-loyalty-program.html"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "d8b4ddd5-e0ed-47b8-803f-bc5ad18c4843",
+      "slug": "louvre-hotels-group-d18c4843",
+      "name": "Louvre Hotels Group",
+      "city_id": "paris",
+      "reason": "umbrella_brand",
+      "group": "Louvre",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://corporate.louvrehotels.com/fr-fr/cgv-conditions-generales-vente/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "e584f19d-3467-4248-af3a-998133a1fd7d",
+      "slug": "hotel-mercure-paris-la-defense-service-reservations-33a1fd7d",
+      "name": "Hôtel Mercure Paris la Defense Service Reservations",
+      "city_id": "paris",
+      "reason": "corporate_or_sales_office",
+      "group": "Accor",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "e8bff2a2-532f-485c-aca1-a8192486a413",
+      "name": "Eurostars France",
+      "city_id": "paris",
+      "slug": "eurostars-france-2486a413",
+      "reason": "umbrella_brand",
+      "group": "Hotusa",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.bodacc.fr/telechargements/COMMERCIALES/PDF/C/BODACC-C_20090073_0001_p000.pdf"
+      ],
+      "review_note": "Historic registered office at 44 Rue du Temple; not a named hotel.",
+      "review_query": "Eurostars France paris"
+    },
+    {
+      "id": "2b8f4a45-cd51-4e06-b4e9-3f0bd12d28ff",
+      "slug": "hilton-italia-spa-d12d28ff",
+      "name": "Hilton Italia SPA",
+      "city_id": "rome",
+      "reason": "umbrella_brand",
+      "group": "Hilton",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://www.impresaitalia.info/kk04586572/hilton-italia-spa/roma.aspx"
+      ],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Hilton Italia SPA\" \"Via Cola di Rienzo, 203\""
+    },
+    {
+      "id": "4cf2c378-defa-4ad0-aaf7-2af26e496421",
+      "name": "Eurostars Italia SRL",
+      "city_id": "rome",
+      "slug": "eurostars-italia-srl-6e496421",
+      "reason": "umbrella_brand",
+      "group": "Hotusa",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://saint-paul.hotelinroma.com/location.html"
+      ],
+      "review_note": "Possible Saint Paul property alias, but source address 45 conflicts with hotel 43 and the source URL stpaul.it does not establish the property. Withheld pending exact identity verification.",
+      "review_query": "Eurostars Italia SRL rome"
+    },
+    {
+      "id": "d90c5c16-96a1-4890-9ae2-753bfe2fe3ce",
+      "slug": "roscioli-hotels-group-fe2fe3ce",
+      "name": "Roscioli Hotels Group",
+      "city_id": "rome",
+      "reason": "umbrella_brand",
+      "group": "Roscioli",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.rosciolihotels.it/portals/1103/media/1b1f1e3b-a999-4e39-be24-ff55b695b25f.pdf"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "04459b91-9b3f-4762-8e3a-28b00096e771",
+      "slug": "the-ritz-carlton-hotel-co-sales-marketing-0096e771",
+      "name": "The Ritz-Carlton Hotel Co Sales & Marketing",
+      "city_id": "singapore",
+      "reason": "corporate_or_sales_office",
+      "group": "Marriott",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "21dd1b45-6f26-4a71-9247-87b2f56164aa",
+      "slug": "hilton-international-f56164aa",
+      "name": "Hilton International",
+      "city_id": "singapore",
+      "reason": "umbrella_brand",
+      "group": "Hilton",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://www.bizapore.com/en/hilton-international-asia-pacific-pte-6737-7780"
+      ],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Hilton International\" \"163 Penang Rd\""
+    },
+    {
+      "id": "38d9769f-4e94-4a9b-a587-4b098ae0b824",
+      "name": "Frasers Hospitality",
+      "city_id": "singapore",
+      "slug": "frasers-hospitality-8ae0b824",
+      "reason": "umbrella_brand",
+      "group": "Frasers",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.frasershospitality.com/en/contact-us/"
+      ],
+      "review_note": "Official group contact at Alexandra Point, 438 Alexandra Road; individual properties are listed separately.",
+      "review_query": "Frasers Hospitality singapore"
+    },
+    {
+      "id": "3ada00f7-4cc9-4f14-bdd5-3d1692ce58f3",
+      "slug": "hilton-reservation-worldwide-92ce58f3",
+      "name": "Hilton Reservation Worldwide",
+      "city_id": "singapore",
+      "reason": "corporate_or_sales_office",
+      "group": "Hilton",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "3b50ea5f-b535-4638-914f-d7bf71af07b0",
+      "slug": "beaufort-international-hotels-71af07b0",
+      "name": "Beaufort International Hotels",
+      "city_id": "singapore",
+      "reason": "umbrella_brand",
+      "group": "Beaufort",
+      "review_status": "uncertain_quarantine",
+      "sources": [
+        "https://www.bizapore.com/en/beaufort-international-hotels-singapore-6820-6789"
+      ],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Beaufort International Hotels\" \"79 Anson Rd\""
+    },
+    {
+      "id": "3efee054-cb40-43f6-8353-4de8507249cb",
+      "slug": "pan-pacific-hotels-group-507249cb",
+      "name": "Pan Pacific Hotels Group",
+      "city_id": "singapore",
+      "reason": "umbrella_brand",
+      "group": "Pan Pacific",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://lib.nus.edu.sg/nus_hlc/annrep/pphg22012.pdf"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "6a515412-2684-4fe6-b799-4f22aaa70161",
+      "slug": "marriott-international-inc-aaa70161",
+      "name": "Marriott International Inc.",
+      "city_id": "singapore",
+      "reason": "umbrella_brand",
+      "group": "Marriott",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://spcommreports.ohchr.org/TMResultsBase/DownLoadFile?gId=36222"
+      ],
+      "review_note": "Marriott corporate correspondence uses 2 HarbourFront Place #06-08, matching this regional-office address.",
+      "review_query": "\"Marriott International Inc.\" \"2 Harbourfront Pl\""
+    },
+    {
+      "id": "6d88aa5d-05e1-42da-8e46-6ad1e78e1c09",
+      "slug": "intercontinental-hotels-group-e78e1c09",
+      "name": "Intercontinental Hotels Group",
+      "city_id": "singapore",
+      "reason": "umbrella_brand",
+      "group": "IHG",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.ihgplc.com/en/contact-us/regional-headquarters"
+      ],
+      "review_note": "IHG identifies 230 Victoria Street, Bugis Junction Towers as its regional headquarters.",
+      "review_query": "\"Intercontinental Hotels Group\" \"230 Victoria St\""
+    },
+    {
+      "id": "8fa2461a-f16c-4dca-a5c8-037e6ffa0ec6",
+      "slug": "prince-hotels-resorts-singapore-regional-office-6ffa0ec6",
+      "name": "Prince Hotels & Resorts Singapore Regional Office",
+      "city_id": "singapore",
+      "reason": "corporate_or_sales_office",
+      "group": "Prince",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "9534a261-9416-437c-9cf0-56badc18973c",
+      "slug": "madras-group-of-hotels-dc18973c",
+      "name": "Madras Group Of Hotels",
+      "city_id": "singapore",
+      "reason": "umbrella_brand",
+      "group": "Madras",
+      "review_status": "uncertain_quarantine",
+      "sources": [],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"Madras Group Of Hotels\" \"30 Madras St\""
+    },
+    {
+      "id": "a92b884a-af7a-427f-89db-280534cd8dbd",
+      "slug": "millennium-copthorne-international-34cd8dbd",
+      "name": "Millennium & Copthorne International",
+      "city_id": "singapore",
+      "reason": "umbrella_brand",
+      "group": "Millennium & Copthorne",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://media.millenniumhotels.com/Live/9/A/2/9A2F5B83-EDFF-4567-9C6F-1478CFA3AE2D/Global%20Designated%20Compliance%20Teams%20and%20DPOs.pdf"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "ba0f3778-5d12-499a-bc99-bb4ef0ec2814",
+      "slug": "park-hotel-group-f0ec2814",
+      "name": "Park Hotel Group",
+      "city_id": "singapore",
+      "reason": "umbrella_brand",
+      "group": "Park Hotel Group",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.parkhotelgroup.com/about-us/contact"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "c09f5248-77a0-4b64-a2cd-7378f63afbf6",
+      "slug": "semhotel-management-f63afbf6",
+      "name": "Semhotel Management",
+      "city_id": "singapore",
+      "reason": "umbrella_brand",
+      "group": "Semhotel",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.sembcorp.com/news-and-insights/news/2008/sembcorp-industries-winds-up-inactive-subsidiary/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "c14e23ca-1c53-4565-a8ac-875ee017365e",
+      "slug": "al-asia-hotel-management-e017365e",
+      "name": "Al Asia Hotel Management",
+      "city_id": "singapore",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "e8caf12a-8d0c-42f1-be5e-7b9e0a191d4d",
+      "slug": "robinson-international-hotel-management-0a191d4d",
+      "name": "Robinson International Hotel Management",
+      "city_id": "singapore",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "ec3e3c8e-a3b3-4b50-8094-0d6e4efa70c5",
+      "slug": "aurora-hotels-international-4efa70c5",
+      "name": "Aurora Hotels International",
+      "city_id": "singapore",
+      "reason": "umbrella_brand",
+      "group": "Aurora",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.aurora-hotels.com/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "ecac6a8f-024b-46e3-9dba-6640ef4661f0",
+      "slug": "singapore-meritus-international-hotels-ef4661f0",
+      "name": "Singapore Meritus International Hotels",
+      "city_id": "singapore",
+      "reason": "umbrella_brand",
+      "group": "Meritus",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://ised-isde.canada.ca/cipo/trademark-search/866705?wbdisable=true"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "f227a757-abe9-4501-93eb-30a82db41579",
+      "slug": "mgm-grand-international-2db41579",
+      "name": "MGM Grand International",
+      "city_id": "singapore",
+      "reason": "umbrella_brand",
+      "group": "MGM",
+      "review_status": "uncertain_quarantine",
+      "sources": [],
+      "review_note": "Matching identity is not sufficiently established as an individual hotel. Withheld pending an exact property match; no assertion of fraud or of non-existence.",
+      "review_query": "\"MGM Grand International\" \"290 Orchard Rd\""
+    },
+    {
+      "id": "fe4512ec-c4ea-4ac5-b3cb-47f43fdc2f43",
+      "slug": "club-marriott-3fdc2f43",
+      "name": "Club Marriott",
+      "city_id": "singapore",
+      "reason": "loyalty_program",
+      "group": "Marriott",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.myclubmarriott.com/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "0cbb37cc-d719-4a7e-93f2-e3e7ca56800f",
+      "slug": "constellation-hotel-group-ca56800f",
+      "name": "Constellation Hotel Group",
+      "city_id": "sydney",
+      "reason": "umbrella_brand",
+      "group": "Constellation",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://regorgs.fwc.gov.au/sites/default/files/migration/386/115n-ar2005-313.pdf"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "156284fd-8bfb-4cd5-ba0d-a0fa546229ca",
+      "slug": "accor-reservation-services-546229ca",
+      "name": "Accor Reservation Services",
+      "city_id": "sydney",
+      "reason": "corporate_or_sales_office",
+      "group": "Accor",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "231df416-3d95-4c37-a18e-3eefb2dd0974",
+      "slug": "the-red-star-hotel-group-b2dd0974",
+      "name": "The Red Star Hotel Group",
+      "city_id": "sydney",
+      "reason": "umbrella_brand",
+      "group": "Red Star",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://redstarhotelgroup.com/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "772a9144-b5ae-422a-a9df-813bfaa4fc07",
+      "slug": "japan-hotel-reservations-faa4fc07",
+      "name": "Japan Hotel Reservations",
+      "city_id": "sydney",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "7f409826-57fa-4fcb-967a-a4eb6a5112fa",
+      "slug": "hyatt-regency-sanctuary-cove-sydney-office-6a5112fa",
+      "name": "Hyatt Regency Sanctuary Cove Sydney Office",
+      "city_id": "sydney",
+      "reason": "corporate_or_sales_office",
+      "group": "Hyatt",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "ce99f0f4-fd7f-4701-9469-ea1a02d1ed27",
+      "slug": "nlg-hotel-group-02d1ed27",
+      "name": "NLG Hotel Group",
+      "city_id": "sydney",
+      "reason": "umbrella_brand",
+      "group": "NLG",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://announcements.asx.com.au/asxpdf/20110314/pdf/41xdqpj2hk9hll.pdf"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "d7162d5e-7487-4e78-8dcc-188d156c17c7",
+      "slug": "accor-corporate-office-156c17c7",
+      "name": "Accor Corporate Office",
+      "city_id": "sydney",
+      "reason": "corporate_or_sales_office",
+      "group": "Accor",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "efe3e7dd-024c-4db8-9723-e019dea9236a",
+      "slug": "gallagher-hotel-management-dea9236a",
+      "name": "Gallagher Hotel Management",
+      "city_id": "sydney",
+      "reason": "corporate_or_sales_office",
+      "group": "Gallagher",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "f0ec2551-08d5-4dbe-8155-e4c30576aea3",
+      "slug": "red-star-hotel-group-0576aea3",
+      "name": "Red Star Hotel Group",
+      "city_id": "sydney",
+      "reason": "umbrella_brand",
+      "group": "Red Star",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://redstarhotelgroup.com/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "f39f82e3-3d49-4386-b628-60bceaf41b5a",
+      "slug": "kingfisher-bay-resort-sales-office-eaf41b5a",
+      "name": "Kingfisher Bay Resort Sales Office",
+      "city_id": "sydney",
+      "reason": "corporate_or_sales_office",
+      "group": "Kingfisher",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "01640b06-58cc-4b1e-bca9-855835a64e29",
+      "slug": "hotel-35a64e29",
+      "name": "白馬アルプスホテル東京営業所",
+      "city_id": "tokyo",
+      "reason": "corporate_or_sales_office",
+      "group": "Hakuba Alps",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "022472b7-98ee-433b-abd7-74ac43b1ed2c",
+      "slug": "tokyo-west-hotel-group-43b1ed2c",
+      "name": "東京ウエストホテルグループ（Tokyo-west Hotel Group)",
+      "city_id": "tokyo",
+      "reason": "umbrella_brand",
+      "group": "Tokyo West",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://urban-hotel.jp/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "12ee3218-b746-43b0-990c-74e22f872f9f",
+      "slug": "hotel-2f872f9f",
+      "name": "カヌチャベイリゾート東京営業所",
+      "city_id": "tokyo",
+      "reason": "corporate_or_sales_office",
+      "group": "Kanucha",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "2dd5b45c-40dd-455a-a9b4-5703eec1d9da",
+      "slug": "bay-hotel-group-eec1d9da",
+      "name": "BAY HOTEL Group（ベイホテルグループ）",
+      "city_id": "tokyo",
+      "reason": "umbrella_brand",
+      "group": "BAY HOTEL",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.bay-hotel.jp/eng/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "387f189d-1b0f-47b8-8195-9201d836c6f7",
+      "slug": "hotel-d836c6f7",
+      "name": "ホテル浦島チェーン東京営業所",
+      "city_id": "tokyo",
+      "reason": "corporate_or_sales_office",
+      "group": "Urashima",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "50f06bb4-52ba-4a81-ac2d-746de80fb643",
+      "slug": "hotel-e80fb643",
+      "name": "草津ナウリゾートホテル東京営業所",
+      "city_id": "tokyo",
+      "reason": "corporate_or_sales_office",
+      "group": "Kusatsu Now",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "53347d57-7bba-4d6d-a481-a075292a9abe",
+      "slug": "hotel-292a9abe",
+      "name": "大塚商会ホテルグループ",
+      "city_id": "tokyo",
+      "reason": "umbrella_brand",
+      "group": "Otsuka Shokai",
+      "review_status": "confirmed_web",
+      "sources": [
+        "https://www.otsuka-shokai.co.jp/hotel/"
+      ],
+      "review_note": "Web source identifies the programme/group/office; no individual hotel identified by this listing. Historic sources establish the corporate identity, not current operating status."
+    },
+    {
+      "id": "76faef60-536a-439d-80fc-bacbc1883e33",
+      "slug": "hotel-c1883e33",
+      "name": "ホテルサンバレー那須東京予約センター",
+      "city_id": "tokyo",
+      "reason": "corporate_or_sales_office",
+      "group": "Sunvalley",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "b2123579-4a96-4bf8-bbc7-b5817f1851d7",
+      "slug": "hotel-7f1851d7",
+      "name": "日本の宿古窯東京営業所",
+      "city_id": "tokyo",
+      "reason": "corporate_or_sales_office",
+      "group": "Koyo",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "b75ce1ef-5154-4c20-93e7-07ec4b96ef07",
+      "slug": "hotel-4b96ef07",
+      "name": "あさやホテル東京営業所",
+      "city_id": "tokyo",
+      "reason": "corporate_or_sales_office",
+      "group": "Asaya",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    },
+    {
+      "id": "fa0c78b7-ee79-410c-886a-2d5c0f830d4c",
+      "slug": "hotel-0f830d4c",
+      "name": "ビジネスホテル予約センター",
+      "city_id": "tokyo",
+      "reason": "corporate_or_sales_office",
+      "group": "unresolved",
+      "review_status": "explicit_office_name",
+      "sources": [],
+      "review_note": "Explicit headquarters, management, reservations or sales-office wording in the source name. No hotel/brand allowance overrides it."
+    }
+  ]
+}

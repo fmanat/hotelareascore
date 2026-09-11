@@ -6,28 +6,47 @@
 > resolved history to `docs/adr/` or the dated report it already lives in;
 > don't re-narrate it here.
 
-## NEXT SESSION — Bloc A implemented; owner validation before Bloc B
+## NEXT SESSION — Bloc A accepted; Bloc B implemented, awaiting owner review
 
-**2026-09-11 — Bloc A:** dataset-wide institution exclusions implemented
-(ADR-016), pending owner acceptance. Full 12-city scan: **33,966 → 33,920**
-hotels, **46 exclusions** (confirmed or uncertain; fail closed), **11**
-externally checked tourist-name collisions protected. Existing hotel/score/
-nearby-fact rows and web search/cards/references purged; scores of retained
-hotels unchanged. Quarantined IDs cannot return under a changed name.
-Multilingual ingestion + stale-ETL/export/build guards are in place.
-See [Bloc A report](reports/bloc-a-institutions.md) and its full JSON audit.
-**Do not start Bloc B until the owner validates Bloc A.** C–F remain undone.
-The old 200-hotel proposal now contains 2 removed entries (198 survive);
-the old 214-URL go-live dry-run is obsolete. Cohort reconstruction is Bloc F.
-No indexing flag enabled; no scoring formula change.
-**Production removal NOT confirmed:** commit `1d4e4ef` pushed, all five
-[CI jobs green](https://github.com/fmanat/hotelareascore/actions/runs/34646720383),
-but the live `/hotel/singapore-boys-home-3ba67d6c` still returns HTTP 200
-with its scored page after CI. No Cloudflare deployment check is attached
-to the commit. Available API authentication returns HTTP 403 for the
-`staycontext` Pages project; no connected browser is available. Owner must
-provide project access or deploy the green commit. Treat this as a live
-publication blocker until the old URL and search entry are gone.
+**2026-09-11 — Bloc A accepted by the owner after external counter-audit:**
+46 / 33,966 institutional exclusions, no verified tourist-hotel loss;
+1,825 Home/House and 1,061 hostel names preserved at that checkpoint.
+See [Bloc A report](reports/bloc-a-institutions.md), ADR-016.
+
+**Bloc B implemented on explicit owner instruction (ADR-017):** full 12-city
+scan **33,920 → 33,779**, **141 exclusions** (5 programme-name, 63 office-name,
+73 umbrella-name matches). **26 uncertain identities quarantined**, not
+claimed as confirmed non-hotels; **11 property aliases protected** with
+external evidence. Physical ETL/search/card/reference purge; 38 static hotel
+pages removed. Kept hotel/score/fact values unchanged; A audit preserved.
+Guards at ingestion, validation, publication (also noindex), export and build;
+quarantined IDs/slugs cannot return through renaming. See the complete
+[Bloc B report](reports/bloc-b-brands.md) and JSON city/group/review log.
+
+**Generic attribute signal quantified, NOT activated:** original contacts
+retrieved for all 33,920 records; 24 have no non-empty contact, 91 share exact
+coordinates with another identified same-group record, 158 have an address
+country different from the nominal city. All 158 are MY in Singapore's
+cross-border bbox — not proven bad addresses. OR = 273, AND = 0 before B;
+OR = 269, AND = 0 after B. Incomplete streets and unknown groups reported
+separately. No automatic exclusion on these proxies.
+
+Local validation: **419 tests passed + 1 pre-existing expected failure**,
+including 135 Bloc B tests; typecheck clean, full 15,721-page build and SEO
+assertions passed. Full `make validate` (including remote taxonomy coverage) and dataset
+integrity checks passed across all 12 cities.
+The commit's CI must be green before session closure.
+**C–F remain undone; no later bloc started.** The old 200-entry proposal now
+has 197 surviving identities after A+B; its old 214-URL go-live dry-run is
+obsolete. Cohort reconstruction belongs to F. No indexing/scoring change.
+
+**Production remains an owner-dashboard blocker:** requested live check at
+21:04:20 UTC, repeated **21:14:34 UTC on 2026-09-11**: Singapore Boys' Home
+still serves its scored page with **HTTP 200** after Bloc A commit `1d4e4ef`.
+GitHub exposes no deployment record; this does not prove whether Cloudflare
+started a build. Owner explicitly handles the dashboard. **Do not force a
+Cloudflare trigger, retry or configuration change.** A green GitHub CI does
+not establish production removal; old URL/search disappearance is unverified.
 
 **Correction (2026-09-11, owner):** night mission #3 delivered **only**
 Blocs G/H/I (golden-set expansion, technical debt, pre-launch readiness —

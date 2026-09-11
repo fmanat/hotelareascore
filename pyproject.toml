@@ -24,7 +24,7 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 
 [tool.setuptools.package-data]
-hotelareascore = ["institution_rules.json"]
+hotelareascore = ["institution_rules.json", "brand_rules.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

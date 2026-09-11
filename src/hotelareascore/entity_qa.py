@@ -95,6 +95,7 @@ import re
 import unicodedata
 
 from .institutions import institution_matches
+from .brands import brand_matches
 
 LODGING_KEYWORDS = re.compile(
     r"\b(hotel|hotels|inn|suite|suites|resort|resorts|hostel|hostels|lodge|lodges|guest ?house|"
@@ -283,7 +284,7 @@ def is_likely_non_hotel(name: str | None, hotel_id: str | None = None) -> bool:
     """
     # ADR-016: institutional signals override ALL brand/lodging allowances.
     # Uncertain matches are withheld and logged by ingest, never published.
-    if institution_matches(name, hotel_id):
+    if institution_matches(name, hotel_id) or brand_matches(name, hotel_id):
         return True
     if not name:
         return False

@@ -23,6 +23,7 @@ from .config import City, ETL_DIR, get_city
 from .dedupe import HotelRecord, dedupe_hotels
 from .entity_qa import is_known_bad_geocode, is_likely_non_hotel
 from .institutions import institution_matches
+from .brands import brand_matches
 
 
 def city_dir(release: overture.Release, city: City) -> Path:
@@ -215,6 +216,10 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
         {"id": r[0], "name": r[1], "matches": matches, "action": "exclude_pending_review"}
         for r in hotels_raw_rows if (matches := institution_matches(r[1], r[0]))
     ]
+    brand_excluded = [
+        {"id": r[0], "name": r[1], "matches": matches, "action": "exclude_pending_review"}
+        for r in hotels_raw_rows if (matches := brand_matches(r[1], r[0]))
+    ]
 
     # Known bad-geocode exclusions (owner audit, this session, docs/reports/
     # destination-name-mismatch-audit.md): a different bug class -- real
@@ -288,6 +293,8 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
         "entity_qa_excluded_names": [name for _, name in entity_qa_excluded],
         "institution_excluded_count": len(institution_excluded),
         "institution_exclusions": institution_excluded,
+        "brand_excluded_count": len(brand_excluded),
+        "brand_exclusions": brand_excluded,
         "bad_geocode_excluded_count": len(bad_geocode_excluded),
         "bad_geocode_excluded_names": [name for _, name in bad_geocode_excluded],
         "pois": n_pois,

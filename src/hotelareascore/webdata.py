@@ -14,6 +14,7 @@ from typing import Any
 
 from . import overture, publication
 from .institutions import assert_no_institutions
+from .brands import assert_no_brands
 from .config import DIMENSIONS, ETL_DIR, REPO_ROOT, get_city, load_score_weights
 from .dedupe import haversine_m
 from .reason_codes import compute_reason_codes
@@ -76,6 +77,7 @@ def _fetch_hotels(con, etl_dir: Path) -> list[dict[str, Any]]:
     # Check the whole hotel dataset, including rows with missing scores.
     rows = con.execute("SELECT id, name FROM read_parquet(?)", [str(etl_dir / "hotels.parquet")]).fetchall()
     assert_no_institutions([{"id": r[0], "name": r[1]} for r in rows], context=str(etl_dir))
+    assert_no_brands([{"id": r[0], "name": r[1]} for r in rows], context=str(etl_dir))
     q = f"""
         SELECT h.id, h.name, h.lat, h.lon, h.address_locality, h.address_region, h.address_country,
                h.dedupe_confidence,
@@ -299,6 +301,7 @@ def _city_page_aggregate(
     baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
     rows = con.execute("SELECT id, name FROM read_parquet(?)", [str(hotels_path)]).fetchall()
     assert_no_institutions([{"id": r[0], "name": r[1]} for r in rows], context=f"city aggregate {city_id}")
+    assert_no_brands([{"id": r[0], "name": r[1]} for r in rows], context=f"city aggregate {city_id}")
 
     def linked_slug(name: str, hotel_id: str) -> str | None:
         slug = hotel_slug(name, hotel_id)

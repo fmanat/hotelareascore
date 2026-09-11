@@ -41,13 +41,18 @@ export function institutionMatches(name, hotelId) {
 }
 
 export function checkInstitutionExports(webRoot) {
+  return checkHotelExports(webRoot, institutionMatches, 'Institution');
+}
+
+export function checkHotelExports(webRoot, matcher, label) {
   const failures = [];
   // Include static cards, global/sharded search, city representatives, comparisons.
   function visit(value, file) {
     if (Array.isArray(value)) return value.forEach(v => visit(v, file));
     if (!value || typeof value !== 'object') return;
     if (typeof value.name === 'string' || value.id || value.slug) {
-      const matches = institutionMatches(value.name, value.id ?? value.slug);
+      const matches = matcher(value.name, value.id ?? value.slug);
+      if (!matches.length && value.id && value.slug) matches.push(...matcher(value.name, value.slug));
       if (matches.length) failures.push({ file, id: value.id ?? value.slug, name: value.name, matches });
     }
     for (const [key, child] of Object.entries(value)) {
@@ -61,7 +66,7 @@ export function checkInstitutionExports(webRoot) {
     }
   }
   if (failures.length) {
-    throw new Error(`Institution candidates in web exports; no pages may be built:\n${JSON.stringify(failures, null, 2)}`);
+    throw new Error(`${label} candidates in web exports; no pages may be built:\n${JSON.stringify(failures, null, 2)}`);
   }
 }
 
