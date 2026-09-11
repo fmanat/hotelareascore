@@ -7,18 +7,15 @@
 
 ## Session checkpoint (long-session discipline — overwritten hourly, not accumulated)
 
-**Last updated:** 2026-09-11 05:42 UTC — ~43.5h elapsed since mission
-start (22:05 UTC 2026-09-09), well past the stated ~12h window (flagged
-2026-09-10 14:41/16:05; not re-belaboring further, continuing the
-authorized fallback loop as-is).
+**Last updated:** 2026-09-11 07:19 UTC — ~45h elapsed since mission start
+(22:05 UTC 2026-09-09), well past the ~12h window (flagged repeatedly,
+2026-09-10 14:41/16:05, 2026-09-11 05:42 — continuing the authorized
+fallback loop as-is, not re-flagging every checkpoint from here).
 **Bloc en cours:** none — G, H, I done since 22:40 (2026-09-09). Idle.
-**Poussé sur origin/main:** `ce1c5c3` (checkpoint 16h05). CI green on
+**Poussé sur origin/main:** `c78eeed` (checkpoint 05h42). CI green on
 every commit this session.
-**Probe status:** still healthy whenever actually checked (site confirmed
-200 OK live, just now). More local-network blips overnight (same
-signature as before, both diagnostic features working correctly) —
-`probe-summary.md` current figures: 1698 min of the elapsed window had no
-monitoring coverage (host sleep), longest single gap 243 min.
+**Probe status:** healthy live just now. `probe-summary.md` has current
+gap/blip figures.
 **Reste à faire (ce soir):** rien d'autorisé — cf. "idées non autorisées"
 plus bas pour ce que je ferais avec un go-ahead. Sonde de prod continue en
 tâche de fond, checkpoints horaires continuent.
