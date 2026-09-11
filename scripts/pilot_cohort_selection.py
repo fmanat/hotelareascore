@@ -70,6 +70,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from hotelareascore.accommodation import classify_accommodation
+from hotelareascore.names import present_name
 from hotelareascore.institutions import institution_matches
 from hotelareascore.brands import brand_matches
 from hotelareascore.config import DIMENSIONS, ETL_DIR, load_cities  # noqa: E402
@@ -108,7 +109,7 @@ def load_city_candidates(city_id: str) -> list[dict]:
             SELECT hotel_id, count(*) AS n_facts FROM read_parquet('{facts_path.as_posix()}') GROUP BY hotel_id
         )
         SELECT
-            h.id, h.name, h.address_locality, h.dedupe_confidence, h.taxonomy_primary,
+            h.id, h.name, h.address_locality, h.dedupe_confidence, h.taxonomy_primary, h.brand_name, h.names_json,
             s.confidence, s.balanced_score,
             {', '.join(f's.{d}' for d in DIMENSIONS)},
             coalesce(f.n_facts, 0) AS n_facts,
@@ -119,7 +120,7 @@ def load_city_candidates(city_id: str) -> list[dict]:
         LEFT JOIN facts f ON f.hotel_id = h.id
     """).fetchall()
 
-    cols = ["id", "name", "locality", "dedupe_confidence", "taxonomy_primary", "confidence", "balanced_score"] + list(DIMENSIONS) + \
+    cols = ["id", "name", "locality", "dedupe_confidence", "taxonomy_primary", "brand_name", "names_json", "confidence", "balanced_score"] + list(DIMENSIONS) + \
            ["n_facts", "is_coincident", "is_numeric_name"]
     candidates = []
     for row in rows:
@@ -148,7 +149,7 @@ def load_city_candidates(city_id: str) -> list[dict]:
             continue
         # Gate 12: Latin-script name (docs/seo-policy.md §2, owner decision
         # 2026-09-07) -- stays searchable/scored, just not cohort-eligible.
-        if is_non_latin_name(rec["name"]):
+        if not present_name(rec["name"],rec.get("names_json"))["name_index_eligible"]:
             continue
 
         # Distinctiveness: max absolute deviation from city median across

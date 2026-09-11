@@ -1,1 +1,283 @@
-[{"slug": "fixture-park-hotel-e2e001", "name": "Fixture Park Hotel", "city": "London", "locality": "Camden", "scores": {"walkability_density": 88.0, "transit_access": 74.0, "food_essentials": 82.0, "quietness_proxy": 55.0, "family_convenience": 91.0, "nightlife_access": 40.0}, "balanced_score": 76.0, "confidence": 92.0, "confidence_label": "High", "verdict": "Excellent for walking to everyday places; excellent for family convenience; moderate surrounding activity.", "has_static_page": true, "city_id": "london"}, {"slug": "fixture-transit-hotel-e2e002", "name": "Fixture Transit Hotel", "city": "London", "locality": "Islington", "scores": {"walkability_density": 70.0, "transit_access": 95.0, "food_essentials": 68.0, "quietness_proxy": 42.0, "family_convenience": 30.0, "nightlife_access": 58.0}, "balanced_score": 71.0, "confidence": 88.0, "confidence_label": "High", "verdict": "Excellent for transit access; good for walking to everyday places; active surroundings.", "has_static_page": true, "city_id": "london"}, {"slug": "fixture-quiet-hotel-e2e003", "name": "Fixture Quiet Hotel", "city": "London", "locality": "Richmond", "scores": {"walkability_density": 40.0, "transit_access": 35.0, "food_essentials": 45.0, "quietness_proxy": 92.0, "family_convenience": 60.0, "nightlife_access": 10.0}, "balanced_score": 52.0, "confidence": 81.0, "confidence_label": "High", "verdict": "Excellent for quiet surroundings; limited transit access; quiet surroundings.", "has_static_page": true, "city_id": "london"}, {"slug": "fixture-riverside-hotel-e2e004", "name": "Fixture Riverside Hotel", "city": "Bangkok", "locality": "Bang Rak", "scores": {"walkability_density": 60.0, "transit_access": 55.0, "food_essentials": 85.0, "quietness_proxy": 48.0, "family_convenience": 20.0, "nightlife_access": 75.0}, "balanced_score": 62.0, "confidence": 90.0, "confidence_label": "High", "verdict": "Excellent for restaurants and everyday essentials; active nightlife nearby.", "has_static_page": true, "city_id": "bangkok"}, {"slug": "fixture-paris-hotel-e2e", "name": "Fixture Paris Hotel", "city": "Paris", "city_id": "paris", "locality": "Paris", "has_static_page": true, "scores": {"walkability_density": 75.0, "transit_access": 70.0, "food_essentials": 72.0, "quietness_proxy": 50.0, "family_convenience": 55.0, "nightlife_access": 45.0}, "balanced_score": 70.0, "confidence": 90.0, "confidence_label": "High", "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."}, {"slug": "fixture-rome-hotel-e2e", "name": "Fixture Rome Hotel", "city": "Rome", "city_id": "rome", "locality": "Rome", "has_static_page": true, "scores": {"walkability_density": 75.0, "transit_access": 70.0, "food_essentials": 72.0, "quietness_proxy": 50.0, "family_convenience": 55.0, "nightlife_access": 45.0}, "balanced_score": 70.0, "confidence": 90.0, "confidence_label": "High", "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."}, {"slug": "fixture-barcelona-hotel-e2e", "name": "Fixture Barcelona Hotel", "city": "Barcelona", "city_id": "barcelona", "locality": "Barcelona", "has_static_page": true, "scores": {"walkability_density": 75.0, "transit_access": 70.0, "food_essentials": 72.0, "quietness_proxy": 50.0, "family_convenience": 55.0, "nightlife_access": 45.0}, "balanced_score": 70.0, "confidence": 90.0, "confidence_label": "High", "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."}, {"slug": "fixture-amsterdam-hotel-e2e", "name": "Fixture Amsterdam Hotel", "city": "Amsterdam", "city_id": "amsterdam", "locality": "Amsterdam", "has_static_page": true, "scores": {"walkability_density": 75.0, "transit_access": 70.0, "food_essentials": 72.0, "quietness_proxy": 50.0, "family_convenience": 55.0, "nightlife_access": 45.0}, "balanced_score": 70.0, "confidence": 90.0, "confidence_label": "High", "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."}, {"slug": "fixture-lisbon-hotel-e2e", "name": "Fixture Lisbon Hotel", "city": "Lisbon", "city_id": "lisbon", "locality": "Lisbon", "has_static_page": true, "scores": {"walkability_density": 75.0, "transit_access": 70.0, "food_essentials": 72.0, "quietness_proxy": 50.0, "family_convenience": 55.0, "nightlife_access": 45.0}, "balanced_score": 70.0, "confidence": 90.0, "confidence_label": "High", "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."}, {"slug": "fixture-sydney-hotel-e2e", "name": "Fixture Sydney Hotel", "city": "Sydney", "city_id": "sydney", "locality": "Sydney", "has_static_page": true, "scores": {"walkability_density": 75.0, "transit_access": 70.0, "food_essentials": 72.0, "quietness_proxy": 50.0, "family_convenience": 55.0, "nightlife_access": 45.0}, "balanced_score": 70.0, "confidence": 90.0, "confidence_label": "High", "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."}, {"slug": "fixture-tokyo-hotel-e2e", "name": "Fixture Tokyo Hotel", "city": "Tokyo", "city_id": "tokyo", "locality": "Tokyo", "has_static_page": true, "scores": {"walkability_density": 75.0, "transit_access": 70.0, "food_essentials": 72.0, "quietness_proxy": 50.0, "family_convenience": 55.0, "nightlife_access": 45.0}, "balanced_score": 70.0, "confidence": 90.0, "confidence_label": "High", "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."}, {"slug": "fixture-dubai-hotel-e2e", "name": "Fixture Dubai Hotel", "city": "Dubai", "city_id": "dubai", "locality": "Dubai", "has_static_page": true, "scores": {"walkability_density": 75.0, "transit_access": 70.0, "food_essentials": 72.0, "quietness_proxy": 50.0, "family_convenience": 55.0, "nightlife_access": 45.0}, "balanced_score": 70.0, "confidence": 90.0, "confidence_label": "High", "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."}, {"slug": "fixture-new-york-hotel-e2e", "name": "Fixture New York City metro Hotel", "city": "New York City metro", "city_id": "new_york", "locality": "New York City metro", "has_static_page": true, "scores": {"walkability_density": 75.0, "transit_access": 70.0, "food_essentials": 72.0, "quietness_proxy": 50.0, "family_convenience": 55.0, "nightlife_access": 45.0}, "balanced_score": 70.0, "confidence": 90.0, "confidence_label": "High", "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."}, {"slug": "fixture-singapore-hotel-e2e", "name": "Fixture Singapore Hotel", "city": "Singapore", "city_id": "singapore", "locality": "Singapore", "has_static_page": true, "scores": {"walkability_density": 75.0, "transit_access": 70.0, "food_essentials": 72.0, "quietness_proxy": 50.0, "family_convenience": 55.0, "nightlife_access": 45.0}, "balanced_score": 70.0, "confidence": 90.0, "confidence_label": "High", "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."}]
+[
+  {
+    "slug": "fixture-park-hotel-e2e001",
+    "name": "Fixture Park Hotel",
+    "city": "London",
+    "locality": "Camden",
+    "scores": {
+      "walkability_density": 88.0,
+      "transit_access": 74.0,
+      "food_essentials": 82.0,
+      "quietness_proxy": 55.0,
+      "family_convenience": 91.0,
+      "nightlife_access": 40.0
+    },
+    "balanced_score": 76.0,
+    "confidence": 92.0,
+    "confidence_label": "High",
+    "verdict": "Excellent for walking to everyday places; excellent for family convenience; moderate surrounding activity.",
+    "has_static_page": true,
+    "city_id": "london"
+  },
+  {
+    "slug": "fixture-transit-hotel-e2e002",
+    "name": "Fixture Transit Hotel",
+    "city": "London",
+    "locality": "Islington",
+    "scores": {
+      "walkability_density": 70.0,
+      "transit_access": 95.0,
+      "food_essentials": 68.0,
+      "quietness_proxy": 42.0,
+      "family_convenience": 30.0,
+      "nightlife_access": 58.0
+    },
+    "balanced_score": 71.0,
+    "confidence": 88.0,
+    "confidence_label": "High",
+    "verdict": "Excellent for transit access; good for walking to everyday places; active surroundings.",
+    "has_static_page": true,
+    "city_id": "london"
+  },
+  {
+    "slug": "fixture-quiet-hotel-e2e003",
+    "name": "Fixture Quiet Hotel",
+    "city": "London",
+    "locality": "Richmond",
+    "scores": {
+      "walkability_density": 40.0,
+      "transit_access": 35.0,
+      "food_essentials": 45.0,
+      "quietness_proxy": 92.0,
+      "family_convenience": 60.0,
+      "nightlife_access": 10.0
+    },
+    "balanced_score": 52.0,
+    "confidence": 81.0,
+    "confidence_label": "High",
+    "verdict": "Excellent for quiet surroundings; limited transit access; quiet surroundings.",
+    "has_static_page": true,
+    "city_id": "london"
+  },
+  {
+    "slug": "fixture-riverside-hotel-e2e004",
+    "name": "Fixture Riverside Hotel",
+    "city": "Bangkok",
+    "locality": "Bang Rak",
+    "scores": {
+      "walkability_density": 60.0,
+      "transit_access": 55.0,
+      "food_essentials": 85.0,
+      "quietness_proxy": 48.0,
+      "family_convenience": 20.0,
+      "nightlife_access": 75.0
+    },
+    "balanced_score": 62.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "verdict": "Excellent for restaurants and everyday essentials; active nightlife nearby.",
+    "has_static_page": true,
+    "city_id": "bangkok"
+  },
+  {
+    "slug": "fixture-paris-hotel-e2e",
+    "name": "Fixture Paris Hotel",
+    "city": "Paris",
+    "city_id": "paris",
+    "locality": "Paris",
+    "has_static_page": true,
+    "scores": {
+      "walkability_density": 75.0,
+      "transit_access": 70.0,
+      "food_essentials": 72.0,
+      "quietness_proxy": 50.0,
+      "family_convenience": 55.0,
+      "nightlife_access": 45.0
+    },
+    "balanced_score": 70.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."
+  },
+  {
+    "slug": "fixture-rome-hotel-e2e",
+    "name": "Fixture Rome Hotel",
+    "city": "Rome",
+    "city_id": "rome",
+    "locality": "Rome",
+    "has_static_page": true,
+    "scores": {
+      "walkability_density": 75.0,
+      "transit_access": 70.0,
+      "food_essentials": 72.0,
+      "quietness_proxy": 50.0,
+      "family_convenience": 55.0,
+      "nightlife_access": 45.0
+    },
+    "balanced_score": 70.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."
+  },
+  {
+    "slug": "fixture-barcelona-hotel-e2e",
+    "name": "Fixture Barcelona Hotel",
+    "city": "Barcelona",
+    "city_id": "barcelona",
+    "locality": "Barcelona",
+    "has_static_page": true,
+    "scores": {
+      "walkability_density": 75.0,
+      "transit_access": 70.0,
+      "food_essentials": 72.0,
+      "quietness_proxy": 50.0,
+      "family_convenience": 55.0,
+      "nightlife_access": 45.0
+    },
+    "balanced_score": 70.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."
+  },
+  {
+    "slug": "fixture-amsterdam-hotel-e2e",
+    "name": "Fixture Amsterdam Hotel",
+    "city": "Amsterdam",
+    "city_id": "amsterdam",
+    "locality": "Amsterdam",
+    "has_static_page": true,
+    "scores": {
+      "walkability_density": 75.0,
+      "transit_access": 70.0,
+      "food_essentials": 72.0,
+      "quietness_proxy": 50.0,
+      "family_convenience": 55.0,
+      "nightlife_access": 45.0
+    },
+    "balanced_score": 70.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."
+  },
+  {
+    "slug": "fixture-lisbon-hotel-e2e",
+    "name": "Fixture Lisbon Hotel",
+    "city": "Lisbon",
+    "city_id": "lisbon",
+    "locality": "Lisbon",
+    "has_static_page": true,
+    "scores": {
+      "walkability_density": 75.0,
+      "transit_access": 70.0,
+      "food_essentials": 72.0,
+      "quietness_proxy": 50.0,
+      "family_convenience": 55.0,
+      "nightlife_access": 45.0
+    },
+    "balanced_score": 70.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."
+  },
+  {
+    "slug": "fixture-sydney-hotel-e2e",
+    "name": "Fixture Sydney Hotel",
+    "city": "Sydney",
+    "city_id": "sydney",
+    "locality": "Sydney",
+    "has_static_page": true,
+    "scores": {
+      "walkability_density": 75.0,
+      "transit_access": 70.0,
+      "food_essentials": 72.0,
+      "quietness_proxy": 50.0,
+      "family_convenience": 55.0,
+      "nightlife_access": 45.0
+    },
+    "balanced_score": 70.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."
+  },
+  {
+    "slug": "fixture-tokyo-hotel-e2e",
+    "name": "ホテルココ",
+    "city": "Tokyo",
+    "city_id": "tokyo",
+    "locality": "Tokyo",
+    "has_static_page": true,
+    "scores": {
+      "walkability_density": 75.0,
+      "transit_access": 70.0,
+      "food_essentials": 72.0,
+      "quietness_proxy": 50.0,
+      "family_convenience": 55.0,
+      "nightlife_access": 45.0
+    },
+    "balanced_score": 70.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity.",
+    "display_name": "Hotel Coco (ホテルココ)"
+  },
+  {
+    "slug": "fixture-dubai-hotel-e2e",
+    "name": "Fixture Dubai Hotel",
+    "city": "Dubai",
+    "city_id": "dubai",
+    "locality": "Dubai",
+    "has_static_page": true,
+    "scores": {
+      "walkability_density": 75.0,
+      "transit_access": 70.0,
+      "food_essentials": 72.0,
+      "quietness_proxy": 50.0,
+      "family_convenience": 55.0,
+      "nightlife_access": 45.0
+    },
+    "balanced_score": 70.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."
+  },
+  {
+    "slug": "fixture-new-york-hotel-e2e",
+    "name": "Fixture New York City metro Hotel",
+    "city": "New York City metro",
+    "city_id": "new_york",
+    "locality": "New York City metro",
+    "has_static_page": true,
+    "scores": {
+      "walkability_density": 75.0,
+      "transit_access": 70.0,
+      "food_essentials": 72.0,
+      "quietness_proxy": 50.0,
+      "family_convenience": 55.0,
+      "nightlife_access": 45.0
+    },
+    "balanced_score": 70.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."
+  },
+  {
+    "slug": "fixture-singapore-hotel-e2e",
+    "name": "Fixture Singapore Hotel",
+    "city": "Singapore",
+    "city_id": "singapore",
+    "locality": "Singapore",
+    "has_static_page": true,
+    "scores": {
+      "walkability_density": 75.0,
+      "transit_access": 70.0,
+      "food_essentials": 72.0,
+      "quietness_proxy": 50.0,
+      "family_convenience": 55.0,
+      "nightlife_access": 45.0
+    },
+    "balanced_score": 70.0,
+    "confidence": 90.0,
+    "confidence_label": "High",
+    "verdict": "Good for walking to everyday places; good for transit access; moderate surrounding activity."
+  }
+]

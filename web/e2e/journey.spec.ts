@@ -134,3 +134,10 @@ test('searching never sends an analytics/events request (night mission #3 Tache 
   );
   expect(suspect).toEqual([]);
 });
+
+test('hotel and why-fact names retain Latin and original scripts', async ({ page }) => {
+  await page.goto('/hotel/fixture-tokyo-hotel-e2e');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Hotel Coco (ホテルココ)');
+  await expect(page.locator('.nearby .name')).toHaveText('Cafe Coco (カフェココ)');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
+});

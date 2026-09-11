@@ -8,7 +8,7 @@
 // This runs as an npm `prebuild` hook (package.json), before `astro
 // build` ever starts, so a missing export fails fast with an explicit,
 // actionable message instead.
-import { existsSync, statSync } from 'node:fs';
+import { existsSync, statSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { checkInstitutionExports } from './institution-guard.mjs';
@@ -75,3 +75,9 @@ if (missing.length > 0 || empty.length > 0) {
 checkInstitutionExports(WEB_ROOT);
 checkBrandExports(WEB_ROOT);
 checkAccommodationExports(WEB_ROOT);
+// Added name metadata must still fit the Pages per-asset upload limit.
+for (const file of readdirSync(path.join(WEB_ROOT,'public/data'))) {
+  if (statSync(path.join(WEB_ROOT,'public/data',file)).size > 25 * 1024 * 1024) {
+    throw new Error(`Public data asset exceeds 25 MiB: ${file}`);
+  }
+}

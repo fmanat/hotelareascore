@@ -79,6 +79,7 @@ const { currentSlug } = Astro.props;
   interface SearchIndexEntry {
     slug: string;
     name: string;
+    display_name?: string;
     city: string;
     locality: string | null;
   }
@@ -111,10 +112,10 @@ const { currentSlug } = Astro.props;
       search: async (query) => {
         const data = index ?? (await loadIndex());
         return data
-          .filter((e) => e.slug !== currentSlug && e.name.toLowerCase().includes(query))
+          .filter((e) => e.slug !== currentSlug && `${e.display_name ?? ""} ${e.name}`.toLowerCase().includes(query))
           .slice(0, 8);
       },
-      label: (e) => e.name,
+      label: (e) => e.display_name ?? e.name,
       meta: (e) => (e.locality ? `${e.locality}, ${e.city}` : e.city),
       onSelect: (e) => {
         window.location.href = `/compare?a=${encodeURIComponent(currentSlug)}&b=${encodeURIComponent(e.slug)}`;

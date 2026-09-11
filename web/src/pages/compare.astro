@@ -143,6 +143,7 @@ const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSI
   interface SearchIndexEntry {
     slug: string;
     name: string;
+    display_name?: string;
     city: string;
     locality: string | null;
     scores: Record<string, number>;
@@ -170,9 +171,9 @@ const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSI
       resultsEl,
       search: async (query) => {
         const data = await loadIndex();
-        return data.filter((e) => e.name.toLowerCase().includes(query)).slice(0, 8);
+        return data.filter((e) => `${e.display_name ?? ""} ${e.name}`.toLowerCase().includes(query)).slice(0, 8);
       },
-      label: (e) => e.name,
+      label: (e) => e.display_name ?? e.name,
       meta: (e) => (e.locality ? `${e.locality}, ${e.city}` : e.city),
       onSelect: (e) => onPick(e.slug),
       emptyMessage: 'No hotels found in our index.',
@@ -188,12 +189,13 @@ const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSI
 
   function renderCol(container: HTMLElement, hotel: SearchIndexEntry) {
     container.innerHTML = `
-      <h2>${hotel.name}</h2>
+      <h2></h2>
       <p class="locality">${hotel.locality ? hotel.locality + ', ' : ''}${hotel.city}</p>
       <p class="verdict">${hotel.verdict}</p>
       <p class="balanced">Balanced score: ${Math.round(hotel.balanced_score)}/100 · ${hotel.confidence_label} confidence</p>
       <a class="view-link" href="/hotel/${hotel.slug}">View full result &rarr;</a>
     `;
+    container.querySelector("h2")!.textContent = hotel.display_name ?? hotel.name;
   }
 
   async function renderCompare() {

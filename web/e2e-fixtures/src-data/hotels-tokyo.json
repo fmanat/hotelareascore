@@ -2,7 +2,7 @@
   {
     "id": "e2e-tokyo-1",
     "slug": "fixture-tokyo-hotel-e2e",
-    "name": "Fixture Tokyo Hotel",
+    "name": "ホテルココ",
     "city_id": "tokyo",
     "city_name": "Tokyo",
     "locality": "Tokyo",
@@ -34,14 +34,19 @@
       {
         "rank": 1,
         "category": "cafe",
-        "name": "Fixture Tokyo Cafe",
-        "distance_m": 80.0
+        "name": "カフェココ",
+        "distance_m": 80.0,
+        "display_name": "Cafe Coco (カフェココ)",
+        "name_method": "source_alternative_latin"
       }
     ],
     "comparable": [],
     "has_static_page": true,
     "publication_status": "noindex",
     "accommodation_type": "hotel",
-    "accommodation_type_label": "Hotel"
+    "accommodation_type_label": "Hotel",
+    "name_index_eligible": true,
+    "display_name": "Hotel Coco (ホテルココ)",
+    "name_method": "source_alternative_latin"
   }
 ]

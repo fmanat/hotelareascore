@@ -75,6 +75,7 @@ const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSI
     accommodation_type_label?: string;
     slug: string;
     name: string;
+    display_name?: string;
     city: string;
     city_id: string;
     locality: string | null;
@@ -140,9 +141,9 @@ const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSI
           return;
         }
 
-        document.title = `${hotel.name} · StayContext`;
+        document.title = `${hotel.display_name ?? hotel.name} · StayContext`;
         const nameEl = document.getElementById('limited-name');
-        if (nameEl) nameEl.textContent = hotel.name;
+        if (nameEl) nameEl.textContent = hotel.display_name ?? hotel.name;
         const typeEl = document.getElementById('limited-type');
         if (typeEl) typeEl.textContent = hotel.accommodation_type_label ?? 'Accommodation type unconfirmed';
         const metaEl = document.getElementById('limited-meta');

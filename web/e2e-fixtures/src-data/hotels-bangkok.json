@@ -35,6 +35,7 @@
     "publication_status": "noindex",
     "has_static_page": true,
     "accommodation_type": "hotel",
-    "accommodation_type_label": "Hotel"
+    "accommodation_type_label": "Hotel",
+    "name_index_eligible": true
   }
 ]

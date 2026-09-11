@@ -24,12 +24,18 @@ export interface NearbyFact {
   rank: number;
   category: string;
   name: string;
+  display_name?: string;
+  name_index_eligible?: boolean;
+  name_method?: string;
   distance_m: number;
 }
 
 export interface ComparableHotel {
   slug: string;
   name: string;
+  display_name?: string;
+  name_index_eligible?: boolean;
+  name_method?: string;
   balanced_score: number;
   /** docs/adr/013: whether this comparable hotel has a real built page
    * (`/hotel/{slug}`) or should link to the client-rendered limited-data
@@ -43,6 +49,9 @@ export interface Hotel {
   id: string;
   slug: string;
   name: string;
+  display_name?: string;
+  name_index_eligible?: boolean;
+  name_method?: string;
   city_id: string;
   city_name: string;
   locality: string | null;
@@ -80,6 +89,9 @@ export interface CityBaseline {
 
 export interface CityPageHotelRef {
   name: string;
+  display_name?: string;
+  name_index_eligible?: boolean;
+  name_method?: string;
   locality: string | null;
   slug: string | null;
   score?: number;
@@ -112,6 +124,9 @@ export interface SearchIndexEntry {
   accommodation_type_label?: string;
   slug: string;
   name: string;
+  display_name?: string;
+  name_index_eligible?: boolean;
+  name_method?: string;
   city: string;
   /** Machine city id (e.g. "new_york"), not the display name in `city` --
    * lets the limited-data card (docs/adr/013) fetch that one city's

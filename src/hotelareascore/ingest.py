@@ -40,6 +40,7 @@ def _hotels_raw_sql(places_path: str, city: City) -> str:
         SELECT
             id,
             names.primary AS name,
+            to_json(names) AS names_json,
             brand.names.primary AS brand_name,
             bbox.xmin AS lon,
             bbox.ymin AS lat,
@@ -80,6 +81,7 @@ def _poi_sql(places_path: str, city: City) -> str:
         SELECT
             id,
             names.primary AS name,
+            to_json(names) AS names_json,
             bbox.xmin AS lon,
             bbox.ymin AS lat,
             confidence,
@@ -100,6 +102,7 @@ def _green_space_select(source_path: str, city: City, predicate: str) -> str:
         SELECT
             id,
             names.primary AS name,
+            to_json(names) AS names_json,
             subtype,
             class,
             ST_AsText(geometry) AS geometry_wkt,

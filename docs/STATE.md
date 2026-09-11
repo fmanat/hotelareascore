@@ -24,7 +24,14 @@ OYO Home du propriétaire classé logement entier ; 14 Sonder/Domio inconnus
 **zéro ré-ingestion**. [Rapport C](reports/bloc-c-accommodation.md).
 446 tests passent (+ 1 xfail historique), garde de build testée, typecheck propre,
 15 721 pages construites et assertions SEO conformes.
-**À suivre : D, puis rapport E uniquement.** L'arrêt explicite demandé
+**C poussé `f0a8ea3`, CI verte (5 jobs). D livré dans le commit de ce bloc :**
+4 824 noms non latins scannés, 170 débloqués pour la lisibilité, dont 145 de type
+hôtel ; 4 669 noms restent inéligibles (incluant noms numériques/manquants).
+Variantes source prioritaires ; fallback limité par écriture, originaux conservés.
+Noms hôtels et POI affichés selon la même règle ; slugs inchangés.
+[Rapport D](reports/bloc-d-names.md), [options FR](reports/i18n-options.md).
+464 tests passent (+ 1 xfail), typecheck propre, build de 15 721 pages.
+**À suivre : rapport E uniquement.** L'arrêt explicite demandé
 à E interdit de commencer F cette nuit sans un nouveau GO.
 
 ### Décisions en attente du propriétaire

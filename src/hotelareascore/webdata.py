@@ -16,6 +16,7 @@ from . import overture, publication
 from .institutions import assert_no_institutions
 from .brands import assert_no_brands
 from .accommodation import classify_accommodation
+from .names import present_name, unique_name_sources, display_fields
 from .config import DIMENSIONS, ETL_DIR, REPO_ROOT, get_city, load_score_weights
 from .dedupe import haversine_m
 from .reason_codes import compute_reason_codes
@@ -81,7 +82,7 @@ def _fetch_hotels(con, etl_dir: Path) -> list[dict[str, Any]]:
     assert_no_brands([{"id": r[0], "name": r[1]} for r in rows], context=str(etl_dir))
     q = f"""
         SELECT h.id, h.name, h.lat, h.lon, h.address_locality, h.address_region, h.address_country,
-               h.dedupe_confidence, h.taxonomy_primary, h.brand_name,
+               h.dedupe_confidence, h.taxonomy_primary, h.brand_name, h.names_json,
                s.walkability_density, s.transit_access, s.food_essentials,
                s.quietness_proxy, s.family_convenience, s.nightlife_access,
                s.balanced_score, s.confidence, s.score_version, s.source_release
@@ -98,10 +99,12 @@ def _fetch_nearby_facts(con, etl_dir: Path) -> dict[str, list[dict[str, Any]]]:
         FROM read_parquet('{etl_dir / 'nearby_facts.parquet'}')
         ORDER BY hotel_id, rank
     """
+    source_rows = con.execute("SELECT name, names_json FROM read_parquet(?) WHERE name IN (SELECT name FROM read_parquet(?))", [str(etl_dir / "pois.parquet"), str(etl_dir / "nearby_facts.parquet")]).fetchall()
+    alternatives = unique_name_sources(source_rows)
     by_hotel: dict[str, list[dict[str, Any]]] = {}
     for hotel_id, rank, category, name, distance_m in con.execute(q).fetchall():
         by_hotel.setdefault(hotel_id, []).append(
-            {"rank": rank, "category": category, "name": name, "distance_m": round(distance_m, 1)}
+            {"rank": rank, "category": category, "name": name, "distance_m": round(distance_m, 1), **display_fields(name, alternatives.get(name))}
         )
     return by_hotel
 
@@ -225,6 +228,7 @@ def export_city(city_id: str, release: overture.Release) -> list[dict[str, Any]]
         locality_mismatch = _locality_mismatch(city, r["address_region"], r["address_country"])
         hotel = {
             **classify_accommodation(r),
+            **present_name(r["name"], r.get("names_json")),
             "id": r["id"],
             "slug": hotel_slug(r["name"] or "hotel", r["id"]),
             "name": r["name"] or "(unnamed)",
@@ -247,7 +251,7 @@ def export_city(city_id: str, release: overture.Release) -> list[dict[str, Any]]
             # this export is what a template's `indexable` prop actually
             # reads, so it fails closed here too, CLAUDE.md hard rule 10).
             "publication_status": (
-                "indexable" if r["id"] in indexable_by_id and not is_numeric_name(r["name"]) and classify_accommodation(r)["accommodation_type"] == "hotel" else "noindex"
+                "indexable" if r["id"] in indexable_by_id and not is_numeric_name(r["name"]) and classify_accommodation(r)["accommodation_type"] == "hotel" and present_name(r["name"],r.get("names_json"))["name_index_eligible"] else "noindex"
             ),
             "scores": scores,
             "balanced_score": round(r["balanced_score"], 1),
@@ -265,7 +269,7 @@ def export_city(city_id: str, release: overture.Release) -> list[dict[str, Any]]
     _attach_comparable_hotels(hotels)
     for h in hotels:
         h["comparable"] = [
-            {"slug": hotels[i]["slug"], "name": hotels[i]["name"], "balanced_score": hotels[i]["balanced_score"]}
+            {"slug": hotels[i]["slug"], "name": hotels[i]["name"], "display_name": hotels[i]["display_name"], "balanced_score": hotels[i]["balanced_score"]}
             for i in h.pop("_comparable_idx")
         ]
 
@@ -312,7 +316,7 @@ def _city_page_aggregate(
     top_by_dimension: dict[str, list[dict[str, Any]]] = {}
     for dim in DIMENSIONS:
         rows = con.execute(f"""
-            SELECT h.name, h.address_locality, h.id, s.{dim} AS score
+            SELECT h.name, h.address_locality, h.id, s.{dim} AS score, h.names_json
             FROM read_parquet('{hotels_path.as_posix()}') h
             JOIN read_parquet('{scores_path.as_posix()}') s ON s.hotel_id = h.id
             WHERE h.name IS NOT NULL AND trim(h.name) != ''
@@ -322,12 +326,13 @@ def _city_page_aggregate(
             {
                 "name": r[0], "locality": r[1], "score": round(r[3], 1),
                 "slug": linked_slug(r[0], r[2]),
+                **present_name(r[0],r[4]),
             }
             for r in rows
         ]
 
     rep_rows = con.execute(f"""
-        SELECT h.name, h.address_locality, h.id, s.balanced_score
+        SELECT h.name, h.address_locality, h.id, s.balanced_score, h.names_json
         FROM read_parquet('{hotels_path.as_posix()}') h
         JOIN read_parquet('{scores_path.as_posix()}') s ON s.hotel_id = h.id
         WHERE h.name IS NOT NULL AND trim(h.name) != ''
@@ -337,6 +342,7 @@ def _city_page_aggregate(
         {
             "name": r[0], "locality": r[1], "balanced_score": round(r[3], 1),
             "slug": linked_slug(r[0], r[2]),
+                **present_name(r[0],r[4]),
         }
         for r in rep_rows
     ]
@@ -424,7 +430,7 @@ def export_web_data(release: overture.Release, city_ids: list[str]) -> None:
                 "slug": h["slug"],
                 "name": h["name"],
                 "city": h["city_name"],
-                **{k:v for k,v in h.items() if k.startswith("accommodation_type")},
+                **{k:v for k,v in h.items() if k in ("accommodation_type", "accommodation_type_label") or (k == "display_name" and v != h["name"])},
                 "city_id": h["city_id"],
                 "locality": h["locality"],
                 "has_static_page": h["has_static_page"],

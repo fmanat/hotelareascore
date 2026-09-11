@@ -27,7 +27,7 @@ const { hotels, currentSlug, cityId } = Astro.props;
               ? `/hotel/${h.slug}`
               : `/hotel/limited?slug=${encodeURIComponent(h.slug)}&city=${encodeURIComponent(cityId)}`}
           >
-            {h.name}
+            {h.display_name ?? h.name}
           </a>
           <span class="right">
             <span class="score">{Math.round(h.balanced_score)}</span>

@@ -26,7 +26,7 @@ function fmtDistance(m: number): string {
       <ul>
         {facts.map((f) => (
           <li>
-            <span class="name">{f.name}</span>
+            <span class="name" title={f.name_method === "transliteration_approximate" ? "Romanized name; spelling may differ." : undefined}>{f.display_name ?? f.name}</span>
             <span class="meta">
               {fmtCategory(f.category)} · {fmtDistance(f.distance_m)}
             </span>

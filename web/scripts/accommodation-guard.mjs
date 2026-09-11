@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 export function assertAccommodation(row) {
+  if (row.publication_status === 'indexable' && row.name_index_eligible !== true) throw new Error(`Unreliable or missing Latin name: ${row.id ?? row.slug}`);
   if (row.publication_status === 'indexable' && row.accommodation_type !== 'hotel') {
     throw new Error(`Nonhotel or unclassified indexable accommodation: ${row.id ?? row.slug}`);
   }

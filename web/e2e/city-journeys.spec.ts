@@ -17,7 +17,7 @@ const CITIES: Record<string, { hotelName: string; cityName: string }> = {
   amsterdam: { hotelName: 'Fixture Amsterdam Hotel', cityName: 'Amsterdam' },
   lisbon: { hotelName: 'Fixture Lisbon Hotel', cityName: 'Lisbon' },
   sydney: { hotelName: 'Fixture Sydney Hotel', cityName: 'Sydney' },
-  tokyo: { hotelName: 'Fixture Tokyo Hotel', cityName: 'Tokyo' },
+  tokyo: { hotelName: 'Hotel Coco (ホテルココ)', cityName: 'Tokyo' },
   dubai: { hotelName: 'Fixture Dubai Hotel', cityName: 'Dubai' },
   new_york: { hotelName: 'Fixture New York City metro Hotel', cityName: 'New York City metro' },
   singapore: { hotelName: 'Fixture Singapore Hotel', cityName: 'Singapore' },

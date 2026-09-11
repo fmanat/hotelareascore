@@ -81,6 +81,7 @@
     accommodation_type_label?: string;
     slug: string;
     name: string;
+    display_name?: string;
     city: string;
     city_id: string;
     locality: string | null;
@@ -110,7 +111,7 @@
       resultsEl,
       search: async (query) => {
         const data = index ?? (await loadIndex());
-        const matches = data.filter((e) => e.name.toLowerCase().includes(query)).slice(0, 8);
+        const matches = data.filter((e) => `${e.display_name ?? ""} ${e.name}`.toLowerCase().includes(query)).slice(0, 8);
         // docs/STATE.md "search_events as the coverage KPI" -- captured
         // here (this is THE search journey, docs/strategy.md journey A),
         // not the compare pickers. web/src/lib/events.ts: never sent
@@ -118,7 +119,7 @@
         recordSearchEvent(query, matches.length);
         return matches;
       },
-      label: (e) => e.name,
+      label: (e) => e.display_name ?? e.name,
       meta: (e) => `${e.accommodation_type_label ?? "Accommodation type unconfirmed"} · ${e.locality ? `${e.locality}, ${e.city}` : e.city}`,
       onSelect: (e) => {
         // docs/adr/013: the long tail outside the static-page budget has

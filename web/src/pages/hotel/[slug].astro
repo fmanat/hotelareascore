@@ -44,11 +44,11 @@ const confidenceClass = hotel.confidence_label.toLowerCase();
 const breadcrumb = breadcrumbJsonLd([
   { name: 'Search', path: '/' },
   { name: hotel.city_name, path: `/city/${hotel.city_id}` },
-  { name: hotel.name, path: `/hotel/${hotel.slug}` },
+  { name: (hotel.display_name ?? hotel.name), path: `/hotel/${hotel.slug}` },
 ]);
-const place = placeJsonLd({ name: hotel.name, lat: hotel.lat, lon: hotel.lon, addressLocality: hotel.locality });
+const place = placeJsonLd({ name: (hotel.display_name ?? hotel.name), lat: hotel.lat, lon: hotel.lon, addressLocality: hotel.locality });
 const lodgingBusiness = lodgingBusinessJsonLd({
-  name: hotel.name,
+  name: (hotel.display_name ?? hotel.name),
   lat: hotel.lat,
   lon: hotel.lon,
   addressLocality: hotel.locality,
@@ -58,9 +58,9 @@ const lodgingBusiness = lodgingBusinessJsonLd({
 ---
 
 <BaseLayout
-  title={`${hotel.name}${hotel.locality && hotel.locality !== hotel.name ? `, ${hotel.locality}` : ''} — surroundings score`}
-  description={`${hotel.name} in ${hotel.city_name}: ${hotel.verdict}`}
-  indexable={hotel.publication_status === 'indexable' && hotel.accommodation_type === 'hotel'}
+  title={`${(hotel.display_name ?? hotel.name)}${hotel.locality && hotel.locality !== (hotel.display_name ?? hotel.name) ? `, ${hotel.locality}` : ''} — surroundings score`}
+  description={`${(hotel.display_name ?? hotel.name)} in ${hotel.city_name}: ${hotel.verdict}`}
+  indexable={hotel.publication_status === 'indexable' && hotel.accommodation_type === 'hotel' && hotel.name_index_eligible === true}
   requiresFlag="HOTEL_PAGE_INDEXING_ENABLED"
 >
   <Fragment slot="head">
@@ -83,7 +83,8 @@ const lodgingBusiness = lodgingBusinessJsonLd({
           </span>
         )}
       </p>
-      <h1>{hotel.name}</h1>
+      <h1>{(hotel.display_name ?? hotel.name)}</h1>
+      <p class="meta">{hotel.name_method === "transliteration_approximate" ? "Romanized name; spelling may differ." : ""}</p>
       <p class="meta">{hotel.accommodation_type_label ?? "Accommodation type unconfirmed"}</p>
       <p class="verdict">{hotel.verdict}</p>
       <div class="badges">

@@ -71,6 +71,7 @@ def set_status(
     score_version: str | None = None,
     hotel_name: str | None = None,
     accommodation_type: str | None = None,
+    name_index_eligible: bool = False,
 ) -> None:
     """The only way a page's publication status changes. Always requires a
     reason and a decider -- there is no code path that flips a status
@@ -111,6 +112,8 @@ def set_status(
             )
     if page_type == "hotel" and status == "indexable" and accommodation_type != "hotel":
         raise ValueError("Only an explicitly classified hotel can be indexable; unknown and other accommodation types remain noindex")
+    if page_type == "hotel" and status == "indexable" and not name_index_eligible:
+        raise ValueError("A reliable Latin name rendering is required for hotel indexing")
     con.execute(
         """
         INSERT INTO page_publication (page_type, page_id, status, reason, decided_by, decided_at, score_version)

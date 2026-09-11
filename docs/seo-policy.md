@@ -37,28 +37,25 @@ long-tail wins — weight toward them ~70/30), spread across cities, high
 confidence, distinctive surroundings (a hotel where our data tells a story
 beats a generic one).
 
-**Latin-script name required for pilot-cohort eligibility (owner decision,
-2026-09-07).** The launch cohort is for an English-language audience; a
-hotel whose name has no Latin-script rendering isn't legible to that
-audience on a results page, and we have no reliable transliteration
-pipeline to produce one honestly (a machine transliteration presented as
-the hotel's name would itself be an invented fact, CLAUDE.md hard rule 3).
-This is a **cohort-eligibility rule, not a data-quality judgment**: a
-non-Latin-script hotel is not excluded from the dataset, stays fully
-searchable, and is scored identically to every other hotel — it simply
-cannot be promoted to the indexable pilot cohort until either (a) it has
-a genuine Latin-script name in the source data, or (b) a reviewed
-transliteration pipeline exists (not built, not scoped yet). Implemented
-as gate 12 in §4, checked by `entity_qa.is_non_latin_name` (per-character
-Unicode-script check, not a hardcoded alphabet list — deliberately admits
-Latin names with real diacritics, e.g. "Hôtel Le Méridien", while
-excluding CJK/Thai/Arabic/Cyrillic/etc.). Added after an owner audit of
-`pilot-cohort-proposal.md` v1 found 19/200 selected hotels in non-Latin
-scripts (11 Thai, 8 Japanese) — several of them not hotels at all (an
-archaeological site, a liquor shop, a share house, a boat pier, a housing
-estate, a university residence hall), a failure mode `entity_qa.py`'s
-English-only marker list structurally cannot catch (see
-`docs/STATE.md`'s entity-QA specimens).
+**Readable Latin name required for pilot eligibility (Bloc D, 2026-09-12).**
+The original source name is retained. Display `Latin (Original)` when a Latin
+variant exists, and the original alone when no reliable variant exists.
+Priority: original Latin name (diacritics preserved), Overture current
+common/official Latin alternative (English first), then documented script-limited
+romanization. Latin, Cyrillic, Greek, Hangul and kana-only Japanese may pass the
+readability gate; any Han/kanji, Thai, Arabic, Hebrew or other unsupported letters
+without a source Latin variant keep the original and remain nonindexable.
+Mixed scripts fail if any letter needs an unsupported conversion. Romanization
+is labelled, never presented as a verified official spelling or translation.
+
+`names.present_name` supplies the recorded name-gate input. Missing name-gate
+metadata fails closed in publication and the build. Name readability is only
+one gate: it does NOT prove a hotel, reception, legal operation or fitness for
+the cohort. A/B exclusions always inspect original identities; all type and
+existing quality gates still apply. Existing canonical slugs remain byte-for-byte
+unchanged: rendering changes never feed slug generation. POI why-facts follow
+the same display policy; ambiguous same-name POI matches cannot borrow another
+place's Latin alternative. See `reports/bloc-d-names.md` and ADR-020.
 
 ## 3. Page types
 

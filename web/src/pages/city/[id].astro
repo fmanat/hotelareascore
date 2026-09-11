@@ -89,7 +89,7 @@ function fmt(n: number | null): string {
           <ul>
             {(page.top_by_dimension[dim] ?? []).map((h) => (
               <li>
-                {h.slug ? <a href={`/hotel/${h.slug}`}>{h.name}</a> : <span>{h.name}</span>}
+                {h.slug ? <a href={`/hotel/${h.slug}`}>{h.display_name ?? h.name}</a> : <span>{h.display_name ?? h.name}</span>}
                 {h.locality ? ` — ${h.locality}` : ''} ({fmt(h.score ?? null)})
               </li>
             ))}
@@ -105,7 +105,7 @@ function fmt(n: number | null): string {
       {
         page.representative_hotels.map((h) => (
           <li>
-            {h.slug ? <a href={`/hotel/${h.slug}`}>{h.name}</a> : <span>{h.name}</span>}
+            {h.slug ? <a href={`/hotel/${h.slug}`}>{h.display_name ?? h.name}</a> : <span>{h.display_name ?? h.name}</span>}
             {h.locality ? ` — ${h.locality}` : ''} — balanced score {fmt(h.balanced_score ?? null)}
           </li>
         ))
