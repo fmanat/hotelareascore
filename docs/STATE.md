@@ -20,43 +20,55 @@ through `6321f9e` — 12-city pages, security headers, SEO machinery,
 pilot-cohort proposal, entity-QA hygiene, ops bots — that one really is
 done and shipped).
 
-Each bloc needs a one-line rationale from the owner's own manual review —
-**not given to Claude yet as of this correction**, marked `[owner to
-provide]` rather than guessed (`CLAUDE.md §2.3`, no invented facts).
-Topic grounding below is Claude's best-effort orientation in
-already-documented gaps — confirm against the owner's actual finding
-before scoping.
+**Findings (2026-09-11, owner's manual review, "pack v2"): 12 pilot-cohort
+fiches inspected, 5 defective / 7 validated — 42% anomaly rate, all on
+establishment *identity*, none on the scores themselves.**
 
-- **A — Gates institutions**: systematic entity-QA gate for non-hotel
-  institutions (specimens already logged ad hoc, "Entity QA" below; no
-  gate exists yet). **Finding: [owner to provide]**
-- **B — Marques sans établissement**: hotel-brand sub-venues (restaurant/
-  spa/parking under a parent brand, no real bookable property) passing
-  as hotels — likely the logged "brand-allowlist short-circuit" (~33
-  cases, `Souq Madinat Jumeirah`), scope not re-verified against this
-  finding. **Finding: [owner to provide]**
-- **C — Type d'hébergement**: accommodation-type correctness — Overture's
-  `lodging` hierarchy mixes vacation rentals/campgrounds/unclassified in
-  with real hotels (`data/config/taxonomy-mapping.yml`). Distinct from
-  the destination/resort *presentation* lens (`docs/adr/015`, decision
-  (c)) — this is whether a record is a hotel at all. **Finding: [owner to
-  provide]**
-- **D — Translittération**: `entity_qa.py`'s English-only name filter has
-  near-zero recall on CJK/Arabic/Thai non-hotel names (9 specimens
-  logged, "Entity QA" below) — needs the language-specific marker list
-  that section already flags as unattempted. **Finding: [owner to
-  provide]**
-- **E — Rapport ancrage**: anchoring/urban-bias report across the *full*
-  dataset, not just the golden set (Bloc G only fixed golden-set
-  composition) — how many of the 33,966 live hotels show the
-  isolated-but-legitimate pattern from `docs/adr/015`'s seed case.
-  **Finding: [owner to provide]**
-- **F — Reconstruction cohorte + vérification externe**: once A-D change
-  which records count as real hotels, recompute the staged 200-hotel
-  pilot cohort (decision (b)) against the fixed gates, then verify
-  **outside Claude** (owner or third party) before treating it as the
-  go-live blocker's resolution. Sequenced after A-D, not parallel.
-  **Finding: [owner to provide]**
+- **A — Institutions non touristiques**: `"Singapore Boys' Home"` was in
+  the pilot cohort — a juvenile detention center. Publishing a scored
+  page for a children's penal institution would be a serious incident.
+  Family to exclude from the whole dataset, not just the cohort: homes,
+  foyers, detention/rehab centers, nursing homes (EHPAD), shelters. New
+  specimen, not previously logged (distinct from the non-Latin-script
+  institutions already in "Entity QA" below — this one has a fully
+  English, hotel-plausible name, so the language-filter gap doesn't
+  explain it).
+- **B — Marques sans établissement**: `"ALL Accor"` was in the cohort —
+  not a hotel, Accor group's loyalty program. Geolocated points under
+  that name are marketing/SEO artifacts with no real establishment
+  behind them. Distinct from the already-logged "brand-allowlist
+  short-circuit" below (real sub-venues of a real hotel) — here the name
+  passes every hotel-sounding filter; it's the *referent* that doesn't
+  exist.
+- **C — Type d'hébergement**: an OYO cohort entry is a fully
+  self-serviced independent home — no reception, no on-site staff. Real
+  accommodation, but not a hotel; the page would misrepresent the
+  category. Caution: OYO also operates real hotels, so this can't be a
+  brand-wide exclusion — same family of problem as the `lodging`
+  hierarchy mix in `data/config/taxonomy-mapping.yml`, but needs a
+  per-listing signal, not a brand rule.
+- **D — Écritures non latines**: on an English-language site, all
+  Claude-produced text must be English; Japanese and Thai text was
+  showing in fiches. Proper nouns aren't translated but must render
+  legibly → dual "Latin (Original)" display, e.g. "Hotel Coco (ホテルCOCO)".
+  This is a presentation/i18n fix, distinct from bloc D's original
+  framing as an `entity_qa.py` filter-recall issue (still true and still
+  useful context, "Entity QA" below, but not what this finding is about).
+- **E — Biais urbain / hôtels d'ancrage**: two cases now — `"Hilton
+  Bangkok Suvarnabhumi Golf Resort & Spa"` (excellent hotel FOR GOLF,
+  owner stayed there) and `"Sheraton East Rutherford NJ"` (adjacent to
+  MetLife Stadium). Both score low everywhere because all 6 dimensions
+  measure urban density, while these hotels have a FUNCTION. The scores
+  are factually correct; the framing misleads. Rule: type changes
+  presentation, never scores (`docs/adr/015`, decision (c) — this
+  finding is the second confirming case, not a new decision).
+- **F — Reconstruction cohorte + vérification externe (method
+  conclusion, not a separate defect)**: 5/12 = 42% anomaly rate, 100% on
+  identity, 0% on scores; the other 7 pass the 15-second test. Overture
+  data alone is not sufficient to decide a point is a publishable hotel
+  → a mandatory external-verification gate on the 200-hotel cohort,
+  using these 5 cases as the test set. Sequenced after A-D land, not
+  parallel.
 
 ## Session checkpoint (long-session discipline — overwritten hourly, not accumulated)
 
@@ -174,6 +186,16 @@ gap was first written down.
 Full detail in `docs/reports/phase-3-batch-1-ingestion-report.md` and
 `tests/golden/LABELS-PROVENANCE.md` §"Data-quality specimens". Summary:
 
+- **Pilot-cohort v2 human review (2026-09-11, owner, 5 new specimens)**:
+  see "NEXT SESSION — Blocs A-F" at the top of this file for full
+  detail/rationale. `"Singapore Boys' Home"` (juvenile detention center),
+  `"ALL Accor"` (loyalty program, no establishment), an OYO
+  self-serviced-home entry (real accommodation, not a hotel), plus
+  non-Latin-script display text found in fiches (i18n, not a filter
+  gap) and a second anchoring case (`"Sheraton East Rutherford NJ"`,
+  alongside the existing Hilton Bangkok Golf Resort case). None of these
+  are caught by any filter below — new failure modes, not more instances
+  of the ones already listed.
 - **English-market-only name filter** (`entity_qa.py`): near-zero recall on
   CJK/Arabic/etc. non-hotel names. Original 2 specimens (Tokyo liquor shop
   + bathhouse), `xfail`-tested. **6 more found in the pilot-cohort v1 audit
