@@ -6,13 +6,26 @@
 > resolved history to `docs/adr/` or the dated report it already lives in;
 > don't re-narrate it here.
 
-## NEXT SESSION — PRIORITY #1: night mission #3's Blocs A-F (not done)
+## NEXT SESSION — Bloc A implemented; owner validation before Bloc B
+
+**2026-09-11 — Bloc A:** dataset-wide institution exclusions implemented
+(ADR-016), pending owner acceptance. Full 12-city scan: **33,966 → 33,920**
+hotels, **46 exclusions** (confirmed or uncertain; fail closed), **11**
+externally checked tourist-name collisions protected. Existing hotel/score/
+nearby-fact rows and web search/cards/references purged; scores of retained
+hotels unchanged. Quarantined IDs cannot return under a changed name.
+Multilingual ingestion + stale-ETL/export/build guards are in place.
+See [Bloc A report](reports/bloc-a-institutions.md) and its full JSON audit.
+**Do not start Bloc B until the owner validates Bloc A.** C–F remain undone.
+The old 200-hotel proposal now contains 2 removed entries (198 survive);
+the old 214-URL go-live dry-run is obsolete. Cohort reconstruction is Bloc F.
+No indexing flag enabled; no scoring formula change.
 
 **Correction (2026-09-11, owner):** night mission #3 delivered **only**
 Blocs G/H/I (golden-set expansion, technical debt, pre-launch readiness —
-see below). Its own Blocs A-F were never executed and are **not**
+see below). At that checkpoint its own Blocs A-F had never been executed and were **not**
 long-shipped work — an earlier session's STATE.md note claiming otherwise
-was wrong and has been removed. These six blocs are the top priority for
+was wrong and has been removed. The remaining blocs are the top priority for
 whoever picks up next, **before** any of the "Idées non autorisées" list
 further down. Do not confuse this A-F set with the *different* A-F set
 from the project's very first overnight mission (commits `8806111`
@@ -78,7 +91,8 @@ since mission start (22:05 UTC 2026-09-09), ~4.8x the stated ~12h window
 its 10h internal budget and exited ~19:41 UTC; asked the owner directly
 whether to keep the fallback loop going. **Owner decision: stop here.**
 **Bloc en cours:** none — G, H, I done since 22:40 (2026-09-09). Session
-closed by owner instruction; no active work.
+closed by owner instruction; that watcher remains stopped. Bloc A was
+subsequently implemented on explicit owner instruction (see above).
 **Poussé sur origin/main:** `7c0a586` (checkpoint 19h47) + this closing
 commit. CI green on every commit this session (confirmed via `gh run
 list`, run 34640632737 succeeded).
@@ -140,16 +154,16 @@ of time and stays fully inert (flags off) — see open decisions below.
       published-page fiche, 11 gates, and selection reasoning per hotel,
       including 2 flagged as most discutable (a likely non-hotel
       institution, an ambiguous short-term-rental listing) —
-      [cohort-inspection-12.json](reports/cohort-inspection-12.json). **This
-      is now the ONLY remaining blocker before go-live** —
+      [cohort-inspection-12.json](reports/cohort-inspection-12.json). **Superseded 2026-09-11: the cohort requires the A–F identity fixes
+      and a new review before go-live** —
       [go-live-seo-checklist.md](reports/go-live-seo-checklist.md) (night
       mission #2 Tache 3) is the exact 6-step sequence from here to the
       90-day clock starting. The package is staged (`page_publication`:
       home/methodology/12 cities/200-cohort all `draft`, re-run via
       `python3 scripts/compute_publication.py`) and dry-run verified —
       [go-live-sitemap-dry-run-report.md](reports/go-live-sitemap-dry-run-report.md):
-      all 214 staged URLs resolve to a real built page, 0 consistency
-      issues.
+      all 214 staged URLs resolved at that time; this is now obsolete
+      after Bloc A removed 2 cohort entries.
 - [ ] **(c) "Destination/resort" hotel type — review the detection
       feasibility report before any implementation** (not a go-live
       blocker, a separate decision track). Owner-framed
@@ -193,9 +207,8 @@ Full detail in `docs/reports/phase-3-batch-1-ingestion-report.md` and
   self-serviced-home entry (real accommodation, not a hotel), plus
   non-Latin-script display text found in fiches (i18n, not a filter
   gap) and a second anchoring case (`"Sheraton East Rutherford NJ"`,
-  alongside the existing Hilton Bangkok Golf Resort case). None of these
-  are caught by any filter below — new failure modes, not more instances
-  of the ones already listed.
+  alongside the existing Hilton Bangkok Golf Resort case). The Singapore Boys’ Home case is now excluded by Bloc A (ADR-016).
+  The other failure modes remain open; Bloc B awaits owner validation of A.
 - **English-market-only name filter** (`entity_qa.py`): near-zero recall on
   CJK/Arabic/etc. non-hotel names. Original 2 specimens (Tokyo liquor shop
   + bathhouse), `xfail`-tested. **6 more found in the pilot-cohort v1 audit
@@ -320,11 +333,11 @@ commencée :
 
 | Month | Est. recurring € | Main driver | Notes |
 |---|---:|---|---|
-| 2026-09 | 0 | - | 33,966 hotels, 185 MB ETL output, all free tiers |
+| 2026-09 | 0 | - | 33,920 hotels after Bloc A, all free tiers |
 
 ## Decision & session history
 
-Full narrative history lives in `docs/adr/001` through `015` (each records
+Full narrative history lives in `docs/adr/001` through `016` (each records
 context/decision/consequences) and the dated reports under `docs/reports/`
 they reference. Batch ingestion, golden-set construction, and calibration
 runs are documented in `docs/reports/phase-3-*` and

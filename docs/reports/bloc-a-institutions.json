@@ -1,0 +1,1062 @@
+{
+  "release": "2026-08-19.0",
+  "rules_sha256": "a9f679a853727bfcfdac390b91a25d00200356db88f00b10d9ed7f676c927490",
+  "cities": {
+    "london": {
+      "scanned": 4397,
+      "excluded": 8,
+      "remaining": 4389,
+      "by_primary_reason": {
+        "elder_care": 2,
+        "medical_residential": 3,
+        "rehabilitation": 2,
+        "shelter": 1
+      },
+      "input_sha256": "3e5d680b90f01cf0dccc87daa246dff7badb3b44e2b1c3d46c7acc9d8125e1d1"
+    },
+    "bangkok": {
+      "scanned": 7546,
+      "excluded": 6,
+      "remaining": 7540,
+      "by_primary_reason": {
+        "elder_care": 4,
+        "medical_residential": 2
+      },
+      "input_sha256": "e4ccde4a17ccfc34e0ae02a1e4367ecfca4004fcb246cb40c3f4a0f34568c91a"
+    },
+    "paris": {
+      "scanned": 3582,
+      "excluded": 5,
+      "remaining": 3577,
+      "by_primary_reason": {
+        "elder_care": 1,
+        "shelter": 4
+      },
+      "input_sha256": "cdb89f117d4004c8bf40a96ba09e932491612e9738aa435c0fa72f34abcc0671"
+    },
+    "rome": {
+      "scanned": 5040,
+      "excluded": 7,
+      "remaining": 5033,
+      "by_primary_reason": {
+        "elder_care": 2,
+        "shelter": 5
+      },
+      "input_sha256": "cb487fd500a1ae11d7acd44632f1853d989af21bad6dfba062d34c66a9997cb2"
+    },
+    "barcelona": {
+      "scanned": 1720,
+      "excluded": 5,
+      "remaining": 1715,
+      "by_primary_reason": {
+        "elder_care": 1,
+        "shelter": 4
+      },
+      "input_sha256": "ecfa854dd492ac5b65a637083546797b90e37e756b02d34847bdaa48b8dc1c96"
+    },
+    "amsterdam": {
+      "scanned": 1071,
+      "excluded": 1,
+      "remaining": 1070,
+      "by_primary_reason": {
+        "shelter": 1
+      },
+      "input_sha256": "774c1ec43c28588f4c441578ec28985be245c60e4e45d553aebfba9e403f5ebf"
+    },
+    "lisbon": {
+      "scanned": 1289,
+      "excluded": 2,
+      "remaining": 1287,
+      "by_primary_reason": {
+        "medical_residential": 1,
+        "shelter": 1
+      },
+      "input_sha256": "2ce91beff1d99c35fa87697d536aba12c96c3cfd7d0d64ad5976a34639dd417e"
+    },
+    "sydney": {
+      "scanned": 1078,
+      "excluded": 1,
+      "remaining": 1077,
+      "by_primary_reason": {
+        "child_care": 1
+      },
+      "input_sha256": "6b134213989a4931f5ab2db0344d7b3d1c6473bc686f1c1a927f69c59235e734"
+    },
+    "tokyo": {
+      "scanned": 2745,
+      "excluded": 0,
+      "remaining": 2745,
+      "by_primary_reason": {},
+      "input_sha256": "b4f961e5b3daf0c80b1215da4ff2a9f8ed40039eee368e187e40748f48e6ddc2"
+    },
+    "dubai": {
+      "scanned": 2067,
+      "excluded": 2,
+      "remaining": 2065,
+      "by_primary_reason": {
+        "child_care": 1,
+        "medical_residential": 1
+      },
+      "input_sha256": "6804129d51a66958a2bcc641777f2b94cde3c00cb0a28f4408ae60b435a4b124"
+    },
+    "new_york": {
+      "scanned": 2194,
+      "excluded": 5,
+      "remaining": 2189,
+      "by_primary_reason": {
+        "medical_residential": 4,
+        "shelter": 1
+      },
+      "input_sha256": "a673243de693a3d563dde119df805f5ccf0a843525c38b7aee649177ebe489b8"
+    },
+    "singapore": {
+      "scanned": 1237,
+      "excluded": 4,
+      "remaining": 1233,
+      "by_primary_reason": {
+        "child_care": 3,
+        "elder_care": 1
+      },
+      "input_sha256": "f5d8646401f80257c3c94e757295aaef401a3985cc28e9bea062fb91c9406722"
+    }
+  },
+  "exclusions": [
+    {
+      "city_id": "london",
+      "id": "6ef5118d-599a-433b-8e30-fbcb723870b6",
+      "name": "Whitefarm Lodge Care Home",
+      "slug": "whitefarm-lodge-care-home-723870b6",
+      "matches": [
+        {
+          "reason": "elder_care",
+          "language": "en",
+          "term": "care home"
+        },
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "care"
+        }
+      ],
+      "primary_reason": "elder_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "london",
+      "id": "c0783f98-1cdf-4b56-a36f-844a7563f760",
+      "name": "Westmoor House Rehabilitation Centre",
+      "slug": "westmoor-house-rehabilitation-centre-7563f760",
+      "matches": [
+        {
+          "reason": "rehabilitation",
+          "language": "en",
+          "term": "rehabilitation centre"
+        }
+      ],
+      "primary_reason": "rehabilitation",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "london",
+      "id": "9bae129f-7c69-4ebc-9eda-d8de98ea5f06",
+      "name": "Look Ahead Care & Support",
+      "slug": "look-ahead-care-support-98ea5f06",
+      "matches": [
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "care"
+        }
+      ],
+      "primary_reason": "medical_residential",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "london",
+      "id": "be0b9e6c-a72b-4918-9cf7-8282a1eae65b",
+      "name": "Sankofa Care",
+      "slug": "sankofa-care-a1eae65b",
+      "matches": [
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "care"
+        }
+      ],
+      "primary_reason": "medical_residential",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "london",
+      "id": "7278a72f-eb0b-4d45-bd2a-8cc94d5c7cde",
+      "name": "Camberwell Foyer",
+      "slug": "camberwell-foyer-4d5c7cde",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "en",
+          "term": "foyer"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "london",
+      "id": "a54d4f69-674d-4af8-9793-5e84c03fdbd8",
+      "name": "Ronald McDonald House Moorfields",
+      "slug": "ronald-mcdonald-house-moorfields-c03fdbd8",
+      "matches": [
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "ronald mcdonald house"
+        }
+      ],
+      "primary_reason": "medical_residential",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "london",
+      "id": "21e2bbfa-e3d6-4786-8f0c-3f9d379b3f58",
+      "name": "The Lodge Care Home",
+      "slug": "the-lodge-care-home-379b3f58",
+      "matches": [
+        {
+          "reason": "elder_care",
+          "language": "en",
+          "term": "care home"
+        },
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "care"
+        }
+      ],
+      "primary_reason": "elder_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "london",
+      "id": "90f9713b-333e-4724-9a69-6225c4467315",
+      "name": "Halfway House Farm",
+      "slug": "halfway-house-farm-c4467315",
+      "matches": [
+        {
+          "reason": "rehabilitation",
+          "language": "en",
+          "term": "halfway house"
+        }
+      ],
+      "primary_reason": "rehabilitation",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "bangkok",
+      "id": "a160ceb7-3739-4e80-9d29-ef75642bfbf0",
+      "name": "บ้านจรัญอบอุ่น - บ้านพักผู้สูงอายุ และผู้ป่วยติดเตียง",
+      "slug": "hotel-642bfbf0",
+      "matches": [
+        {
+          "reason": "elder_care",
+          "language": "th",
+          "term": "บ้านพักผู้สูงอายุ"
+        }
+      ],
+      "primary_reason": "elder_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "bangkok",
+      "id": "d69e2b50-8ee2-40ae-8f5b-8de17db0c4dc",
+      "name": "ฺBR care",
+      "slug": "br-care-7db0c4dc",
+      "matches": [
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "care"
+        }
+      ],
+      "primary_reason": "medical_residential",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "bangkok",
+      "id": "e9e98f53-582e-4e25-bcc3-49c74176d198",
+      "name": "บ้านพักผู้สูงอายุ สยามเกษียณ siam kasean",
+      "slug": "siam-kasean-4176d198",
+      "matches": [
+        {
+          "reason": "elder_care",
+          "language": "th",
+          "term": "บ้านพักผู้สูงอายุ"
+        }
+      ],
+      "primary_reason": "elder_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "bangkok",
+      "id": "58893f3b-54e8-4935-a360-8e75878a4ec3",
+      "name": "ศูนย์ดูแลผู้สูงอายุหรือผู้มีภาวะพึ่งพิง ดูเวลเนสแคร์ DoWellnessCare",
+      "slug": "dowellnesscare-878a4ec3",
+      "matches": [
+        {
+          "reason": "elder_care",
+          "language": "th",
+          "term": "ศูนย์ดูแลผู้สูงอายุ"
+        }
+      ],
+      "primary_reason": "elder_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "bangkok",
+      "id": "3810a506-8cb6-4cb7-a4ae-4eca69b575dc",
+      "name": "Love and Care Pet",
+      "slug": "love-and-care-pet-69b575dc",
+      "matches": [
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "care"
+        }
+      ],
+      "primary_reason": "medical_residential",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "bangkok",
+      "id": "fe7ea53a-7198-49af-944c-44cecba3676b",
+      "name": "บ้านพักผู้สูงอายุ สไตล์รีสอร์ท ท่ามกลางธรรมชาติ เฮลท์ตี้ลีฟวิ่งเซ็นเตอร์",
+      "slug": "hotel-cba3676b",
+      "matches": [
+        {
+          "reason": "elder_care",
+          "language": "th",
+          "term": "บ้านพักผู้สูงอายุ"
+        }
+      ],
+      "primary_reason": "elder_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "paris",
+      "id": "1938147a-0007-4581-9a17-90ede133d359",
+      "name": "Foyer Anne-Marie Veder",
+      "slug": "foyer-anne-marie-veder-e133d359",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "en",
+          "term": "foyer"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "paris",
+      "id": "ed2ad678-4086-43e2-b1b0-2a0d796b2695",
+      "name": "EHPAD Sainte Monique",
+      "slug": "ehpad-sainte-monique-796b2695",
+      "matches": [
+        {
+          "reason": "elder_care",
+          "language": "fr",
+          "term": "ehpad"
+        }
+      ],
+      "primary_reason": "elder_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "paris",
+      "id": "fb7a1a0e-842a-40ef-9461-53c527350221",
+      "name": "Foyer Saint Jean Eudes",
+      "slug": "foyer-saint-jean-eudes-27350221",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "en",
+          "term": "foyer"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "paris",
+      "id": "66790ebd-1487-4b94-a772-72f587cba884",
+      "name": "Foyer Henri Planchat",
+      "slug": "foyer-henri-planchat-87cba884",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "en",
+          "term": "foyer"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "paris",
+      "id": "7d27cdfe-f806-46af-b210-b77e72eee0a3",
+      "name": "Foyer Hébergement Michel Cahen",
+      "slug": "foyer-hebergement-michel-cahen-72eee0a3",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "en",
+          "term": "foyer"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "rome",
+      "id": "b3437c25-6a17-4335-acd6-f42e09b3f600",
+      "name": "B&B Maru Shelter",
+      "slug": "b-b-maru-shelter-09b3f600",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "en",
+          "term": "shelter"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "rome",
+      "id": "778d7496-3d0c-42d6-944a-105715d90f13",
+      "name": "Villa Rigacci Casa Di Riposo",
+      "slug": "villa-rigacci-casa-di-riposo-15d90f13",
+      "matches": [
+        {
+          "reason": "elder_care",
+          "language": "it",
+          "term": "casa di riposo"
+        }
+      ],
+      "primary_reason": "elder_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "rome",
+      "id": "84fa7dc8-b868-486d-bc33-78f322762ce4",
+      "name": "B&B Rifugio di Roma",
+      "slug": "b-b-rifugio-di-roma-22762ce4",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "it",
+          "term": "rifugio"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "rome",
+      "id": "6ebed3ab-59a3-4eef-a933-4a808a7dd224",
+      "name": "Cohousing camere per anziani la soluzione economica alla #CasadiRiposo",
+      "slug": "cohousing-camere-per-anziani-la-soluzione-economica-alla-casadiriposo-8a7dd224",
+      "matches": [
+        {
+          "reason": "elder_care",
+          "language": "it",
+          "term": "per anziani"
+        }
+      ],
+      "primary_reason": "elder_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "rome",
+      "id": "0dad7ef2-0bd8-40aa-a7b6-81d4931a1189",
+      "name": "Foyer Phat Diem",
+      "slug": "foyer-phat-diem-931a1189",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "en",
+          "term": "foyer"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "rome",
+      "id": "13d1bc0b-e716-4093-8f3f-9a91354b8706",
+      "name": "Rifugio degli Artisti Top",
+      "slug": "rifugio-degli-artisti-top-354b8706",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "it",
+          "term": "rifugio"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "rome",
+      "id": "c6d2c108-1ecc-47fd-9c46-0b74043e9e53",
+      "name": "Il Rifugio Degli Artisti",
+      "slug": "il-rifugio-degli-artisti-043e9e53",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "it",
+          "term": "rifugio"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "barcelona",
+      "id": "13d820f7-90d8-4d01-a9be-cef80c0d9a44",
+      "name": "Refugi Estanys de la Pera",
+      "slug": "refugi-estanys-de-la-pera-0c0d9a44",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "ca",
+          "term": "refugi"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "barcelona",
+      "id": "8a4cab61-69dc-4774-bf68-cbafd59b1628",
+      "name": "Center Rambles Shelter",
+      "slug": "center-rambles-shelter-d59b1628",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "en",
+          "term": "shelter"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "barcelona",
+      "id": "cdf22cd5-5a06-46bf-b885-442521e04096",
+      "name": "My Barcelona Refuge",
+      "slug": "my-barcelona-refuge-21e04096",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "en",
+          "term": "refuge"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "barcelona",
+      "id": "ffeb93f5-6ba8-463d-847e-fda6493557d1",
+      "name": "El Refugio 21",
+      "slug": "el-refugio-21-493557d1",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "es",
+          "term": "refugio"
+        },
+        {
+          "reason": "shelter",
+          "language": "pt",
+          "term": "refugio"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "barcelona",
+      "id": "2b2076a1-a226-431d-a38e-0f88fb5c7977",
+      "name": "Residencia para Mayores Ballesol Mirasierra",
+      "slug": "residencia-para-mayores-ballesol-mirasierra-fb5c7977",
+      "matches": [
+        {
+          "reason": "elder_care",
+          "language": "es",
+          "term": "residencia para mayores"
+        }
+      ],
+      "primary_reason": "elder_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "amsterdam",
+      "id": "1e836668-8716-481c-918c-b73073ddff45",
+      "name": "Shelter Jordan Amsterdam Hostel",
+      "slug": "shelter-jordan-amsterdam-hostel-73ddff45",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "en",
+          "term": "shelter"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "lisbon",
+      "id": "f443220e-5f15-4b9b-a001-d6bd0cc20f58",
+      "name": "Refúgio - Accommodation with Care - Nuno's Apartments",
+      "slug": "refugio-accommodation-with-care-nuno-s-apartments-0cc20f58",
+      "matches": [
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "care"
+        },
+        {
+          "reason": "shelter",
+          "language": "es",
+          "term": "refugio"
+        },
+        {
+          "reason": "shelter",
+          "language": "pt",
+          "term": "refugio"
+        }
+      ],
+      "primary_reason": "medical_residential",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "lisbon",
+      "id": "4eee1088-87c2-4c6c-a4bb-26f4881d1ab1",
+      "name": "Refuge Hostel",
+      "slug": "refuge-hostel-881d1ab1",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "en",
+          "term": "refuge"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "sydney",
+      "id": "1a803b86-24ed-4050-9fbc-8de2cfef1ba2",
+      "name": "Oasis Youth Care Centre",
+      "slug": "oasis-youth-care-centre-cfef1ba2",
+      "matches": [
+        {
+          "reason": "child_care",
+          "language": "en",
+          "term": "youth care"
+        },
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "care"
+        }
+      ],
+      "primary_reason": "child_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "dubai",
+      "id": "7b64c951-7e42-42ab-8839-b1e3bf61f47e",
+      "name": "Rovers Boys Hostel ",
+      "slug": "rovers-boys-hostel-bf61f47e",
+      "matches": [
+        {
+          "reason": "child_care",
+          "language": "en",
+          "term": "boys hostel"
+        }
+      ],
+      "primary_reason": "child_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "dubai",
+      "id": "20e1c940-4e1b-4ad4-9136-a9432ddf4b23",
+      "name": "Premium Furnished Studio At Jaddaf Health Care City Awg2",
+      "slug": "premium-furnished-studio-at-jaddaf-health-care-city-awg2-2ddf4b23",
+      "matches": [
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "care"
+        }
+      ],
+      "primary_reason": "medical_residential",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "new_york",
+      "id": "0248a503-a1ee-4194-ba9c-38ee2ab8e49b",
+      "name": "Brooklyn Broadway Homeless Shelter",
+      "slug": "brooklyn-broadway-homeless-shelter-2ab8e49b",
+      "matches": [
+        {
+          "reason": "shelter",
+          "language": "en",
+          "term": "shelter"
+        }
+      ],
+      "primary_reason": "shelter",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "new_york",
+      "id": "e35a2a8a-3329-42c2-91e4-84cf81f50b17",
+      "name": "Grand Medical Suites",
+      "slug": "grand-medical-suites-81f50b17",
+      "matches": [
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "medical"
+        }
+      ],
+      "primary_reason": "medical_residential",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "new_york",
+      "id": "8cf9a28e-53b7-4c94-aa19-f0f3a8aecd85",
+      "name": "Jewish Renaissance Medical Center",
+      "slug": "jewish-renaissance-medical-center-a8aecd85",
+      "matches": [
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "medical"
+        }
+      ],
+      "primary_reason": "medical_residential",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "new_york",
+      "id": "b9ef9e8d-cac4-414d-a862-9856f9d3cded",
+      "name": "Millennium Care",
+      "slug": "millennium-care-f9d3cded",
+      "matches": [
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "care"
+        }
+      ],
+      "primary_reason": "medical_residential",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "new_york",
+      "id": "0b2859fa-7d5a-4fbc-9d76-c93c2691240a",
+      "name": "Fine Care Center",
+      "slug": "fine-care-center-2691240a",
+      "matches": [
+        {
+          "reason": "medical_residential",
+          "language": "en",
+          "term": "care"
+        }
+      ],
+      "primary_reason": "medical_residential",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "singapore",
+      "id": "2511f051-4294-4d3c-8b4c-bc553ba67d6c",
+      "name": "Singapore Boys' Home",
+      "slug": "singapore-boys-home-3ba67d6c",
+      "matches": [
+        {
+          "reason": "child_care",
+          "language": "en",
+          "term": "boys home"
+        }
+      ],
+      "primary_reason": "child_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "singapore",
+      "id": "f0326acc-45be-41e7-b9b9-af46432ccce7",
+      "name": "Andrew and Grace Home",
+      "slug": "andrew-and-grace-home-432ccce7",
+      "matches": [
+        {
+          "reason": "child_care",
+          "language": "en",
+          "term": "andrew and grace home"
+        }
+      ],
+      "primary_reason": "child_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "singapore",
+      "id": "e2d08620-052c-45ec-a184-26f91c0af351",
+      "name": "Marine Parade Aspiration Elderly Lodge",
+      "slug": "marine-parade-aspiration-elderly-lodge-1c0af351",
+      "matches": [
+        {
+          "reason": "elder_care",
+          "language": "en",
+          "term": "elderly lodge"
+        }
+      ],
+      "primary_reason": "elder_care",
+      "action": "exclude_pending_review"
+    },
+    {
+      "city_id": "singapore",
+      "id": "ff155722-297d-4ae1-aedc-58b9039816f4",
+      "name": "Singapore Boys' Hostel",
+      "slug": "singapore-boys-hostel-039816f4",
+      "matches": [
+        {
+          "reason": "child_care",
+          "language": "en",
+          "term": "boys hostel"
+        }
+      ],
+      "primary_reason": "child_care",
+      "action": "exclude_pending_review"
+    }
+  ],
+  "reviewed_hotels": [
+    {
+      "id": "4855a2d0-3f13-4b76-862e-b34e18b10e0d",
+      "name": "Shelter City Hostel",
+      "slug": "shelter-city-hostel-18b10e0d",
+      "source": "https://shelterhostel.amsterdam/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "ba2d80d8-3955-4bc9-8f11-ecf3ed327028",
+      "name": "Siam Shelter",
+      "slug": "siam-shelter-ed327028",
+      "source": "https://www.siamshelter.com/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "ea8427bb-2add-414b-be2e-4e31c10888eb",
+      "name": "Mama Shelter Dubai",
+      "slug": "mama-shelter-dubai-c10888eb",
+      "source": "https://mamashelter.com/dubai/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "614a8df1-51ca-4821-8f66-947298befb3e",
+      "name": "Mama Shelter Lisboa",
+      "slug": "mama-shelter-lisboa-98befb3e",
+      "source": "https://mamashelter.com/lisboa/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "747f9187-a43b-4bf1-8af7-94aa6bb11eda",
+      "name": "Mama Shelter London - Shoreditch",
+      "slug": "mama-shelter-london-shoreditch-6bb11eda",
+      "source": "https://all.accor.com/a/en/information/member-guest-star-participating-hotels.html",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "55fd2c58-5d20-470a-8864-4700f76ac0a0",
+      "name": "Mama Shelter Paris West",
+      "slug": "mama-shelter-paris-west-f76ac0a0",
+      "source": "https://mamashelter.com/paris-west/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "91827c79-83a0-47e0-8e02-45737ae20547",
+      "name": "Mama Shelter Paris La Défense",
+      "slug": "mama-shelter-paris-la-defense-7ae20547",
+      "source": "https://mamashelter.com/paris-la-defense/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "9f723508-0cea-4c83-8079-05596d12a7ef",
+      "name": "Mama Shelter Paris East",
+      "slug": "mama-shelter-paris-east-6d12a7ef",
+      "source": "https://mamashelter.com/paris-east/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "93c73ee8-9030-439e-b16b-0ae305ef9acc",
+      "name": "Mama Shelter Roma",
+      "slug": "mama-shelter-roma-05ef9acc",
+      "source": "https://mamashelter.com/roma/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "aecdc4a3-7f6e-46c6-b844-c5f728d65f09",
+      "name": "Mama Shelter Singapore",
+      "slug": "mama-shelter-singapore-28d65f09",
+      "source": "https://mamashelter.com/singapore/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "adbc1ff0-3224-442e-a15f-b4761b4b2bff",
+      "name": "Golden Foyer Bangkok",
+      "slug": "golden-foyer-bangkok-1b4b2bff",
+      "source": "https://www.booking.com/hotel/th/golden-foyer-suvarnabhumi-airport.en-gb.html",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ],
+      "evidence": "Source address 541/8 Luang Phaeng Road matches Overture address 541, 8 Luang Phaeng Rd."
+    }
+  ],
+  "totals": {
+    "scanned": 33966,
+    "excluded": 46,
+    "remaining": 33920
+  },
+  "removed_web_references_by_file": {
+    "web/src/data/hotels-amsterdam.json": 4,
+    "web/src/data/hotels-bangkok.json": 5,
+    "web/src/data/hotels-barcelona.json": 11,
+    "web/src/data/hotels-dubai.json": 4,
+    "web/src/data/hotels-lisbon.json": 2,
+    "web/src/data/hotels-london.json": 12,
+    "web/src/data/hotels-new_york.json": 8,
+    "web/src/data/hotels-paris.json": 10,
+    "web/src/data/hotels-rome.json": 19,
+    "web/src/data/hotels-singapore.json": 10,
+    "web/src/data/hotels-sydney.json": 3,
+    "web/public/data/search-index-amsterdam-5.json": 1,
+    "web/public/data/search-index-bangkok-0.json": 1,
+    "web/public/data/search-index-bangkok-3.json": 1,
+    "web/public/data/search-index-bangkok-8.json": 1,
+    "web/public/data/search-index-bangkok-b.json": 1,
+    "web/public/data/search-index-bangkok-c.json": 2,
+    "web/public/data/search-index-barcelona-1.json": 1,
+    "web/public/data/search-index-barcelona-4.json": 1,
+    "web/public/data/search-index-barcelona-6.json": 1,
+    "web/public/data/search-index-barcelona-7.json": 1,
+    "web/public/data/search-index-barcelona-8.json": 1,
+    "web/public/data/search-index-dubai-3.json": 1,
+    "web/public/data/search-index-dubai-e.json": 1,
+    "web/public/data/search-index-lisbon-1.json": 1,
+    "web/public/data/search-index-lisbon-8.json": 1,
+    "web/public/data/search-index-london-0.json": 1,
+    "web/public/data/search-index-london-5.json": 1,
+    "web/public/data/search-index-london-6.json": 2,
+    "web/public/data/search-index-london-8.json": 2,
+    "web/public/data/search-index-london-b.json": 1,
+    "web/public/data/search-index-london-e.json": 1,
+    "web/public/data/search-index-new_york-5.json": 1,
+    "web/public/data/search-index-new_york-7.json": 1,
+    "web/public/data/search-index-new_york-a.json": 1,
+    "web/public/data/search-index-new_york-b.json": 1,
+    "web/public/data/search-index-new_york-d.json": 1,
+    "web/public/data/search-index-paris-1.json": 1,
+    "web/public/data/search-index-paris-3.json": 1,
+    "web/public/data/search-index-paris-4.json": 1,
+    "web/public/data/search-index-paris-5.json": 1,
+    "web/public/data/search-index-paris-9.json": 1,
+    "web/public/data/search-index-rome-0.json": 1,
+    "web/public/data/search-index-rome-3.json": 2,
+    "web/public/data/search-index-rome-4.json": 2,
+    "web/public/data/search-index-rome-6.json": 1,
+    "web/public/data/search-index-rome-9.json": 1,
+    "web/public/data/search-index-singapore-1.json": 1,
+    "web/public/data/search-index-singapore-4.json": 1,
+    "web/public/data/search-index-singapore-7.json": 1,
+    "web/public/data/search-index-singapore-c.json": 1,
+    "web/public/data/search-index-sydney-2.json": 1,
+    "web/public/data/search-index.json": 46,
+    "web/src/data/city-pages.json": 2
+  },
+  "verification": {
+    "remaining_scores_unchanged": true,
+    "search_before": 33966,
+    "search_after": 33920,
+    "static_before": 15749,
+    "static_after": 15738,
+    "cohort_removed": [
+      {
+        "city_id": "rome",
+        "id": "b3437c25-6a17-4335-acd6-f42e09b3f600",
+        "name": "B&B Maru Shelter",
+        "locality": "Roma",
+        "chain": "False",
+        "confidence": "88.53458070755005",
+        "balanced_score": "34.057003306498764",
+        "distinctiveness": "84.5",
+        "walkability_density": "33.18298935038444",
+        "transit_access": "46.24798310024936",
+        "food_essentials": "0.0",
+        "quietness_proxy": "48.921269774688405",
+        "family_convenience": "99.79120812634396",
+        "nightlife_access": "5.68998358356228"
+      },
+      {
+        "city_id": "singapore",
+        "id": "2511f051-4294-4d3c-8b4c-bc553ba67d6c",
+        "name": "Singapore Boys' Home",
+        "locality": "Singapore",
+        "chain": "False",
+        "confidence": "81.80712807178497",
+        "balanced_score": "26.80516332822654",
+        "distinctiveness": "84.8",
+        "walkability_density": "3.3485559594025265",
+        "transit_access": "13.860234033030713",
+        "food_essentials": "0.0",
+        "quietness_proxy": "92.12284437495244",
+        "family_convenience": "95.44978673497027",
+        "nightlife_access": "0.0"
+      }
+    ],
+    "protected_home_house_names": 1825,
+    "protected_hostel_names": 1061
+  }
+}

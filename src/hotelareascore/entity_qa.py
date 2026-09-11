@@ -1,4 +1,7 @@
 """Entity QA (docs/STATE.md "Bounded pre-Phase-3 task: entity QA", item a):
+Bloc A / ADR-016 now runs multilingual institution exclusions FIRST,
+including quarantined IDs, before every legacy allowance described below.
+The historical limitations below still apply to other non-hotel families.
 Overture's `hotel`-family taxonomy leaves catch some places that plainly
 aren't hotels — a consultancy ("RevenuebyDesign"), an office tower
 ("อาคารใยแก้ว True Tower"). Overture's own fields (`basic_category`,
@@ -90,6 +93,8 @@ from __future__ import annotations
 
 import re
 import unicodedata
+
+from .institutions import institution_matches
 
 LODGING_KEYWORDS = re.compile(
     r"\b(hotel|hotels|inn|suite|suites|resort|resorts|hostel|hostels|lodge|lodges|guest ?house|"
@@ -269,14 +274,17 @@ def is_non_latin_name(name: str | None) -> bool:
     return False
 
 
-def is_likely_non_hotel(name: str | None) -> bool:
+def is_likely_non_hotel(name: str | None, hotel_id: str | None = None) -> bool:
     """True if `name` looks like a business/institution swept up by a
     hotel-family taxonomy leaf rather than an actual lodging business.
-    Conservative by design (brand allowlist checked first, and markers with
-    a demonstrated false-positive history removed — see module docstring):
-    false negatives (missed non-hotels) are the intended failure mode, not
-    false exclusions of real hotels. Some still slip through either way.
+    Institutional signals and quarantined IDs take precedence (ADR-016):
+    uncertainty means exclusion, with evidence logged by ingestion. Other
+    entity families retain the older conservative brand/lodging allowances.
     """
+    # ADR-016: institutional signals override ALL brand/lodging allowances.
+    # Uncertain matches are withheld and logged by ingest, never published.
+    if institution_matches(name, hotel_id):
+        return True
     if not name:
         return False
     folded = _fold(name)

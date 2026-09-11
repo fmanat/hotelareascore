@@ -22,6 +22,7 @@ from . import overture, taxonomy
 from .config import City, ETL_DIR, get_city
 from .dedupe import HotelRecord, dedupe_hotels
 from .entity_qa import is_known_bad_geocode, is_likely_non_hotel
+from .institutions import institution_matches
 
 
 def city_dir(release: overture.Release, city: City) -> Path:
@@ -209,7 +210,11 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
     # validated classifier -- see entity_qa.py docstring for known
     # limitations. Every exclusion is logged so it can be found and
     # reverted if it turns out to be a real hotel.
-    entity_qa_excluded = [(r[0], r[1]) for r in hotels_raw_rows if is_likely_non_hotel(r[1])]
+    entity_qa_excluded = [(r[0], r[1]) for r in hotels_raw_rows if is_likely_non_hotel(r[1], r[0])]
+    institution_excluded = [
+        {"id": r[0], "name": r[1], "matches": matches, "action": "exclude_pending_review"}
+        for r in hotels_raw_rows if (matches := institution_matches(r[1], r[0]))
+    ]
 
     # Known bad-geocode exclusions (owner audit, this session, docs/reports/
     # destination-name-mismatch-audit.md): a different bug class -- real
@@ -281,6 +286,8 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
         "dedupe_records_absorbed": sum(len(d.member_ids) for d in merged_groups) - len(merged_groups),
         "entity_qa_excluded_count": len(entity_qa_excluded),
         "entity_qa_excluded_names": [name for _, name in entity_qa_excluded],
+        "institution_excluded_count": len(institution_excluded),
+        "institution_exclusions": institution_excluded,
         "bad_geocode_excluded_count": len(bad_geocode_excluded),
         "bad_geocode_excluded_names": [name for _, name in bad_geocode_excluded],
         "pois": n_pois,

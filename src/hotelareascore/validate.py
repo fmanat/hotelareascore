@@ -14,6 +14,7 @@ from typing import Any
 from . import overture, taxonomy
 from .config import DIMENSIONS, ETL_DIR, get_city
 from .webdata import FAR_FROM_CENTER_KM
+from .institutions import assert_no_institutions
 
 
 class ValidationError(RuntimeError):
@@ -29,6 +30,8 @@ def validate_city(city_id: str, release: overture.Release) -> dict[str, Any]:
     etl_dir = ETL_DIR / release.id / city.id
     con = overture.connect()
     con.execute(f"CREATE OR REPLACE TEMP TABLE hotels AS SELECT * FROM read_parquet('{etl_dir / 'hotels.parquet'}')")
+    rows = con.execute("SELECT id, name FROM hotels").fetchall()
+    assert_no_institutions([{"id": r[0], "name": r[1]} for r in rows], context=f"validate {city_id}")
     con.execute(f"CREATE OR REPLACE TEMP TABLE scores AS SELECT * FROM read_parquet('{etl_dir / 'hotel_scores.parquet'}')")
 
     manifest = json.loads((etl_dir / "manifest.json").read_text())

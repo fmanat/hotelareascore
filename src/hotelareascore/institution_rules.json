@@ -1,0 +1,1389 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "language": "en",
+      "reason": "child_care",
+      "match": "word",
+      "terms": [
+        "boys home",
+        "boy home",
+        "girls home",
+        "girl home",
+        "childrens home",
+        "children home",
+        "child care home",
+        "orphanage",
+        "group home",
+        "youth home",
+        "juvenile home",
+        "boys hostel",
+        "girls hostel",
+        "youth care",
+        "childrens care",
+        "childrens residential",
+        "boys homes",
+        "boy homes",
+        "girls homes",
+        "girl homes",
+        "childrens homes",
+        "children homes",
+        "child care homes",
+        "group homes",
+        "youth homes",
+        "juvenile homes",
+        "andrew and grace home"
+      ]
+    },
+    {
+      "language": "en",
+      "reason": "elder_care",
+      "match": "word",
+      "terms": [
+        "care home",
+        "nursing home",
+        "retirement home",
+        "rest home",
+        "aged care",
+        "assisted living",
+        "senior living",
+        "residential care",
+        "convalescent home",
+        "old peoples home",
+        "old folks home",
+        "old age home",
+        "elderly lodge",
+        "senior home",
+        "seniors home",
+        "elderly home",
+        "care homes",
+        "nursing homes",
+        "retirement homes",
+        "rest homes",
+        "convalescent homes",
+        "old peoples homes",
+        "old folks homes",
+        "old age homes",
+        "senior homes",
+        "seniors homes",
+        "elderly homes"
+      ]
+    },
+    {
+      "language": "en",
+      "reason": "detention",
+      "match": "word",
+      "terms": [
+        "detention",
+        "correctional",
+        "remand",
+        "prison",
+        "penitentiary",
+        "jail",
+        "gaol",
+        "reformatory"
+      ]
+    },
+    {
+      "language": "en",
+      "reason": "rehabilitation",
+      "match": "word",
+      "terms": [
+        "halfway house",
+        "rehabilitation centre",
+        "rehabilitation center",
+        "rehab centre",
+        "rehab center",
+        "recovery home",
+        "sober living",
+        "halfway houses",
+        "rehabilitation centres",
+        "rehabilitation centers",
+        "rehab centres",
+        "rehab centers",
+        "recovery homes"
+      ]
+    },
+    {
+      "language": "en",
+      "reason": "shelter",
+      "match": "word",
+      "terms": [
+        "shelter",
+        "shelters",
+        "refuge",
+        "refuges",
+        "foyer",
+        "foyers"
+      ]
+    },
+    {
+      "language": "en",
+      "reason": "medical_residential",
+      "match": "word",
+      "terms": [
+        "psychiatric",
+        "mental health residential",
+        "mental health home",
+        "mental hospital",
+        "medical residential",
+        "residential medical",
+        "residential treatment",
+        "hospice",
+        "sanatorium",
+        "sanitorium",
+        "care",
+        "medical",
+        "mental health homes",
+        "ronald mcdonald house"
+      ]
+    },
+    {
+      "language": "fr",
+      "reason": "child_care",
+      "match": "word",
+      "terms": [
+        "orphelinat",
+        "maison denfants",
+        "maison de lenfance",
+        "village denfants",
+        "pouponniere"
+      ]
+    },
+    {
+      "language": "fr",
+      "reason": "elder_care",
+      "match": "word",
+      "terms": [
+        "ehpad",
+        "maison de retraite",
+        "maison de repos",
+        "residence pour personnes agees",
+        "residence autonomie",
+        "residence seniors",
+        "residence senior"
+      ]
+    },
+    {
+      "language": "fr",
+      "reason": "detention",
+      "match": "word",
+      "terms": [
+        "centre de detention",
+        "centre penitentiaire",
+        "maison darret",
+        "centre de retention",
+        "centre educatif ferme"
+      ]
+    },
+    {
+      "language": "fr",
+      "reason": "rehabilitation",
+      "match": "word",
+      "terms": [
+        "centre de readaptation",
+        "centre de reeducation",
+        "centre de rehabilitation",
+        "centre de desintoxication"
+      ]
+    },
+    {
+      "language": "fr",
+      "reason": "shelter",
+      "match": "word",
+      "terms": [
+        "centre dhebergement durgence",
+        "centre dhebergement et de reinsertion",
+        "accueil de nuit",
+        "centre daccueil social"
+      ]
+    },
+    {
+      "language": "fr",
+      "reason": "medical_residential",
+      "match": "word",
+      "terms": [
+        "psychiatrique",
+        "residence medicalisee",
+        "maison daccueil specialisee",
+        "etablissement medico social"
+      ]
+    },
+    {
+      "language": "it",
+      "reason": "child_care",
+      "match": "word",
+      "terms": [
+        "orfanotrofio",
+        "casa famiglia",
+        "casa per minori",
+        "comunita per minori"
+      ]
+    },
+    {
+      "language": "it",
+      "reason": "elder_care",
+      "match": "word",
+      "terms": [
+        "casa di riposo",
+        "casa di cura",
+        "residenza sanitaria assistenziale",
+        "residenza per anziani",
+        "casa per anziani",
+        "per anziani",
+        "casadiriposo"
+      ]
+    },
+    {
+      "language": "it",
+      "reason": "detention",
+      "match": "word",
+      "terms": [
+        "carcere",
+        "prigione",
+        "penitenziario",
+        "casa circondariale",
+        "istituto penale",
+        "centro di detenzione"
+      ]
+    },
+    {
+      "language": "it",
+      "reason": "rehabilitation",
+      "match": "word",
+      "terms": [
+        "centro di riabilitazione",
+        "comunita terapeutica",
+        "centro di recupero tossicodipendenti"
+      ]
+    },
+    {
+      "language": "it",
+      "reason": "shelter",
+      "match": "word",
+      "terms": [
+        "rifugio",
+        "casa rifugio",
+        "centro di accoglienza",
+        "dormitorio sociale"
+      ]
+    },
+    {
+      "language": "it",
+      "reason": "medical_residential",
+      "match": "word",
+      "terms": [
+        "psichiatrico",
+        "psichiatrica",
+        "residenza sanitaria",
+        "sanatorio"
+      ]
+    },
+    {
+      "language": "es",
+      "reason": "child_care",
+      "match": "word",
+      "terms": [
+        "orfanato",
+        "hogar de menores",
+        "hogar de ninos",
+        "centro de menores",
+        "casa de acogida"
+      ]
+    },
+    {
+      "language": "es",
+      "reason": "elder_care",
+      "match": "word",
+      "terms": [
+        "residencia de ancianos",
+        "residencia para mayores",
+        "residencia de mayores",
+        "residencia geriatrica",
+        "hogar de ancianos",
+        "centro geriatrico"
+      ]
+    },
+    {
+      "language": "es",
+      "reason": "detention",
+      "match": "word",
+      "terms": [
+        "prision",
+        "carcel",
+        "centro penitenciario",
+        "centro de detencion",
+        "centro de internamiento"
+      ]
+    },
+    {
+      "language": "es",
+      "reason": "rehabilitation",
+      "match": "word",
+      "terms": [
+        "centro de rehabilitacion",
+        "comunidad terapeutica",
+        "centro de desintoxicacion"
+      ]
+    },
+    {
+      "language": "es",
+      "reason": "shelter",
+      "match": "word",
+      "terms": [
+        "refugio",
+        "albergue social",
+        "albergue para personas sin hogar",
+        "albergue de emergencia",
+        "centro de acogida"
+      ]
+    },
+    {
+      "language": "es",
+      "reason": "medical_residential",
+      "match": "word",
+      "terms": [
+        "psiquiatrico",
+        "psiquiatrica",
+        "residencia sociosanitaria",
+        "sanatorio"
+      ]
+    },
+    {
+      "language": "ca",
+      "reason": "child_care",
+      "match": "word",
+      "terms": [
+        "orfenat",
+        "llar dinfants tutelats",
+        "centre residencial daccio educativa",
+        "centre de menors",
+        "casa dacollida"
+      ]
+    },
+    {
+      "language": "ca",
+      "reason": "elder_care",
+      "match": "word",
+      "terms": [
+        "residencia de gent gran",
+        "residencia per a gent gran",
+        "llar davis",
+        "residencia geriatrica",
+        "centre geriatric"
+      ]
+    },
+    {
+      "language": "ca",
+      "reason": "detention",
+      "match": "word",
+      "terms": [
+        "preso",
+        "centre penitenciari",
+        "centre de detencio",
+        "centre dinternament"
+      ]
+    },
+    {
+      "language": "ca",
+      "reason": "rehabilitation",
+      "match": "word",
+      "terms": [
+        "centre de rehabilitacio",
+        "comunitat terapeutica",
+        "centre de desintoxicacio"
+      ]
+    },
+    {
+      "language": "ca",
+      "reason": "shelter",
+      "match": "word",
+      "terms": [
+        "refugi",
+        "alberg social",
+        "centre dacollida",
+        "llar dacollida"
+      ]
+    },
+    {
+      "language": "ca",
+      "reason": "medical_residential",
+      "match": "word",
+      "terms": [
+        "psiquiatric",
+        "psiquiatrica",
+        "residencia sociosanitaria",
+        "sanatori"
+      ]
+    },
+    {
+      "language": "nl",
+      "reason": "child_care",
+      "match": "word",
+      "terms": [
+        "weeshuis",
+        "kindertehuis",
+        "jeugdzorg",
+        "gezinshuis"
+      ]
+    },
+    {
+      "language": "nl",
+      "reason": "elder_care",
+      "match": "word",
+      "terms": [
+        "verpleeghuis",
+        "verzorgingshuis",
+        "bejaardentehuis",
+        "woonzorgcentrum",
+        "zorgcentrum",
+        "zorgresidentie"
+      ]
+    },
+    {
+      "language": "nl",
+      "reason": "detention",
+      "match": "word",
+      "terms": [
+        "gevangenis",
+        "penitentiaire inrichting",
+        "detentiecentrum",
+        "huis van bewaring",
+        "justitiele jeugdinrichting"
+      ]
+    },
+    {
+      "language": "nl",
+      "reason": "rehabilitation",
+      "match": "word",
+      "terms": [
+        "revalidatiecentrum",
+        "afkickkliniek",
+        "verslavingszorg"
+      ]
+    },
+    {
+      "language": "nl",
+      "reason": "shelter",
+      "match": "word",
+      "terms": [
+        "daklozenopvang",
+        "vrouwenopvang",
+        "maatschappelijke opvang",
+        "nachtopvang",
+        "blijf van mijn lijf"
+      ]
+    },
+    {
+      "language": "nl",
+      "reason": "medical_residential",
+      "match": "word",
+      "terms": [
+        "psychiatrisch",
+        "psychiatrische",
+        "beschermd wonen",
+        "sanatorium"
+      ]
+    },
+    {
+      "language": "pt",
+      "reason": "child_care",
+      "match": "word",
+      "terms": [
+        "orfanato",
+        "lar de criancas",
+        "lar de infancia",
+        "casa de acolhimento"
+      ]
+    },
+    {
+      "language": "pt",
+      "reason": "elder_care",
+      "match": "word",
+      "terms": [
+        "lar de idosos",
+        "lar para idosos",
+        "residencia senior",
+        "residencia geriatrica",
+        "casa de repouso",
+        "estrutura residencial para pessoas idosas"
+      ]
+    },
+    {
+      "language": "pt",
+      "reason": "detention",
+      "match": "word",
+      "terms": [
+        "prisao",
+        "cadeia",
+        "estabelecimento prisional",
+        "centro de detencao",
+        "centro de internamento"
+      ]
+    },
+    {
+      "language": "pt",
+      "reason": "rehabilitation",
+      "match": "word",
+      "terms": [
+        "centro de reabilitacao",
+        "comunidade terapeutica",
+        "centro de desintoxicacao"
+      ]
+    },
+    {
+      "language": "pt",
+      "reason": "shelter",
+      "match": "word",
+      "terms": [
+        "refugio",
+        "abrigo",
+        "centro de acolhimento",
+        "albergue social"
+      ]
+    },
+    {
+      "language": "pt",
+      "reason": "medical_residential",
+      "match": "word",
+      "terms": [
+        "psiquiatrico",
+        "psiquiatrica",
+        "unidade de cuidados continuados",
+        "sanatorio"
+      ]
+    },
+    {
+      "language": "ja",
+      "reason": "child_care",
+      "match": "substring",
+      "terms": [
+        "児童養護施設",
+        "乳児院",
+        "孤児院",
+        "児童自立支援施設",
+        "児童相談所"
+      ]
+    },
+    {
+      "language": "ja",
+      "reason": "elder_care",
+      "match": "substring",
+      "terms": [
+        "老人ホーム",
+        "養護老人",
+        "介護老人",
+        "高齢者住宅",
+        "高齢者向け住宅",
+        "ケアハウス",
+        "特別養護",
+        "介護付き",
+        "介護付",
+        "有料老人"
+      ]
+    },
+    {
+      "language": "ja",
+      "reason": "detention",
+      "match": "substring",
+      "terms": [
+        "刑務所",
+        "少年院",
+        "拘置所",
+        "拘留所",
+        "少年鑑別所",
+        "矯正施設"
+      ]
+    },
+    {
+      "language": "ja",
+      "reason": "rehabilitation",
+      "match": "substring",
+      "terms": [
+        "更生施設",
+        "更生保護施設",
+        "リハビリテーションセンター",
+        "依存症回復"
+      ]
+    },
+    {
+      "language": "ja",
+      "reason": "shelter",
+      "match": "substring",
+      "terms": [
+        "シェルター",
+        "避難所",
+        "婦人保護施設",
+        "救護施設",
+        "一時保護所"
+      ]
+    },
+    {
+      "language": "ja",
+      "reason": "medical_residential",
+      "match": "substring",
+      "terms": [
+        "精神科病院",
+        "精神病院",
+        "療養所",
+        "サナトリウム",
+        "グループホーム",
+        "ホスピス"
+      ]
+    },
+    {
+      "language": "zh",
+      "reason": "child_care",
+      "match": "substring",
+      "terms": [
+        "儿童院",
+        "兒童院",
+        "儿童福利院",
+        "兒童福利院",
+        "孤儿院",
+        "孤兒院",
+        "儿童之家",
+        "兒童之家",
+        "男童院",
+        "女童院"
+      ]
+    },
+    {
+      "language": "zh",
+      "reason": "elder_care",
+      "match": "substring",
+      "terms": [
+        "养老院",
+        "養老院",
+        "护理院",
+        "護理院",
+        "安老院",
+        "老人院",
+        "敬老院",
+        "疗养院",
+        "療養院",
+        "乐龄之家",
+        "樂齡之家"
+      ]
+    },
+    {
+      "language": "zh",
+      "reason": "detention",
+      "match": "substring",
+      "terms": [
+        "监狱",
+        "監獄",
+        "拘留所",
+        "看守所",
+        "拘押中心",
+        "拘留中心",
+        "惩教",
+        "懲教",
+        "少年感化院",
+        "收容所"
+      ]
+    },
+    {
+      "language": "zh",
+      "reason": "rehabilitation",
+      "match": "substring",
+      "terms": [
+        "康复中心",
+        "康復中心",
+        "戒毒所",
+        "戒毒中心",
+        "中途之家"
+      ]
+    },
+    {
+      "language": "zh",
+      "reason": "shelter",
+      "match": "substring",
+      "terms": [
+        "庇护所",
+        "庇護所",
+        "避难所",
+        "避難所",
+        "收容中心"
+      ]
+    },
+    {
+      "language": "zh",
+      "reason": "medical_residential",
+      "match": "substring",
+      "terms": [
+        "精神病院",
+        "精神卫生中心",
+        "精神衛生中心",
+        "精神疗养",
+        "精神療養",
+        "临终关怀",
+        "臨終關懷"
+      ]
+    },
+    {
+      "language": "th",
+      "reason": "child_care",
+      "match": "substring",
+      "terms": [
+        "สถานสงเคราะห์เด็ก",
+        "บ้านเด็กกำพร้า",
+        "บ้านพักเด็กและครอบครัว",
+        "สถานคุ้มครองเด็ก"
+      ]
+    },
+    {
+      "language": "th",
+      "reason": "elder_care",
+      "match": "substring",
+      "terms": [
+        "บ้านพักคนชรา",
+        "สถานสงเคราะห์คนชรา",
+        "ศูนย์ดูแลผู้สูงอายุ",
+        "บ้านพักผู้สูงอายุ",
+        "ศูนย์พัฒนาการจัดสวัสดิการสังคมผู้สูงอายุ"
+      ]
+    },
+    {
+      "language": "th",
+      "reason": "detention",
+      "match": "substring",
+      "terms": [
+        "เรือนจำ",
+        "ทัณฑสถาน",
+        "สถานพินิจ",
+        "ศูนย์ฝึกและอบรมเด็กและเยาวชน",
+        "สถานกักขัง",
+        "สถานกักกัน"
+      ]
+    },
+    {
+      "language": "th",
+      "reason": "rehabilitation",
+      "match": "substring",
+      "terms": [
+        "สถานบำบัด",
+        "ศูนย์บำบัด",
+        "ศูนย์ฟื้นฟูสมรรถภาพ",
+        "บ้านกึ่งวิถี"
+      ]
+    },
+    {
+      "language": "th",
+      "reason": "shelter",
+      "match": "substring",
+      "terms": [
+        "สถานสงเคราะห์",
+        "บ้านพักฉุกเฉิน",
+        "สถานคุ้มครองคนไร้ที่พึ่ง",
+        "ศูนย์พักพิง",
+        "บ้านพักพิง"
+      ]
+    },
+    {
+      "language": "th",
+      "reason": "medical_residential",
+      "match": "substring",
+      "terms": [
+        "โรงพยาบาลจิตเวช",
+        "สถาบันจิตเวช",
+        "สถานพักฟื้น",
+        "ศูนย์ดูแลผู้ป่วย"
+      ]
+    },
+    {
+      "language": "ar",
+      "reason": "child_care",
+      "match": "word",
+      "terms": [
+        "دار الأيتام",
+        "دار ايتام",
+        "دار رعاية الأطفال",
+        "دار رعاية الايتام",
+        "مؤسسة رعاية الأيتام"
+      ]
+    },
+    {
+      "language": "ar",
+      "reason": "elder_care",
+      "match": "word",
+      "terms": [
+        "دار المسنين",
+        "دار رعاية المسنين",
+        "دار العجزة",
+        "رعاية كبار السن"
+      ]
+    },
+    {
+      "language": "ar",
+      "reason": "detention",
+      "match": "word",
+      "terms": [
+        "سجن",
+        "السجن",
+        "سجون",
+        "السجون",
+        "مركز احتجاز",
+        "مركز توقيف",
+        "مؤسسة عقابية",
+        "المؤسسات العقابية",
+        "دار الأحداث"
+      ]
+    },
+    {
+      "language": "ar",
+      "reason": "rehabilitation",
+      "match": "word",
+      "terms": [
+        "مركز إعادة التأهيل",
+        "مركز اعادة التأهيل",
+        "مركز تأهيل",
+        "علاج الإدمان",
+        "علاج الادمان"
+      ]
+    },
+    {
+      "language": "ar",
+      "reason": "shelter",
+      "match": "word",
+      "terms": [
+        "ملجأ",
+        "ملاجئ",
+        "دار إيواء",
+        "دار ايواء",
+        "مركز إيواء",
+        "مركز ايواء"
+      ]
+    },
+    {
+      "language": "ar",
+      "reason": "medical_residential",
+      "match": "word",
+      "terms": [
+        "مستشفى نفسي",
+        "مستشفى للأمراض النفسية",
+        "دار رعاية صحية",
+        "مصحة نفسية"
+      ]
+    },
+    {
+      "language": "ms",
+      "reason": "child_care",
+      "match": "word",
+      "terms": [
+        "rumah anak yatim",
+        "rumah kanak kanak",
+        "rumah budak lelaki",
+        "rumah budak perempuan",
+        "rumah perlindungan kanak kanak"
+      ]
+    },
+    {
+      "language": "ms",
+      "reason": "elder_care",
+      "match": "word",
+      "terms": [
+        "rumah orang tua",
+        "rumah jagaan",
+        "pusat jagaan warga emas",
+        "rumah warga emas"
+      ]
+    },
+    {
+      "language": "ms",
+      "reason": "detention",
+      "match": "word",
+      "terms": [
+        "penjara",
+        "pusat tahanan",
+        "pusat pemulihan akhlak",
+        "sekolah henry gurney"
+      ]
+    },
+    {
+      "language": "ms",
+      "reason": "rehabilitation",
+      "match": "word",
+      "terms": [
+        "pusat pemulihan",
+        "rumah perantaraan",
+        "pusat rehabilitasi"
+      ]
+    },
+    {
+      "language": "ms",
+      "reason": "shelter",
+      "match": "word",
+      "terms": [
+        "rumah perlindungan",
+        "pusat perlindungan",
+        "rumah kebajikan"
+      ]
+    },
+    {
+      "language": "ms",
+      "reason": "medical_residential",
+      "match": "word",
+      "terms": [
+        "hospital psikiatri",
+        "rumah rawatan",
+        "pusat penjagaan pesakit"
+      ]
+    },
+    {
+      "language": "ta",
+      "reason": "child_care",
+      "match": "substring",
+      "terms": [
+        "அனாதை இல்லம்",
+        "அனாதை இல்லங்கள்",
+        "ஆதரவற்றோர் இல்லம்",
+        "சிறுவர் இல்லம்",
+        "சிறுமியர் இல்லம்",
+        "குழந்தைகள் காப்பகம்"
+      ]
+    },
+    {
+      "language": "ta",
+      "reason": "elder_care",
+      "match": "substring",
+      "terms": [
+        "முதியோர் இல்லம்",
+        "முதியோர் காப்பகம்",
+        "தாதிமை இல்லம்"
+      ]
+    },
+    {
+      "language": "ta",
+      "reason": "detention",
+      "match": "substring",
+      "terms": [
+        "சிறைச்சாலை",
+        "சிறுவர் சீர்திருத்த",
+        "தடுப்பு முகாம்",
+        "சீர்திருத்த பள்ளி"
+      ]
+    },
+    {
+      "language": "ta",
+      "reason": "rehabilitation",
+      "match": "substring",
+      "terms": [
+        "மறுவாழ்வு மையம்",
+        "புனர்வாழ்வு நிலையம்",
+        "மறுவாழ்வு இல்லம்"
+      ]
+    },
+    {
+      "language": "ta",
+      "reason": "shelter",
+      "match": "substring",
+      "terms": [
+        "பாதுகாப்பு இல்லம்",
+        "அடைக்கல இல்லம்",
+        "காப்பகம்"
+      ]
+    },
+    {
+      "language": "ta",
+      "reason": "medical_residential",
+      "match": "substring",
+      "terms": [
+        "மனநல காப்பகம்",
+        "மனநல மருத்துவமனை",
+        "பராமரிப்பு இல்லம்"
+      ]
+    }
+  ],
+  "reviewed_hotels": [
+    {
+      "id": "4855a2d0-3f13-4b76-862e-b34e18b10e0d",
+      "name": "Shelter City Hostel",
+      "slug": "shelter-city-hostel-18b10e0d",
+      "source": "https://shelterhostel.amsterdam/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "ba2d80d8-3955-4bc9-8f11-ecf3ed327028",
+      "name": "Siam Shelter",
+      "slug": "siam-shelter-ed327028",
+      "source": "https://www.siamshelter.com/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "ea8427bb-2add-414b-be2e-4e31c10888eb",
+      "name": "Mama Shelter Dubai",
+      "slug": "mama-shelter-dubai-c10888eb",
+      "source": "https://mamashelter.com/dubai/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "614a8df1-51ca-4821-8f66-947298befb3e",
+      "name": "Mama Shelter Lisboa",
+      "slug": "mama-shelter-lisboa-98befb3e",
+      "source": "https://mamashelter.com/lisboa/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "747f9187-a43b-4bf1-8af7-94aa6bb11eda",
+      "name": "Mama Shelter London - Shoreditch",
+      "slug": "mama-shelter-london-shoreditch-6bb11eda",
+      "source": "https://all.accor.com/a/en/information/member-guest-star-participating-hotels.html",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "55fd2c58-5d20-470a-8864-4700f76ac0a0",
+      "name": "Mama Shelter Paris West",
+      "slug": "mama-shelter-paris-west-f76ac0a0",
+      "source": "https://mamashelter.com/paris-west/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "91827c79-83a0-47e0-8e02-45737ae20547",
+      "name": "Mama Shelter Paris La Défense",
+      "slug": "mama-shelter-paris-la-defense-7ae20547",
+      "source": "https://mamashelter.com/paris-la-defense/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "9f723508-0cea-4c83-8079-05596d12a7ef",
+      "name": "Mama Shelter Paris East",
+      "slug": "mama-shelter-paris-east-6d12a7ef",
+      "source": "https://mamashelter.com/paris-east/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "93c73ee8-9030-439e-b16b-0ae305ef9acc",
+      "name": "Mama Shelter Roma",
+      "slug": "mama-shelter-roma-05ef9acc",
+      "source": "https://mamashelter.com/roma/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "aecdc4a3-7f6e-46c6-b844-c5f728d65f09",
+      "name": "Mama Shelter Singapore",
+      "slug": "mama-shelter-singapore-28d65f09",
+      "source": "https://mamashelter.com/singapore/",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ]
+    },
+    {
+      "id": "adbc1ff0-3224-442e-a15f-b4761b4b2bff",
+      "name": "Golden Foyer Bangkok",
+      "slug": "golden-foyer-bangkok-1b4b2bff",
+      "source": "https://www.booking.com/hotel/th/golden-foyer-suvarnabhumi-airport.en-gb.html",
+      "reviewed_at": "2026-09-11",
+      "allowed_reasons": [
+        "shelter"
+      ],
+      "evidence": "Source address 541/8 Luang Phaeng Road matches Overture address 541, 8 Luang Phaeng Rd."
+    }
+  ],
+  "quarantined_records": [
+    {
+      "id": "6ef5118d-599a-433b-8e30-fbcb723870b6",
+      "name": "Whitefarm Lodge Care Home",
+      "slug": "whitefarm-lodge-care-home-723870b6",
+      "reason": "elder_care"
+    },
+    {
+      "id": "c0783f98-1cdf-4b56-a36f-844a7563f760",
+      "name": "Westmoor House Rehabilitation Centre",
+      "slug": "westmoor-house-rehabilitation-centre-7563f760",
+      "reason": "rehabilitation"
+    },
+    {
+      "id": "9bae129f-7c69-4ebc-9eda-d8de98ea5f06",
+      "name": "Look Ahead Care & Support",
+      "slug": "look-ahead-care-support-98ea5f06",
+      "reason": "medical_residential"
+    },
+    {
+      "id": "be0b9e6c-a72b-4918-9cf7-8282a1eae65b",
+      "name": "Sankofa Care",
+      "slug": "sankofa-care-a1eae65b",
+      "reason": "medical_residential"
+    },
+    {
+      "id": "7278a72f-eb0b-4d45-bd2a-8cc94d5c7cde",
+      "name": "Camberwell Foyer",
+      "slug": "camberwell-foyer-4d5c7cde",
+      "reason": "shelter"
+    },
+    {
+      "id": "a54d4f69-674d-4af8-9793-5e84c03fdbd8",
+      "name": "Ronald McDonald House Moorfields",
+      "slug": "ronald-mcdonald-house-moorfields-c03fdbd8",
+      "reason": "medical_residential"
+    },
+    {
+      "id": "21e2bbfa-e3d6-4786-8f0c-3f9d379b3f58",
+      "name": "The Lodge Care Home",
+      "slug": "the-lodge-care-home-379b3f58",
+      "reason": "elder_care"
+    },
+    {
+      "id": "90f9713b-333e-4724-9a69-6225c4467315",
+      "name": "Halfway House Farm",
+      "slug": "halfway-house-farm-c4467315",
+      "reason": "rehabilitation"
+    },
+    {
+      "id": "a160ceb7-3739-4e80-9d29-ef75642bfbf0",
+      "name": "บ้านจรัญอบอุ่น - บ้านพักผู้สูงอายุ และผู้ป่วยติดเตียง",
+      "slug": "hotel-642bfbf0",
+      "reason": "elder_care"
+    },
+    {
+      "id": "d69e2b50-8ee2-40ae-8f5b-8de17db0c4dc",
+      "name": "ฺBR care",
+      "slug": "br-care-7db0c4dc",
+      "reason": "medical_residential"
+    },
+    {
+      "id": "e9e98f53-582e-4e25-bcc3-49c74176d198",
+      "name": "บ้านพักผู้สูงอายุ สยามเกษียณ siam kasean",
+      "slug": "siam-kasean-4176d198",
+      "reason": "elder_care"
+    },
+    {
+      "id": "58893f3b-54e8-4935-a360-8e75878a4ec3",
+      "name": "ศูนย์ดูแลผู้สูงอายุหรือผู้มีภาวะพึ่งพิง ดูเวลเนสแคร์ DoWellnessCare",
+      "slug": "dowellnesscare-878a4ec3",
+      "reason": "elder_care"
+    },
+    {
+      "id": "3810a506-8cb6-4cb7-a4ae-4eca69b575dc",
+      "name": "Love and Care Pet",
+      "slug": "love-and-care-pet-69b575dc",
+      "reason": "medical_residential"
+    },
+    {
+      "id": "fe7ea53a-7198-49af-944c-44cecba3676b",
+      "name": "บ้านพักผู้สูงอายุ สไตล์รีสอร์ท ท่ามกลางธรรมชาติ เฮลท์ตี้ลีฟวิ่งเซ็นเตอร์",
+      "slug": "hotel-cba3676b",
+      "reason": "elder_care"
+    },
+    {
+      "id": "1938147a-0007-4581-9a17-90ede133d359",
+      "name": "Foyer Anne-Marie Veder",
+      "slug": "foyer-anne-marie-veder-e133d359",
+      "reason": "shelter"
+    },
+    {
+      "id": "ed2ad678-4086-43e2-b1b0-2a0d796b2695",
+      "name": "EHPAD Sainte Monique",
+      "slug": "ehpad-sainte-monique-796b2695",
+      "reason": "elder_care"
+    },
+    {
+      "id": "fb7a1a0e-842a-40ef-9461-53c527350221",
+      "name": "Foyer Saint Jean Eudes",
+      "slug": "foyer-saint-jean-eudes-27350221",
+      "reason": "shelter"
+    },
+    {
+      "id": "66790ebd-1487-4b94-a772-72f587cba884",
+      "name": "Foyer Henri Planchat",
+      "slug": "foyer-henri-planchat-87cba884",
+      "reason": "shelter"
+    },
+    {
+      "id": "7d27cdfe-f806-46af-b210-b77e72eee0a3",
+      "name": "Foyer Hébergement Michel Cahen",
+      "slug": "foyer-hebergement-michel-cahen-72eee0a3",
+      "reason": "shelter"
+    },
+    {
+      "id": "b3437c25-6a17-4335-acd6-f42e09b3f600",
+      "name": "B&B Maru Shelter",
+      "slug": "b-b-maru-shelter-09b3f600",
+      "reason": "shelter"
+    },
+    {
+      "id": "778d7496-3d0c-42d6-944a-105715d90f13",
+      "name": "Villa Rigacci Casa Di Riposo",
+      "slug": "villa-rigacci-casa-di-riposo-15d90f13",
+      "reason": "elder_care"
+    },
+    {
+      "id": "84fa7dc8-b868-486d-bc33-78f322762ce4",
+      "name": "B&B Rifugio di Roma",
+      "slug": "b-b-rifugio-di-roma-22762ce4",
+      "reason": "shelter"
+    },
+    {
+      "id": "6ebed3ab-59a3-4eef-a933-4a808a7dd224",
+      "name": "Cohousing camere per anziani la soluzione economica alla #CasadiRiposo",
+      "slug": "cohousing-camere-per-anziani-la-soluzione-economica-alla-casadiriposo-8a7dd224",
+      "reason": "elder_care"
+    },
+    {
+      "id": "0dad7ef2-0bd8-40aa-a7b6-81d4931a1189",
+      "name": "Foyer Phat Diem",
+      "slug": "foyer-phat-diem-931a1189",
+      "reason": "shelter"
+    },
+    {
+      "id": "13d1bc0b-e716-4093-8f3f-9a91354b8706",
+      "name": "Rifugio degli Artisti Top",
+      "slug": "rifugio-degli-artisti-top-354b8706",
+      "reason": "shelter"
+    },
+    {
+      "id": "c6d2c108-1ecc-47fd-9c46-0b74043e9e53",
+      "name": "Il Rifugio Degli Artisti",
+      "slug": "il-rifugio-degli-artisti-043e9e53",
+      "reason": "shelter"
+    },
+    {
+      "id": "13d820f7-90d8-4d01-a9be-cef80c0d9a44",
+      "name": "Refugi Estanys de la Pera",
+      "slug": "refugi-estanys-de-la-pera-0c0d9a44",
+      "reason": "shelter"
+    },
+    {
+      "id": "8a4cab61-69dc-4774-bf68-cbafd59b1628",
+      "name": "Center Rambles Shelter",
+      "slug": "center-rambles-shelter-d59b1628",
+      "reason": "shelter"
+    },
+    {
+      "id": "cdf22cd5-5a06-46bf-b885-442521e04096",
+      "name": "My Barcelona Refuge",
+      "slug": "my-barcelona-refuge-21e04096",
+      "reason": "shelter"
+    },
+    {
+      "id": "ffeb93f5-6ba8-463d-847e-fda6493557d1",
+      "name": "El Refugio 21",
+      "slug": "el-refugio-21-493557d1",
+      "reason": "shelter"
+    },
+    {
+      "id": "2b2076a1-a226-431d-a38e-0f88fb5c7977",
+      "name": "Residencia para Mayores Ballesol Mirasierra",
+      "slug": "residencia-para-mayores-ballesol-mirasierra-fb5c7977",
+      "reason": "elder_care"
+    },
+    {
+      "id": "1e836668-8716-481c-918c-b73073ddff45",
+      "name": "Shelter Jordan Amsterdam Hostel",
+      "slug": "shelter-jordan-amsterdam-hostel-73ddff45",
+      "reason": "shelter"
+    },
+    {
+      "id": "f443220e-5f15-4b9b-a001-d6bd0cc20f58",
+      "name": "Refúgio - Accommodation with Care - Nuno's Apartments",
+      "slug": "refugio-accommodation-with-care-nuno-s-apartments-0cc20f58",
+      "reason": "medical_residential"
+    },
+    {
+      "id": "4eee1088-87c2-4c6c-a4bb-26f4881d1ab1",
+      "name": "Refuge Hostel",
+      "slug": "refuge-hostel-881d1ab1",
+      "reason": "shelter"
+    },
+    {
+      "id": "1a803b86-24ed-4050-9fbc-8de2cfef1ba2",
+      "name": "Oasis Youth Care Centre",
+      "slug": "oasis-youth-care-centre-cfef1ba2",
+      "reason": "child_care"
+    },
+    {
+      "id": "7b64c951-7e42-42ab-8839-b1e3bf61f47e",
+      "name": "Rovers Boys Hostel ",
+      "slug": "rovers-boys-hostel-bf61f47e",
+      "reason": "child_care"
+    },
+    {
+      "id": "20e1c940-4e1b-4ad4-9136-a9432ddf4b23",
+      "name": "Premium Furnished Studio At Jaddaf Health Care City Awg2",
+      "slug": "premium-furnished-studio-at-jaddaf-health-care-city-awg2-2ddf4b23",
+      "reason": "medical_residential"
+    },
+    {
+      "id": "0248a503-a1ee-4194-ba9c-38ee2ab8e49b",
+      "name": "Brooklyn Broadway Homeless Shelter",
+      "slug": "brooklyn-broadway-homeless-shelter-2ab8e49b",
+      "reason": "shelter"
+    },
+    {
+      "id": "e35a2a8a-3329-42c2-91e4-84cf81f50b17",
+      "name": "Grand Medical Suites",
+      "slug": "grand-medical-suites-81f50b17",
+      "reason": "medical_residential"
+    },
+    {
+      "id": "8cf9a28e-53b7-4c94-aa19-f0f3a8aecd85",
+      "name": "Jewish Renaissance Medical Center",
+      "slug": "jewish-renaissance-medical-center-a8aecd85",
+      "reason": "medical_residential"
+    },
+    {
+      "id": "b9ef9e8d-cac4-414d-a862-9856f9d3cded",
+      "name": "Millennium Care",
+      "slug": "millennium-care-f9d3cded",
+      "reason": "medical_residential"
+    },
+    {
+      "id": "0b2859fa-7d5a-4fbc-9d76-c93c2691240a",
+      "name": "Fine Care Center",
+      "slug": "fine-care-center-2691240a",
+      "reason": "medical_residential"
+    },
+    {
+      "id": "2511f051-4294-4d3c-8b4c-bc553ba67d6c",
+      "name": "Singapore Boys' Home",
+      "slug": "singapore-boys-home-3ba67d6c",
+      "reason": "child_care"
+    },
+    {
+      "id": "f0326acc-45be-41e7-b9b9-af46432ccce7",
+      "name": "Andrew and Grace Home",
+      "slug": "andrew-and-grace-home-432ccce7",
+      "reason": "child_care"
+    },
+    {
+      "id": "e2d08620-052c-45ec-a184-26f91c0af351",
+      "name": "Marine Parade Aspiration Elderly Lodge",
+      "slug": "marine-parade-aspiration-elderly-lodge-1c0af351",
+      "reason": "elder_care"
+    },
+    {
+      "id": "ff155722-297d-4ae1-aedc-58b9039816f4",
+      "name": "Singapore Boys' Hostel",
+      "slug": "singapore-boys-hostel-039816f4",
+      "reason": "child_care"
+    }
+  ]
+}

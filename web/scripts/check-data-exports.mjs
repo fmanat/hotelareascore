@@ -11,6 +11,7 @@
 import { existsSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { checkInstitutionExports } from './institution-guard.mjs';
 
 const WEB_ROOT = path.resolve(fileURLToPath(import.meta.url), '../..');
 
@@ -68,3 +69,5 @@ if (missing.length > 0 || empty.length > 0) {
   console.error('');
   process.exit(1);
 }
+
+checkInstitutionExports(WEB_ROOT);
