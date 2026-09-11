@@ -6,7 +6,27 @@
 > resolved history to `docs/adr/` or the dated report it already lives in;
 > don't re-narrate it here.
 
-## NEXT SESSION — Bloc A accepted; Bloc B implemented, awaiting owner review
+## Mission de nuit 2026-09-12 — G → C → D → E ; arrêt obligatoire après E
+
+A et B validés par contre-audit externe (instruction propriétaire).
+**G préparé :** Wrangler 4.131.1, `make deploy` limité au projet existant
+`staycontext`, build + SEO + noindex + contrôle de domaine avant envoi.
+Tests de sécurité locaux ; aucune connexion OAuth ni publication tentée.
+Procédure et incident Git déconnecté dans le [runbook](reports/phase-4-launch-runbook.md).
+Production figée sur `77e49b3` selon le propriétaire ; commande à lancer par
+lui après `wrangler login`. Aucun flag activé, aucun projet créé.
+**À suivre : C, D, puis rapport E uniquement.** L'arrêt explicite demandé
+à E interdit de commencer F cette nuit sans un nouveau GO.
+
+### Décisions en attente du propriétaire
+
+- Exécuter le login et le déploiement manuel G, puis vérifier la disparition
+  effective des pages A/B en production.
+- Examiner le rapport E avant toute implémentation d'ancrage et la reprise F.
+- Phase 4 : identité légale complète, nouvelle cohorte vérifiée et revue,
+  GSC et autorisation d'indexation restent à régler ; tous les flags restent OFF.
+
+## Contexte A/B — tous deux acceptés par le propriétaire
 
 **2026-09-11 — Bloc A accepted by the owner after external counter-audit:**
 46 / 33,966 institutional exclusions, no verified tourist-hotel loss;

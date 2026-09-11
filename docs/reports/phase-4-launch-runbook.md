@@ -210,3 +210,66 @@ Cloudflare Pages build times are usually comparable), not zero.
   any per-page `indexable` state.
 - No step in Part B is taken without the matching Part A hand-off having
   actually arrived — this runbook is a sequence, not a schedule.
+
+## 2026-09-12 incident — explicit manual deployment (supersedes Git deployment above)
+
+Owner dashboard evidence: Git connection remains **disconnected** despite
+correct settings and GitHub reauthorization. Pushes do not start a Pages
+build; the dashboard only replays `77e49b3` (2026-09-09). Production still
+serves pre-A/B data, including Singapore Boys' Home. A pushed commit and a
+green GitHub CI **do not update production**. Treat deployment as an explicit
+manual step until a separately verified repair. Do not create another Pages
+project or move the attached `staycontext.com` / `www.staycontext.com` domains.
+
+Prepared, not executed: pinned free dev dependency Wrangler 4.131.1 and
+`make deploy`. No login, upload, account creation or dashboard action was
+performed by the agent. This does not change any launch/indexing flag.
+
+One-time owner action, from the repository root (Node >=22.12):
+
+```bash
+npm --prefix web ci
+web/node_modules/.bin/wrangler login
+```
+
+The second command opens interactive OAuth in your browser; the owner must
+perform it. Choose the existing account that owns `staycontext`. If a stale
+`CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_API_KEY` is set in your terminal, unset it
+locally before using OAuth; do not paste credentials into chat or git. On
+multiple accounts, set `CLOUDFLARE_ACCOUNT_ID` to the existing account's ID.
+
+Each deployment, after checking the **exact commit's CI is green**:
+
+```bash
+git pull --ff-only origin main
+make deploy
+make verify-prod
+```
+
+`make deploy` requires a clean `main` matching local `origin/main`, reads
+Wrangler's project list to require the existing `staycontext` with its apex
+domain, runs the Astro build from committed exports, checks SEO, then checks
+robots disallow-all and absence of public sitemaps. Only then it calls:
+`wrangler pages deploy web/dist --project-name staycontext --branch main
+--commit-hash <HEAD>`. It does not run ETL or regenerate the static selection.
+The project keeps its existing Git integration and domains. It runs Wrangler
+with closed stdin and `CI=true`: missing auth/project fails rather than
+starting login or proposing project creation. Never replace this with a
+`pages project create`, `wrangler deploy` Worker migration, or a new project.
+
+If a preflight/build/SEO check fails, stop and resolve that error; there has
+been no upload. If Pages refuses the existing project or account, leave the
+incident open for the owner. The command deliberately supports the current
+all-noindex state only; a later indexing launch needs its own reviewed change.
+
+After upload, verify both domains and confirm these former scored URLs no
+longer return a hotel page (expected 404), and that their names disappeared
+from search: `/hotel/singapore-boys-home-3ba67d6c` and the ALL Accor slug in
+`bloc-b-brands.json`. A deployment success message alone does not close the
+incident. Rollback is an explicit owner deployment of a reviewed commit;
+**do not roll back to pre-A/B**, which would restore excluded institutions.
+
+Sources: [Cloudflare existing Git projects support manual Wrangler uploads](https://developers.cloudflare.com/pages/get-started/direct-upload/),
+[Pages deployment CLI](https://developers.cloudflare.com/workers/wrangler/commands/pages/).
+Validation: 3 mocked deployment safety tests (no network/auth), local full
+build/SEO; command is prepared, production outcome remains unverified.

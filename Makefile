@@ -58,3 +58,8 @@ all: ingest score validate report
 
 test:
 	pytest -q
+
+# Explicit manual production upload; never called by CI or by a git push.
+.PHONY: deploy
+deploy:
+	node web/scripts/deploy-pages.mjs
