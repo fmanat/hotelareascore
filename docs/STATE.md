@@ -7,19 +7,24 @@
 
 ## Session checkpoint (long-session discipline — overwritten hourly, not accumulated)
 
-**Last updated:** 2026-09-11 17:54 UTC — ~55.8h elapsed since mission
+**Last updated:** 2026-09-11 19:47 UTC — ~57.7h elapsed since mission
 start (22:05 UTC 2026-09-09), well past the ~12h window (flagged
-repeatedly; not re-flagging every checkpoint).
+repeatedly at 2026-09-10 14:41, 16:05, and 2026-09-11 05:42; asking the
+owner directly this checkpoint whether to keep the fallback loop running
+— see message to owner outside this file).
 **Bloc en cours:** none — G, H, I done since 22:40 (2026-09-09). Idle.
-**Poussé sur origin/main:** `cb64d0f` (checkpoint 11h37). CI green on
-every commit this session (one transient `gh`-API connectivity error at
-12h38, same local-network cause, not a real CI failure — confirmed by
-re-querying).
-**Probe status:** healthy live just now. `probe-summary.md` has current
-gap/blip figures.
+**Poussé sur origin/main:** `1d9caf6` (checkpoint 17h54), this checkpoint
+pending push as next commit. CI green on every commit this session.
+**Probe status:** live `curl` 200 OK just now. `prod_probe_loop.sh`
+(PID 6593, alive since 09:24 UTC 09-09) still running and appending to
+`probe.log`. The Monitor watcher script driving hourly notifications
+(`monitor_incident3.py`, task `bqzc13vn4`) hit its own 10h internal time
+budget and exited around 19:41 UTC — no longer producing HOURLY_MARK /
+TRANSITION notifications. Not yet restarted: pausing to ask the owner
+first, given the window is now ~4.8x the stated ~12h.
 **Reste à faire (ce soir):** rien d'autorisé — cf. "idées non autorisées"
-plus bas pour ce que je ferais avec un go-ahead. Sonde de prod continue en
-tâche de fond, checkpoints horaires continuent.
+plus bas pour ce que je ferais avec un go-ahead. Sonde de prod (bash loop)
+continue en tâche de fond indépendamment de ce watcher.
 **Note on "blocs A-F":** the original A-F lettering (this repo's very
 first overnight mission, before this saga) maps to work already
 long-shipped (C = SEO machinery ADR-008, D = pilot cohort proposal, E =
