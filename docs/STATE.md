@@ -7,12 +7,11 @@
 
 ## Session checkpoint (long-session discipline — overwritten hourly, not accumulated)
 
-**Last updated:** 2026-09-11 07:19 UTC — ~45h elapsed since mission start
-(22:05 UTC 2026-09-09), well past the ~12h window (flagged repeatedly,
-2026-09-10 14:41/16:05, 2026-09-11 05:42 — continuing the authorized
-fallback loop as-is, not re-flagging every checkpoint from here).
+**Last updated:** 2026-09-11 11:37 UTC — ~49.5h elapsed since mission
+start (22:05 UTC 2026-09-09), well past the ~12h window (flagged
+repeatedly; not re-flagging every checkpoint).
 **Bloc en cours:** none — G, H, I done since 22:40 (2026-09-09). Idle.
-**Poussé sur origin/main:** `c78eeed` (checkpoint 05h42). CI green on
+**Poussé sur origin/main:** `3a3a7d6` (checkpoint 07h19). CI green on
 every commit this session.
 **Probe status:** healthy live just now. `probe-summary.md` has current
 gap/blip figures.
