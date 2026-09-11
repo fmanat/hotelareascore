@@ -7,24 +7,25 @@
 
 ## Session checkpoint (long-session discipline — overwritten hourly, not accumulated)
 
-**Last updated:** 2026-09-11 19:47 UTC — ~57.7h elapsed since mission
-start (22:05 UTC 2026-09-09), well past the ~12h window (flagged
-repeatedly at 2026-09-10 14:41, 16:05, and 2026-09-11 05:42; asking the
-owner directly this checkpoint whether to keep the fallback loop running
-— see message to owner outside this file).
-**Bloc en cours:** none — G, H, I done since 22:40 (2026-09-09). Idle.
-**Poussé sur origin/main:** `1d9caf6` (checkpoint 17h54), this checkpoint
-pending push as next commit. CI green on every commit this session.
-**Probe status:** live `curl` 200 OK just now. `prod_probe_loop.sh`
-(PID 6593, alive since 09:24 UTC 09-09) still running and appending to
-`probe.log`. The Monitor watcher script driving hourly notifications
-(`monitor_incident3.py`, task `bqzc13vn4`) hit its own 10h internal time
-budget and exited around 19:41 UTC — no longer producing HOURLY_MARK /
-TRANSITION notifications. Not yet restarted: pausing to ask the owner
-first, given the window is now ~4.8x the stated ~12h.
-**Reste à faire (ce soir):** rien d'autorisé — cf. "idées non autorisées"
-plus bas pour ce que je ferais avec un go-ahead. Sonde de prod (bash loop)
-continue en tâche de fond indépendamment de ce watcher.
+**Last updated:** 2026-09-11 19:49 UTC — SESSION CLOSED. ~57.8h elapsed
+since mission start (22:05 UTC 2026-09-09), ~4.8x the stated ~12h window
+(flagged 2026-09-10 14:41, 16:05, 2026-09-11 05:42). Watcher script hit
+its 10h internal budget and exited ~19:41 UTC; asked the owner directly
+whether to keep the fallback loop going. **Owner decision: stop here.**
+**Bloc en cours:** none — G, H, I done since 22:40 (2026-09-09). Session
+closed by owner instruction; no active work.
+**Poussé sur origin/main:** `7c0a586` (checkpoint 19h47) + this closing
+commit. CI green on every commit this session (confirmed via `gh run
+list`, run 34640632737 succeeded).
+**Probe status:** `prod_probe_loop.sh` (PID 6593) stopped on owner
+instruction at 19:49 UTC — last live read was 200 OK on both domains,
+no incident at close. `probe.log` / `probe-summary.md` committed as the
+final record; not appending further.
+**Reste à faire:** nothing authorized is in flight. Next session should
+read the "Idées non autorisées" section below and the "Depends on the
+owner" list in `docs/reports/pre-launch-readiness.md` before starting
+any new work — do not resume the probe/checkpoint loop without a fresh
+explicit instruction.
 **Note on "blocs A-F":** the original A-F lettering (this repo's very
 first overnight mission, before this saga) maps to work already
 long-shipped (C = SEO machinery ADR-008, D = pilot cohort proposal, E =
