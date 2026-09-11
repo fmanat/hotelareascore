@@ -40,7 +40,7 @@ jobs:
       - name: Install fixture data for typecheck
         run: node e2e/prepare-fixtures.mjs
       - name: Deployment safety tests (mocked; no authentication or upload)
-        run: node --test scripts/deploy-pages.test.mjs
+        run: node --test scripts/deploy-pages.test.mjs scripts/accommodation-guard.test.mjs
       - name: Typecheck
         run: npm run typecheck
 

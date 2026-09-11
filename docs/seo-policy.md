@@ -130,3 +130,14 @@ Decision rules at day 90:
 - SEO self-improvement loop: GSC weekly → clustering → opportunity rules →
   recommendation → **PR/report, never auto-publication** for structural
   changes. Improve existing pages before creating new ones.
+
+### Accommodation-type gate (Bloc C, 2026-09-12)
+
+Only an explicitly classified `hotel` can be considered for indexing, in
+addition to every other gate and a recorded publication decision. Aparthotel,
+serviced-apartment, whole-home, hostel, guesthouse-B&B and unknown stay searchable
+with their English type label, but remain noindex. B&B is not admitted yet:
+source taxonomy cannot prove staffed reception. OYO alone never decides type;
+explicit OYO Home/whole-unit evidence does. Sonder/Domio unresolved properties
+remain unknown. This descriptive field never changes scores or weights.
+See ADR-019 and `reports/bloc-c-accommodation.md`. No flag is activated.

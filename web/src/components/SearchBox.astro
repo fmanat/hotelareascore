@@ -78,6 +78,7 @@
   import { recordSearchEvent } from '../lib/events';
 
   interface SearchIndexEntry {
+    accommodation_type_label?: string;
     slug: string;
     name: string;
     city: string;
@@ -118,7 +119,7 @@
         return matches;
       },
       label: (e) => e.name,
-      meta: (e) => (e.locality ? `${e.locality}, ${e.city}` : e.city),
+      meta: (e) => `${e.accommodation_type_label ?? "Accommodation type unconfirmed"} · ${e.locality ? `${e.locality}, ${e.city}` : e.city}`,
       onSelect: (e) => {
         // docs/adr/013: the long tail outside the static-page budget has
         // no built `/hotel/{slug}` page -- route those to the

@@ -13,6 +13,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { checkInstitutionExports } from './institution-guard.mjs';
 import { checkBrandExports } from './brand-guard.mjs';
+import { checkAccommodationExports } from './accommodation-guard.mjs';
 
 const WEB_ROOT = path.resolve(fileURLToPath(import.meta.url), '../..');
 
@@ -73,3 +74,4 @@ if (missing.length > 0 || empty.length > 0) {
 
 checkInstitutionExports(WEB_ROOT);
 checkBrandExports(WEB_ROOT);
+checkAccommodationExports(WEB_ROOT);

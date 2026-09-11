@@ -33,6 +33,8 @@
     "nearby_facts": [],
     "comparable": [],
     "publication_status": "noindex",
-    "has_static_page": true
+    "has_static_page": true,
+    "accommodation_type": "hotel",
+    "accommodation_type_label": "Hotel"
   }
 ]

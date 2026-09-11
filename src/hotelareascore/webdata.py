@@ -15,6 +15,7 @@ from typing import Any
 from . import overture, publication
 from .institutions import assert_no_institutions
 from .brands import assert_no_brands
+from .accommodation import classify_accommodation
 from .config import DIMENSIONS, ETL_DIR, REPO_ROOT, get_city, load_score_weights
 from .dedupe import haversine_m
 from .reason_codes import compute_reason_codes
@@ -80,7 +81,7 @@ def _fetch_hotels(con, etl_dir: Path) -> list[dict[str, Any]]:
     assert_no_brands([{"id": r[0], "name": r[1]} for r in rows], context=str(etl_dir))
     q = f"""
         SELECT h.id, h.name, h.lat, h.lon, h.address_locality, h.address_region, h.address_country,
-               h.dedupe_confidence,
+               h.dedupe_confidence, h.taxonomy_primary, h.brand_name,
                s.walkability_density, s.transit_access, s.food_essentials,
                s.quietness_proxy, s.family_convenience, s.nightlife_access,
                s.balanced_score, s.confidence, s.score_version, s.source_release
@@ -223,6 +224,7 @@ def export_city(city_id: str, release: overture.Release) -> list[dict[str, Any]]
         distance_km = round(haversine_m(city.center_lat, city.center_lon, r["lat"], r["lon"]) / 1000, 1)
         locality_mismatch = _locality_mismatch(city, r["address_region"], r["address_country"])
         hotel = {
+            **classify_accommodation(r),
             "id": r["id"],
             "slug": hotel_slug(r["name"] or "hotel", r["id"]),
             "name": r["name"] or "(unnamed)",
@@ -245,7 +247,7 @@ def export_city(city_id: str, release: overture.Release) -> list[dict[str, Any]]
             # this export is what a template's `indexable` prop actually
             # reads, so it fails closed here too, CLAUDE.md hard rule 10).
             "publication_status": (
-                "indexable" if r["id"] in indexable_by_id and not is_numeric_name(r["name"]) else "noindex"
+                "indexable" if r["id"] in indexable_by_id and not is_numeric_name(r["name"]) and classify_accommodation(r)["accommodation_type"] == "hotel" else "noindex"
             ),
             "scores": scores,
             "balanced_score": round(r["balanced_score"], 1),
@@ -422,6 +424,7 @@ def export_web_data(release: overture.Release, city_ids: list[str]) -> None:
                 "slug": h["slug"],
                 "name": h["name"],
                 "city": h["city_name"],
+                **{k:v for k,v in h.items() if k.startswith("accommodation_type")},
                 "city_id": h["city_id"],
                 "locality": h["locality"],
                 "has_static_page": h["has_static_page"],

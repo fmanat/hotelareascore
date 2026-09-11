@@ -21,15 +21,16 @@ const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSI
 
 <BaseLayout
   title="Hotel profile (limited data)"
-  description="A limited surroundings profile: computed scores only. This hotel's full profile — nearby facts, map, comparable hotels — isn't built yet."
+  description="A limited surroundings profile: computed scores only. This accommodation's full profile — nearby facts, map, comparable hotels — isn't built yet."
 >
   <p id="limited-loading">Loading…</p>
 
   <article id="limited-card" hidden data-dimension-keys={JSON.stringify(DIMENSION_KEYS)} data-dimension-labels={JSON.stringify(dimensionLabels)}>
     <h1 id="limited-name"></h1>
+    <p id="limited-type"></p>
     <p id="limited-meta" class="meta"></p>
     <p class="notice">
-      <strong>Limited profile.</strong> This hotel isn't part of our fully profiled set yet, so there's no
+      <strong>Limited profile.</strong> This accommodation isn't part of our fully profiled set yet, so there's no
       nearby-facts list, map, or comparable-hotels list for it — only the computed scores below, from the
       same data and formula as every other hotel (<a href="/methodology">methodology</a>).
     </p>
@@ -40,7 +41,7 @@ const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSI
   </article>
 
   <p id="limited-notfound" hidden>
-    We couldn't find a hotel matching that link — it may have moved or the link is malformed.
+    We couldn't find accommodation matching that link — it may have moved or the link is malformed.
     <a href="/">Search again</a>.
   </p>
 </BaseLayout>
@@ -71,6 +72,7 @@ const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSI
 
 <script>
   interface SearchIndexEntry {
+    accommodation_type_label?: string;
     slug: string;
     name: string;
     city: string;
@@ -103,11 +105,12 @@ const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSI
   // shard first when we know the city, and only fall back to the full
   // index for a stale/malformed link that's missing it.
   function findHotel(slug: string, cityId: string | null): Promise<SearchIndexEntry | undefined> {
-    const shard = cityId ? fetch(`/data/search-index-${encodeURIComponent(cityId)}.json`) : null;
+    const shard = cityId ? fetch(`/data/search-index-${encodeURIComponent(cityId)}-${encodeURIComponent(slug.slice(-1))}.json`) : null;
     const lookup = shard
       ? shard
           .then((r) => (r.ok ? r.json() : Promise.reject(new Error('shard not found'))))
           .then((data: SearchIndexEntry[]) => data.find((h) => h.slug === slug))
+          .catch(() => undefined)
       : Promise.resolve(undefined);
 
     return lookup.then((hotel) => {
@@ -140,6 +143,8 @@ const dimensionLabels = Object.fromEntries(DIMENSION_KEYS.map((k) => [k, DIMENSI
         document.title = `${hotel.name} · StayContext`;
         const nameEl = document.getElementById('limited-name');
         if (nameEl) nameEl.textContent = hotel.name;
+        const typeEl = document.getElementById('limited-type');
+        if (typeEl) typeEl.textContent = hotel.accommodation_type_label ?? 'Accommodation type unconfirmed';
         const metaEl = document.getElementById('limited-meta');
         if (metaEl) metaEl.textContent = hotel.locality ? `${hotel.locality}, ${hotel.city}` : hotel.city;
         const verdictEl = document.getElementById('limited-verdict');

@@ -60,7 +60,7 @@ const lodgingBusiness = lodgingBusinessJsonLd({
 <BaseLayout
   title={`${hotel.name}${hotel.locality && hotel.locality !== hotel.name ? `, ${hotel.locality}` : ''} — surroundings score`}
   description={`${hotel.name} in ${hotel.city_name}: ${hotel.verdict}`}
-  indexable={hotel.publication_status === 'indexable'}
+  indexable={hotel.publication_status === 'indexable' && hotel.accommodation_type === 'hotel'}
   requiresFlag="HOTEL_PAGE_INDEXING_ENABLED"
 >
   <Fragment slot="head">
@@ -84,6 +84,7 @@ const lodgingBusiness = lodgingBusinessJsonLd({
         )}
       </p>
       <h1>{hotel.name}</h1>
+      <p class="meta">{hotel.accommodation_type_label ?? "Accommodation type unconfirmed"}</p>
       <p class="verdict">{hotel.verdict}</p>
       <div class="badges">
         <span class={`badge ${confidenceClass}`}>{hotel.confidence_label} confidence</span>

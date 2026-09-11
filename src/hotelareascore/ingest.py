@@ -24,6 +24,7 @@ from .dedupe import HotelRecord, dedupe_hotels
 from .entity_qa import is_known_bad_geocode, is_likely_non_hotel
 from .institutions import institution_matches
 from .brands import brand_matches
+from .accommodation import annotate_table
 
 
 def city_dir(release: overture.Release, city: City) -> Path:
@@ -39,6 +40,7 @@ def _hotels_raw_sql(places_path: str, city: City) -> str:
         SELECT
             id,
             names.primary AS name,
+            brand.names.primary AS brand_name,
             bbox.xmin AS lon,
             bbox.ymin AS lat,
             confidence,
@@ -269,6 +271,7 @@ def ingest_city(city_id: str, release: overture.Release | None = None) -> dict[s
         "FROM hotels_raw h JOIN dedupe_groups d ON d.canonical_id = h.id"
     )
 
+    annotate_table(con, "hotels_final")
     out_dir = city_dir(release, city)
     con.execute(f"COPY hotels_final TO '{out_dir / 'hotels.parquet'}' (FORMAT PARQUET)")
     con.execute(f"COPY pois TO '{out_dir / 'pois.parquet'}' (FORMAT PARQUET)")

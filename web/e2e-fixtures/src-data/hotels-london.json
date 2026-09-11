@@ -53,7 +53,9 @@
       }
     ],
     "publication_status": "noindex",
-    "has_static_page": true
+    "has_static_page": true,
+    "accommodation_type": "hotel",
+    "accommodation_type_label": "Hotel"
   },
   {
     "id": "e2e-lon-2",
@@ -103,7 +105,9 @@
       }
     ],
     "publication_status": "noindex",
-    "has_static_page": true
+    "has_static_page": true,
+    "accommodation_type": "hotel",
+    "accommodation_type_label": "Hotel"
   },
   {
     "id": "e2e-lon-3",
@@ -139,6 +143,8 @@
     "nearby_facts": [],
     "comparable": [],
     "publication_status": "noindex",
-    "has_static_page": true
+    "has_static_page": true,
+    "accommodation_type": "hotel",
+    "accommodation_type_label": "Hotel"
   }
 ]

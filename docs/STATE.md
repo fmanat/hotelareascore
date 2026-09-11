@@ -15,7 +15,16 @@ Tests de sécurité locaux ; aucune connexion OAuth ni publication tentée.
 Procédure et incident Git déconnecté dans le [runbook](reports/phase-4-launch-runbook.md).
 Production figée sur `77e49b3` selon le propriétaire ; commande à lancer par
 lui après `wrangler login`. Aucun flag activé, aucun projet créé.
-**À suivre : C, D, puis rapport E uniquement.** L'arrêt explicite demandé
+**G poussé `6a2af23`, CI verte (5 jobs). C livré dans le commit de ce bloc :**
+33 779 entrées conservées : 24 452 hôtels, 266 aparthotels, 1 049 appartements
+avec services, 950 logements entiers, 2 237 hostels, 3 298 guesthouses/B&B,
+1 527 inconnus. Seul `hotel` passe le gate de type, sans activation.
+OYO Home du propriétaire classé logement entier ; 14 Sonder/Domio inconnus
+à vérifier. 2 412 candidats théoriques de récupération hors hôtels,
+**zéro ré-ingestion**. [Rapport C](reports/bloc-c-accommodation.md).
+446 tests passent (+ 1 xfail historique), garde de build testée, typecheck propre,
+15 721 pages construites et assertions SEO conformes.
+**À suivre : D, puis rapport E uniquement.** L'arrêt explicite demandé
 à E interdit de commencer F cette nuit sans un nouveau GO.
 
 ### Décisions en attente du propriétaire
@@ -57,7 +66,7 @@ assertions passed. Full `make validate` (including remote taxonomy coverage) and
 integrity checks passed across all 12 cities.
 Implementation commit `fbbc0c4` pushed; all five [CI jobs green](https://github.com/fmanat/hotelareascore/actions/runs/34651434836)
 (including E2E).
-**C–F remain undone; no later bloc started.** The old 200-entry proposal now
+**Historical checkpoint before the night mission: C–F were undone.** The old 200-entry proposal now
 has 197 surviving identities after A+B; its old 214-URL go-live dry-run is
 obsolete. Cohort reconstruction belongs to F. No indexing/scoring change.
 

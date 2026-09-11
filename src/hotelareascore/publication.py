@@ -70,6 +70,7 @@ def set_status(
     decided_by: str,
     score_version: str | None = None,
     hotel_name: str | None = None,
+    accommodation_type: str | None = None,
 ) -> None:
     """The only way a page's publication status changes. Always requires a
     reason and a decider -- there is no code path that flips a status
@@ -108,6 +109,8 @@ def set_status(
                 "independent of confidence. Not a bug in this hotel's data; fix the name "
                 "resolution upstream (entity_qa.py) before ever indexing this record."
             )
+    if page_type == "hotel" and status == "indexable" and accommodation_type != "hotel":
+        raise ValueError("Only an explicitly classified hotel can be indexable; unknown and other accommodation types remain noindex")
     con.execute(
         """
         INSERT INTO page_publication (page_type, page_id, status, reason, decided_by, decided_at, score_version)

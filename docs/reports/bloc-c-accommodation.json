@@ -1,0 +1,366 @@
+{
+  "release": "2026-08-19.0",
+  "cities": {
+    "london": {
+      "total": 4364,
+      "types": {
+        "hotel": 3120,
+        "aparthotel": 25,
+        "serviced-apartment": 193,
+        "whole-home": 151,
+        "hostel": 238,
+        "guesthouse-B&B": 436,
+        "unknown": 201
+      },
+      "rejected_lodging_by_type": {
+        "lodging": 749,
+        "holiday_rental_home": 198,
+        "campground": 72,
+        "cabin": 43,
+        "cottage": 16,
+        "rv_park": 7,
+        "ski_resort": 6,
+        "self_catering_accommodation": 3,
+        "beach_resort": 2
+      },
+      "potential_whole_home_recovery_report_only": 257,
+      "unresolved_generic_lodging": 749
+    },
+    "bangkok": {
+      "total": 7517,
+      "types": {
+        "hotel": 5660,
+        "aparthotel": 3,
+        "serviced-apartment": 112,
+        "whole-home": 80,
+        "hostel": 872,
+        "guesthouse-B&B": 209,
+        "unknown": 581
+      },
+      "rejected_lodging_by_type": {
+        "lodging": 11024,
+        "holiday_rental_home": 132,
+        "campground": 52,
+        "cottage": 19,
+        "cabin": 15,
+        "rv_park": 12,
+        "ski_resort": 7,
+        "beach_resort": 4
+      },
+      "potential_whole_home_recovery_report_only": 166,
+      "unresolved_generic_lodging": 11024
+    },
+    "paris": {
+      "total": 3568,
+      "types": {
+        "hotel": 3198,
+        "aparthotel": 55,
+        "serviced-apartment": 85,
+        "whole-home": 45,
+        "hostel": 58,
+        "guesthouse-B&B": 114,
+        "unknown": 13
+      },
+      "rejected_lodging_by_type": {
+        "lodging": 326,
+        "holiday_rental_home": 214,
+        "campground": 15,
+        "rv_park": 6,
+        "ski_resort": 2,
+        "cottage": 1,
+        "cabin": 1
+      },
+      "potential_whole_home_recovery_report_only": 216,
+      "unresolved_generic_lodging": 326
+    },
+    "rome": {
+      "total": 5030,
+      "types": {
+        "hotel": 2658,
+        "aparthotel": 4,
+        "serviced-apartment": 291,
+        "whole-home": 87,
+        "hostel": 96,
+        "guesthouse-B&B": 1827,
+        "unknown": 67
+      },
+      "rejected_lodging_by_type": {
+        "holiday_rental_home": 1096,
+        "lodging": 521,
+        "cabin": 13,
+        "campground": 9,
+        "cottage": 3,
+        "rv_park": 3,
+        "ski_resort": 2,
+        "beach_resort": 2
+      },
+      "potential_whole_home_recovery_report_only": 1112,
+      "unresolved_generic_lodging": 521
+    },
+    "barcelona": {
+      "total": 1704,
+      "types": {
+        "hotel": 1061,
+        "aparthotel": 16,
+        "serviced-apartment": 105,
+        "whole-home": 127,
+        "hostel": 258,
+        "guesthouse-B&B": 97,
+        "unknown": 40
+      },
+      "rejected_lodging_by_type": {
+        "lodging": 178,
+        "holiday_rental_home": 156,
+        "campground": 12,
+        "cabin": 10,
+        "ski_resort": 4,
+        "rv_park": 2,
+        "beach_resort": 1
+      },
+      "potential_whole_home_recovery_report_only": 166,
+      "unresolved_generic_lodging": 178
+    },
+    "amsterdam": {
+      "total": 1065,
+      "types": {
+        "hotel": 780,
+        "aparthotel": 6,
+        "serviced-apartment": 3,
+        "whole-home": 36,
+        "hostel": 54,
+        "guesthouse-B&B": 168,
+        "unknown": 18
+      },
+      "rejected_lodging_by_type": {
+        "lodging": 94,
+        "holiday_rental_home": 17,
+        "campground": 14,
+        "cabin": 6,
+        "ski_resort": 2,
+        "cottage": 1
+      },
+      "potential_whole_home_recovery_report_only": 24,
+      "unresolved_generic_lodging": 94
+    },
+    "lisbon": {
+      "total": 1282,
+      "types": {
+        "hotel": 869,
+        "aparthotel": 7,
+        "serviced-apartment": 12,
+        "whole-home": 104,
+        "hostel": 182,
+        "guesthouse-B&B": 102,
+        "unknown": 6
+      },
+      "rejected_lodging_by_type": {
+        "lodging": 140,
+        "holiday_rental_home": 131,
+        "campground": 2,
+        "rv_park": 2,
+        "cabin": 1
+      },
+      "potential_whole_home_recovery_report_only": 132,
+      "unresolved_generic_lodging": 140
+    },
+    "sydney": {
+      "total": 1067,
+      "types": {
+        "hotel": 712,
+        "aparthotel": 15,
+        "serviced-apartment": 89,
+        "whole-home": 46,
+        "hostel": 79,
+        "guesthouse-B&B": 62,
+        "unknown": 64
+      },
+      "rejected_lodging_by_type": {
+        "lodging": 164,
+        "holiday_rental_home": 34,
+        "campground": 18,
+        "ski_resort": 7,
+        "cottage": 4,
+        "rv_park": 4,
+        "self_catering_accommodation": 2,
+        "cabin": 1,
+        "beach_resort": 1
+      },
+      "potential_whole_home_recovery_report_only": 39,
+      "unresolved_generic_lodging": 164
+    },
+    "tokyo": {
+      "total": 2734,
+      "types": {
+        "hotel": 2234,
+        "aparthotel": 5,
+        "serviced-apartment": 24,
+        "whole-home": 4,
+        "hostel": 160,
+        "guesthouse-B&B": 138,
+        "unknown": 169
+      },
+      "rejected_lodging_by_type": {
+        "lodging": 477,
+        "holiday_rental_home": 26,
+        "campground": 21,
+        "ski_resort": 17,
+        "cabin": 9,
+        "cottage": 3,
+        "rv_park": 1
+      },
+      "potential_whole_home_recovery_report_only": 38,
+      "unresolved_generic_lodging": 477
+    },
+    "dubai": {
+      "total": 2060,
+      "types": {
+        "hotel": 1462,
+        "aparthotel": 129,
+        "serviced-apartment": 54,
+        "whole-home": 260,
+        "hostel": 41,
+        "guesthouse-B&B": 18,
+        "unknown": 96
+      },
+      "rejected_lodging_by_type": {
+        "lodging": 486,
+        "holiday_rental_home": 128,
+        "cabin": 16,
+        "beach_resort": 14,
+        "campground": 10,
+        "ski_resort": 1,
+        "rv_park": 1
+      },
+      "potential_whole_home_recovery_report_only": 144,
+      "unresolved_generic_lodging": 486
+    },
+    "new_york": {
+      "total": 2174,
+      "types": {
+        "hotel": 1788,
+        "aparthotel": 1,
+        "serviced-apartment": 30,
+        "whole-home": 8,
+        "hostel": 56,
+        "guesthouse-B&B": 111,
+        "unknown": 180
+      },
+      "rejected_lodging_by_type": {
+        "lodging": 1831,
+        "holiday_rental_home": 77,
+        "campground": 64,
+        "beach_resort": 6,
+        "rv_park": 5,
+        "ski_resort": 5,
+        "cabin": 3,
+        "self_catering_accommodation": 1
+      },
+      "potential_whole_home_recovery_report_only": 80,
+      "unresolved_generic_lodging": 1831
+    },
+    "singapore": {
+      "total": 1214,
+      "types": {
+        "hotel": 910,
+        "aparthotel": 0,
+        "serviced-apartment": 51,
+        "whole-home": 2,
+        "hostel": 143,
+        "guesthouse-B&B": 16,
+        "unknown": 92
+      },
+      "rejected_lodging_by_type": {
+        "lodging": 1238,
+        "holiday_rental_home": 29,
+        "campground": 27,
+        "cabin": 6,
+        "cottage": 3,
+        "beach_resort": 2,
+        "rv_park": 1
+      },
+      "potential_whole_home_recovery_report_only": 38,
+      "unresolved_generic_lodging": 1238
+    }
+  },
+  "totals": {
+    "hotel": 24452,
+    "aparthotel": 266,
+    "serviced-apartment": 1049,
+    "whole-home": 950,
+    "hostel": 2237,
+    "guesthouse-B&B": 3298,
+    "unknown": 1527
+  },
+  "mixed_operator_review": [
+    {
+      "city": "london",
+      "id": "048bbc57-52b0-4fcd-b696-6fdc80954cbd",
+      "name": "Sonder The Henry"
+    },
+    {
+      "city": "london",
+      "id": "fb81f803-8447-4fc2-9f01-b61ffb88ca22",
+      "name": "Sonder The Maddox"
+    },
+    {
+      "city": "london",
+      "id": "dec577ea-86df-442a-903c-66331135c3ff",
+      "name": "Chelsea Green Hotel, Sonder"
+    },
+    {
+      "city": "london",
+      "id": "ee47c71a-7f5c-4b12-a67c-518b6edde874",
+      "name": "Sonder King Street"
+    },
+    {
+      "city": "london",
+      "id": "cf18c55c-2492-4ac6-b0b9-fc2104f364ba",
+      "name": "Sonder Edgware Road"
+    },
+    {
+      "city": "london",
+      "id": "c3cc989c-6606-427c-a767-f1ca9f0af540",
+      "name": "Sonder Camden Road"
+    },
+    {
+      "city": "london",
+      "id": "206097f5-6547-44f3-958b-38f21cde80a9",
+      "name": "Sonder Back Hill"
+    },
+    {
+      "city": "london",
+      "id": "b0942912-f489-4a7a-9675-e90c71b9b969",
+      "name": "Sonder Apartements"
+    },
+    {
+      "city": "rome",
+      "id": "c9595bfe-63cf-4c92-8226-881cfc19aa8e",
+      "name": "Testaccio Hotel Monte dei Cocci, Sonder"
+    },
+    {
+      "city": "rome",
+      "id": "b73824a9-67ff-4bc2-9575-61d64b2427e8",
+      "name": "Piazza Di Spagna Hotel, Sonder"
+    },
+    {
+      "city": "barcelona",
+      "id": "dee8d2fd-f903-41b7-8147-85be021734e0",
+      "name": "Los Arcos Hotel Gothic Quarter, Sonder"
+    },
+    {
+      "city": "barcelona",
+      "id": "4b25c811-cb34-4d77-959e-b44be6c6f321",
+      "name": "Vasanta Hotel Eixample, Sonder"
+    },
+    {
+      "city": "amsterdam",
+      "id": "72926559-f98b-4b6c-b18a-c5e85e7dc445",
+      "name": "Park House Hotel Museum Quarter, Sonder"
+    },
+    {
+      "city": "new_york",
+      "id": "dd6fce5a-c7c9-480b-bbbd-3859c20ee36b",
+      "name": "Court Square Hotel Long Island City New York , Belvilla District 6 Formerly Sonder"
+    }
+  ]
+}

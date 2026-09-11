@@ -15,7 +15,7 @@ def test_unrecorded_page_is_not_indexable(con):
 
 
 def test_set_and_get_status_roundtrip(con):
-    publication.set_status(con, "hotel", "h1", "indexable", "pilot cohort", "system:test")
+    publication.set_status(con, "hotel", "h1", "indexable", "pilot cohort", "system:test", accommodation_type="hotel")
     row = publication.get_status(con, "hotel", "h1")
     assert row["status"] == "indexable"
     assert row["reason"] == "pilot cohort"
@@ -25,9 +25,9 @@ def test_set_and_get_status_roundtrip(con):
 
 def test_reason_required(con):
     with pytest.raises(ValueError):
-        publication.set_status(con, "hotel", "h1", "indexable", "", "system:test")
+        publication.set_status(con, "hotel", "h1", "indexable", "", "system:test", accommodation_type="hotel")
     with pytest.raises(ValueError):
-        publication.set_status(con, "hotel", "h1", "indexable", "   ", "system:test")
+        publication.set_status(con, "hotel", "h1", "indexable", "   ", "system:test", accommodation_type="hotel")
 
 
 def test_invalid_status_rejected(con):
@@ -42,7 +42,7 @@ def test_invalid_page_type_rejected(con):
 
 def test_updating_status_overwrites_not_duplicates(con):
     publication.set_status(con, "hotel", "h1", "noindex", "default", "system:test")
-    publication.set_status(con, "hotel", "h1", "indexable", "promoted to pilot cohort", "system:test2")
+    publication.set_status(con, "hotel", "h1", "indexable", "promoted to pilot cohort", "system:test2", accommodation_type="hotel")
     row = publication.get_status(con, "hotel", "h1")
     assert row["status"] == "indexable"
     assert row["reason"] == "promoted to pilot cohort"
@@ -51,7 +51,7 @@ def test_updating_status_overwrites_not_duplicates(con):
 
 
 def test_list_by_status_filters_by_page_type(con):
-    publication.set_status(con, "hotel", "h1", "indexable", "r", "system:test")
+    publication.set_status(con, "hotel", "h1", "indexable", "r", "system:test", accommodation_type="hotel")
     publication.set_status(con, "city", "london", "indexable", "r", "system:test")
     hotel_rows = publication.list_by_status(con, "indexable", "hotel")
     all_rows = publication.list_by_status(con, "indexable")
@@ -65,13 +65,13 @@ def test_list_by_status_filters_by_page_type(con):
 # this, so the gate lives in set_status itself, not a caller's judgment.
 def test_numeric_name_hotel_cannot_be_marked_indexable(con):
     with pytest.raises(ValueError, match="numeric-name"):
-        publication.set_status(con, "hotel", "h1", "indexable", "r", "system:test", hotel_name="8468671")
+        publication.set_status(con, "hotel", "h1", "indexable", "r", "system:test", hotel_name="8468671", accommodation_type="hotel")
     assert publication.get_status(con, "hotel", "h1") is None
 
 
 def test_numeric_name_gate_is_trimmed_like_the_slug_helper(con):
     with pytest.raises(ValueError):
-        publication.set_status(con, "hotel", "h1", "indexable", "r", "system:test", hotel_name="  86  ")
+        publication.set_status(con, "hotel", "h1", "indexable", "r", "system:test", hotel_name="  86  ", accommodation_type="hotel")
 
 
 def test_numeric_name_hotel_can_still_be_draft_or_noindex(con):
@@ -84,7 +84,7 @@ def test_numeric_name_hotel_can_still_be_draft_or_noindex(con):
 
 
 def test_non_numeric_name_hotel_is_unaffected_by_the_gate(con):
-    publication.set_status(con, "hotel", "h1", "indexable", "r", "system:test", hotel_name="The Savoy Hotel")
+    publication.set_status(con, "hotel", "h1", "indexable", "r", "system:test", hotel_name="The Savoy Hotel", accommodation_type="hotel")
     assert publication.is_indexable(con, "hotel", "h1") is True
 
 
@@ -93,6 +93,6 @@ def test_numeric_name_gate_only_applies_when_a_name_is_given(con):
     # not accidentally block them (it's specific to page_type == "hotel"
     # AND a name being provided).
     publication.set_status(con, "city", "london", "indexable", "r", "system:test")
-    publication.set_status(con, "hotel", "h1", "indexable", "r", "system:test")  # no hotel_name passed
+    publication.set_status(con, "hotel", "h1", "indexable", "r", "system:test", accommodation_type="hotel")  # no hotel_name passed
     assert publication.is_indexable(con, "city", "london") is True
     assert publication.is_indexable(con, "hotel", "h1") is True

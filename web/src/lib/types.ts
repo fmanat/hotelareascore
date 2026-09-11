@@ -38,6 +38,8 @@ export interface ComparableHotel {
 }
 
 export interface Hotel {
+  accommodation_type?: string;
+  accommodation_type_label?: string;
   id: string;
   slug: string;
   name: string;
@@ -106,6 +108,8 @@ export type PersonaWeights = Record<DimensionKey, number>;
 export type Personas = Record<string, PersonaWeights>;
 
 export interface SearchIndexEntry {
+  accommodation_type?: string;
+  accommodation_type_label?: string;
   slug: string;
   name: string;
   city: string;

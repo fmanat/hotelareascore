@@ -69,6 +69,9 @@ import duckdb
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from hotelareascore.accommodation import classify_accommodation
+from hotelareascore.institutions import institution_matches
+from hotelareascore.brands import brand_matches
 from hotelareascore.config import DIMENSIONS, ETL_DIR, load_cities  # noqa: E402
 from hotelareascore.entity_qa import HOSPITALITY_BRANDS, _fold, is_non_latin_name  # noqa: E402
 
@@ -105,7 +108,7 @@ def load_city_candidates(city_id: str) -> list[dict]:
             SELECT hotel_id, count(*) AS n_facts FROM read_parquet('{facts_path.as_posix()}') GROUP BY hotel_id
         )
         SELECT
-            h.id, h.name, h.address_locality, h.dedupe_confidence,
+            h.id, h.name, h.address_locality, h.dedupe_confidence, h.taxonomy_primary,
             s.confidence, s.balanced_score,
             {', '.join(f's.{d}' for d in DIMENSIONS)},
             coalesce(f.n_facts, 0) AS n_facts,
@@ -116,11 +119,15 @@ def load_city_candidates(city_id: str) -> list[dict]:
         LEFT JOIN facts f ON f.hotel_id = h.id
     """).fetchall()
 
-    cols = ["id", "name", "locality", "dedupe_confidence", "confidence", "balanced_score"] + list(DIMENSIONS) + \
+    cols = ["id", "name", "locality", "dedupe_confidence", "taxonomy_primary", "confidence", "balanced_score"] + list(DIMENSIONS) + \
            ["n_facts", "is_coincident", "is_numeric_name"]
     candidates = []
     for row in rows:
         rec = dict(zip(cols, row))
+        if institution_matches(rec["name"],rec["id"]) or brand_matches(rec["name"],rec["id"]):
+            continue
+        if classify_accommodation(rec)["accommodation_type"] != "hotel":
+            continue
         # Gate 1: confidence >= 80
         if rec["confidence"] < 80:
             continue
