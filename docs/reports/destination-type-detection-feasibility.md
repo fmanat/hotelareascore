@@ -1,5 +1,7 @@
 # "Destination/resort" hotel type — detection feasibility report
 
+> **Superseded 2026-09-12:** [Bloc E](bloc-e-anchors.md) measures the post-A/B population with actual polygon distance and documents source/identity limitations. This historical study used bbox centroids; do not use its counts or seed-case success as current validation.
+
 - **Date:** 2026-09-XX (owner decision session, post night mission #3)
 - **Companion to:** `docs/adr/015-destination-resort-hotel-type-lens.md`
 - **Status: report only, per the owner's explicit order — no detection
