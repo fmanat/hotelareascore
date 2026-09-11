@@ -7884,6 +7884,20 @@
     "removed_pilot_proposal_entries": 1,
     "remaining_historical_pilot_entries_after_A_and_B": 197,
     "cloudflare_force_action": false,
-    "full_validate_12_cities": "passed (including remote taxonomy coverage)"
+    "full_validate_12_cities": "passed (including remote taxonomy coverage)",
+    "ci": {
+      "implementation_commit": "fbbc0c48a7809bf94a8646b58deef1a3fe3221d8",
+      "run_url": "https://github.com/fmanat/hotelareascore/actions/runs/34651434836",
+      "conclusion": "success",
+      "jobs": [
+        "etl-tests",
+        "seo-assertions",
+        "e2e",
+        "typecheck",
+        "lint-docs"
+      ]
+    },
+    "excluded_slugs_absent_in_build": 141,
+    "singapore_boys_home_absent_in_build": true
   }
 }

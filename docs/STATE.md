@@ -35,7 +35,8 @@ Local validation: **419 tests passed + 1 pre-existing expected failure**,
 including 135 Bloc B tests; typecheck clean, full 15,721-page build and SEO
 assertions passed. Full `make validate` (including remote taxonomy coverage) and dataset
 integrity checks passed across all 12 cities.
-The commit's CI must be green before session closure.
+Implementation commit `fbbc0c4` pushed; all five [CI jobs green](https://github.com/fmanat/hotelareascore/actions/runs/34651434836)
+(including E2E).
 **C–F remain undone; no later bloc started.** The old 200-entry proposal now
 has 197 surviving identities after A+B; its old 214-URL go-live dry-run is
 obsolete. Cohort reconstruction belongs to F. No indexing/scoring change.

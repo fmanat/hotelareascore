@@ -157,7 +157,7 @@ Lecture des attributs originaux via les assets GeoParquet du catalogue STAC de l
 - Comparaison SQL bidirectionnelle `EXCEPT ALL` des lignes conservées avec les sauvegardes : hôtels, scores et faits inchangés. Jointures complètes hôtels/scores, bornes, versions, coordonnées, unicité, baselines et absence des familles A/B contrôlées sur les 12 villes.
 - **419 tests réussis, 1 échec attendu préexistant**, dont **135 tests B**. Tests positifs de programmes/bureaux multilingues, 30 noms légitimes, 11 exceptions réelles, ingestion avant dédoublonnage, publication même noindex, ETL obsolète, agrégats de ville, exports, parité Python/JavaScript et maintien de l’inactivité du signal générique.
 - `PYTHONPATH=src make validate CITY=all RELEASE=2026-08-19.0` : 12 villes OK, y compris le contrôle distant des catégories Overture.
-- Typecheck : 0 erreur, 0 avertissement. Build réel et assertions SEO réussis sur 15 721 pages. La CI du commit reste à vérifier après push.
+- Typecheck : 0 erreur, 0 avertissement. Build réel et assertions SEO réussis sur 15 721 pages. Commit `fbbc0c4` poussé : [les cinq jobs CI sont verts](https://github.com/fmanat/hotelareascore/actions/runs/34651434836), dont les E2E.
 
 Reproduction (avec les artefacts de la release présents) :
 
