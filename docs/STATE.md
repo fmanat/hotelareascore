@@ -20,6 +20,14 @@ See [Bloc A report](reports/bloc-a-institutions.md) and its full JSON audit.
 The old 200-hotel proposal now contains 2 removed entries (198 survive);
 the old 214-URL go-live dry-run is obsolete. Cohort reconstruction is Bloc F.
 No indexing flag enabled; no scoring formula change.
+**Production removal NOT confirmed:** commit `1d4e4ef` pushed, all five
+[CI jobs green](https://github.com/fmanat/hotelareascore/actions/runs/34646720383),
+but the live `/hotel/singapore-boys-home-3ba67d6c` still returns HTTP 200
+with its scored page after CI. No Cloudflare deployment check is attached
+to the commit. Available API authentication returns HTTP 403 for the
+`staycontext` Pages project; no connected browser is available. Owner must
+provide project access or deploy the green commit. Treat this as a live
+publication blocker until the old URL and search entry are gone.
 
 **Correction (2026-09-11, owner):** night mission #3 delivered **only**
 Blocs G/H/I (golden-set expansion, technical debt, pre-launch readiness —

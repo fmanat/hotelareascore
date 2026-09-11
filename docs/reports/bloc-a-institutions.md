@@ -79,10 +79,25 @@ Terminology references include [French public-service EHPAD guidance](https://so
 - Python/JavaScript parity test covers all lexicon literals, regression names and ID/slug exceptions; production exports are also checked.
 - Local `make test`: **284 passed, 1 expected failure** (the pre-existing CJK liquor-shop limitation, outside Bloc A). Pytest now explicitly imports this checkout’s `src`, preventing another installed editable checkout from being tested accidentally.
 - Local real-data Astro build: 15,759 HTML pages; SEO assertions passed (unique titles, one canonical, JSON-LD and sitemap/publication consistency). Typecheck: zero errors/warnings, one pre-existing async-function hint.
-- GitHub CI result: recorded in the delivery message for the pushed commit.
+- GitHub CI: **all five jobs passed** for commit `1d4e4ef` ([run 34646720383](https://github.com/fmanat/hotelareascore/actions/runs/34646720383)), including E2E.
 
 ## Reproduction and limits
 
 From an unpurged copy of the existing release: `python3 scripts/exclude_institutions.py` produces the audit; `python3 scripts/exclude_institutions.py --apply` purges ETL and committed exports, retaining local backups. `node web/scripts/institution-guard.mjs` checks every current export. `make test` exercises regressions. The script preserves an existing pre-purge report when no matches remain.
 
 This closes the known institution naming/ID paths, not the general identity-verification problem. Unknown institutions with opaque names can escape a lexicon; the gate in Bloc F remains necessary. No Block B work, score formula change, new indexable URL, paid dependency or indexing flag change was made.
+
+## Production handoff — unresolved
+
+The code/data commit `1d4e4ef` is pushed and its CI is green. A live GET
+**after CI completed** still returned HTTP 200 and the Singapore Boys’ Home
+scored page at `/hotel/singapore-boys-home-3ba67d6c`. This is **not** a
+successful production removal. GitHub exposes no Cloudflare deployment
+status for this commit. The available API authentication returned HTTP 403
+when reading the `staycontext` Pages project, and browser discovery returned
+no connected browser. No deployment was performed in this session.
+
+The owner was asked to provide a connected Cloudflare browser or deploy
+`origin/main` to the existing `staycontext` project. Recheck the old URL and
+search index afterward; no indexing flag needs changing. The production
+blocker must remain visible until those checks pass.
