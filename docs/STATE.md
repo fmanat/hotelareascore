@@ -1,9 +1,62 @@
 # STATE.md — project state tracker
 
-> Claude Code: read this first every session; update it whenever phase,
-> decisions, or blockers change. Keep it under ~150 lines — this is a
-> dashboard, not a journal. Move resolved history to `docs/adr/` or the
-> dated report it already lives in; don't re-narrate it here.
+> Read this first every session, whichever agent you are (`CLAUDE.md` /
+> `AGENTS.md`); update it whenever phase, decisions, or blockers change.
+> Keep it under ~150 lines — this is a dashboard, not a journal. Move
+> resolved history to `docs/adr/` or the dated report it already lives in;
+> don't re-narrate it here.
+
+## NEXT SESSION — PRIORITY #1: night mission #3's Blocs A-F (not done)
+
+**Correction (2026-09-11, owner):** night mission #3 delivered **only**
+Blocs G/H/I (golden-set expansion, technical debt, pre-launch readiness —
+see below). Its own Blocs A-F were never executed and are **not**
+long-shipped work — an earlier session's STATE.md note claiming otherwise
+was wrong and has been removed. These six blocs are the top priority for
+whoever picks up next, **before** any of the "Idées non autorisées" list
+further down. Do not confuse this A-F set with the *different* A-F set
+from the project's very first overnight mission (commits `8806111`
+through `6321f9e` — 12-city pages, security headers, SEO machinery,
+pilot-cohort proposal, entity-QA hygiene, ops bots — that one really is
+done and shipped).
+
+Each bloc needs a one-line rationale from the owner's own manual review —
+**not given to Claude yet as of this correction**, marked `[owner to
+provide]` rather than guessed (`CLAUDE.md §2.3`, no invented facts).
+Topic grounding below is Claude's best-effort orientation in
+already-documented gaps — confirm against the owner's actual finding
+before scoping.
+
+- **A — Gates institutions**: systematic entity-QA gate for non-hotel
+  institutions (specimens already logged ad hoc, "Entity QA" below; no
+  gate exists yet). **Finding: [owner to provide]**
+- **B — Marques sans établissement**: hotel-brand sub-venues (restaurant/
+  spa/parking under a parent brand, no real bookable property) passing
+  as hotels — likely the logged "brand-allowlist short-circuit" (~33
+  cases, `Souq Madinat Jumeirah`), scope not re-verified against this
+  finding. **Finding: [owner to provide]**
+- **C — Type d'hébergement**: accommodation-type correctness — Overture's
+  `lodging` hierarchy mixes vacation rentals/campgrounds/unclassified in
+  with real hotels (`data/config/taxonomy-mapping.yml`). Distinct from
+  the destination/resort *presentation* lens (`docs/adr/015`, decision
+  (c)) — this is whether a record is a hotel at all. **Finding: [owner to
+  provide]**
+- **D — Translittération**: `entity_qa.py`'s English-only name filter has
+  near-zero recall on CJK/Arabic/Thai non-hotel names (9 specimens
+  logged, "Entity QA" below) — needs the language-specific marker list
+  that section already flags as unattempted. **Finding: [owner to
+  provide]**
+- **E — Rapport ancrage**: anchoring/urban-bias report across the *full*
+  dataset, not just the golden set (Bloc G only fixed golden-set
+  composition) — how many of the 33,966 live hotels show the
+  isolated-but-legitimate pattern from `docs/adr/015`'s seed case.
+  **Finding: [owner to provide]**
+- **F — Reconstruction cohorte + vérification externe**: once A-D change
+  which records count as real hotels, recompute the staged 200-hotel
+  pilot cohort (decision (b)) against the fixed gates, then verify
+  **outside Claude** (owner or third party) before treating it as the
+  go-live blocker's resolution. Sequenced after A-D, not parallel.
+  **Finding: [owner to provide]**
 
 ## Session checkpoint (long-session discipline — overwritten hourly, not accumulated)
 
@@ -21,20 +74,12 @@ list`, run 34640632737 succeeded).
 instruction at 19:49 UTC — last live read was 200 OK on both domains,
 no incident at close. `probe.log` / `probe-summary.md` committed as the
 final record; not appending further.
-**Reste à faire:** nothing authorized is in flight. Next session should
-read the "Idées non autorisées" section below and the "Depends on the
-owner" list in `docs/reports/pre-launch-readiness.md` before starting
-any new work — do not resume the probe/checkpoint loop without a fresh
-explicit instruction.
-**Note on "blocs A-F":** the original A-F lettering (this repo's very
-first overnight mission, before this saga) maps to work already
-long-shipped (C = SEO machinery ADR-008, D = pilot cohort proposal, E =
-entity-QA hygiene, F = ops bots, verified again night mission #3 Tache 5)
-— nothing there is actually pending tonight. The mission text's "GO
-impossible du bloc E" reads instead as tonight's real remaining blocker:
-the owner cohort review / go-live GO (`docs/STATE.md` open decision (b))
-— not re-litigated here, just noted so this isn't silently reinterpreted
-later.
+**Reste à faire:** night mission #3's own Blocs A-F, see the priority
+section at the top of this file — **not** long-shipped, corrected
+2026-09-11 (an earlier version of this note wrongly said otherwise).
+After that: the "Idées non autorisées" section below and the "Depends on
+the owner" list in `docs/reports/pre-launch-readiness.md`. Do not resume
+the probe/checkpoint loop without a fresh explicit instruction.
 
 ## Current phase
 

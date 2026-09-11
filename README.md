@@ -8,14 +8,39 @@ Brand/domain: **StayContext**, staycontext.com (`docs/adr/012`). The repo,
 Python package (`src/hotelareascore/`), and internal docs keep the
 `hotelareascore` code name — only the product-facing brand changed.
 
-**Status: Phase 2 (product proof — London + Bangkok). Phase 1's Data Proof
-Report was accepted by the owner; see `docs/STATE.md` for what's next.**
+**Status: see `docs/STATE.md` — the authoritative, current phase/gate
+tracker. Don't trust a phase claim anywhere else in this README or in
+`web/README.md`; both go stale between sessions, `docs/STATE.md` doesn't.**
+
+## Prerequisites
+
+- Python >= 3.11 (`pyproject.toml`), Node.js >= 22.12.0 (`web/package.json`)
+- No accounts, no API keys, no `.env` needed to install or run tests —
+  the ETL reads Overture's public S3 parquet directly (`src/hotelareascore/overture.py`)
+- `gh` CLI only needed for CI/PR inspection, not for install or tests
+
+## Install & test
+
+```bash
+pip install -e ".[dev]"    # Python package + dev/test deps
+make test                  # pytest -q -- unit + data + integration tests
+
+cd web
+npm install                 # once
+npm run typecheck           # astro check
+npx playwright install      # once, for the E2E browsers
+npm run test:e2e            # playwright test -- builds + serves fixture data itself
+```
+
+`npm run test:e2e` needs no manual fixture setup: its `webServer` config
+(`web/playwright.config.ts`) runs `e2e/prepare-fixtures.mjs` then
+`astro build` before starting the suite.
 
 ## Repo layout
 
 ```
-CLAUDE.md              operating rules for Claude Code sessions (only file
-                       auto-loaded each session)
+CLAUDE.md              operating rules, auto-loaded each session by Claude Code
+AGENTS.md              same operating rules, identical content, read by Codex
 docs/
   STATE.md             phase tracker, gates, open decisions — start here
   strategy.md          thesis, journeys, phases, commercial model, legal list
