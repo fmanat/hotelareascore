@@ -7,12 +7,14 @@
 
 ## Session checkpoint (long-session discipline — overwritten hourly, not accumulated)
 
-**Last updated:** 2026-09-11 11:37 UTC — ~49.5h elapsed since mission
+**Last updated:** 2026-09-11 17:54 UTC — ~55.8h elapsed since mission
 start (22:05 UTC 2026-09-09), well past the ~12h window (flagged
 repeatedly; not re-flagging every checkpoint).
 **Bloc en cours:** none — G, H, I done since 22:40 (2026-09-09). Idle.
-**Poussé sur origin/main:** `3a3a7d6` (checkpoint 07h19). CI green on
-every commit this session.
+**Poussé sur origin/main:** `cb64d0f` (checkpoint 11h37). CI green on
+every commit this session (one transient `gh`-API connectivity error at
+12h38, same local-network cause, not a real CI failure — confirmed by
+re-querying).
 **Probe status:** healthy live just now. `probe-summary.md` has current
 gap/blip figures.
 **Reste à faire (ce soir):** rien d'autorisé — cf. "idées non autorisées"

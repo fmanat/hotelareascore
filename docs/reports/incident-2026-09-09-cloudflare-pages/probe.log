@@ -8259,3 +8259,83 @@ timestamp_utc,url,status,cf_ray,error
 2026-09-11T11:38:03Z,https://staycontext.com/chemin-inexistant-probe,404,a396624c3c810c81-CDG,
 2026-09-11T11:38:03Z,https://staycontext.com/sitemap-static.xml,404,a396624cfbb09efa-CDG,
 2026-09-11T11:38:03Z,https://staycontext.pages.dev/,200,a396624dfd6dd0a2-CDG,
+2026-09-11T11:38:33Z,https://staycontext.com/,200,a396630b39967021-CDG,
+2026-09-11T11:38:33Z,https://staycontext.com/chemin-inexistant-probe,404,a396630c5bd6d110-CDG,
+2026-09-11T11:38:33Z,https://staycontext.com/sitemap-static.xml,404,a396630d0d166f14-CDG,
+2026-09-11T11:38:33Z,https://staycontext.pages.dev/,200,a396630dd8070210-CDG,
+2026-09-11T11:39:04Z,https://staycontext.com/,200,a39663cb0b122a37-CDG,
+2026-09-11T11:39:04Z,https://staycontext.com/chemin-inexistant-probe,404,a39663cbe91ed982-CDG,
+2026-09-11T11:39:04Z,https://staycontext.com/sitemap-static.xml,404,a39663ccacfed87e-CDG,
+2026-09-11T11:39:04Z,https://staycontext.pages.dev/,200,a39663cd681b9eb8-CDG,
+2026-09-11T12:38:24Z,https://staycontext.com/,200,a396bab2b96cb1aa-CDG,
+2026-09-11T12:38:24Z,https://staycontext.com/chemin-inexistant-probe,404,a396bab38c6c8825-CDG,
+2026-09-11T12:38:24Z,https://staycontext.com/sitemap-static.xml,404,a396bab44bffebae-CDG,
+2026-09-11T12:38:24Z,https://staycontext.pages.dev/,200,a396bab53d4e1581-CDG,
+2026-09-11T12:38:54Z,https://staycontext.com/,200,a396bb7258c4d08f-CDG,
+2026-09-11T12:38:54Z,https://staycontext.com/chemin-inexistant-probe,404,a396bb732c9bbb34-CDG,
+2026-09-11T12:38:54Z,https://staycontext.com/sitemap-static.xml,404,a396bb74abbc3f0a-CDG,
+2026-09-11T12:38:54Z,https://staycontext.pages.dev/,200,a396bb758e0e9eec-CDG,
+2026-09-11T12:39:25Z,https://staycontext.com/,200,a396bc32efa13ef4-CDG,
+2026-09-11T12:39:25Z,https://staycontext.com/chemin-inexistant-probe,404,a396bc33b8d085fe-CDG,
+2026-09-11T12:39:25Z,https://staycontext.com/sitemap-static.xml,404,a396bc34893ad131-CDG,
+2026-09-11T12:39:25Z,https://staycontext.pages.dev/,200,a396bc358d024e73-CDG,
+2026-09-11T12:39:56Z,https://staycontext.com/,200,a396bcf2bb67da95-CDG,
+2026-09-11T12:39:56Z,https://staycontext.com/chemin-inexistant-probe,404,a396bcf378316f51-CDG,
+2026-09-11T12:39:56Z,https://staycontext.com/sitemap-static.xml,404,a396bcf45bd8d784-CDG,
+2026-09-11T12:39:56Z,https://staycontext.pages.dev/,200,a396bcf508f1da68-CDG,
+2026-09-11T13:39:16Z,https://staycontext.com/,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T13:39:16Z,https://staycontext.com/chemin-inexistant-probe,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T13:39:16Z,https://staycontext.com/sitemap-static.xml,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T13:39:16Z,https://staycontext.pages.dev/,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T15:41:27Z,https://staycontext.com/,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T15:41:27Z,https://staycontext.com/chemin-inexistant-probe,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T15:41:27Z,https://staycontext.com/sitemap-static.xml,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T15:41:27Z,https://staycontext.pages.dev/,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T16:42:49Z,https://staycontext.com/,0,,The read operation timed out
+2026-09-11T16:42:49Z,https://staycontext.com/chemin-inexistant-probe,404,a398213648dbebad-CDG,
+2026-09-11T16:42:49Z,https://staycontext.com/sitemap-static.xml,404,a398213f0cd1229c-CDG,
+2026-09-11T16:42:49Z,https://staycontext.pages.dev/,200,a3982146bd642c0b-CDG,
+2026-09-11T16:43:41Z,https://staycontext.com/,200,a39822763ca6dc71-CDG,
+2026-09-11T16:43:41Z,https://staycontext.com/chemin-inexistant-probe,404,a398227efae84562-CDG,
+2026-09-11T16:43:41Z,https://staycontext.com/sitemap-static.xml,404,a39822aec8b0048e-CDG,
+2026-09-11T16:43:41Z,https://staycontext.pages.dev/,200,a39822b1bba96056-CDG,
+2026-09-11T16:44:40Z,https://staycontext.com/,200,a398237b1dced0a4-CDG,
+2026-09-11T16:44:40Z,https://staycontext.com/chemin-inexistant-probe,404,a3982385f8e5eba9-CDG,
+2026-09-11T16:44:40Z,https://staycontext.com/sitemap-static.xml,0,,The read operation timed out
+2026-09-11T16:44:40Z,https://staycontext.pages.dev/,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:54:01Z,https://staycontext.com/,200,a3988905ed0699ce-CDG,
+2026-09-11T17:54:01Z,https://staycontext.com/chemin-inexistant-probe,404,a39889072f7aad2e-CDG,
+2026-09-11T17:54:01Z,https://staycontext.com/sitemap-static.xml,404,a39889081c0dcb5a-CDG,
+2026-09-11T17:54:01Z,https://staycontext.pages.dev/,200,a39889097883f130-CDG,
+2026-09-11T17:54:31Z,https://staycontext.com/,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:54:31Z,https://staycontext.com/chemin-inexistant-probe,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:54:31Z,https://staycontext.com/sitemap-static.xml,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:54:31Z,https://staycontext.pages.dev/,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:55:02Z,https://staycontext.com/,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:55:02Z,https://staycontext.com/chemin-inexistant-probe,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:55:02Z,https://staycontext.com/sitemap-static.xml,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:55:02Z,https://staycontext.pages.dev/,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:55:32Z,https://staycontext.com/,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:55:32Z,https://staycontext.com/chemin-inexistant-probe,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:55:32Z,https://staycontext.com/sitemap-static.xml,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:55:32Z,https://staycontext.pages.dev/,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:56:02Z,https://staycontext.com/,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:56:02Z,https://staycontext.com/chemin-inexistant-probe,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:56:02Z,https://staycontext.com/sitemap-static.xml,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T17:56:02Z,https://staycontext.pages.dev/,0,,"<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+2026-09-11T18:44:47Z,https://staycontext.com/,200,a398d369ed15009e-CDG,
+2026-09-11T18:44:47Z,https://staycontext.com/chemin-inexistant-probe,404,a398d36c1801ebb1-CDG,
+2026-09-11T18:44:47Z,https://staycontext.com/sitemap-static.xml,404,a398d36d994dd2bc-CDG,
+2026-09-11T18:44:47Z,https://staycontext.pages.dev/,200,a398d36ec8c86774-CDG,
+2026-09-11T19:24:12Z,https://staycontext.com/,200,a3990d258dd1d347-CDG,
+2026-09-11T19:24:12Z,https://staycontext.com/chemin-inexistant-probe,404,a3990d26de2999b0-CDG,
+2026-09-11T19:24:12Z,https://staycontext.com/sitemap-static.xml,404,a3990d286d203752-CDG,
+2026-09-11T19:24:12Z,https://staycontext.pages.dev/,200,a3990d2abf2ef495-CDG,
+2026-09-11T19:24:44Z,https://staycontext.com/,200,a3990decbf167853-CDG,
+2026-09-11T19:24:44Z,https://staycontext.com/chemin-inexistant-probe,404,a3990dee2f51d516-CDG,
+2026-09-11T19:24:44Z,https://staycontext.com/sitemap-static.xml,404,a3990def6d82eeab-CDG,
+2026-09-11T19:24:44Z,https://staycontext.pages.dev/,200,a3990df0aa99a2e9-CDG,
+2026-09-11T19:25:16Z,https://staycontext.com/,200,a3990eb398ed9ee2-CDG,
+2026-09-11T19:25:16Z,https://staycontext.com/chemin-inexistant-probe,404,a3990eb52a8a7028-CDG,
+2026-09-11T19:25:16Z,https://staycontext.com/sitemap-static.xml,404,a3990eb69acc6cbe-CDG,
+2026-09-11T19:25:16Z,https://staycontext.pages.dev/,200,a3990eb809bb6fee-CDG,
